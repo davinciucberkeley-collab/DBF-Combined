@@ -1,0 +1,20 @@
+{
+ "mass_basic_kg": 1.64048,
+ "cg_x_m": 0.021413285745635426,
+ "cg_y_m": -0.0033284752023797918,
+ "cg_z_m": 0.006602948527260314,
+ "I_cad_axes_kgm2": {
+  "Ixx": 0.08819733113977586,
+  "Iyy": 0.034857762187808464,
+  "Izz": 0.09830645516124172
+ },
+ "prop_hub_x_aft_of_LE_m": -0.1234244759082442,
+ "motor_station_y": 0.228,
+ "motor_station_z": 0.156,
+ "x_ground_m": 0.3375,
+ "fin_y_m": 0.38,
+ "fin_h_m": 0.1937,
+ "elevon": {
+  "hinge_inertia_one_elevon_kgm2": 1.3685700000000003e-05,
+  "hinge_inertia_balance_one_kgm2": 5.91936e-06,
+  "hinge_inertia_total_kgm2": 1.9605060000000004e-0

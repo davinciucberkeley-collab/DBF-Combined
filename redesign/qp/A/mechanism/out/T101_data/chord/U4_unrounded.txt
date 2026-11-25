@@ -1,0 +1,8 @@
+T101C3 Z5        peak mean elevon 8.315 deg  pitch_use 0.5543  mean elevon last 5 s of cruise -6.98 deg (neg = TE up)  V last5 17.10
+T101C3 Z5_lua    peak mean elevon 8.570 deg  pitch_use 0.5713  mean elevon last 5 s of cruise -7.04 deg (neg = TE up)  V last5 17.06
+T101C3 T074      peak mean elevon 9.760 deg  pitch_use 0.6507  mean elevon last 5 s of cruise -6.51 deg (neg = TE up)  V last5 17.78
+T101C3 T074_lua  peak mean elevon 9.075 deg  pitch_use 0.6050  mean elevon last 5 s of cruise -6.34 deg (neg = TE up)  V last5 17.96
+T101C4 Z5        peak mean elevon 7.210 deg  pitch_use 0.4807  mean elevon last 5 s of cruise -5.70 deg (neg = TE up)  V last5 17.16
+T101C4 Z5_lua    peak mean elevon 7.265 deg  pitch_use 0.4843  mean elevon last 5 s of cruise -5.76 deg (neg = TE up)  V last5 17.10
+T101C4 T074      peak mean elevon 7.540 deg  pitch_use 0.5027  mean elevon last 5 s of cruise -5.43 deg (neg = TE up)  V last5 17.72
+T101C4 T074_lua  peak mean elevon 8.140 deg  pitch_use 0.5427  mean elevon last 5 s of cruise -5.24 deg (neg = TE up)  V last5 17.94

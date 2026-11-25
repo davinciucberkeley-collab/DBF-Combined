@@ -1,0 +1,13 @@
+{'cg_x': np.float64(0.022884409617321244), 'h': np.float64(0.27711559038267874), 'tip_narrow': 33.005675848562646, 'tip_wide': 53.89854079008823, 'I': array([0.05772651, 0.02599915, 0.06252816]), 'v_tip_parked': 7.441111673368119, 'restore_ratio_5ms': 2.2148057174214113}
+
+### plateau 30.0 N per foot, usable stroke 20 mm
+hard level                   stroke max   8.3 mm  n 10.79  Fmax  39.7 N  side   0.0 N  tilt_end   0.0  drift     0 mm  set 6.8
+hard 10 narrow               stroke max  13.9 mm  n 5.43  Fmax  39.9 N  side  14.3 N  tilt_end   1.8  drift   142 mm  set 12.4
+hard 10 narrow neg           stroke max  13.9 mm  n 5.43  Fmax  39.9 N  side  14.3 N  tilt_end   1.8  drift   142 mm  set 12.4
+hard 10 wide                 stroke max   8.2 mm  n 6.13  Fmax  45.1 N  side  18.0 N  tilt_end   0.1  drift    36 mm  set 6.7
+hard 7/7 combo               stroke max   9.2 mm  n 5.67  Fmax  45.2 N  side  18.1 N  tilt_end   0.4  drift    21 mm  set 7.7
+hard 10 narrow + drift .5    stroke max  15.4 mm  n 6.68  Fmax  40.0 N  side  16.0 N  tilt_end   2.2  drift    23 mm  set 13.9
+hard 10 wide + drift .5 y    stroke max  11.0 mm  n 6.34  Fmax  46.7 N  side  18.7 N  tilt_end   0.4  drift   104 mm  set 9.5
+normal level .5              stroke max   2.3 mm  n 8.93  Fmax  32.8 N  side   0.0 N  tilt_end   0.0  drift     0 mm  set 0.8
+normal 10 narrow .5          stroke max   3.3 mm  n 6.92  Fmax  33.5 N  side  12.7 N  tilt_end   0.1  drift    97 mm  set 1.8
+normal 10 wide .5 + drift    stroke max   5.8 mm  n 5.45  Fmax  40.1 N  side  16.0 N  tilt_end   0.3  drift   101 mm  set 4.3

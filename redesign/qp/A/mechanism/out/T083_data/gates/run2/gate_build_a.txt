@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\qp\A\cad\build_a.py", line 35, in <module>
+    gi.write()
+    ~~~~~~~~^^
+  File "C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\qp\A\cad\gen_interfaces.py", line 55, in write
+    with open(os.path.join(d, 'interfaces.json'), 'w', encoding='utf-8', newline='\n') as f:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [Errno 22] Invalid argument: 'C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\redesign\\qp\\A\\cad\\model\\wing\\interfaces.json'

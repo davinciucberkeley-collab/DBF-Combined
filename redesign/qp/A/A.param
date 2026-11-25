@@ -54,9 +54,10 @@ MIXING_GAIN,0.65
 # ---------------------------------------------------------------- 2 Motors and thrust
 # A: spin cap 0.90, REQUIRED (D-183): APC 9x4.5MR uncapped full duty is 13.0 A (14.3 A one motor at 1.50 kg) vs the 13 A / 180 s rating; at 0.90 one motor is 12.1 A phase / 10.9 A bus (prop_a.py).
 #   SITL: with this cap the hover cases in wind never need more than the numbers in SITL-A.md; K09-L lesson: the motor has no burst rating
-Q_M_SPIN_MAX,0.90
+# T-083: Q_M_SPIN_MAX 1.0: the X2216 needs no motor-current cap (one motor 20.1 A fresh vs the 24.9 A EST line); a 0.90 cap would cut the sag window to +4.6 % (no download, prop_a --sched at 1.912 kg). Was 0.90 (MN2212, A-P16).
+Q_M_SPIN_MAX,1.0
 # A: pack limit. sizing_a.py peak pack current 41 A (4 x 10.3 A table at 100 %); no limiter needed below that - EST
-Q_M_BAT_CURR_MAX,41
+Q_M_BAT_CURR_MAX,72
 Q_M_BAT_IDX,0
 Q_M_BAT_CURR_TC,1
 # 4S LiPo full / empty (3.3 V/cell). Thrust compensation by voltage is ON (K09-L R10 practice); SITL has no battery model so it is inert there
@@ -98,7 +99,7 @@ Q_A_RATE_Y_MAX,90
 #   lag of the motor, gyro and D filters turns the 12-15 Hz mode into a pole). Lower P, D and LESS lag restore it (pitch 15 / 0.002 / FLTD 40 + gyro 60: min gain margin 2.8; roll 0.20 / 0.003 / 32 + gyro 60: 2.5).
 #   D-191 (CLAIMS-FIX): with the tap-test tolerance +-20 % on the cage modes the 0.15 / 0.002 / 40 set had pitch GM 1.56-1.64 (< 2). Pitch P 0.12 / D 0.0012 / FLTD 60 (gyro 60 kept): GM 2.33 over every corner, damping, thrust scale and mode shift of 0.8-1.2 (sitl/fu_cage.py; structures/iter3_run.md); rigid crossover 2.2 Hz (was 2.6), PM 54 deg (was 56), Ms 2.2 (was 2.7).
 #   QP-4 / D-186: the FC stays on the wing-centre plate as drawn, HARD-MOUNTED (thin foam tape), NOT on the 5 mm gel pads (their stiffness is unknown; a gel mode could sit in the rate band or on hover 1P). Gel only if its frequency is measured at 40-70 Hz.
-#   REQUIRES the flight controller on the wing spar centre (C4's IMU node), not on the cage hub: with the IMU on the hub the yaw (8-10 Hz) and roll (29-35 Hz) loops are unstable at zeta <= 1 % with any of these settings.
+#   REQUIRES the flight controller hard-mounted on the wing spar (C4: spar centre; D-239/D-240: 75 mm left of centre, y -75 mm, to cut the 27-30 Hz wing-flap pickup: model result, T-091; unconfirmed until T-A-TAP / tether), not on the cage hub: with the IMU on the hub the yaw (8-10 Hz) and roll (29-35 Hz) loops are unstable at zeta <= 1 % with any of these settings.
 Q_A_RAT_RLL_P,0.20
 Q_A_RAT_RLL_I,0.25
 Q_A_RAT_RLL_D,0.003
@@ -158,17 +159,24 @@ Q_TRANS_FAIL,15
 Q_TRANS_FAIL_ACT,1
 
 # ---------------------------------------------------------------- 5 Fixed wing (A: cruise 17 m/s, Vs 11.76 / 12.19 m/s at 1.396 / 1.50 kg EST, MISSION.md s1; QP-3 SITL-FLIGHT.md)
-AIRSPEED_CRUISE,17
+# T-101 D-255 (AM-059): cruise 18 m/s (cuts the elevon cruise trim about 1 deg; with the pack at the aft end of its tray slot, CG 23.49 mm, pitch use 0.59 worst of the four C3 cases).
+#   Margin to the THR_MAX 68 ceiling shrinks: level speed at the ceiling 18.5-18.8 m/s (above); SITL A1 settled at 18.1-18.3 m/s (0.2-0.7 m/s headroom). Checked on the first cruise logs (duty, M8 / TP-11).
+AIRSPEED_CRUISE,18
 # integer parameter (14.5 read back as 14 in SITL). 1.3 x Vs = 14.3, so 15; K09-L kept MIN = cruise
 AIRSPEED_MIN,16
-AIRSPEED_MAX,18
+# D-255: 20 (was 18 = the new cruise); below the maximum level speed is not required, VD 24 m/s (A-P13) bounds it
+AIRSPEED_MAX,20
 AIRSPEED_STALL,12.2
 # QP-3: servo-gain scaling speed = cruise (was 15, left from the 15 m/s draft). Not tested separately in SITL (FBWA / CRUISE flew stable at 17 m/s with the stock gains, elevon peak 8.6 deg)
 SCALING_SPEED,17
 ROLL_LIMIT_DEG,45
 PTCH_LIM_MAX_DEG,20
 PTCH_LIM_MIN_DEG,-10
-RLL2SRV_RMAX,150
+# D-254 / D-255: roll-rate demand cap = the derived cruise roll requirement (MIL-F-8785C Class I L1 Cat B, 60 deg in 1.7 s, about 45 deg/s); was 150.
+#   TCONST 0.9 (ArduPlane default 0.5) trims the bank overshoot a little (SITL, one sample each: elevon 18.14 -> 17.36 deg; 60 deg change from the bank at the reversal command in 1.50 s,
+#   1.81 s from the commanded +30 to -30 deg). Flight tune at TP-11.
+RLL2SRV_RMAX,45
+RLL2SRV_TCONST,0.9
 # pitch-rate caps (K09-L: from its torsion mode and CL-F4-PTCH-RMAX-TURN). A: a 45 deg bank level turn at 15 m/s needs g tan(phi) sin(phi) / V = 26.5 deg/s
 #   (K09-L 17 m/s: 23.4), so UP 35 still covers it. No A structural basis for the cap yet (fin f1 / wing torsion not computed): keep the K09-L numbers
 PTCH2SRV_RMAX_UP,35
@@ -176,8 +184,11 @@ PTCH2SRV_RMAX_DN,20
 # QP-3 follow-up 1: climb attainable at 17 m/s at the THR_MAX 68 ceiling is 2.8-3.2 m/s fresh, 2.2-2.5 m/s at 13.2 V rest (EST); the cap follows the worst state
 TECS_CLMB_MAX,2
 TECS_SINK_MAX,2.5
+# T-101 / D-251 C3 control: pitch weights height over speed so TECS does not chop throttle after CRUISE handover; SITL pitch use at the 0.25 chord 0.554-0.651 (AR-017, T101_results.json C3 runs T101C3_*); default 1.0; verify on bench param dump, TP-19.
+TECS_SPDWEIGHT,0.5
 ARSPD_TYPE,1
-ARSPD_BUS,0
+# D-259 (2026-11-24): Kakute H743-Wing external I2C port = I2C2, ARSPD_BUS 2 (Holybro mapping, docs.holybro.com kakute-h743-wing, read 2026-11-24 by the AM-064 scout); was 0 (K09-L board). Confirm at the FC0 bench step (airspeed reads).
+ARSPD_BUS,2
 ARSPD_TUBE_ORDR,2
 ARSPD_USE,1
 RUDD_DT_GAIN,35
@@ -199,14 +210,18 @@ INS_LOG_BAT_OPT,5
 
 # ---------------------------------------------------------------- 6 Battery and failsafes (K09-L lessons)
 BATT_MONITOR,4
-BATT_VOLT_MULT,11.05
-BATT_AMP_PERVLT,64
+# D-259: Kakute H743-Wing built-in sensor scales 18.18 / 36.36 (https://docs.holybro.com/autopilot/kakute-h743-wing/power-monitor-and-scale.md, read 2026-11-24); were 11.05 / 64 (K09-L CoreWing values, A.param l.10).
+#   The Q_M_BAT_CURR_MAX 72 A limiter depends on this scale. Calibrate against a meter in TP-2 (current to >= 80 A).
+BATT_VOLT_MULT,18.18
+BATT_AMP_PERVLT,36.36
 # A: one Tattu 2300 mAh 4S 75C pack in flight (D-183b: the 2300, not the CNHL 3000; mission_gate_a.py: 24.5 Wh usable of 34.0 Wh). Two packs are bought, flown one at a time
-BATT_CAPACITY,2300
-# remaining-capacity triggers: usable = 0.90 worn-pack floor x 0.80 (20 % reserve) = 72 % of 2300 = 1656 mAh, so BATT_LOW fires at 2300 - 1656 = 644, set 650 mAh left (28 %).
+BATT_CAPACITY,2800
+# T-083: Q_M_BAT_CURR_MAX 72 A = XT90 90 A / 1.25 (A-P16); four X2216 V3 on the APC 9x4.5MR draw 73 A at full duty on a fresh pack (prop_a.py EST), so it binds only there (duty 0.993).
+# T-083: BATT_CAPACITY 2800 (O4b RDQ 2800 pack; was 2300 stale). BATT_LOW_MAH 790 = 2800 - 0.72 x 2800 (784, rounded up); BATT_CRT_MAH 420 = 345 x 2800 / 2300.
+# remaining-capacity triggers (was, 2300 pack): usable = 0.90 worn-pack floor x 0.80 (20 % reserve) = 72 % of 2300 = 1656 mAh, so BATT_LOW fires at 2300 - 1656 = 644, set 650 mAh left (28 %).
 #   That budget covers hover 180 s incl the 40 s go-around, two transitions, climb and 4.71 min of cruise at 1.396 kg (MISSION.md s4) (3.41 min needed). Critical at 15 % = 345 mAh
-BATT_LOW_MAH,650
-BATT_CRT_MAH,345
+BATT_LOW_MAH,790
+BATT_CRT_MAH,420
 BATT_LOW_VOLT,14.4
 BATT_CRT_VOLT,14.0
 BATT_FS_VOLTSRC,1
@@ -262,4 +277,10 @@ FENCE_ALT_MAX,110
 FENCE_RADIUS,240
 FENCE_MARGIN,10
 AHRS_ORIENTATION,0
-# IMU / GPS / compass offsets: "-" for A (no CAD position yet); the K09-L values do not apply
+# IMU offset (T-092, D-239): FC hard-mounted 75 mm off the wing centre, left side. Board centre taken as the IMU position (the IMU chip position on the Kakute H743-Wing is "-", not published: +-10 mm EST).
+# Body frame x forward (= -x CAD, LE side), y right (= +y CAD, servo R), z down (= -z CAD), relative to the CAD CG (sitl/cad_mass.json, 2026-11-23: x 22.05 mm aft of the LE, y -3.32 mm, z 6.56 mm; board centre x 47.0, y -75.0, z 17.68 mm, redesign/qp/A/cad/amodel/electrical.py FC_*).
+# ArduPilot reference point of INS_POS: assumed relative to the CG (ArduPilot parameter text not re-read this session: verify against the firmware version before flight). Re-measure with the as-built CG (T-A-CG-BREADBOARD).
+INS_POS1_X,-0.0250
+INS_POS1_Y,-0.0717
+INS_POS1_Z,-0.0111
+# GPS / compass offsets: "-" (not set for A; the K09-L values do not apply)

@@ -19,24 +19,25 @@
     "ship": "P:cost.ship_usd",
     "bump": "P:cost.bump",
     "tubes": "P:cost.reserve_tube_ids",
+    "rship": "P:cost.reserve_ship_usd",
     "budget": "P:req.budget_usd"
    },
    "outputs": {
-    "total_usd": 1779.4666375000002,
-    "total_30_usd": 1899.9539012500002,
-    "margin_usd": 220.53336249999984,
-    "margin_30_usd": 100.04609874999983,
-    "reserve_usd": 327.4303875,
-    "shipping_usd": 55.13
+    "total_usd": 1939.1716625000001,
+    "total_30_usd": 2029.67643875,
+    "margin_usd": 60.82833749999986,
+    "margin_30_usd": -29.67643874999999,
+    "reserve_usd": 346.9446375,
+    "shipping_usd": 63.120000000000005
    },
    "input_values": {
     "rows": [
      [
       "P01",
       "propulsion",
-      "TMotor",
-      5.0,
-      46.9,
+      "RMRC",
+      4.0,
+      22.99,
       false
      ],
      [
@@ -58,9 +59,9 @@
      [
       "W01",
       "power",
-      "RMRC",
+      "RDQ",
       2.0,
-      37.09,
+      54.99,
       false
      ],
      [
@@ -107,7 +108,7 @@
       "W07",
       "power",
       "RMRC",
-      1.0,
+      2.0,
       3.96,
       false
      ],
@@ -148,7 +149,7 @@
       "avionics",
       "RMRC",
       1.0,
-      95.98,
+      129.01,
       false
      ],
      [
@@ -171,7 +172,7 @@
       "M01",
       "mechanisms",
       "RMRC",
-      3.0,
+      2.0,
       13.99,
       false
      ],
@@ -188,7 +189,7 @@
       "airframe",
       "Local",
       1.0,
-      70.0,
+      45.0,
       true
      ],
      [
@@ -212,31 +213,31 @@
       "airframe",
       "RMRC",
       1.0,
-      15.34,
-      true
+      15.36,
+      false
      ],
      [
       "R14",
       "airframe",
       "RMRC",
       1.0,
-      0.0,
-      true
+      2.3,
+      false
      ],
      [
       "R10",
       "airframe",
       "RMRC",
       1.0,
-      4.4,
+      8.5,
       false
      ],
      [
       "R03",
       "airframe",
-      "Prusa",
+      "Amazon",
       1.0,
-      23.99,
+      12.99,
       false
      ],
      [
@@ -244,7 +245,7 @@
       "airframe",
       "Amazon",
       1.0,
-      20.0,
+      10.0,
       true
      ],
      [
@@ -276,7 +277,7 @@
       "ground_test",
       "Amazon",
       1.0,
-      50.95,
+      45.15,
       true
      ],
      [
@@ -300,24 +301,8 @@
       "ground_test",
       "Amazon",
       1.0,
-      25.0,
-      true
-     ],
-     [
-      "B01",
-      "ground_test",
-      "RMRC",
-      1.0,
-      15.99,
-      false
-     ],
-     [
-      "B02",
-      "ground_test",
-      "RMRC",
-      1.0,
       12.99,
-      false
+      true
      ],
      [
       "B03",
@@ -334,14 +319,6 @@
       1.0,
       15.0,
       true
-     ],
-     [
-      "B05",
-      "ground_test",
-      "SparkFun",
-      1.0,
-      0.0,
-      false
      ],
      [
       "R11",
@@ -366,34 +343,170 @@
       1.0,
       6.0,
       true
+     ],
+     [
+      "T1",
+      "airframe",
+      "Zoro",
+      1.0,
+      43.29,
+      false
+     ],
+     [
+      "T2",
+      "airframe",
+      "Amazon",
+      1.0,
+      15.98,
+      false
+     ],
+     [
+      "T3",
+      "airframe",
+      "Wicks",
+      3.0,
+      6.46,
+      false
+     ],
+     [
+      "T4",
+      "airframe",
+      "USComposites",
+      1.0,
+      20.2,
+      false
+     ],
+     [
+      "T5",
+      "airframe",
+      "RMRC",
+      2.0,
+      2.02,
+      false
+     ],
+     [
+      "T6",
+      "ground_test",
+      "Amazon",
+      1.0,
+      14.99,
+      false
+     ],
+     [
+      "T7",
+      "ground_test",
+      "Amazon",
+      1.0,
+      23.79,
+      false
+     ],
+     [
+      "T8",
+      "ground_test",
+      "Amazon",
+      1.0,
+      24.69,
+      false
+     ],
+     [
+      "T9",
+      "ground_test",
+      "Amazon",
+      1.0,
+      13.99,
+      false
+     ],
+     [
+      "T10",
+      "ground_test",
+      "Local",
+      1.0,
+      8.0,
+      true
+     ],
+     [
+      "R15",
+      "airframe",
+      "Carbonwebshop",
+      1.0,
+      50.09,
+      false
+     ],
+     [
+      "T11",
+      "airframe",
+      "Zoro",
+      1.0,
+      33.69,
+      false
+     ],
+     [
+      "T12",
+      "airframe",
+      "USComposites",
+      1.0,
+      4.9,
+      false
+     ],
+     [
+      "W10",
+      "power",
+      "RMRC",
+      1.0,
+      12.99,
+      false
      ]
     ],
     "tax": 0.1025,
     "faa": 5.0,
     "ship": [
      [
-      "RMRC",
-      15.0
-     ],
-     [
-      "TMotor",
+      "Alcobra",
       10.71
      ],
      [
       "Amazon",
-      10.71
+      0.0
+     ],
+     [
+      "Carbonwebshop",
+      25.0
+     ],
+     [
+      "Local",
+      0.0
      ],
      [
       "Prusa",
       10.71
      ],
      [
+      "RDQ",
+      10.71
+     ],
+     [
+      "RMRC",
+      0.0
+     ],
+     [
       "SparkFun",
       8.0
      ],
      [
-      "Local",
+      "TMotor",
       0.0
+     ],
+     [
+      "USComposites",
+      10.71
+     ],
+     [
+      "Wicks",
+      10.71
+     ],
+     [
+      "Zoro",
+      5.99
      ]
     ],
     "bump": 0.3,
@@ -401,7 +514,13 @@
      "R02",
      "R08",
      "R09",
-     "R10"
+     "R10",
+     "R15"
+    ],
+    "rship": [
+     10.71,
+     15.0,
+     10.71
     ],
     "budget": 2000.0
    }
@@ -409,43 +528,9 @@
   {
    "id": "CL-A-COST-TOTAL",
    "type": "claim",
-   "title": "BOM total incl. tax, shipping, FAA and crash reserve",
+   "title": "BOM total incl. tax, shipping, FAA and crash reserve (by its definition, AM-018)",
    "calc": "CALC-A-COST",
    "output": "total_usd",
-   "unit": "USD",
-   "limit": {
-    "op": "<=",
-    "ref": "P:req.g7_total_usd"
-   },
-   "verifies": [
-    "A-U1"
-   ],
-   "how": "python -I qp/A/bom_a.py (reads BOM-A.csv): $1,779.47; gate G7 total <= $1,800. 16 of 42 lines are unverified (U / EST).",
-   "value": 1779.4666375000002
-  },
-  {
-   "id": "CL-A-COST-MARGIN30",
-   "type": "claim",
-   "title": "Margin to $2,000 if the unverified lines run 30 % over",
-   "calc": "CALC-A-COST",
-   "output": "margin_30_usd",
-   "unit": "USD",
-   "limit": {
-    "op": ">=",
-    "ref": "P:req.g7_margin_usd"
-   },
-   "verifies": [
-    "A-U1"
-   ],
-   "how": "python -I qp/A/bom_a.py: +$100.05 at +30 %; gate G7 margin >= $100. The margin has 5 cents of slack: any rise in the EST lines beyond their +30 % allowance takes it under $100.",
-   "value": 100.04609874999983
-  },
-  {
-   "id": "CL-A-COST-BUDGET",
-   "type": "claim",
-   "title": "BOM total with the unverified lines +30 % against the $2,000 budget",
-   "calc": "CALC-A-COST",
-   "output": "total_30_usd",
    "unit": "USD",
    "limit": {
     "op": "<=",
@@ -454,8 +539,34 @@
    "verifies": [
     "A-U1"
    ],
-   "how": "python -I qp/A/bom_a.py; Makers Pass outside the budget (user, memory).",
-   "value": 1899.9539012500002
+   "how": "python -I qp/A/bom_a.py (reads BOM-A.csv): $1,999.12, margin +$0.88 (2026-11-22). AM-013: the only budget gate is the total incl. crash reserve <= $2,000.",
+   "value": 1939.1716625000001
+  },
+  {
+   "id": "CL-A-COST-MARGIN30",
+   "type": "claim",
+   "title": "Margin to $2,000 if the unverified lines run 30 % over (information only, AM-013)",
+   "calc": "CALC-A-COST",
+   "output": "margin_30_usd",
+   "unit": "USD",
+   "verifies": [
+    "A-U1"
+   ],
+   "how": "python -I qp/A/bom_a.py; the board G7 rule (margin >= $100 at +30 %) is information only since AM-013.",
+   "value": -29.67643874999999
+  },
+  {
+   "id": "CL-A-COST-BUDGET",
+   "type": "claim",
+   "title": "BOM total with the unverified lines +30 % (information only, AM-013)",
+   "calc": "CALC-A-COST",
+   "output": "total_30_usd",
+   "unit": "USD",
+   "verifies": [
+    "A-U1"
+   ],
+   "how": "python -I qp/A/bom_a.py; information only since AM-013; Makers Pass outside the budget (user, memory).",
+   "value": 2029.67643875
   },
   {
    "id": "CALC-A-SCHED",
@@ -588,7 +699,7 @@
     "box": [
      0.9,
      0.5,
-     0.39
+     0.394
     ],
     "lim": [
      1.2,
@@ -624,7 +735,7 @@
    "title": "Stored result: Part overlaps deeper than the tolerance (neutral, +-20, +-21 deg)",
    "script": "redesign/qp/A/proofs/claims_a3_program.py",
    "function": "read_value",
-   "equation": "count of hits with depth > tolerance in cad/out/report_pose20.json and report_pose21.json; read, not re-run",
+   "equation": "count of hits with depth > tolerance in cad/out/report_d212r3_pose20.json and report_d212r3_pose21.json; read, not re-run",
    "inputs": {
     "v": "P:cad3d.n_over_tol"
    },
@@ -666,15 +777,15 @@
    "title": "Stored result: Deepest part overlap at any reachable pose",
    "script": "redesign/qp/A/proofs/claims_a3_program.py",
    "function": "read_value",
-   "equation": "largest depth_mm over the reachable poses in the stored reports; read, not re-run",
+   "equation": "largest depth_mm over the reachable poses in report_d212r3_pose21.json and report_d212r3_pose20.json; read, not re-run",
    "inputs": {
     "v": "P:cad3d.max_depth_mm"
    },
    "outputs": {
-    "v": 0.042
+    "v": 0.034
    },
    "input_values": {
-    "v": 0.042
+    "v": 0.034
    }
   },
   {
@@ -699,8 +810,8 @@
     "HWC-001",
     "HWC-003"
    ],
-   "how": "collide_a.py report (D-194): the only hits under the 0.05 mm gate are the two balance horn tabs touching their stop bosses at the +21 deg stop (0.042 mm, WNG-007 on WNG-008, a designed contact) and one M2 nut on its screw shank (0.034 mm, HWC-003 on HWC-001); +-22 deg is past the stop and is not a reachable pose.",
-   "value": 0.042
+   "how": "collide_a.py report after D-212 rev 3 (report_d212r3_pose21.json, review r3 m-9): ten static hits, all under the 0.05 mm gate, the deepest one M2 nut on its screw shank (0.034 mm, HWC-003 on HWC-001); the +-21 deg poses show none (the 0.042 mm balance-tab contact of the pre-D-212 report_pose21.json is gone). The +-20 deg poses (the commanded endpoints, BUILD D5b) are read from report_d212r3_pose20.json (rev 3, rerun 2026-11-19, 0 hits, static identical); +-22 deg is past the stop and is not a reachable pose.",
+   "value": 0.034
   },
   {
    "id": "CALC-A-WIRE-ENDS-READ",
@@ -733,7 +844,7 @@
    "verifies": [
     "A-U4"
    ],
-   "how": "collide_a.py wire_ends check (41 strands).",
+   "how": "collide_a.py wire_ends check (strands per wire_inventory.json).",
    "value": 0
   },
   {
@@ -801,7 +912,7 @@
    "verifies": [
     "A-U4"
    ],
-   "how": "python -I qp/A/cad/a_assembly.py: 28 of 28 steps, 0 blocked, 0 unsupported, no wire laid before its ends.",
+   "how": "python -I qp/A/cad/a_assembly.py: 0 blocked, 0 unsupported, no wire laid before its ends (T-099 gates record 2026-11-23: 66 steps, 59 with parts plus 7 marker steps).",
    "value": 59
   },
   {
@@ -815,10 +926,10 @@
     "v": "P:cad3d.assy_parts_placed"
    },
    "outputs": {
-    "v": 113
+    "v": 129
    },
    "input_values": {
-    "v": 113
+    "v": 129
    }
   },
   {
@@ -835,8 +946,8 @@
    "verifies": [
     "A-U4"
    ],
-   "how": "a_assembly.py: 78 of 78 parts placed, none missing from the sequence.",
-   "value": 113
+   "how": "a_assembly.py: 129 of 129 parts placed (T-099 gates record 2026-11-23), none missing from the sequence.",
+   "value": 129
   }
  ]
 }

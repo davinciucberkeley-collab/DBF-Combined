@@ -1,0 +1,93 @@
+fillet: sleeve B, 10 junction edges at r 2.0 mm
+fillet: sleeve A, 13 junction edges at r 1.5 mm
+hub block volume 16878 mm3 = 21.44 g PETG
+chol flag 0, 110.4 s, nnz(R) 2010 M
+solved 223.8 s, residual 3.3e-10 
+relative residual per load case: 2.2e-10 3.5e-10 3.5e-10 2.3e-11 1.4e-11 1.5e-11 2.1e-10 2.8e-10 3.6e-10 2.3e-11 1.4e-11 1.5e-11 1.8e-10 2.4e-10 3.2e-10 2.2e-11 1.4e-11 1.5e-11 1.8e-10 3.0e-10 3.3e-10 2.2e-11 1.4e-11 1.6e-11
+equilibrium max error 2.3e-10
+mesh 375926 elements, 1748259 free dof, hub block 21.44 g, 441 s
+landing combos: 301
+LANDING RB {
+ "whole hub": {
+  "p99_MPa": 9.585344179569352,
+  "p99_case": "hard 10 wide + drift .5 y@342",
+  "max_MPa": 169.44667399707106,
+  "max_case": "hard 10 wide + drift .5 y@342",
+  "RF_p99": 0.9676608523469108,
+  "RF_max_singular": 0.05473912293492941,
+  "allow_MPa": 9.27536231884058
+ },
+ "aft of block face (D-209 \"bridge boss\" definition)": {
+  "p99_MPa": 8.507623553465422,
+  "p99_case": "hard 10 wide + drift .5 y@342",
+  "max_MPa": 169.44667399707106,
+  "max_case": "hard 10 wide + drift .5 y@342",
+  "RF_p99": 1.0902412713198193,
+  "RF_max_singular": 0.05473912293492941,
+  "allow_MPa": 9.27536231884058
+ },
+ "last 12 mm before the bore mouth (collar in C6; block in base)": {
+  "p99_MPa": 4.20702744695499,
+  "p99_case": "hard 7/7 combo@345",
+  "max_MPa": 18.064170095517376,
+  "max_case": "hard 7/7 combo@345",
+  "RF_p99": 2.204730640764896,
+  "RF_max_singular": 0.5134673926228286,
+  "allow_MPa": 9.27536231884058
+ },
+ "collar extension only (x > 24)": {
+  "p99_MPa": 4.20408252498685,
+  "p99_case": "hard 7/7 combo@345",
+  "max_MPa": 18.064170095517376,
+  "max_case": "hard 7/7 combo@345",
+  "RF_p99": 2.2062750347341464,
+  "RF_max_singular": 0.5134673926228286,
+  "allow_MPa": 9.27536231884058
+ }
+}
+LANDING RBx1.5 {
+ "whole hub": {
+  "p99_MPa": 14.378016269354033,
+  "p99_case": "hard 10 wide + drift .5 y@342",
+  "max_MPa": 254.17001099560662,
+  "max_case": "hard 10 wide + drift .5 y@342",
+  "RF_p99": 0.6451072348979403,
+  "RF_max_singular": 0.036492748623286275,
+  "allow_MPa": 9.27536231884058
+ },
+ "aft of block face (D-209 \"bridge boss\" definition)": {
+  "p99_MPa": 12.76143533019813,
+  "p99_case": "hard 10 wide + drift .5 y@342",
+  "max_MPa": 254.17001099560662,
+  "max_case": "hard 10 wide + drift .5 y@342",
+  "RF_p99": 0.726827514213213,
+  "RF_max_singular": 0.036492748623286275,
+  "allow_MPa": 9.27536231884058
+ },
+ "last 12 mm before the bore mouth (collar in C6; block in base)": {
+  "p99_MPa": 6.310541170432485,
+  "p99_case": "hard 7/7 combo@345",
+  "max_MPa": 27.09625514327606,
+  "max_case": "hard 7/7 combo@345",
+  "RF_p99": 1.4698204271765976,
+  "RF_max_singular": 0.3423115950818858,
+  "allow_MPa": 9.27536231884058
+ },
+ "collar extension only (x > 24)": {
+  "p99_MPa": 6.306123787480269,
+  "p99_case": "hard 7/7 combo@345",
+  "max_MPa": 27.09625514327606,
+  "max_case": "hard 7/7 combo@345",
+  "RF_p99": 1.470850023156099,
+  "RF_max_singular": 0.3423115950818858,
+  "allow_MPa": 9.27536231884058
+ }
+}
+landing tube/bond RB {"hub_peak": 169.44667399707106, "hub_zones_worst_combo": {"bridge boss (aft of the block)": {"max": 169.44667399707106, "p99": 8.507623553465422, "p95": 5.432764703406874}, "centre block / crossing": {"max": 76.71990525206023, "p99": 11.937674392516664, "p95": 8.00829741837737}, "sleeves outside the block": {"max": 15.693565121542287, "p99": 7.372990779440595, "p95": 5.369783667781897}}, "hub_peak_at": [14.03, -5.8, 3.26], "hub_zones_envelope": {"bridge boss (aft of the block)": {"max": 169.44667399707106, "p99": 8.507623553465422}, "centre block / crossing": {"max": 76.71990525206023, "p99": 11.937674392516664}, "sleeves outside the block": {"max": 17.222532678995652, "p99": 7.372990779440595}}, "tube_A": {"axial": 137.65981505963188, "axial_at_s": 1.5768036744161977, "hoop": 21.089647920095764, "shear": 22.20818140148895, "shear_at_s": 9.521960664748988}, "tube_B": {"axial": 162.54532
+landing tube/bond x1.5 {"hub_peak": 254.17001099560662, "hub_zones_worst_combo": {"bridge boss (aft of the block)": {"max": 254.17001099560662, "p99": 12.76143533019813, "p95": 8.14914705511031}, "centre block / crossing": {"max": 115.07985787809034, "p99": 17.906511588774986, "p95": 12.01244612756605}, "sleeves outside the block": {"max": 23.54034768231344, "p99": 11.059486169160886, "p95": 8.054675501672849}}, "hub_peak_at": [14.03, -5.8, 3.26], "hub_zones_envelope": {"bridge boss (aft of the block)": {"max": 254.17001099560662, "p99": 12.76143533019813}, "centre block / crossing": {"max": 115.07985787809034, "p99": 17.906511588774986}, "sleeves outside the block": {"max": 25.83379901849347, "p99": 11.059486169160886}}, "tube_A": {"axial": 206.48972258944784, "axial_at_s": 1.5768036744161977, "hoop": 31.634471880143643, "shear": 33.312272102233436, "shear_at_s": 9.521960664748988}, "tube_B": {"axial": 243.81
+F1 {"hub_peak": 34.719402796532016, "hub_zones_worst_combo": {"bridge boss (aft of the block)": {"max": 34.719402796532016, "p99": 2.5283522660105566, "p95": 1.544136357941434}, "centre block / crossing": {"max": 15.153110535827727, "p99": 3.1111289662233945, "p95": 2.135108851737781}, "sleeves outside the block": {"max": 5.27402159739311, "p99": 2.2781672335938565, "p95": 1.5829094320358739}}, "hub_peak_at": [14.03, -5.56, 3.45], "hub_zones_envelope": {"bridge boss (aft of the block)": {"max": 34.719402796532016, "p99": 2.8735683519961275}, "centre block / crossing": {"max": 15.153110535827727, "p99": 3.264201960340792}, "sleeves outside the block": {"max": 7.464966698394711, "p99": 2.89891004
+F2 {"hub_peak": 40.51982211682696, "hub_zones_worst_combo": {"bridge boss (aft of the block)": {"max": 40.51982211682696, "p99": 2.973544919031998, "p95": 1.8163353646473555}, "centre block / crossing": {"max": 17.677172702671605, "p99": 3.6631606190732464, "p95": 2.5177299468025263}, "sleeves outside the block": {"max": 6.2441013645242975, "p99": 2.687784351970456, "p95": 1.8672301749639602}}, "hub_peak_at": [14.03, -5.56, 3.45], "hub_zones_envelope": {"bridge boss (aft of the block)": {"max": 40.51982211682696, "p99": 3.3243063866610365}, "centre block / crossing": {"max": 17.677172702671605, "p99": 3.8135258562424146}, "sleeves outside the block": {"max": 8.676463275126373, "p99": 3.33553557
+S1 {"hub_peak": 47.78549117118754, "hub_zones_worst_combo": {"bridge boss (aft of the block)": {"max": 47.78549117118754, "p99": 4.1451637709008535, "p95": 2.7184373721938253}, "centre block / crossing": {"max": 25.97926671785485, "p99": 7.028732703567719, "p95": 5.154214957921825}, "sleeves outside the block": {"max": 14.333672566856038, "p99": 5.381265439494604, "p95": 3.639073780054658}}, "hub_peak_at": [14.03, -5.8, 3.26], "hub_zones_envelope": {"bridge boss (aft of the block)": {"max": 47.7854
+S2 {"hub_peak": 49.5202021541043, "hub_zones_worst_combo": {"bridge boss (aft of the block)": {"max": 49.5202021541043, "p99": 4.976065620549337, "p95": 3.6285214483341894}, "centre block / crossing": {"max": 22.06760217830751, "p99": 8.148697938385062, "p95": 5.172956568948165}, "sleeves outside the block": {"max": 11.904070240861625, "p99": 4.964255537164182, "p95": 2.9775270940283423}}, "hub_peak_at": [14.03, -5.8, 3.26], "hub_zones_envelope": {"bridge boss (aft of the block)": {"max": 49.520202
+S3 {"hub_peak": 11.408834604931295, "hub_zones_worst_combo": {"bridge boss (aft of the block)": {"max": 11.408834604931295, "p99": 1.4053762791997932, "p95": 1.0403697032641417}, "centre block / crossing": {"max": 4.796290396653733, "p99": 1.5843735745641347, "p95": 1.1039066036397103}, "sleeves outside the block": {"max": 4.731562701953209, "p99": 2.1037655907181736, "p95": 1.2691327687245157}}, "hub_peak_at": [14.02, -5.24, 3.93], "hub_zones_envelope": {"bridge boss (aft of the block)": {"max": 1
+done 2448 s

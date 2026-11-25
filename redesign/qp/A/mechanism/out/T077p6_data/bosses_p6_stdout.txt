@@ -1,0 +1,24 @@
+peak rigid-body |a_cg| over 23 cases x zeta x mu: 11.94 g (t077p6_demand.py)
+foam punch per boss: kz 0.135 MN/m, kh 0.120 MN/m (T-073: 0.21 / 0.12 with its own constants)
+| board | row | RF | basis |
+|---|---|---|---|
+| FC Kakute H743-Wing 28 g, 4 bosses 6x6 on the 25 | mount f_z 872 Hz / f_horizontal 659 Hz vs 304 Hz (A-P10(a) 1.2 x top 2P band) | 2.17 | EST |
+| FC Kakute H743-Wing 28 g, 4 bosses 6x6 on the 25 | landing RB x1.5 (n 17.9 g, F 4.9 N along x, lever 7.5 mm): foam bearing under one boss (dN 0.74 N, 6 x 6 mm punch, no skin spreading) | 2.33 | EST foam 103 kPa |
+| FC Kakute H743-Wing 28 g, 4 bosses 6x6 on the 25 | landing RB x1.5: boss base bond peel / tension (epoxy 2.0 MPa) | 45.16 | EST |
+| FC Kakute H743-Wing 28 g, 4 bosses 6x6 on the 25 | landing RB x1.5: M2 screw shear (FC: 4 screws; ESC held by tape + tie: not a screw row) | 431.37 | EST |
+| FC Kakute H743-Wing 28 g, 4 bosses 6x6 on the 25 | landing x1.97 (n 23.5 g, F 6.5 N along x, lever 7.5 mm): foam bearing under one boss (dN 0.97 N, 6 x 6 mm punch, no skin spreading) | 1.77 | EST foam 103 kPa |
+| FC Kakute H743-Wing 28 g, 4 bosses 6x6 on the 25 | landing x1.97: boss base bond peel / tension (epoxy 2.0 MPa) | 34.38 | EST |
+| FC Kakute H743-Wing 28 g, 4 bosses 6x6 on the 25 | landing x1.97: M2 screw shear (FC: 4 screws; ESC held by tape + tie: not a screw row) | 328.45 | EST |
+| FC Kakute H743-Wing 28 g, 4 bosses 6x6 on the 25 | landing x2.23 (n 26.6 g, F 7.3 N along x, lever 7.5 mm): foam bearing under one boss (dN 1.10 N, 6 x 6 mm punch, no skin spreading) | 1.56 | EST foam 103 kPa |
+| FC Kakute H743-Wing 28 g, 4 bosses 6x6 on the 25 | landing x2.23: boss base bond peel / tension (epoxy 2.0 MPa) | 30.37 | EST |
+| FC Kakute H743-Wing 28 g, 4 bosses 6x6 on the 25 | landing x2.23: M2 screw shear (FC: 4 screws; ESC held by tape + tie: not a screw row) | 290.16 | EST |
+| ESC SpeedyBee 4-in-1 20 g, 4 bosses 6x6 on the 2 | mount f_z 1031 Hz / f_horizontal 780 Hz vs 304 Hz (A-P10(a) 1.2 x top 2P band) | 2.56 | EST |
+| ESC SpeedyBee 4-in-1 20 g, 4 bosses 6x6 on the 2 | landing RB x1.5 (n 17.9 g, F 3.5 N along x, lever 7.4 mm): foam bearing under one boss (dN 0.65 N, 6 x 6 mm punch, no skin spreading) | 2.63 | EST foam 103 kPa |
+| ESC SpeedyBee 4-in-1 20 g, 4 bosses 6x6 on the 2 | landing RB x1.5: boss base bond peel / tension (epoxy 2.0 MPa) | 51.06 | EST |
+| ESC SpeedyBee 4-in-1 20 g, 4 bosses 6x6 on the 2 | landing RB x1.5: M2 screw shear (FC: 4 screws; ESC held by tape + tie: not a screw row) | - | EST |
+| ESC SpeedyBee 4-in-1 20 g, 4 bosses 6x6 on the 2 | landing x1.97 (n 23.5 g, F 4.6 N along x, lever 7.4 mm): foam bearing under one boss (dN 0.86 N, 6 x 6 mm punch, no skin spreading) | 2.00 | EST foam 103 kPa |
+| ESC SpeedyBee 4-in-1 20 g, 4 bosses 6x6 on the 2 | landing x1.97: boss base bond peel / tension (epoxy 2.0 MPa) | 38.88 | EST |
+| ESC SpeedyBee 4-in-1 20 g, 4 bosses 6x6 on the 2 | landing x1.97: M2 screw shear (FC: 4 screws; ESC held by tape + tie: not a screw row) | - | EST |
+| ESC SpeedyBee 4-in-1 20 g, 4 bosses 6x6 on the 2 | landing x2.23 (n 26.6 g, F 5.2 N along x, lever 7.4 mm): foam bearing under one boss (dN 0.97 N, 6 x 6 mm punch, no skin spreading) | 1.77 | EST foam 103 kPa |
+| ESC SpeedyBee 4-in-1 20 g, 4 bosses 6x6 on the 2 | landing x2.23: boss base bond peel / tension (epoxy 2.0 MPa) | 34.35 | EST |
+| ESC SpeedyBee 4-in-1 20 g, 4 bosses 6x6 on the 2 | landing x2.23: M2 screw shear (FC: 4 screws; ESC held by tape + tie: not a screw row) | - | EST |

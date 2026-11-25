@@ -1,0 +1,21 @@
+# T-076c step 2: D-1 modal transient.  Category: dynamics (beam-frame FE modal superposition, exact integrator, one-way coupling to the rigid-body landing sim).  Mass 1.64 kg.
+
+## frame: bridge asbuilt, corner nom: 540 dofs, 6 rigid modes, FE mass 1640.0 g; lowest flexible modes (Hz): 11.1, 22.0, 25.7, 26.5, 29.5, 34.3, 34.5, 37.5, 37.5, 39.5, 42.8, 43.7
+zeta 1 %: hub Mz env dyn 5.92 / FE-rigid 4.00 / sim RB 7.75 N m -> DAF env 0.76 (vs sim RB), 1.48 (vs FE rigid); case-max 0.76 / 1.48.  Bridge |(My,Mz)| at mouth env dyn 7.31 / FE-rigid 3.02 / sim RB(total wrench) 8.16 -> DAF env 0.90 (vs sim RB), 2.42 (vs FE rigid); case-max 0.51 / 2.54; RF_bridge(dyn) 4.62
+| case | sim RB Mz (N m) | FE rigid Mz | dyn Mz | DAF vs sim RB | bridge |(My,Mz)| sim RB / FE rigid / dyn | arm-root bending peak (4 arms, dyn, N m) | pad stroke max mm | bottoms (> 20 mm) |
+|---|---|---|---|---|---|---|---|---|
+| hard level | 7.75 | 4.00 | 5.92 | 0.76 | 8.16 / 3.02 / 4.17 | 5.04 / 5.04 / 5.09 / 5.51 | 9.1 | no |
+| hard 10 narrow | 2.21 | 1.20 | 2.56 | 1.16 | 3.18 / 2.31 / 5.80 | 5.32 / 5.84 / 4.80 / 5.56 | 15.8 | no |
+| hard 10 narrow neg | 2.89 | 1.67 | 4.70 | 1.63 | 3.92 / 2.88 / 7.31 | 6.04 / 5.69 / 6.61 / 5.91 | 15.4 | no |
+frame wall 2 s
+
+## frame: bridge rec, corner nom: 540 dofs, 6 rigid modes, FE mass 1640.0 g; lowest flexible modes (Hz): 9.6, 21.0, 25.0, 25.7, 29.2, 29.3, 33.9, 37.5, 37.5, 39.4, 42.8, 43.3
+zeta 1 %: hub Mz env dyn 3.65 / FE-rigid 3.99 / sim RB 7.75 N m -> DAF env 0.47 (vs sim RB), 0.91 (vs FE rigid); case-max 0.47 / 0.91.  Bridge |(My,Mz)| at mouth env dyn 6.35 / FE-rigid 2.90 / sim RB(total wrench) 8.16 -> DAF env 0.78 (vs sim RB), 2.19 (vs FE rigid); case-max 0.29 / 2.47; RF_bridge(dyn) 5.32
+| case | sim RB Mz (N m) | FE rigid Mz | dyn Mz | DAF vs sim RB | bridge |(My,Mz)| sim RB / FE rigid / dyn | arm-root bending peak (4 arms, dyn, N m) | pad stroke max mm | bottoms (> 20 mm) |
+|---|---|---|---|---|---|---|---|---|
+| hard level | 7.75 | 3.99 | 3.65 | 0.47 | 8.16 / 2.90 / 2.34 | 5.02 / 4.85 / 5.05 / 4.89 | 9.1 | no |
+| hard 10 narrow | 2.21 | 1.20 | 1.92 | 0.87 | 3.18 / 2.28 / 5.65 | 5.93 / 5.87 / 5.81 / 5.61 | 15.8 | no |
+| hard 10 narrow neg | 2.89 | 1.67 | 3.05 | 1.06 | 3.92 / 2.85 / 6.35 | 6.29 / 5.14 / 6.31 / 5.18 | 15.4 | no |
+frame wall 4 s
+
+done 4 s

@@ -1,0 +1,2692 @@
+{
+ "task": "T-035 / R-INT-02",
+ "name": "pack-3p3Ah",
+ "adapter": "concept_a",
+ "started": "20261123-141617",
+ "wall_s": 8.7,
+ "command": "python -I tools/design_loop/cli.py run --set pack_capacity_ah=3.3 --name pack-3p3Ah",
+ "changes": [
+  {
+   "change": "pack_capacity_ah",
+   "old": 2.8,
+   "new": 3.3,
+   "unit": "Ah",
+   "note": "pack mass 270.0 -> 318.21 g (linear in Ah, EST); PWR-001, mass.pack_g and the itemised pack row updated; BOM price and pack size NOT updated"
+  },
+  {
+   "change": "mass roll-up",
+   "old": 1640.98,
+   "new": 1689.19,
+   "unit": "g",
+   "note": "CG x 22.000 -> 20.575 mm (lateral CG not updated); deltas added to mass.basic_cad_kg, mass.cg_x_mm"
+  }
+ ],
+ "steps": {
+  "baseline": [
+   {
+    "step": "gen_params_a",
+    "cmd": "python -I C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\tools\\design_loop\\runs\\20261123-141617-pack-3p3Ah\\work\\redesign\\qp\\A\\proofs\\gen_params_a.py",
+    "exit": 0,
+    "wall_s": 0.24,
+    "tail": [
+     "wrote C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\tools\\design_loop\\runs\\20261123-141617-pack-3p3Ah\\work\\redesign\\qp\\A\\params-A.json"
+    ]
+   },
+   {
+    "step": "merge_check",
+    "cmd": "python -I C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\tools\\design_loop\\runs\\20261123-141617-pack-3p3Ah\\work\\redesign\\interfaces\\merge_check.py --root C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\tools\\design_loop\\runs\\20261123-141617-pack-3p3Ah\\work\\redesign\\qp\\A\\cad\\model --out C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\tools\\design_loop\\runs\\20261123-141617-pack-3p3Ah\\work\\mc_out --budget C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\tools\\design_loop\\runs\\20261123-141617-pack-3p3Ah\\work\\redesign\\qp\\A\\cad\\model\\mass_budget.json",
+    "exit": 1,
+    "wall_s": 0.38,
+    "tail": [
+     "merge_check: 10 sources, 131 parts, 46 connection types, 196 edges; total 1641 g, CG 0.022, -0.003, 0.007",
+     "  ERROR mass         TOTAL          aircraft 1641 g > limit 1500 g",
+     "merge_check: FAIL (1 errors, 0 warnings); wrote ../mc_out/{interfaces.json,REPORT.md}"
+    ]
+   },
+   {
+    "step": "claims_a0_base",
+    "cmd": "python -I C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\tools\\design_loop\\runs\\20261123-141617-pack-3p3Ah\\work\\redesign\\qp\\A\\proofs\\claims_a0_base.py",
+    "exit": 0,
+    "wall_s": 0.22,
+    "tail": [
+     "redesign/qp/A/proofs/claims.a0_base.json: 0 claims"
+    ]
+   },
+   {
+    "step": "claims_a1_flight",
+    "cmd": "python -I C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\tools\\design_loop\\runs\\20261123-141617-pack-3p3Ah\\work\\redesign\\qp\\A\\proofs\\claims_a1_flight.py",
+    "exit": 0,
+    "wall_s": 0.53,
+    "tail": [
+     "  CL-A-TIPOVER                   31 deg   margin +3%",
+     "  CL-A-ROLL-141             106.9 deg/s   margin +19%",
+     "  CL-A-ROLL-GATE            106.4 deg/s   margin +18%",
+     "  CL-A-PITCH-USE                  0.575   margin +4%"
+    ]
+   },
+   {
+    "step": "claims_a2_struct",
+    "cmd": "python -I C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\tools\\design_loop\\runs\\20261123-141617-pack-3p3Ah\\work\\redesign\\qp\\A\\proofs\\claims_a2_struct.py",
+    "exit": 0,
+    "wall_s": 0.17,
+    "tail": [
+     "  CL-A-VIB-GM-SHIFT                1.05   margin -48%   FAILS",
+     "  CL-A-SERVO-FACTOR               1.556   margin +4%",
+     "  CL-A-SERVO-COLD                 1.585   margin +6%",
+     "  CL-A-SERVO-RATIO                2.629   margin +75%"
+    ]
+   },
+   {
+    "step": "claims_a3_program",
+    "cmd": "python -I C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\tools\\design_loop\\runs\\20261123-141617-pack-3p3Ah\\work\\redesign\\qp\\A\\proofs\\claims_a3_program.py",
+    "exit": 0,
+    "wall_s": 0.16,
+    "tail": [
+     "  CL-A-WIRE-ENDS                      0   margin +0 abs",
+     "  CL-A-WIRE-FOLDS                     0   margin +0 abs",
+     "  CL-A-ASSY-STEPS                    59   margin +0%",
+     "  CL-A-ASSY-PARTS                   129   margin +0%"
+    ]
+   },
+   {
+    "step": "build_graph --strict",
+    "cmd": "python -I C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\tools\\design_loop\\runs\\20261123-141617-pack-3p3Ah\\work\\redesign\\proofs\\build_graph.py --root C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\tools\\design_loop\\runs\\20261123-141617-pack-3p3Ah\\work\\redesign\\qp\\A --out C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\tools\\design_loop\\runs\\20261123-141617-pack-3p3Ah\\work\\redesign\\qp\\A\\proofs\\out --dataset concept-a --strict",
+    "exit": 1,
+    "wall_s": 1.11,
+    "tail": [
+     "  ERROR: STRICT CL-A-ELEVON-TORSION-FOAM: FAILS: margin -487.8% (504.3 kPa vs <= 85.8 kPa)",
+     "  ERROR: STRICT CL-A-HORN-BEARING-STALL: FAILS: margin -83.2% (36.65 MPa vs <= 20 MPa)",
+     "  ERROR: STRICT CL-A-LINKAGE-FREEPLAY: FAILS: margin -28.0% (1.28 deg vs <= 1 deg)",
+     "  ERROR: STRICT CL-A-VIB-GM-SHIFT: FAILS: margin -47.5% (1.05 vs >= 2)"
+    ]
+   }
+  ],
+  "variant": [
+   {
+    "step": "gen_params_a",
+    "cmd": "python -I C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\tools\\design_loop\\runs\\20261123-141617-pack-3p3Ah\\work\\redesign\\qp\\A\\proofs\\gen_params_a.py",
+    "exit": 0,
+    "wall_s": 0.15,
+    "tail": [
+     "wrote C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\tools\\design_loop\\runs\\20261123-141617-pack-3p3Ah\\work\\redesign\\qp\\A\\params-A.json"
+    ]
+   },
+   {
+    "step": "merge_check",
+    "cmd": "python -I C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\tools\\design_loop\\runs\\20261123-141617-pack-3p3Ah\\work\\redesign\\interfaces\\merge_check.py --root C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\tools\\design_loop\\runs\\20261123-141617-pack-3p3Ah\\work\\redesign\\qp\\A\\cad\\model --out C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\tools\\design_loop\\runs\\20261123-141617-pack-3p3Ah\\work\\mc_out --budget C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\tools\\design_loop\\runs\\20261123-141617-pack-3p3Ah\\work\\redesign\\qp\\A\\cad\\model\\mass_budget.json",
+    "exit": 1,
+    "wall_s": 0.23,
+    "tail": [
+     "merge_check: 10 sources, 131 parts, 46 connection types, 196 edges; total 1689 g, CG 0.021, -0.003, 0.008",
+     "  ERROR mass         TOTAL          aircraft 1689 g > limit 1500 g",
+     "merge_check: FAIL (1 errors, 0 warnings); wrote ../mc_out/{interfaces.json,REPORT.md}"
+    ]
+   },
+   {
+    "step": "claims_a0_base",
+    "cmd": "python -I C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\tools\\design_loop\\runs\\20261123-141617-pack-3p3Ah\\work\\redesign\\qp\\A\\proofs\\claims_a0_base.py",
+    "exit": 0,
+    "wall_s": 0.16,
+    "tail": [
+     "redesign/qp/A/proofs/claims.a0_base.json: 0 claims"
+    ]
+   },
+   {
+    "step": "claims_a1_flight",
+    "cmd": "python -I C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\tools\\design_loop\\runs\\20261123-141617-pack-3p3Ah\\work\\redesign\\qp\\A\\proofs\\claims_a1_flight.py",
+    "exit": 0,
+    "wall_s": 0.4,
+    "tail": [
+     "  CL-A-TIPOVER                   31 deg   margin +3%",
+     "  CL-A-ROLL-141             106.9 deg/s   margin +19%",
+     "  CL-A-ROLL-GATE            106.4 deg/s   margin +18%",
+     "  CL-A-PITCH-USE                  0.575   margin +4%"
+    ]
+   },
+   {
+    "step": "claims_a2_struct",
+    "cmd": "python -I C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\tools\\design_loop\\runs\\20261123-141617-pack-3p3Ah\\work\\redesign\\qp\\A\\proofs\\claims_a2_struct.py",
+    "exit": 0,
+    "wall_s": 0.16,
+    "tail": [
+     "  CL-A-VIB-GM-SHIFT                1.05   margin -48%   FAILS",
+     "  CL-A-SERVO-FACTOR               1.556   margin +4%",
+     "  CL-A-SERVO-COLD                 1.585   margin +6%",
+     "  CL-A-SERVO-RATIO                2.629   margin +75%"
+    ]
+   },
+   {
+    "step": "claims_a3_program",
+    "cmd": "python -I C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\tools\\design_loop\\runs\\20261123-141617-pack-3p3Ah\\work\\redesign\\qp\\A\\proofs\\claims_a3_program.py",
+    "exit": 0,
+    "wall_s": 0.14,
+    "tail": [
+     "  CL-A-WIRE-ENDS                      0   margin +0 abs",
+     "  CL-A-WIRE-FOLDS                     0   margin +0 abs",
+     "  CL-A-ASSY-STEPS                    59   margin +0%",
+     "  CL-A-ASSY-PARTS                   129   margin +0%"
+    ]
+   },
+   {
+    "step": "build_graph --strict",
+    "cmd": "python -I C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\tools\\design_loop\\runs\\20261123-141617-pack-3p3Ah\\work\\redesign\\proofs\\build_graph.py --root C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\tools\\design_loop\\runs\\20261123-141617-pack-3p3Ah\\work\\redesign\\qp\\A --out C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\tools\\design_loop\\runs\\20261123-141617-pack-3p3Ah\\work\\redesign\\qp\\A\\proofs\\out --dataset concept-a --strict",
+    "exit": 1,
+    "wall_s": 0.99,
+    "tail": [
+     "  ERROR: STRICT CL-A-ELEVON-TORSION-FOAM: FAILS: margin -487.8% (504.3 kPa vs <= 85.8 kPa)",
+     "  ERROR: STRICT CL-A-HORN-BEARING-STALL: FAILS: margin -83.2% (36.65 MPa vs <= 20 MPa)",
+     "  ERROR: STRICT CL-A-LINKAGE-FREEPLAY: FAILS: margin -28.0% (1.28 deg vs <= 1 deg)",
+     "  ERROR: STRICT CL-A-VIB-GM-SHIFT: FAILS: margin -47.5% (1.05 vs >= 2)"
+    ]
+   }
+  ]
+ },
+ "baseline": {
+  "CL-A-MASS-PRED": {
+   "title": "Predicted take-off mass (CAD basic x growth + overrun)",
+   "value": 1.880671052,
+   "unit": "kg",
+   "limit": "<= 1.47",
+   "pass": false,
+   "margin": -0.2793680625850341,
+   "status": "UNVERIFIED",
+   "category": "rigid-body (static mass properties, algebra)"
+  },
+  "CL-A-MASS-ITEM": {
+   "title": "Predicted mass, itemised growth by maturity (cross-check)",
+   "value": 1.4474069999999999,
+   "unit": "kg",
+   "limit": "<= 1.47",
+   "pass": true,
+   "margin": 0.015369387755102099,
+   "status": "UNVERIFIED",
+   "category": "rigid-body (static mass properties, algebra)"
+  },
+  "CL-A-MASS-GATE-ROOM": {
+   "title": "Predicted mass against the 1.47 kg gate",
+   "value": 1.880671052,
+   "unit": "kg",
+   "limit": "<= 1.47",
+   "pass": false,
+   "margin": -0.2793680625850341,
+   "status": "UNVERIFIED",
+   "category": "rigid-body (static mass properties, algebra)"
+  },
+  "CL-A-MASS-USER": {
+   "title": "Predicted mass against the 25 kg user cap",
+   "value": 1.880671052,
+   "unit": "kg",
+   "limit": "<= 25.0",
+   "pass": true,
+   "margin": 0.92477315792,
+   "status": "UNVERIFIED",
+   "category": "rigid-body (static mass properties, algebra)"
+  },
+  "CL-A-CUTS-REQUIRED": {
+   "title": "EST cuts that must be real for <= 1.470 kg",
+   "value": 409.1237623053518,
+   "unit": "g",
+   "limit": "<= 41.6",
+   "pass": false,
+   "margin": -8.83470582464788,
+   "status": "UNVERIFIED",
+   "category": "rigid-body (static mass properties, algebra)"
+  },
+  "CL-A-STRUCT-MASS": {
+   "title": "Structure mass (CAD groups, with the EST cuts)",
+   "value": 483.6,
+   "unit": "g",
+   "limit": "<= 494.0",
+   "pass": true,
+   "margin": 0.021052631578947323,
+   "status": "UNVERIFIED",
+   "category": "rigid-body (static mass properties, algebra)"
+  },
+  "CL-A-CG": {
+   "title": "CG aft of the leading edge, CAD as drawn",
+   "value": 22.049361357237743,
+   "unit": "mm",
+   "limit": ">= 19.0",
+   "pass": true,
+   "margin": 0.16049270301251278,
+   "status": "CHECKED",
+   "category": "rigid-body (static mass properties, algebra)"
+  },
+  "CL-A-CG-HI": {
+   "title": "CG aft limit of the design band",
+   "value": 22.049361357237743,
+   "unit": "mm",
+   "limit": "<= 26.0",
+   "pass": true,
+   "margin": 0.15194764010624068,
+   "status": "CHECKED",
+   "category": "rigid-body (static mass properties, algebra)"
+  },
+  "CL-A-CG-TRIM-AFT": {
+   "title": "CG at the aft end of the pack trim travel",
+   "value": 23.694719618764392,
+   "unit": "mm",
+   "limit": "<= 28.5",
+   "pass": true,
+   "margin": 0.1686063291661617,
+   "status": "CHECKED",
+   "category": "rigid-body (static mass properties, algebra)"
+  },
+  "CL-A-CG-TRIM-FWD": {
+   "title": "CG at the forward end of the pack trim travel",
+   "value": 21.062146400321755,
+   "unit": "mm",
+   "limit": ">= 19.0",
+   "pass": true,
+   "margin": 0.10853402106956604,
+   "status": "CHECKED",
+   "category": "rigid-body (static mass properties, algebra)"
+  },
+  "CL-A-SM": {
+   "title": "Static margin at the CAD CG",
+   "value": 7.6125055684743925,
+   "unit": "% chord",
+   "limit": ">= 5.0",
+   "pass": true,
+   "margin": 0.5225011136948785,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-CG-LATERAL": {
+   "title": "Lateral CG offset (CAD)",
+   "value": 3.3228905897695276,
+   "unit": "mm",
+   "limit": "<= 5.0",
+   "pass": true,
+   "margin": 0.33542188204609447,
+   "status": "CHECKED",
+   "category": "rigid-body (static mass properties, algebra)"
+  },
+  "CL-A-TW-FRESH-GATE": {
+   "title": "Hover T/W fresh at the 1.47 kg gate (0.90 cap)",
+   "value": 3.4707516142866486,
+   "unit": "-",
+   "limit": ">= 2.0",
+   "pass": true,
+   "margin": 0.7353758071433243,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-TW-SAG-GATE": {
+   "title": "Hover T/W sagged pack at the 1.47 kg gate (0.90 cap)",
+   "value": 2.753416768359602,
+   "unit": "-",
+   "limit": ">= 1.6",
+   "pass": true,
+   "margin": 0.7208854802247511,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-TW-FRESH-PRED": {
+   "title": "Hover T/W fresh at the predicted mass (0.90 cap)",
+   "value": 2.7128640426382087,
+   "unit": "-",
+   "limit": ">= 2.0",
+   "pass": true,
+   "margin": 0.35643202131910434,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-TW-SAG-PRED": {
+   "title": "Hover T/W sagged pack at the predicted mass (0.90 cap)",
+   "value": 2.152169378682293,
+   "unit": "-",
+   "limit": ">= 1.6",
+   "pass": true,
+   "margin": 0.345105861676433,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-WINDOW-PRED": {
+   "title": "Transition entry window at the predicted mass (0.90 cap)",
+   "value": 12.836482800285044,
+   "unit": "%",
+   "limit": ">= 5.0",
+   "pass": true,
+   "margin": 1.5672965600570088,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-WINDOW-GATE": {
+   "title": "Transition entry window at the 1.47 kg gate (0.90 cap)",
+   "value": 24.70419678595638,
+   "unit": "%",
+   "limit": ">= 5.0",
+   "pass": true,
+   "margin": 3.940839357191276,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-WINDOW-MASS": {
+   "title": "Largest mass with a +-5 % window (0.90 cap)",
+   "value": 2.202733414687681,
+   "unit": "kg",
+   "limit": ">= 1.880671052",
+   "pass": true,
+   "margin": 0.17124864145975105,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-MOTOR-I": {
+   "title": "One motor at the 0.90 spin cap, winding current",
+   "value": 20.07860666666667,
+   "unit": "A",
+   "limit": "<= 26.8",
+   "pass": true,
+   "margin": 0.2507982587064676,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-ESC-I": {
+   "title": "ESC channel and connector current required (1.25 x uncapped peak)",
+   "value": 25.098258333333337,
+   "unit": "A",
+   "limit": "<= 35.0",
+   "pass": true,
+   "margin": 0.28290690476190467,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-CRUISE-NEED": {
+   "title": "Cruise time the mission needs (300 m reference lap)",
+   "value": 204.55636934924914,
+   "unit": "s",
+   "limit": "<= 210.0",
+   "pass": true,
+   "margin": 0.025922050717861248,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-CRUISE-RADIUS": {
+   "title": "Turn radius at 17 m/s, 30 deg bank",
+   "value": 51.041366716366426,
+   "unit": "m",
+   "limit": "-",
+   "pass": null,
+   "margin": null,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-CRUISE-AVAIL": {
+   "title": "Cruise time to BATT_LOW at the predicted mass",
+   "value": 233.78998459499445,
+   "unit": "s",
+   "limit": ">= 204.55636934924914",
+   "pass": true,
+   "margin": 0.1429122707777108,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-FENCE": {
+   "title": "Any-direction bound after a cruise BATT_LOW",
+   "value": 220.04136671636644,
+   "unit": "m",
+   "limit": "<= 240.0",
+   "pass": true,
+   "margin": 0.08316097201513983,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-STALL": {
+   "title": "1.3 x clean stall speed at the 1.47 kg gate",
+   "value": 15.687455613845213,
+   "unit": "m/s",
+   "limit": "<= 17.0",
+   "pass": true,
+   "margin": 0.07720849330322277,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-YAW-MODEL": {
+   "title": "Hover yaw authority (model) at +-0.10 throttle",
+   "value": 0.363139266754344,
+   "unit": "N m",
+   "limit": ">= 0.35",
+   "pass": true,
+   "margin": 0.037540762155268616,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-YAW-R2": {
+   "title": "Hover yaw authority (model) against the R2 floor",
+   "value": 0.363139266754344,
+   "unit": "N m",
+   "limit": ">= 0.3",
+   "pass": true,
+   "margin": 0.21046422251448002,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-YAW-Q": {
+   "title": "Rotor reaction Q (model)",
+   "value": 59.7,
+   "unit": "N mm",
+   "limit": ">= 55.0",
+   "pass": true,
+   "margin": 0.0854545454545455,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-WIND-LEAN": {
+   "title": "Belly-on hover lean at 5 m/s (SITL max)",
+   "value": 31.5,
+   "unit": "deg",
+   "limit": "<= 40.0",
+   "pass": true,
+   "margin": 0.2125,
+   "status": "CHECKED",
+   "category": "rigid-body dynamics (stored SITL result read, not re-run)"
+  },
+  "CL-A-WIND-OUTPUT": {
+   "title": "Longest time any motor is at or above 0.85 output, 4 m/s turbulence hover (SITL, 1.47 kg gate, worst pack)",
+   "value": 0.2,
+   "unit": "s",
+   "limit": "<= 0.5",
+   "pass": true,
+   "margin": 0.6,
+   "status": "CHECKED",
+   "category": "rigid-body dynamics (stored SITL result read, not re-run)"
+  },
+  "CL-A-WIND-CAP": {
+   "title": "Time any motor is at the 0.90 spin cap, 4 m/s turbulence hover (SITL, 1.47 kg gate, worst pack)",
+   "value": 0.0,
+   "unit": "s",
+   "limit": "<= 0.0",
+   "pass": true,
+   "margin": 0.0,
+   "status": "CHECKED",
+   "category": "rigid-body dynamics (stored SITL result read, not re-run)"
+  },
+  "CL-A-TIPOVER": {
+   "title": "Static tip-over angle on the fin tips",
+   "value": 31.0,
+   "unit": "deg",
+   "limit": ">= 30.0",
+   "pass": true,
+   "margin": 0.03333333333333333,
+   "status": "CHECKED",
+   "category": "rigid-body dynamics (stored SITL result read, not re-run)"
+  },
+  "CL-A-ROLL-141": {
+   "title": "Peak roll rate in SITL at cruise speed, 1.455 kg (D-195 target mass)",
+   "value": 106.9,
+   "unit": "deg/s",
+   "limit": ">= 90.0",
+   "pass": true,
+   "margin": 0.18777777777777785,
+   "status": "CHECKED",
+   "category": "rigid-body dynamics (stored SITL result read, not re-run)"
+  },
+  "CL-A-ROLL-GATE": {
+   "title": "Peak roll rate in SITL at cruise speed, 1.47 kg (the gate)",
+   "value": 106.4,
+   "unit": "deg/s",
+   "limit": ">= 90.0",
+   "pass": true,
+   "margin": 0.18222222222222229,
+   "status": "CHECKED",
+   "category": "rigid-body dynamics (stored SITL result read, not re-run)"
+  },
+  "CL-A-PITCH-USE": {
+   "title": "Elevon use in transition (share of the 20 deg stop)",
+   "value": 0.575,
+   "unit": "-",
+   "limit": "<= 0.6",
+   "pass": true,
+   "margin": 0.041666666666666706,
+   "status": "CHECKED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-FLUTTER-LINE": {
+   "title": "Flutter / divergence line, 1.2 x VD",
+   "value": 28.799999999999997,
+   "unit": "m/s",
+   "limit": "-",
+   "pass": null,
+   "margin": null,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-FLUTTER-ELEVON-NOM": {
+   "title": "Elevon flutter onset with the hinge damper, nominal 25 C (lowest of kd / nom / hi)",
+   "value": 41.0,
+   "unit": "m/s",
+   "limit": ">= 28.799999999999997",
+   "pass": true,
+   "margin": 0.42361111111111127,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-FLUTTER-ELEVON-HOT": {
+   "title": "Elevon flutter onset with the hinge damper, hot 50 C (lowest of kd / nom / hi)",
+   "value": 37.5,
+   "unit": "m/s",
+   "limit": ">= 28.799999999999997",
+   "pass": true,
+   "margin": 0.3020833333333335,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-FLUTTER-ELEVON-COLD": {
+   "title": "Elevon flutter onset with the hinge damper, cold 0 C (lowest of kd / nom / hi)",
+   "value": 44.0,
+   "unit": "m/s",
+   "limit": ">= 28.799999999999997",
+   "pass": true,
+   "margin": 0.5277777777777779,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-FLUTTER-HALF": {
+   "title": "Elevon flutter onset with a half-filled (leaking) damper, kd corner",
+   "value": 31.5,
+   "unit": "m/s",
+   "limit": "-",
+   "pass": null,
+   "margin": null,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-FLUTTER-WING": {
+   "title": "Wing bending-torsion flutter speed, lowest case (fins off, kd corner)",
+   "value": 33.7,
+   "unit": "m/s",
+   "limit": ">= 28.799999999999997",
+   "pass": true,
+   "margin": 0.1701388888888891,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-DIVERGENCE": {
+   "title": "Torsional divergence speed (kd corner, EA 0.10 c aft)",
+   "value": 128.0,
+   "unit": "m/s",
+   "limit": ">= 28.799999999999997",
+   "pass": true,
+   "margin": 3.444444444444445,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-REVERSAL": {
+   "title": "Control reversal speed, 3-D lift basis (kd corner)",
+   "value": 37.0,
+   "unit": "m/s",
+   "limit": ">= 28.799999999999997",
+   "pass": true,
+   "margin": 0.2847222222222224,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-GUST-N": {
+   "title": "Gust load factor at VD 24 (U 4 m/s)",
+   "value": 2.71,
+   "unit": "g",
+   "limit": "<= 3.4",
+   "pass": true,
+   "margin": 0.20294117647058824,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-SPAR": {
+   "title": "Spar 12x10 root bending, MS at 1.5 x n 3.4",
+   "value": 2.73,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 2.73,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-BOND": {
+   "title": "Rib saddle on the spar (thinnest bond), MS",
+   "value": 0.34,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 0.34,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-ARM": {
+   "title": "Motor arm 12x10 under a 30 N prop strike, MS",
+   "value": 1.41,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 1.41,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-ARM-SOCKET": {
+   "title": "Motor arm in its socket, strike couple, MS",
+   "value": 0.48,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 0.48,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-CUP-HEADPULL": {
+   "title": "Motor cup head pull-through (PETG) at the 0.90 cap thrust + 1P, MS",
+   "value": 14.82,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 14.82,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-CUP-STRIKE": {
+   "title": "Motor cup head pull-through under the 30 N transverse prop strike, MS",
+   "value": 1.55,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 1.55,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-CUP-PLATE": {
+   "title": "Motor cup plate bending past the sleeve end under the strike, MS",
+   "value": 0.49,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 0.49,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-CUP-HOLE": {
+   "title": "Motor cup screw-hole bearing under a blade-stop torque, MS",
+   "value": 0.39,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 0.39,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-CUP-BOND": {
+   "title": "Motor cup to arm bond under strike torsion + torque, MS",
+   "value": 1.88,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 1.88,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-ARM-BLADE": {
+   "title": "Motor arm 12x10 root bending with the blade-offset strike lever, MS",
+   "value": 0.82,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 0.82,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-FATIGUE-HUBWALL": {
+   "title": "Hub arm-socket wall, 2000 cycles to the cap thrust, MS",
+   "value": 1.17,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 1.17,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-FATIGUE-ARM": {
+   "title": "Arm tube bending amplitude at 4e6 cycles of 1P, MS",
+   "value": 15.32,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 15.32,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-RIB": {
+   "title": "Fin rib 14x12 torsion under one foot load, MS",
+   "value": 0.6,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 0.6,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-FIN": {
+   "title": "Fin tube 16x14 in-plane bending at the foot load, MS",
+   "value": 3.44,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 3.44,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-PACK-CRASH": {
+   "title": "Bridge under pack + hub at the 12 g crash, MS (pack retention)",
+   "value": 2.87,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 2.87,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-BRIDGE-TORSION-F2": {
+   "title": "Bridge 16x14 torsion shear, F2 motor fault at the CFRP factor (bridge alone)",
+   "value": 22.650142768377208,
+   "unit": "MPa",
+   "limit": "<= 30.0",
+   "pass": true,
+   "margin": 0.24499524105409307,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-BRIDGE-TORSION-S2": {
+   "title": "Bridge 16x14 torsion shear, 30 N prop strike in the disc plane (factor 1.0, bridge alone)",
+   "value": 23.827232070206115,
+   "unit": "MPa",
+   "limit": "<= 30.0",
+   "pass": true,
+   "margin": 0.2057589309931295,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-LANDING-STROKE": {
+   "title": "Landing crush stroke at 1.2 m/s on the fin-tip feet",
+   "value": 15.2,
+   "unit": "mm",
+   "limit": "<= 20.0",
+   "pass": true,
+   "margin": 0.24000000000000005,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-FOAM-SPAR-BOND": {
+   "title": "Foam shear around the spar, bond over |y| <= 0.20 m (FIXES2 rule), MS at 103 kPa basis",
+   "value": 0.48,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 0.48,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-FOAM-FIN-SLOT": {
+   "title": "Foam bearing at the fin slot, MS at 103 kPa",
+   "value": 0.81,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 0.81,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-FOAM-TRAY": {
+   "title": "Pack tray on the LE slot floor, 12 g crash, quarter floor carrying, MS at 103 kPa",
+   "value": 0.36,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 0.36,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-FOAM-SERVO": {
+   "title": "Servo stalled into the stop, epoxy on four pocket walls, MS (shear)",
+   "value": 0.73,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 0.73,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-FOAM-CAP-PEEL": {
+   "title": "Stop reaction peeling a lens cap off the tape skin, MS on the foam (tension)",
+   "value": 0.37,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 0.37,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-VIB-LOW-LIMIT": {
+   "title": "Upper edge allowed for strongly coupled modes below the rotor bands",
+   "value": 94.29166666666667,
+   "unit": "Hz",
+   "limit": "-",
+   "pass": null,
+   "margin": null,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-VIB-HIGH-LIMIT": {
+   "title": "Lower edge allowed for strongly coupled modes above the rotor bands",
+   "value": 321.12,
+   "unit": "Hz",
+   "limit": "-",
+   "pass": null,
+   "margin": null,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-VIB-LOW": {
+   "title": "Highest strongly coupled mode below the rotor bands (hi corner)",
+   "value": 81.0,
+   "unit": "Hz",
+   "limit": "<= 94.29166666666667",
+   "pass": true,
+   "margin": 0.1409633230225365,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-VIB-HIGH": {
+   "title": "Lowest strongly coupled mode above the rotor bands (kd corner, fin f1)",
+   "value": 438.0,
+   "unit": "Hz",
+   "limit": ">= 321.12",
+   "pass": true,
+   "margin": 0.3639760837070254,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-VIB-IN-BAND": {
+   "title": "Corners (kd / nom / hi) with a strongly coupled mode INSIDE the excluded rotor band (D-185 (a) needs none)",
+   "value": 3,
+   "unit": "-",
+   "limit": "<= 0",
+   "pass": false,
+   "margin": -3.0,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-VIB-FC": {
+   "title": "Flight-controller vibration, worst of the forced-response sweep",
+   "value": 187.2,
+   "unit": "m/s2",
+   "limit": "<= 30.0",
+   "pass": false,
+   "margin": -5.239999999999999,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-VIB-GM": {
+   "title": "Rate-loop gain margin, minimum over axes and corners (nominal modes)",
+   "value": 1.13,
+   "unit": "-",
+   "limit": ">= 2.0",
+   "pass": false,
+   "margin": -0.43500000000000005,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-HORN-RIB-FOAM-HOLD": {
+   "title": "Horn rib face shear in the elevon foam at 1.5 x VD hold (x 2.156), beam-on-foundation FE, worst foam case",
+   "value": 431.8,
+   "unit": "kPa",
+   "limit": "<= 85.8",
+   "pass": false,
+   "margin": -4.032634032634033,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-HORN-RIB-FOAM-STALL": {
+   "title": "Horn rib face shear in the foam at the 51 N servo stall force (x 1.4375)",
+   "value": 860.9,
+   "unit": "kPa",
+   "limit": "<= 85.8",
+   "pass": false,
+   "margin": -9.033799533799534,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-ELEVON-TORSION-FOAM": {
+   "title": "Elevon torsion beside the horn, foam only (tape skin not credited), 1.5 x VD hold (x 2.156)",
+   "value": 504.3,
+   "unit": "kPa",
+   "limit": "<= 85.8",
+   "pass": false,
+   "margin": -4.8776223776223775,
+   "status": "UNVERIFIED",
+   "category": "illustrative (uncategorised claim)"
+  },
+  "CL-A-HORN-BLADE-HOLD": {
+   "title": "Printed horn blade bending at 1.5 x VD hold (x 2.156), printed lying flat (in-layer)",
+   "value": 3.32,
+   "unit": "MPa",
+   "limit": "<= 20.0",
+   "pass": true,
+   "margin": 0.834,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-HORN-BLADE-STALL": {
+   "title": "Printed horn blade bending at the 51 N stall force (x 1.4375)",
+   "value": 6.62,
+   "unit": "MPa",
+   "limit": "<= 20.0",
+   "pass": true,
+   "margin": 0.6689999999999999,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-HORN-BEARING-HOLD": {
+   "title": "Clevis pin bearing in the 2 mm horn at 1.5 x VD hold (x 2.156)",
+   "value": 18.39,
+   "unit": "MPa",
+   "limit": "<= 20.0",
+   "pass": true,
+   "margin": 0.08049999999999997,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-HORN-BEARING-STALL": {
+   "title": "Clevis pin bearing in the 2 mm horn at the 51 N stall force (x 1.4375)",
+   "value": 36.65,
+   "unit": "MPa",
+   "limit": "<= 20.0",
+   "pass": false,
+   "margin": -0.8324999999999999,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-ROD-LEG-STALL": {
+   "title": "Z-bend leg: yield needed at 1.5 x the 51 N stall force, rod lifted against the keeper (e 1.9 mm), vs the A228 music-wire allowable",
+   "value": 1392.0,
+   "unit": "MPa",
+   "limit": "<= 1680.0",
+   "pass": true,
+   "margin": 0.17142857142857143,
+   "status": "UNVERIFIED",
+   "category": "illustrative (uncategorised claim)"
+  },
+  "CL-A-HORN-SHEAROUT-STALL": {
+   "title": "Horn hole shear-out (1.65 mm ligament) at the 51 N stall force (x 1.4375); allowable PETG 20 MPa / sqrt(3) EST",
+   "value": 11.11,
+   "unit": "MPa",
+   "limit": "<= 11.55",
+   "pass": true,
+   "margin": 0.0380952380952382,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-KEEPER-BRIDGE-STALL": {
+   "title": "Keeper bridge (MEC-008) bending at the 51 N stall force (x 1.4375), rod lifted against the keeper; allowable PETG 20 MPa EST",
+   "value": 19.48,
+   "unit": "MPa",
+   "limit": "<= 20.0",
+   "pass": true,
+   "margin": 0.025999999999999978,
+   "status": "UNVERIFIED",
+   "category": "illustrative (uncategorised claim)"
+  },
+  "CL-A-SERVO-SPEED": {
+   "title": "Elevon servo speed margin: loaded rate over the 152 deg/s of the +-11 deg, 2.2 Hz roll sinusoid (AR-005, 6.0 V pair)",
+   "value": 1.521,
+   "unit": "-",
+   "limit": ">= 1.0",
+   "pass": true,
+   "margin": 0.5209999999999999,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-HORN-RIB-COUPON": {
+   "title": "Horn-rib coupon: load held 30 s without damage, over the required 36.8 N (2.156 x the 17.05 N hold force)",
+   "value": "-",
+   "unit": "-",
+   "limit": ">= 1.0",
+   "pass": null,
+   "margin": null,
+   "status": "PROPOSED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-HORN-STALL-STEP": {
+   "title": "Horn-rib coupon, stall step: 51 N held 5 s, hole elongation and cracks",
+   "value": "-",
+   "unit": "mm",
+   "limit": "<= 0.1",
+   "pass": null,
+   "margin": null,
+   "status": "PROPOSED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-ELEVON-TORSION-COUPON": {
+   "title": "Elevon-section torsion coupon: torque held over the required 0.161 N m (2.156 x the 74.65 N mm outboard hinge moment at VD)",
+   "value": "-",
+   "unit": "-",
+   "limit": ">= 1.0",
+   "pass": null,
+   "margin": null,
+   "status": "PROPOSED",
+   "category": "illustrative (uncategorised claim)"
+  },
+  "CL-A-HORN-STALL-BENCH": {
+   "title": "Bench stall test on the built aircraft: 51 N for 5 s into the 21 deg stop, hole elongation",
+   "value": "-",
+   "unit": "mm",
+   "limit": "<= 0.1",
+   "pass": null,
+   "margin": null,
+   "status": "PROPOSED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-LINKAGE-FREEPLAY": {
+   "title": "Elevon linkage free play from the hole clearances and the Z-bend freedom (clevis cheek holes '-')",
+   "value": 1.28,
+   "unit": "deg",
+   "limit": "<= 1.0",
+   "pass": false,
+   "margin": -0.28,
+   "status": "UNVERIFIED",
+   "category": "illustrative (uncategorised claim)"
+  },
+  "CL-A-VIB-GM-SHIFT": {
+   "title": "Rate-loop gain margin with the cage modes shifted +-20 %",
+   "value": 1.05,
+   "unit": "-",
+   "limit": ">= 2.0",
+   "pass": false,
+   "margin": -0.475,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-SERVO-FACTOR": {
+   "title": "Servo torque factor at 7.2 V, 25 C (ES3054HV)",
+   "value": 1.555947481873408,
+   "unit": "-",
+   "limit": ">= 1.5",
+   "pass": true,
+   "margin": 0.03729832124893869,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-SERVO-COLD": {
+   "title": "Servo torque factor at 7.2 V, damper at 0 C, real arm ratio",
+   "value": 1.5845556899802722,
+   "unit": "-",
+   "limit": ">= 1.5",
+   "pass": true,
+   "margin": 0.05637045998684812,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-SERVO-RATIO": {
+   "title": "Servo stall torque over the hinge moment at VD (A-P11 wording)",
+   "value": 2.6291390728476824,
+   "unit": "-",
+   "limit": ">= 1.5",
+   "pass": true,
+   "margin": 0.7527593818984549,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-COST-TOTAL": {
+   "title": "BOM total incl. tax, shipping, FAA and crash reserve (by its definition, AM-018)",
+   "value": 1939.1716625000001,
+   "unit": "USD",
+   "limit": "<= 2000.0",
+   "pass": true,
+   "margin": 0.030414168749999932,
+   "status": "UNVERIFIED",
+   "category": "illustrative (budget arithmetic)"
+  },
+  "CL-A-COST-MARGIN30": {
+   "title": "Margin to $2,000 if the unverified lines run 30 % over (information only, AM-013)",
+   "value": -29.67643874999999,
+   "unit": "USD",
+   "limit": "-",
+   "pass": null,
+   "margin": null,
+   "status": "UNVERIFIED",
+   "category": "illustrative (budget arithmetic)"
+  },
+  "CL-A-COST-BUDGET": {
+   "title": "BOM total with the unverified lines +30 % (information only, AM-013)",
+   "value": 2029.67643875,
+   "unit": "USD",
+   "limit": "-",
+   "pass": null,
+   "margin": null,
+   "status": "UNVERIFIED",
+   "category": "illustrative (budget arithmetic)"
+  },
+  "CL-A-SCHED-SLACK": {
+   "title": "Slack between the end of F06 and 2027-04-30 (baseline)",
+   "value": 11,
+   "unit": "d",
+   "limit": ">= 0",
+   "pass": true,
+   "margin": 11.0,
+   "status": "UNVERIFIED",
+   "category": "illustrative (schedule arithmetic)"
+  },
+  "CL-A-SCHED-F01": {
+   "title": "Latest-safe F01 start minus the planned start (8 Feb)",
+   "value": 10,
+   "unit": "d",
+   "limit": ">= 0",
+   "pass": true,
+   "margin": 10.0,
+   "status": "UNVERIFIED",
+   "category": "illustrative (schedule arithmetic)"
+  },
+  "CL-A-SCHED-F01-DATE": {
+   "title": "Days from the planned F01 start to the 2027-02-18 trigger",
+   "value": 10,
+   "unit": "d",
+   "limit": ">= 0",
+   "pass": true,
+   "margin": 10.0,
+   "status": "UNVERIFIED",
+   "category": "illustrative (schedule arithmetic)"
+  },
+  "CL-A-SCHED-SENS": {
+   "title": "Slack at p 0.60 (sensitivity, not the baseline)",
+   "value": -5,
+   "unit": "d",
+   "limit": "-",
+   "pass": null,
+   "margin": null,
+   "status": "UNVERIFIED",
+   "category": "illustrative (schedule arithmetic)"
+  },
+  "CL-A-BOX-FIT": {
+   "title": "Packed box against the 1.2 x 0.5 x 0.4 m car-trunk box",
+   "value": 1.0,
+   "unit": "-",
+   "limit": "<= 1.0",
+   "pass": true,
+   "margin": 0.0,
+   "status": "UNVERIFIED",
+   "category": "interference (stored gate result, not re-run)"
+  },
+  "CL-A-COLL-COUNT": {
+   "title": "Part overlaps deeper than the tolerance (neutral, +-20, +-21 deg)",
+   "value": 0,
+   "unit": "-",
+   "limit": "<= 0",
+   "pass": true,
+   "margin": 0.0,
+   "status": "CHECKED",
+   "category": "interference (stored gate result, not re-run)"
+  },
+  "CL-A-COLL-DEPTH": {
+   "title": "Deepest part overlap at any reachable pose",
+   "value": 0.034,
+   "unit": "mm",
+   "limit": "<= 0.05",
+   "pass": true,
+   "margin": 0.32,
+   "status": "CHECKED",
+   "category": "interference (stored gate result, not re-run)"
+  },
+  "CL-A-WIRE-ENDS": {
+   "title": "Wire ends not seated in a part",
+   "value": 0,
+   "unit": "-",
+   "limit": "<= 0",
+   "pass": true,
+   "margin": 0.0,
+   "status": "CHECKED",
+   "category": "interference (stored gate result, not re-run)"
+  },
+  "CL-A-WIRE-FOLDS": {
+   "title": "Wire folds (kinks)",
+   "value": 0,
+   "unit": "-",
+   "limit": "<= 0",
+   "pass": true,
+   "margin": 0.0,
+   "status": "CHECKED",
+   "category": "interference (stored gate result, not re-run)"
+  },
+  "CL-A-ASSY-STEPS": {
+   "title": "Build steps that pass the assembly sweep",
+   "value": 59,
+   "unit": "-",
+   "limit": ">= 59",
+   "pass": true,
+   "margin": 0.0,
+   "status": "CHECKED",
+   "category": "interference (stored gate result, not re-run)"
+  },
+  "CL-A-ASSY-PARTS": {
+   "title": "Parts placed by the build sequence",
+   "value": 129,
+   "unit": "-",
+   "limit": ">= 129",
+   "pass": true,
+   "margin": 0.0,
+   "status": "CHECKED",
+   "category": "interference (stored gate result, not re-run)"
+  },
+  "MC-MASS-TOTAL": {
+   "title": "merge_check CAD mass roll-up vs budget limit",
+   "value": 1640.98,
+   "unit": "g",
+   "limit": "<= 1500",
+   "pass": false,
+   "margin": -0.09398666666666729,
+   "category": "rigid-body (static mass properties, algebra)"
+  },
+  "MC-CG-X": {
+   "title": "merge_check CG aft of LE vs budget band",
+   "value": 22.0,
+   "unit": "mm",
+   "limit": "4.0 .. 28.5",
+   "pass": true,
+   "margin": null,
+   "category": "rigid-body (static mass properties, algebra)"
+  },
+  "MC-GRAPH": {
+   "title": "merge_check interface graph (exit code; its only error today is the mass limit above)",
+   "value": 1,
+   "unit": "exit code",
+   "limit": "0",
+   "pass": false,
+   "margin": null,
+   "category": "interference (graph consistency, static)"
+  }
+ },
+ "variant": {
+  "CL-A-MASS-PRED": {
+   "title": "Predicted take-off mass (CAD basic x growth + overrun)",
+   "value": 1.9345409059999998,
+   "unit": "kg",
+   "limit": "<= 1.47",
+   "pass": false,
+   "margin": -0.3160142217687074,
+   "status": "UNVERIFIED",
+   "category": "rigid-body (static mass properties, algebra)"
+  },
+  "CL-A-MASS-ITEM": {
+   "title": "Predicted mass, itemised growth by maturity (cross-check)",
+   "value": 1.495617,
+   "unit": "kg",
+   "limit": "<= 1.47",
+   "pass": false,
+   "margin": -0.0174265306122449,
+   "status": "UNVERIFIED",
+   "category": "rigid-body (static mass properties, algebra)"
+  },
+  "CL-A-MASS-GATE-ROOM": {
+   "title": "Predicted mass against the 1.47 kg gate",
+   "value": 1.9345409059999998,
+   "unit": "kg",
+   "limit": "<= 1.47",
+   "pass": false,
+   "margin": -0.3160142217687074,
+   "status": "UNVERIFIED",
+   "category": "rigid-body (static mass properties, algebra)"
+  },
+  "CL-A-MASS-USER": {
+   "title": "Predicted mass against the 25 kg user cap",
+   "value": 1.9345409059999998,
+   "unit": "kg",
+   "limit": "<= 25.0",
+   "pass": true,
+   "margin": 0.9226183637600001,
+   "status": "UNVERIFIED",
+   "category": "rigid-body (static mass properties, algebra)"
+  },
+  "CL-A-CUTS-REQUIRED": {
+   "title": "EST cuts that must be real for <= 1.470 kg",
+   "value": 457.3337623053516,
+   "unit": "g",
+   "limit": "<= 41.6",
+   "pass": false,
+   "margin": -9.993600055417106,
+   "status": "UNVERIFIED",
+   "category": "rigid-body (static mass properties, algebra)"
+  },
+  "CL-A-STRUCT-MASS": {
+   "title": "Structure mass (CAD groups, with the EST cuts)",
+   "value": 483.6,
+   "unit": "g",
+   "limit": "<= 494.0",
+   "pass": true,
+   "margin": 0.021052631578947323,
+   "status": "UNVERIFIED",
+   "category": "rigid-body (static mass properties, algebra)"
+  },
+  "CL-A-CG": {
+   "title": "CG aft of the leading edge, CAD as drawn",
+   "value": 20.62521344746224,
+   "unit": "mm",
+   "limit": ">= 19.0",
+   "pass": true,
+   "margin": 0.0855375498664337,
+   "status": "CHECKED",
+   "category": "rigid-body (static mass properties, algebra)"
+  },
+  "CL-A-CG-HI": {
+   "title": "CG aft limit of the design band",
+   "value": 20.62521344746224,
+   "unit": "mm",
+   "limit": "<= 26.0",
+   "pass": true,
+   "margin": 0.20672255971299075,
+   "status": "CHECKED",
+   "category": "rigid-body (static mass properties, algebra)"
+  },
+  "CL-A-CG-TRIM-AFT": {
+   "title": "CG at the aft end of the pack trim travel",
+   "value": 22.50901574323714,
+   "unit": "mm",
+   "limit": "<= 28.5",
+   "pass": true,
+   "margin": 0.2102099739215039,
+   "status": "CHECKED",
+   "category": "rigid-body (static mass properties, algebra)"
+  },
+  "CL-A-CG-TRIM-FWD": {
+   "title": "CG at the forward end of the pack trim travel",
+   "value": 19.4949320699973,
+   "unit": "mm",
+   "limit": ">= 19.0",
+   "pass": true,
+   "margin": 0.02604905631564741,
+   "status": "CHECKED",
+   "category": "rigid-body (static mass properties, algebra)"
+  },
+  "CL-A-SM": {
+   "title": "Static margin at the CAD CG",
+   "value": 8.193790429607251,
+   "unit": "% chord",
+   "limit": ">= 5.0",
+   "pass": true,
+   "margin": 0.6387580859214502,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-CG-LATERAL": {
+   "title": "Lateral CG offset (CAD)",
+   "value": 3.3228905897695276,
+   "unit": "mm",
+   "limit": "<= 5.0",
+   "pass": true,
+   "margin": 0.33542188204609447,
+   "status": "CHECKED",
+   "category": "rigid-body (static mass properties, algebra)"
+  },
+  "CL-A-TW-FRESH-GATE": {
+   "title": "Hover T/W fresh at the 1.47 kg gate (0.90 cap)",
+   "value": 3.4707516142866486,
+   "unit": "-",
+   "limit": ">= 2.0",
+   "pass": true,
+   "margin": 0.7353758071433243,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-TW-SAG-GATE": {
+   "title": "Hover T/W sagged pack at the 1.47 kg gate (0.90 cap)",
+   "value": 2.753416768359602,
+   "unit": "-",
+   "limit": ">= 1.6",
+   "pass": true,
+   "margin": 0.7208854802247511,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-TW-FRESH-PRED": {
+   "title": "Hover T/W fresh at the predicted mass (0.90 cap)",
+   "value": 2.6373207499399207,
+   "unit": "-",
+   "limit": ">= 2.0",
+   "pass": true,
+   "margin": 0.31866037496996036,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-TW-SAG-PRED": {
+   "title": "Hover T/W sagged pack at the predicted mass (0.90 cap)",
+   "value": 2.092239371592081,
+   "unit": "-",
+   "limit": ">= 1.6",
+   "pass": true,
+   "margin": 0.30764960724505047,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-WINDOW-PRED": {
+   "title": "Transition entry window at the predicted mass (0.90 cap)",
+   "value": 11.445251695588746,
+   "unit": "%",
+   "limit": ">= 5.0",
+   "pass": true,
+   "margin": 1.2890503391177492,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-WINDOW-GATE": {
+   "title": "Transition entry window at the 1.47 kg gate (0.90 cap)",
+   "value": 24.70419678595638,
+   "unit": "%",
+   "limit": ">= 5.0",
+   "pass": true,
+   "margin": 3.940839357191276,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-WINDOW-MASS": {
+   "title": "Largest mass with a +-5 % window (0.90 cap)",
+   "value": 2.202733414687681,
+   "unit": "kg",
+   "limit": ">= 1.9345409059999998",
+   "pass": true,
+   "margin": 0.13863367161473766,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-MOTOR-I": {
+   "title": "One motor at the 0.90 spin cap, winding current",
+   "value": 20.07860666666667,
+   "unit": "A",
+   "limit": "<= 26.8",
+   "pass": true,
+   "margin": 0.2507982587064676,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-ESC-I": {
+   "title": "ESC channel and connector current required (1.25 x uncapped peak)",
+   "value": 25.098258333333337,
+   "unit": "A",
+   "limit": "<= 35.0",
+   "pass": true,
+   "margin": 0.28290690476190467,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-CRUISE-NEED": {
+   "title": "Cruise time the mission needs (300 m reference lap)",
+   "value": 204.55636934924914,
+   "unit": "s",
+   "limit": "<= 210.0",
+   "pass": true,
+   "margin": 0.025922050717861248,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-CRUISE-RADIUS": {
+   "title": "Turn radius at 17 m/s, 30 deg bank",
+   "value": 51.041366716366426,
+   "unit": "m",
+   "limit": "-",
+   "pass": null,
+   "margin": null,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-CRUISE-AVAIL": {
+   "title": "Cruise time to BATT_LOW at the predicted mass",
+   "value": 313.9048590926885,
+   "unit": "s",
+   "limit": ">= 204.55636934924914",
+   "pass": true,
+   "margin": 0.5345640915084063,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-FENCE": {
+   "title": "Any-direction bound after a cruise BATT_LOW",
+   "value": 220.04136671636644,
+   "unit": "m",
+   "limit": "<= 240.0",
+   "pass": true,
+   "margin": 0.08316097201513983,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-STALL": {
+   "title": "1.3 x clean stall speed at the 1.47 kg gate",
+   "value": 15.687455613845213,
+   "unit": "m/s",
+   "limit": "<= 17.0",
+   "pass": true,
+   "margin": 0.07720849330322277,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-YAW-MODEL": {
+   "title": "Hover yaw authority (model) at +-0.10 throttle",
+   "value": 0.363139266754344,
+   "unit": "N m",
+   "limit": ">= 0.35",
+   "pass": true,
+   "margin": 0.037540762155268616,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-YAW-R2": {
+   "title": "Hover yaw authority (model) against the R2 floor",
+   "value": 0.363139266754344,
+   "unit": "N m",
+   "limit": ">= 0.3",
+   "pass": true,
+   "margin": 0.21046422251448002,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-YAW-Q": {
+   "title": "Rotor reaction Q (model)",
+   "value": 59.7,
+   "unit": "N mm",
+   "limit": ">= 55.0",
+   "pass": true,
+   "margin": 0.0854545454545455,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-WIND-LEAN": {
+   "title": "Belly-on hover lean at 5 m/s (SITL max)",
+   "value": 31.5,
+   "unit": "deg",
+   "limit": "<= 40.0",
+   "pass": true,
+   "margin": 0.2125,
+   "status": "CHECKED",
+   "category": "rigid-body dynamics (stored SITL result read, not re-run)"
+  },
+  "CL-A-WIND-OUTPUT": {
+   "title": "Longest time any motor is at or above 0.85 output, 4 m/s turbulence hover (SITL, 1.47 kg gate, worst pack)",
+   "value": 0.2,
+   "unit": "s",
+   "limit": "<= 0.5",
+   "pass": true,
+   "margin": 0.6,
+   "status": "CHECKED",
+   "category": "rigid-body dynamics (stored SITL result read, not re-run)"
+  },
+  "CL-A-WIND-CAP": {
+   "title": "Time any motor is at the 0.90 spin cap, 4 m/s turbulence hover (SITL, 1.47 kg gate, worst pack)",
+   "value": 0.0,
+   "unit": "s",
+   "limit": "<= 0.0",
+   "pass": true,
+   "margin": 0.0,
+   "status": "CHECKED",
+   "category": "rigid-body dynamics (stored SITL result read, not re-run)"
+  },
+  "CL-A-TIPOVER": {
+   "title": "Static tip-over angle on the fin tips",
+   "value": 31.0,
+   "unit": "deg",
+   "limit": ">= 30.0",
+   "pass": true,
+   "margin": 0.03333333333333333,
+   "status": "CHECKED",
+   "category": "rigid-body dynamics (stored SITL result read, not re-run)"
+  },
+  "CL-A-ROLL-141": {
+   "title": "Peak roll rate in SITL at cruise speed, 1.455 kg (D-195 target mass)",
+   "value": 106.9,
+   "unit": "deg/s",
+   "limit": ">= 90.0",
+   "pass": true,
+   "margin": 0.18777777777777785,
+   "status": "CHECKED",
+   "category": "rigid-body dynamics (stored SITL result read, not re-run)"
+  },
+  "CL-A-ROLL-GATE": {
+   "title": "Peak roll rate in SITL at cruise speed, 1.47 kg (the gate)",
+   "value": 106.4,
+   "unit": "deg/s",
+   "limit": ">= 90.0",
+   "pass": true,
+   "margin": 0.18222222222222229,
+   "status": "CHECKED",
+   "category": "rigid-body dynamics (stored SITL result read, not re-run)"
+  },
+  "CL-A-PITCH-USE": {
+   "title": "Elevon use in transition (share of the 20 deg stop)",
+   "value": 0.575,
+   "unit": "-",
+   "limit": "<= 0.6",
+   "pass": true,
+   "margin": 0.041666666666666706,
+   "status": "CHECKED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-FLUTTER-LINE": {
+   "title": "Flutter / divergence line, 1.2 x VD",
+   "value": 28.799999999999997,
+   "unit": "m/s",
+   "limit": "-",
+   "pass": null,
+   "margin": null,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-FLUTTER-ELEVON-NOM": {
+   "title": "Elevon flutter onset with the hinge damper, nominal 25 C (lowest of kd / nom / hi)",
+   "value": 41.0,
+   "unit": "m/s",
+   "limit": ">= 28.799999999999997",
+   "pass": true,
+   "margin": 0.42361111111111127,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-FLUTTER-ELEVON-HOT": {
+   "title": "Elevon flutter onset with the hinge damper, hot 50 C (lowest of kd / nom / hi)",
+   "value": 37.5,
+   "unit": "m/s",
+   "limit": ">= 28.799999999999997",
+   "pass": true,
+   "margin": 0.3020833333333335,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-FLUTTER-ELEVON-COLD": {
+   "title": "Elevon flutter onset with the hinge damper, cold 0 C (lowest of kd / nom / hi)",
+   "value": 44.0,
+   "unit": "m/s",
+   "limit": ">= 28.799999999999997",
+   "pass": true,
+   "margin": 0.5277777777777779,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-FLUTTER-HALF": {
+   "title": "Elevon flutter onset with a half-filled (leaking) damper, kd corner",
+   "value": 31.5,
+   "unit": "m/s",
+   "limit": "-",
+   "pass": null,
+   "margin": null,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-FLUTTER-WING": {
+   "title": "Wing bending-torsion flutter speed, lowest case (fins off, kd corner)",
+   "value": 33.7,
+   "unit": "m/s",
+   "limit": ">= 28.799999999999997",
+   "pass": true,
+   "margin": 0.1701388888888891,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-DIVERGENCE": {
+   "title": "Torsional divergence speed (kd corner, EA 0.10 c aft)",
+   "value": 128.0,
+   "unit": "m/s",
+   "limit": ">= 28.799999999999997",
+   "pass": true,
+   "margin": 3.444444444444445,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-REVERSAL": {
+   "title": "Control reversal speed, 3-D lift basis (kd corner)",
+   "value": 37.0,
+   "unit": "m/s",
+   "limit": ">= 28.799999999999997",
+   "pass": true,
+   "margin": 0.2847222222222224,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-GUST-N": {
+   "title": "Gust load factor at VD 24 (U 4 m/s)",
+   "value": 2.71,
+   "unit": "g",
+   "limit": "<= 3.4",
+   "pass": true,
+   "margin": 0.20294117647058824,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-SPAR": {
+   "title": "Spar 12x10 root bending, MS at 1.5 x n 3.4",
+   "value": 2.73,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 2.73,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-BOND": {
+   "title": "Rib saddle on the spar (thinnest bond), MS",
+   "value": 0.34,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 0.34,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-ARM": {
+   "title": "Motor arm 12x10 under a 30 N prop strike, MS",
+   "value": 1.41,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 1.41,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-ARM-SOCKET": {
+   "title": "Motor arm in its socket, strike couple, MS",
+   "value": 0.48,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 0.48,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-CUP-HEADPULL": {
+   "title": "Motor cup head pull-through (PETG) at the 0.90 cap thrust + 1P, MS",
+   "value": 14.82,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 14.82,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-CUP-STRIKE": {
+   "title": "Motor cup head pull-through under the 30 N transverse prop strike, MS",
+   "value": 1.55,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 1.55,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-CUP-PLATE": {
+   "title": "Motor cup plate bending past the sleeve end under the strike, MS",
+   "value": 0.49,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 0.49,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-CUP-HOLE": {
+   "title": "Motor cup screw-hole bearing under a blade-stop torque, MS",
+   "value": 0.39,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 0.39,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-CUP-BOND": {
+   "title": "Motor cup to arm bond under strike torsion + torque, MS",
+   "value": 1.88,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 1.88,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-ARM-BLADE": {
+   "title": "Motor arm 12x10 root bending with the blade-offset strike lever, MS",
+   "value": 0.82,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 0.82,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-FATIGUE-HUBWALL": {
+   "title": "Hub arm-socket wall, 2000 cycles to the cap thrust, MS",
+   "value": 1.17,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 1.17,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-FATIGUE-ARM": {
+   "title": "Arm tube bending amplitude at 4e6 cycles of 1P, MS",
+   "value": 15.32,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 15.32,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-RIB": {
+   "title": "Fin rib 14x12 torsion under one foot load, MS",
+   "value": 0.6,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 0.6,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-FIN": {
+   "title": "Fin tube 16x14 in-plane bending at the foot load, MS",
+   "value": 3.44,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 3.44,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-MS-PACK-CRASH": {
+   "title": "Bridge under pack + hub at the 12 g crash, MS (pack retention)",
+   "value": 2.87,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 2.87,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-BRIDGE-TORSION-F2": {
+   "title": "Bridge 16x14 torsion shear, F2 motor fault at the CFRP factor (bridge alone)",
+   "value": 22.650142768377208,
+   "unit": "MPa",
+   "limit": "<= 30.0",
+   "pass": true,
+   "margin": 0.24499524105409307,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-BRIDGE-TORSION-S2": {
+   "title": "Bridge 16x14 torsion shear, 30 N prop strike in the disc plane (factor 1.0, bridge alone)",
+   "value": 23.827232070206115,
+   "unit": "MPa",
+   "limit": "<= 30.0",
+   "pass": true,
+   "margin": 0.2057589309931295,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-LANDING-STROKE": {
+   "title": "Landing crush stroke at 1.2 m/s on the fin-tip feet",
+   "value": 15.2,
+   "unit": "mm",
+   "limit": "<= 20.0",
+   "pass": true,
+   "margin": 0.24000000000000005,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-FOAM-SPAR-BOND": {
+   "title": "Foam shear around the spar, bond over |y| <= 0.20 m (FIXES2 rule), MS at 103 kPa basis",
+   "value": 0.48,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 0.48,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-FOAM-FIN-SLOT": {
+   "title": "Foam bearing at the fin slot, MS at 103 kPa",
+   "value": 0.81,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 0.81,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-FOAM-TRAY": {
+   "title": "Pack tray on the LE slot floor, 12 g crash, quarter floor carrying, MS at 103 kPa",
+   "value": 0.36,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 0.36,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-FOAM-SERVO": {
+   "title": "Servo stalled into the stop, epoxy on four pocket walls, MS (shear)",
+   "value": 0.73,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 0.73,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-FOAM-CAP-PEEL": {
+   "title": "Stop reaction peeling a lens cap off the tape skin, MS on the foam (tension)",
+   "value": 0.37,
+   "unit": "-",
+   "limit": ">= 0.0",
+   "pass": true,
+   "margin": 0.37,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-VIB-LOW-LIMIT": {
+   "title": "Upper edge allowed for strongly coupled modes below the rotor bands",
+   "value": 94.29166666666667,
+   "unit": "Hz",
+   "limit": "-",
+   "pass": null,
+   "margin": null,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-VIB-HIGH-LIMIT": {
+   "title": "Lower edge allowed for strongly coupled modes above the rotor bands",
+   "value": 321.12,
+   "unit": "Hz",
+   "limit": "-",
+   "pass": null,
+   "margin": null,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-VIB-LOW": {
+   "title": "Highest strongly coupled mode below the rotor bands (hi corner)",
+   "value": 81.0,
+   "unit": "Hz",
+   "limit": "<= 94.29166666666667",
+   "pass": true,
+   "margin": 0.1409633230225365,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-VIB-HIGH": {
+   "title": "Lowest strongly coupled mode above the rotor bands (kd corner, fin f1)",
+   "value": 438.0,
+   "unit": "Hz",
+   "limit": ">= 321.12",
+   "pass": true,
+   "margin": 0.3639760837070254,
+   "status": "CHECKED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-VIB-IN-BAND": {
+   "title": "Corners (kd / nom / hi) with a strongly coupled mode INSIDE the excluded rotor band (D-185 (a) needs none)",
+   "value": 3,
+   "unit": "-",
+   "limit": "<= 0",
+   "pass": false,
+   "margin": -3.0,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-VIB-FC": {
+   "title": "Flight-controller vibration, worst of the forced-response sweep",
+   "value": 187.2,
+   "unit": "m/s2",
+   "limit": "<= 30.0",
+   "pass": false,
+   "margin": -5.239999999999999,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-VIB-GM": {
+   "title": "Rate-loop gain margin, minimum over axes and corners (nominal modes)",
+   "value": 1.13,
+   "unit": "-",
+   "limit": ">= 2.0",
+   "pass": false,
+   "margin": -0.43500000000000005,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-HORN-RIB-FOAM-HOLD": {
+   "title": "Horn rib face shear in the elevon foam at 1.5 x VD hold (x 2.156), beam-on-foundation FE, worst foam case",
+   "value": 431.8,
+   "unit": "kPa",
+   "limit": "<= 85.8",
+   "pass": false,
+   "margin": -4.032634032634033,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-HORN-RIB-FOAM-STALL": {
+   "title": "Horn rib face shear in the foam at the 51 N servo stall force (x 1.4375)",
+   "value": 860.9,
+   "unit": "kPa",
+   "limit": "<= 85.8",
+   "pass": false,
+   "margin": -9.033799533799534,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-ELEVON-TORSION-FOAM": {
+   "title": "Elevon torsion beside the horn, foam only (tape skin not credited), 1.5 x VD hold (x 2.156)",
+   "value": 504.3,
+   "unit": "kPa",
+   "limit": "<= 85.8",
+   "pass": false,
+   "margin": -4.8776223776223775,
+   "status": "UNVERIFIED",
+   "category": "illustrative (uncategorised claim)"
+  },
+  "CL-A-HORN-BLADE-HOLD": {
+   "title": "Printed horn blade bending at 1.5 x VD hold (x 2.156), printed lying flat (in-layer)",
+   "value": 3.32,
+   "unit": "MPa",
+   "limit": "<= 20.0",
+   "pass": true,
+   "margin": 0.834,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-HORN-BLADE-STALL": {
+   "title": "Printed horn blade bending at the 51 N stall force (x 1.4375)",
+   "value": 6.62,
+   "unit": "MPa",
+   "limit": "<= 20.0",
+   "pass": true,
+   "margin": 0.6689999999999999,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-HORN-BEARING-HOLD": {
+   "title": "Clevis pin bearing in the 2 mm horn at 1.5 x VD hold (x 2.156)",
+   "value": 18.39,
+   "unit": "MPa",
+   "limit": "<= 20.0",
+   "pass": true,
+   "margin": 0.08049999999999997,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-HORN-BEARING-STALL": {
+   "title": "Clevis pin bearing in the 2 mm horn at the 51 N stall force (x 1.4375)",
+   "value": 36.65,
+   "unit": "MPa",
+   "limit": "<= 20.0",
+   "pass": false,
+   "margin": -0.8324999999999999,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-ROD-LEG-STALL": {
+   "title": "Z-bend leg: yield needed at 1.5 x the 51 N stall force, rod lifted against the keeper (e 1.9 mm), vs the A228 music-wire allowable",
+   "value": 1392.0,
+   "unit": "MPa",
+   "limit": "<= 1680.0",
+   "pass": true,
+   "margin": 0.17142857142857143,
+   "status": "UNVERIFIED",
+   "category": "illustrative (uncategorised claim)"
+  },
+  "CL-A-HORN-SHEAROUT-STALL": {
+   "title": "Horn hole shear-out (1.65 mm ligament) at the 51 N stall force (x 1.4375); allowable PETG 20 MPa / sqrt(3) EST",
+   "value": 11.11,
+   "unit": "MPa",
+   "limit": "<= 11.55",
+   "pass": true,
+   "margin": 0.0380952380952382,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-KEEPER-BRIDGE-STALL": {
+   "title": "Keeper bridge (MEC-008) bending at the 51 N stall force (x 1.4375), rod lifted against the keeper; allowable PETG 20 MPa EST",
+   "value": 19.48,
+   "unit": "MPa",
+   "limit": "<= 20.0",
+   "pass": true,
+   "margin": 0.025999999999999978,
+   "status": "UNVERIFIED",
+   "category": "illustrative (uncategorised claim)"
+  },
+  "CL-A-SERVO-SPEED": {
+   "title": "Elevon servo speed margin: loaded rate over the 152 deg/s of the +-11 deg, 2.2 Hz roll sinusoid (AR-005, 6.0 V pair)",
+   "value": 1.521,
+   "unit": "-",
+   "limit": ">= 1.0",
+   "pass": true,
+   "margin": 0.5209999999999999,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-HORN-RIB-COUPON": {
+   "title": "Horn-rib coupon: load held 30 s without damage, over the required 36.8 N (2.156 x the 17.05 N hold force)",
+   "value": "-",
+   "unit": "-",
+   "limit": ">= 1.0",
+   "pass": null,
+   "margin": null,
+   "status": "PROPOSED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-HORN-STALL-STEP": {
+   "title": "Horn-rib coupon, stall step: 51 N held 5 s, hole elongation and cracks",
+   "value": "-",
+   "unit": "mm",
+   "limit": "<= 0.1",
+   "pass": null,
+   "margin": null,
+   "status": "PROPOSED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-ELEVON-TORSION-COUPON": {
+   "title": "Elevon-section torsion coupon: torque held over the required 0.161 N m (2.156 x the 74.65 N mm outboard hinge moment at VD)",
+   "value": "-",
+   "unit": "-",
+   "limit": ">= 1.0",
+   "pass": null,
+   "margin": null,
+   "status": "PROPOSED",
+   "category": "illustrative (uncategorised claim)"
+  },
+  "CL-A-HORN-STALL-BENCH": {
+   "title": "Bench stall test on the built aircraft: 51 N for 5 s into the 21 deg stop, hole elongation",
+   "value": "-",
+   "unit": "mm",
+   "limit": "<= 0.1",
+   "pass": null,
+   "margin": null,
+   "status": "PROPOSED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-LINKAGE-FREEPLAY": {
+   "title": "Elevon linkage free play from the hole clearances and the Z-bend freedom (clevis cheek holes '-')",
+   "value": 1.28,
+   "unit": "deg",
+   "limit": "<= 1.0",
+   "pass": false,
+   "margin": -0.28,
+   "status": "UNVERIFIED",
+   "category": "illustrative (uncategorised claim)"
+  },
+  "CL-A-VIB-GM-SHIFT": {
+   "title": "Rate-loop gain margin with the cage modes shifted +-20 %",
+   "value": 1.05,
+   "unit": "-",
+   "limit": ">= 2.0",
+   "pass": false,
+   "margin": -0.475,
+   "status": "UNVERIFIED",
+   "category": "FEA / hand calc (stored result read, not re-run)"
+  },
+  "CL-A-SERVO-FACTOR": {
+   "title": "Servo torque factor at 7.2 V, 25 C (ES3054HV)",
+   "value": 1.555947481873408,
+   "unit": "-",
+   "limit": ">= 1.5",
+   "pass": true,
+   "margin": 0.03729832124893869,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-SERVO-COLD": {
+   "title": "Servo torque factor at 7.2 V, damper at 0 C, real arm ratio",
+   "value": 1.5845556899802722,
+   "unit": "-",
+   "limit": ">= 1.5",
+   "pass": true,
+   "margin": 0.05637045998684812,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-SERVO-RATIO": {
+   "title": "Servo stall torque over the hinge moment at VD (A-P11 wording)",
+   "value": 2.6291390728476824,
+   "unit": "-",
+   "limit": ">= 1.5",
+   "pass": true,
+   "margin": 0.7527593818984549,
+   "status": "UNVERIFIED",
+   "category": "flight dynamics (algebraic, EST inputs)"
+  },
+  "CL-A-COST-TOTAL": {
+   "title": "BOM total incl. tax, shipping, FAA and crash reserve (by its definition, AM-018)",
+   "value": 1939.1716625000001,
+   "unit": "USD",
+   "limit": "<= 2000.0",
+   "pass": true,
+   "margin": 0.030414168749999932,
+   "status": "UNVERIFIED",
+   "category": "illustrative (budget arithmetic)"
+  },
+  "CL-A-COST-MARGIN30": {
+   "title": "Margin to $2,000 if the unverified lines run 30 % over (information only, AM-013)",
+   "value": -29.67643874999999,
+   "unit": "USD",
+   "limit": "-",
+   "pass": null,
+   "margin": null,
+   "status": "UNVERIFIED",
+   "category": "illustrative (budget arithmetic)"
+  },
+  "CL-A-COST-BUDGET": {
+   "title": "BOM total with the unverified lines +30 % (information only, AM-013)",
+   "value": 2029.67643875,
+   "unit": "USD",
+   "limit": "-",
+   "pass": null,
+   "margin": null,
+   "status": "UNVERIFIED",
+   "category": "illustrative (budget arithmetic)"
+  },
+  "CL-A-SCHED-SLACK": {
+   "title": "Slack between the end of F06 and 2027-04-30 (baseline)",
+   "value": 11,
+   "unit": "d",
+   "limit": ">= 0",
+   "pass": true,
+   "margin": 11.0,
+   "status": "UNVERIFIED",
+   "category": "illustrative (schedule arithmetic)"
+  },
+  "CL-A-SCHED-F01": {
+   "title": "Latest-safe F01 start minus the planned start (8 Feb)",
+   "value": 10,
+   "unit": "d",
+   "limit": ">= 0",
+   "pass": true,
+   "margin": 10.0,
+   "status": "UNVERIFIED",
+   "category": "illustrative (schedule arithmetic)"
+  },
+  "CL-A-SCHED-F01-DATE": {
+   "title": "Days from the planned F01 start to the 2027-02-18 trigger",
+   "value": 10,
+   "unit": "d",
+   "limit": ">= 0",
+   "pass": true,
+   "margin": 10.0,
+   "status": "UNVERIFIED",
+   "category": "illustrative (schedule arithmetic)"
+  },
+  "CL-A-SCHED-SENS": {
+   "title": "Slack at p 0.60 (sensitivity, not the baseline)",
+   "value": -5,
+   "unit": "d",
+   "limit": "-",
+   "pass": null,
+   "margin": null,
+   "status": "UNVERIFIED",
+   "category": "illustrative (schedule arithmetic)"
+  },
+  "CL-A-BOX-FIT": {
+   "title": "Packed box against the 1.2 x 0.5 x 0.4 m car-trunk box",
+   "value": 1.0,
+   "unit": "-",
+   "limit": "<= 1.0",
+   "pass": true,
+   "margin": 0.0,
+   "status": "UNVERIFIED",
+   "category": "interference (stored gate result, not re-run)"
+  },
+  "CL-A-COLL-COUNT": {
+   "title": "Part overlaps deeper than the tolerance (neutral, +-20, +-21 deg)",
+   "value": 0,
+   "unit": "-",
+   "limit": "<= 0",
+   "pass": true,
+   "margin": 0.0,
+   "status": "CHECKED",
+   "category": "interference (stored gate result, not re-run)"
+  },
+  "CL-A-COLL-DEPTH": {
+   "title": "Deepest part overlap at any reachable pose",
+   "value": 0.034,
+   "unit": "mm",
+   "limit": "<= 0.05",
+   "pass": true,
+   "margin": 0.32,
+   "status": "CHECKED",
+   "category": "interference (stored gate result, not re-run)"
+  },
+  "CL-A-WIRE-ENDS": {
+   "title": "Wire ends not seated in a part",
+   "value": 0,
+   "unit": "-",
+   "limit": "<= 0",
+   "pass": true,
+   "margin": 0.0,
+   "status": "CHECKED",
+   "category": "interference (stored gate result, not re-run)"
+  },
+  "CL-A-WIRE-FOLDS": {
+   "title": "Wire folds (kinks)",
+   "value": 0,
+   "unit": "-",
+   "limit": "<= 0",
+   "pass": true,
+   "margin": 0.0,
+   "status": "CHECKED",
+   "category": "interference (stored gate result, not re-run)"
+  },
+  "CL-A-ASSY-STEPS": {
+   "title": "Build steps that pass the assembly sweep",
+   "value": 59,
+   "unit": "-",
+   "limit": ">= 59",
+   "pass": true,
+   "margin": 0.0,
+   "status": "CHECKED",
+   "category": "interference (stored gate result, not re-run)"
+  },
+  "CL-A-ASSY-PARTS": {
+   "title": "Parts placed by the build sequence",
+   "value": 129,
+   "unit": "-",
+   "limit": ">= 129",
+   "pass": true,
+   "margin": 0.0,
+   "status": "CHECKED",
+   "category": "interference (stored gate result, not re-run)"
+  },
+  "MC-MASS-TOTAL": {
+   "title": "merge_check CAD mass roll-up vs budget limit",
+   "value": 1689.19,
+   "unit": "g",
+   "limit": "<= 1500",
+   "pass": false,
+   "margin": -0.12612666666666716,
+   "category": "rigid-body (static mass properties, algebra)"
+  },
+  "MC-CG-X": {
+   "title": "merge_check CG aft of LE vs budget band",
+   "value": 20.575,
+   "unit": "mm",
+   "limit": "4.0 .. 28.5",
+   "pass": true,
+   "margin": null,
+   "category": "rigid-body (static mass properties, algebra)"
+  },
+  "MC-GRAPH": {
+   "title": "merge_check interface graph (exit code; its only error today is the mass limit above)",
+   "value": 1,
+   "unit": "exit code",
+   "limit": "0",
+   "pass": false,
+   "margin": null,
+   "category": "interference (graph consistency, static)"
+  }
+ },
+ "key_metrics": [
+  "MC-MASS-TOTAL",
+  "MC-CG-X",
+  "CL-A-MASS-PRED",
+  "CL-A-CG",
+  "CL-A-CG-HI",
+  "CL-A-SM",
+  "CL-A-TW-FRESH-PRED",
+  "CL-A-TW-SAG-PRED",
+  "CL-A-WINDOW-PRED",
+  "CL-A-MOTOR-I",
+  "CL-A-ESC-I",
+  "CL-A-CRUISE-NEED",
+  "CL-A-CRUISE-AVAIL",
+  "CL-A-COST-TOTAL"
+ ],
+ "deltas": [
+  {
+   "id": "CL-A-CG",
+   "title": "CG aft of the leading edge, CAD as drawn",
+   "category": "rigid-body (static mass properties, algebra)",
+   "limit": ">= 19.0",
+   "before": "22.05 mm",
+   "after": "20.63 mm",
+   "before_verdict": "PASS",
+   "after_verdict": "PASS",
+   "margin_before": 0.16049270301251278,
+   "margin_after": 0.0855375498664337,
+   "margin_delta": -0.07495515314607909
+  },
+  {
+   "id": "CL-A-CG-HI",
+   "title": "CG aft limit of the design band",
+   "category": "rigid-body (static mass properties, algebra)",
+   "limit": "<= 26.0",
+   "before": "22.05 mm",
+   "after": "20.63 mm",
+   "before_verdict": "PASS",
+   "after_verdict": "PASS",
+   "margin_before": 0.15194764010624068,
+   "margin_after": 0.20672255971299075,
+   "margin_delta": 0.05477491960675007
+  },
+  {
+   "id": "CL-A-CG-TRIM-AFT",
+   "title": "CG at the aft end of the pack trim travel",
+   "category": "rigid-body (static mass properties, algebra)",
+   "limit": "<= 28.5",
+   "before": "23.69 mm",
+   "after": "22.51 mm",
+   "before_verdict": "PASS",
+   "after_verdict": "PASS",
+   "margin_before": 0.1686063291661617,
+   "margin_after": 0.2102099739215039,
+   "margin_delta": 0.0416036447553422
+  },
+  {
+   "id": "CL-A-CG-TRIM-FWD",
+   "title": "CG at the forward end of the pack trim travel",
+   "category": "rigid-body (static mass properties, algebra)",
+   "limit": ">= 19.0",
+   "before": "21.06 mm",
+   "after": "19.49 mm",
+   "before_verdict": "PASS",
+   "after_verdict": "PASS",
+   "margin_before": 0.10853402106956604,
+   "margin_after": 0.02604905631564741,
+   "margin_delta": -0.08248496475391863
+  },
+  {
+   "id": "CL-A-CRUISE-AVAIL",
+   "title": "Cruise time to BATT_LOW at the predicted mass",
+   "category": "flight dynamics (algebraic, EST inputs)",
+   "limit": ">= 204.55636934924914",
+   "before": "233.8 s",
+   "after": "313.9 s",
+   "before_verdict": "PASS",
+   "after_verdict": "PASS",
+   "margin_before": 0.1429122707777108,
+   "margin_after": 0.5345640915084063,
+   "margin_delta": 0.39165182073069554
+  },
+  {
+   "id": "CL-A-CUTS-REQUIRED",
+   "title": "EST cuts that must be real for <= 1.470 kg",
+   "category": "rigid-body (static mass properties, algebra)",
+   "limit": "<= 41.6",
+   "before": "409.1 g",
+   "after": "457.3 g",
+   "before_verdict": "FAIL",
+   "after_verdict": "FAIL",
+   "margin_before": -8.83470582464788,
+   "margin_after": -9.993600055417106,
+   "margin_delta": -1.158894230769226
+  },
+  {
+   "id": "CL-A-MASS-GATE-ROOM",
+   "title": "Predicted mass against the 1.47 kg gate",
+   "category": "rigid-body (static mass properties, algebra)",
+   "limit": "<= 1.47",
+   "before": "1.881 kg",
+   "after": "1.935 kg",
+   "before_verdict": "FAIL",
+   "after_verdict": "FAIL",
+   "margin_before": -0.2793680625850341,
+   "margin_after": -0.3160142217687074,
+   "margin_delta": -0.03664615918367331
+  },
+  {
+   "id": "CL-A-MASS-ITEM",
+   "title": "Predicted mass, itemised growth by maturity (cross-check)",
+   "category": "rigid-body (static mass properties, algebra)",
+   "limit": "<= 1.47",
+   "before": "1.447 kg",
+   "after": "1.496 kg",
+   "before_verdict": "PASS",
+   "after_verdict": "FAIL",
+   "margin_before": 0.015369387755102099,
+   "margin_after": -0.0174265306122449,
+   "margin_delta": -0.032795918367347
+  },
+  {
+   "id": "CL-A-MASS-PRED",
+   "title": "Predicted take-off mass (CAD basic x growth + overrun)",
+   "category": "rigid-body (static mass properties, algebra)",
+   "limit": "<= 1.47",
+   "before": "1.881 kg",
+   "after": "1.935 kg",
+   "before_verdict": "FAIL",
+   "after_verdict": "FAIL",
+   "margin_before": -0.2793680625850341,
+   "margin_after": -0.3160142217687074,
+   "margin_delta": -0.03664615918367331
+  },
+  {
+   "id": "CL-A-MASS-USER",
+   "title": "Predicted mass against the 25 kg user cap",
+   "category": "rigid-body (static mass properties, algebra)",
+   "limit": "<= 25.0",
+   "before": "1.881 kg",
+   "after": "1.935 kg",
+   "before_verdict": "PASS",
+   "after_verdict": "PASS",
+   "margin_before": 0.92477315792,
+   "margin_after": 0.9226183637600001,
+   "margin_delta": -0.002154794159999973
+  },
+  {
+   "id": "CL-A-SM",
+   "title": "Static margin at the CAD CG",
+   "category": "flight dynamics (algebraic, EST inputs)",
+   "limit": ">= 5.0",
+   "before": "7.613 % chord",
+   "after": "8.194 % chord",
+   "before_verdict": "PASS",
+   "after_verdict": "PASS",
+   "margin_before": 0.5225011136948785,
+   "margin_after": 0.6387580859214502,
+   "margin_delta": 0.11625697222657172
+  },
+  {
+   "id": "CL-A-TW-FRESH-PRED",
+   "title": "Hover T/W fresh at the predicted mass (0.90 cap)",
+   "category": "flight dynamics (algebraic, EST inputs)",
+   "limit": ">= 2.0",
+   "before": "2.713 -",
+   "after": "2.637 -",
+   "before_verdict": "PASS",
+   "after_verdict": "PASS",
+   "margin_before": 0.35643202131910434,
+   "margin_after": 0.31866037496996036,
+   "margin_delta": -0.037771646349143984
+  },
+  {
+   "id": "CL-A-TW-SAG-PRED",
+   "title": "Hover T/W sagged pack at the predicted mass (0.90 cap)",
+   "category": "flight dynamics (algebraic, EST inputs)",
+   "limit": ">= 1.6",
+   "before": "2.152 -",
+   "after": "2.092 -",
+   "before_verdict": "PASS",
+   "after_verdict": "PASS",
+   "margin_before": 0.345105861676433,
+   "margin_after": 0.30764960724505047,
+   "margin_delta": -0.03745625443138251
+  },
+  {
+   "id": "CL-A-WINDOW-PRED",
+   "title": "Transition entry window at the predicted mass (0.90 cap)",
+   "category": "flight dynamics (algebraic, EST inputs)",
+   "limit": ">= 5.0",
+   "before": "12.84 %",
+   "after": "11.45 %",
+   "before_verdict": "PASS",
+   "after_verdict": "PASS",
+   "margin_before": 1.5672965600570088,
+   "margin_after": 1.2890503391177492,
+   "margin_delta": -0.27824622093925955
+  },
+  {
+   "id": "MC-CG-X",
+   "title": "merge_check CG aft of LE vs budget band",
+   "category": "rigid-body (static mass properties, algebra)",
+   "limit": "4.0 .. 28.5",
+   "before": "22 mm",
+   "after": "20.57 mm",
+   "before_verdict": "PASS",
+   "after_verdict": "PASS",
+   "margin_before": null,
+   "margin_after": null
+  },
+  {
+   "id": "MC-MASS-TOTAL",
+   "title": "merge_check CAD mass roll-up vs budget limit",
+   "category": "rigid-body (static mass properties, algebra)",
+   "limit": "<= 1500",
+   "before": "1641.0 g",
+   "after": "1689.2 g",
+   "before_verdict": "FAIL",
+   "after_verdict": "FAIL",
+   "margin_before": -0.09398666666666729,
+   "margin_after": -0.12612666666666716,
+   "margin_delta": -0.03213999999999988
+  }
+ ],
+ "pass_fail_flips": [
+  {
+   "id": "CL-A-MASS-ITEM",
+   "before_verdict": "PASS",
+   "after_verdict": "FAIL",
+   "before": "1.447 kg",
+   "after": "1.496 kg",
+   "category": "rigid-body (static mass properties, algebra)"
+  }
+ ],
+ "interpretation": [
+  "REGRESSION: CL-A-MASS-ITEM PASS -> FAIL (1.447 kg -> 1.496 kg, limit <= 1.47) [rigid-body (static mass properties, algebra)]",
+  "Margin CL-A-CUTS-REQUIRED: -8.83 -> -9.99 (409.1 g -> 457.3 g) [rigid-body (static mass properties, algebra)]",
+  "Margin CL-A-CRUISE-AVAIL: 0.143 -> 0.535 (233.8 s -> 313.9 s) [flight dynamics (algebraic, EST inputs)]",
+  "Margin CL-A-WINDOW-PRED: 1.57 -> 1.29 (12.84 % -> 11.45 %) [flight dynamics (algebraic, EST inputs)]",
+  "Margin CL-A-SM: 0.523 -> 0.639 (7.613 % chord -> 8.194 % chord) [flight dynamics (algebraic, EST inputs)]",
+  "Margin CL-A-CG-TRIM-FWD: 0.109 -> 0.026 (21.06 mm -> 19.49 mm) [rigid-body (static mass properties, algebra)]",
+  "Failing metrics: 14 baseline -> 15 variant (of 100 judged).",
+  "All claim values inherit the EST / UNVERIFIED status of their inputs (see params-A.json); a PASS here is a re-computation, not a flight or bench result. Stored FEA / SITL / gate results are read, not re-run."
+ ],
+ "guard_hashes_before": {
+  "redesign/qp/A/params-A.json": "3c5aecb9140624a0",
+  "redesign/qp/A/proofs/out/graph.json": "24c56742b3e3ef6a",
+  "redesign/qp/A/cad/model/mass_budget.json": "89e964b00ea88b31",
+  "redesign/qp/A/cad/model/power/interfaces.json": "b9cc36a2888fd082",
+  "redesign/qp/A/cad/model/cage/interfaces.json": "dd997a5cf985c69e",
+  "redesign/qp/A/BOM-A.csv": "7071a09851bc8fc2",
+  "redesign/qp/A/sitl/cad_mass.json": "de713ef92bea87af"
+ },
+ "guard_hashes_after": {
+  "redesign/qp/A/params-A.json": "3c5aecb9140624a0",
+  "redesign/qp/A/proofs/out/graph.json": "24c56742b3e3ef6a",
+  "redesign/qp/A/cad/model/mass_budget.json": "89e964b00ea88b31",
+  "redesign/qp/A/cad/model/power/interfaces.json": "b9cc36a2888fd082",
+  "redesign/qp/A/cad/model/cage/interfaces.json": "dd997a5cf985c69e",
+  "redesign/qp/A/BOM-A.csv": "7071a09851bc8fc2",
+  "redesign/qp/A/sitl/cad_mass.json": "de713ef92bea87af"
+ },
+ "committed_unchanged": true,
+ "baseline_matches_committed": {
+  "match": true,
+  "n_diff": 0,
+  "ids": []
+ },
+ "saved_design_dir": "tools\\design_loop\\evidence\\T035-demo-pack-3p3Ah\\variant_design"
+}

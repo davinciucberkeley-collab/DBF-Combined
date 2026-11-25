@@ -1,0 +1,2 @@
+circle r10 mm: J 15951 mm4 (exact pi r^4/2 = 15708), tau/T 8.002e-04 /mm3 incl x1.10 (exact r/J = 6.366e-04)
+rect 5 x 20 mm: J 746 mm4 (Roark 702), tau/T 7.198e-03 /mm3 incl x1.10 (Roark T(3a+1.8b)/(8a^2b^2) = 6.900e-03)

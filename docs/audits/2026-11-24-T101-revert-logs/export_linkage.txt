@@ -1,0 +1,2 @@
+C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\qp\A\sims3d\out\linkage.json  89.2 KB  poses/side 85  min clearance 0.000 mm (arm / servo case), excl design contact 0.066 mm
+exit 0

@@ -1,4 +1,9 @@
-"""Concept A single BOM.  Reproduce: python -I bom_a.py  (stdlib; reads BOM-A.csv beside it; prints markdown; writes nothing)
+"""Concept A single BOM (adopted T-083c 2026-11-22 from mechanism/out/T083b_data/bom_t083b.py; BOM-A.csv = BOM-T083b.csv; D-227..D-229, AM-018, AM-019).
+Reproduce: python -I bom_a.py
+T-083b COPY of T083_data/bom_t083.py reading BOM-T083b.csv (T11 note: also the two FIN-003 root-fitting blanks from the offcut; no price change). T-083 COPY of T077p8_data/bom_p8.py (reads BOM-T083b.csv = BOM-P8.csv with P01 -> SunnySky X2216 V3 880KV short shaft RMRC $22.99 (ship group RMRC), W10 XT90 pigtail set $12.99,
+W07 x2 (100 mm stock leads), the config-study reads (V03 $129.01, R09 $15.36, R10 8x6 $8.50); crash reserve by its definition (AM-018): same rule, it follows P01).
+T-077 p8 COPY of T082_data/bom_t082.py (reads BOM-P8.csv = BOM-T082.csv + R15 25x23 rib tube, T11 6061 bar for the centre node, T12 cotton flock; Carbonwebshop shipping EST $25.00; the crash-reserve tube set adds R15).
+Concept A single BOM.  Reproduce: python -I bom_a.py  (stdlib; reads BOM-A.csv beside it; prints markdown; writes nothing)
 Basis: tax 10.25 % on goods (not shipping); FAA $5; budget $2,000. Shipping per distinct ship_group, EST: RMRC $15.00,
 TMotor $10.71, Amazon $10.71, Prusa $10.71 (EST, D-183), Local $0 (RMRC rates not readable, see review/QP-1/COST.md).
 Status: verified = vendor page read 2026-11-14; unverified = snippet (U) or estimate (EST).
@@ -7,7 +12,7 @@ Crash reserve = one bad crash BEYOND the spares in the BOM: 1 flight pack + 1 mo
 it (a bad crash that also kills them is not covered); stated in MASS-GATE / BASELINE."""
 import csv, os, math
 TAX, FAA, BUDGET, BUMP = 0.1025, 5.0, 2000.0, 0.30
-SHIP = {"RMRC": 15.0, "TMotor": 10.71, "Amazon": 10.71, "Prusa": 10.71, "SparkFun": 8.00, "Local": 0.0}
+SHIP = {"RMRC": 0.0, "TMotor": 0.0, "Amazon": 0.0, "Prusa": 10.71, "SparkFun": 8.00, "Local": 0.0, "RDQ": 10.71, "Alcobra": 10.71, "Zoro": 5.99, "Wicks": 10.71, "USComposites": 10.71, "Carbonwebshop": 25.00}
 rows = list(csv.DictReader(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "BOM-A.csv"), encoding="utf-8")))
 for r in rows:
     r["qty"] = float(r["qty"]); r["u"] = float(r["unit_usd"]); r["spares"] = float(r["spares"])
@@ -19,9 +24,9 @@ def line(i): return next(r["u"] for r in rows if r["id"] == i)
 def ship(): return sum(SHIP[g] for g in {r["ship_group"] for r in rows})
 def reserve(bump=0.0):
     f = 1 + bump
-    tubes = sum(r["qty"]*r["u"] for r in rows if r["id"] in ("R02", "R08", "R09", "R10"))   # QP-4: full carbon-tube set (16x14, 3 x 12x10, 14x12, 6x4.5); R04 removed
+    tubes = sum(r["qty"]*r["u"] for r in rows if r["id"] in ("R02", "R08", "R09", "R10", "R15"))   # QP-4: full carbon-tube set (16x14, 3 x 12x10, 14x12, 6x4.5); R04 removed
     airset = line("R01")*f + tubes + 0.5*line("R03")*f
-    return (line("W01") + line("P01") + line("M01") + airset)*(1+TAX) + SHIP["TMotor"] + SHIP["RMRC"] + SHIP["Amazon"]
+    return (line("W01") + line("P01") + line("M01") + airset)*(1+TAX) + 10.71 + 15.0 + 10.71   # T-082: reserve keeps its 3 shipments at the original EST (definition unchanged)
 def totals(bump=0.0):
     g = goods(bump); spend = g*(1+TAX) + ship() + FAA; res = reserve(bump)
     return dict(goods=g, tax=g*TAX, ship=ship(), spend=spend, reserve=res, total=spend+res, margin=BUDGET-spend-res)

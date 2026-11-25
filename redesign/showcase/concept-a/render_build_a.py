@@ -66,8 +66,10 @@ MODEL_A = os.path.join(CAD_A, 'model')
 BLENDER_DEFAULT = r'C:/Users/dillo/tools/blender/blender-4.5.14-windows-x64/blender.exe'
 OUT = os.path.join(HERE, 'animation')
 
-FPS = 24
+FPS = 24                             # T-027: defaults of the build film; --fps / --width / --height override them (apply_res), all workers and the encode get the same values
 W, H = 1280, 720
+BASE_W = 1280.0                      # the overlay is laid out for a 1280-px-wide frame; k = picture width / BASE_W scales it to any resolution
+FILM_DIR = os.path.join(HERE, 'film')
 T_TITLE, T_CAM_STAGE = 6.5, 1.2      # s stage title card (camera moves during its first T_CAM_STAGE)
 T_CAM = 0.7                          # s camera move before a step (fallback when cam_plan.json is missing; see cam_duration)
 T_CAM_MIN, T_CAM_MAX = 0.6, 4.8      # s camera move limits; the move time grows with the zoom change, the swing and the shift (cam_duration)
@@ -88,15 +90,15 @@ GHOST_STEPS_Y = 0.40                 # m, the x-ray close-up camera follows the 
 T_MOVE = {'long': 2.2, 'short': 1.7, 'appear': 1.0}
 
 STAGES = [
-    ('Wing core and spar', ['A1', 'A2', 'A3', 'A4', 'A5']),
-    ('Cage frame on the bench (D-202), motor leads threaded, motors, props, dock', ['B0a', 'B0b', 'B0c', 'B0d', 'B0e', 'B0f', 'B0g1', 'B0g2', 'B0g3', 'B0g4', 'B0h', 'B0i1', 'B0i2', 'B0i3', 'B0i4', 'B0j1', 'B0j2', 'B0k', 'B1']),
-    ('Rib saddles, phase-lead raceways, pack tray, hinge dampers', ['B2', 'B2a', 'B2b1', 'B2b2', 'B2b3', 'B2b4', 'B2c', 'B3', 'B4']),
-    ('Fin ribs and rib fairings', ['C1', 'C1a']),
+    ('Wing core with bulkheads, plates and skin plies (T-077 p8)', ['A1']),
+    ('Cage frame on the bench (D-202), centre node, motor leads threaded, motors, props, dock; then the spar and plugs', ['B0a', 'B0b', 'B0c', 'B0d', 'B0e', 'B0f', 'B0g1', 'B0g2', 'B0g3', 'B0g4', 'B0h', 'B0i1', 'B0i2', 'B0i3', 'B0i4', 'B0j1', 'B0j2', 'B0k', 'B1', 'A2', 'A3', 'A4', 'A5']),
+    ('Phase-lead raceways, pack tray, hinge dampers', ['B2a', 'B2b1', 'B2b2', 'B2b3', 'B2b4', 'B2c', 'B3', 'B4']),
+    ('Fin ribs (25x23) and rib fairings', ['C1', 'C1a', 'C1b']),
     ('Elevons, balance strips, lens caps', ['C2', 'C2a', 'C2b']),
     ('Fins: fairings, root blocks, tubes', ['C3', 'C4', 'C5', 'C6']),
     ('Landing feet', ['C7', 'C8', 'C9']),
     ('Servos, pushrods, horns, lead threading', ['D1', 'D0', 'D2', 'D2a', 'D3', 'D4', 'D5', 'D5b']),
-    ('Avionics: pitot, plate, ESC, FC, leads', ['E1', 'E2', 'E3', 'E3a', 'E3d', 'E3b']),
+    ('Avionics: pitot, R2 bosses, ESC, FC, leads', ['E1', 'E2', 'E3', 'E3a', 'E3d', 'E3b']),
     ('Pack, XT60, strap, phase leads, bay cover', ['E3c', 'E4', 'E4a', 'E4b', 'E5', 'E6', 'E7']),
 ]
 # per-step camera direction (azimuth from the nose, 90 = left; elevation) where the default (38, 30) hides the part
@@ -121,11 +123,11 @@ SERVO_EDGES = ('E-HRN-07', 'E-HRN-08')
 REVEAL_EDGES = PHASE_EDGES + SERVO_EDGES
 SERVO_START = {'E-HRN-07': 'MEC-001-R', 'E-HRN-08': 'MEC-001-L'}      # the servo lead is threaded from the servo pocket to the slit
 # camera framing: steps with a right and a left part frame the right one only (the left mirrors it); smaller context for small parts
-ONE_SIDE = ('D1', 'D2', 'D2a', 'D3', 'D4', 'D5', 'C7', 'C8', 'C9', 'C1', 'C1a', 'C3', 'C5', 'C6', 'B4', 'C2a', 'C2b')
+ONE_SIDE = ('D1', 'D2', 'D2a', 'D3', 'D4', 'D5', 'C7', 'C8', 'C9', 'C1', 'C1a', 'C1b', 'C3', 'C5', 'C6', 'B4', 'C2a', 'C2b')
 MIN_HALF_STEP = {'D1': 0.10, 'D2': 0.07, 'D2a': 0.05, 'D3': 0.07, 'D4': 0.06, 'D5': 0.05, 'D5b': 0.05, 'C7': 0.12, 'C8': 0.12, 'C9': 0.10, 'E1': 0.15, 'E2': 0.07, 'E3': 0.08,
                  'E3a': 0.06, 'E3d': 0.06, 'E3b': 0.08, 'E3c': 0.07, 'E4': 0.09, 'E4a': 0.08, 'E4b': 0.09, 'E5': 0.09, 'E6': 0.09, 'E7': 0.08, 'D0': 0.09, 'B2a': 0.10, 'B2b1': 0.10, 'B2b2': 0.10, 'B2b3': 0.10, 'B2b4': 0.10, 'B3': 0.10}
 HEAD_R_MM = 4.5                      # bead at the head of a lead being threaded (the lead is 1.2 mm: the bead shows where the fish wire is)
-EXTRA_PTS = {'D0': [(0.083, 0.024, 0.012), (0.14, 0.20, 0.0)]}      # marker steps: points the camera must also frame (servo pocket, slit)
+EXTRA_PTS = {'D0': [(0.064, 0.024, 0.012), (0.14, 0.20, 0.0)]}      # marker steps: points the camera must also frame (servo pocket, slit)
 GHOST_EXTRA = {'D1': ['WNG-001'], 'D0': ['WNG-001']}   # more x-ray steps (not part-inside-part steps with a follow camera): the core is see-through so the pocket, the servo and the lead in the groove are visible
 GHOST_VIEW, GHOST_DIST = (50, 34), 0.24   # x-ray steps (step data 'ghost'): close-up camera that follows the plug along the spar (azimuth, elevation; distance m)
 GHOST_B0 = ('CGE-001', 'CGE-002-', 'CGE-003-', 'CGE-009-', 'CGE-010-')
@@ -134,6 +136,18 @@ FAB_ONLY = {'B1': ('PRP-',)}          # B1: during its make-it beat only the mot
 NO_CONTEXT = ('B0a',)                  # the stage's first step frames only the cage unit on the bench (like the bench steps), not everything placed so far
 T_CHK_CAM = 1.8                      # s camera pull-back to the whole assembly while a checkpoint card is up
 MARKER_BEAT_KINDS = ('thread', 'solder')   # these fab kinds are shown during the marker step's motion, not as a separate beat
+
+
+def apply_res(width=None, height=None, fps=None):
+    """T-027: set the module-level frame size and rate (defaults 1280x720 @ 24 reproduce the build film)."""
+    global W, H, FPS
+    W, H, FPS = int(width or W), int(height or H), int(fps or FPS)
+
+
+def add_res_args(ap):
+    ap.add_argument('--width', type=int, default=W, help='frame width in px (default %d)' % W)
+    ap.add_argument('--height', type=int, default=H, help='frame height in px (default %d)' % H)
+    ap.add_argument('--fps', type=int, default=FPS, help='frames per second (default %d)' % FPS)
 
 
 def smooth(x):
@@ -296,6 +310,415 @@ def moving_frames(rows, total):
 
 
 # =====================================================================================================================
+# short film (T-027): shot list -> scenes of shots; pure functions shared by the Blender worker and the driver
+# =====================================================================================================================
+PARAMS_A = os.path.join(REDESIGN, 'qp', 'A', 'params-A.json')
+FILM_MODES = ('normal', 'ghost', 'fab', 'fab50', 'move', 'hidden')      # fab50 (T-030 M-8): fabricated-part teal at 50 % opacity, for a part whose inside must stay visible
+
+
+def param_value(path):
+    """params-A.json value by key path, e.g. 'box/packed_m/0' (a dict node with a 'value' is unwrapped; digits index lists)."""
+    o = json.load(open(PARAMS_A))
+    for k in path.split('/'):
+        if isinstance(o, dict) and k not in o and 'value' in o:
+            o = o['value']
+        o = o[int(k)] if isinstance(o, list) else o[k]
+    return o['value'] if isinstance(o, dict) and 'value' in o else o
+
+
+def _cam_vec(c):
+    return (float(c['target'][0]), float(c['target'][1]), float(c['target'][2]), float(c['az']), float(c['el']), float(c['dist']))
+
+
+def load_film(path, scene_ids=None):
+    """Shot-list JSON -> {'scenes': [...], 'total': s}. Camera keys are given per shot as {t (s from shot start), target, az, el, dist}; the
+    keys of all shots of a scene form ONE path (hermite_cam, C1: no velocity jump at a shot join). A shot's start camera is the previous shot's
+    last key, so only the first shot of a scene needs a key at t = 0; cuts are allowed only between scenes."""
+    d = json.load(open(path, encoding='utf-8'))
+    scenes, t = [], 0.0
+    for sc in d['scenes']:
+        if scene_ids and sc['id'] not in scene_ids:
+            continue
+        S = dict(id=sc['id'], title=sc.get('title', ''), t0=t, shots=[], keys=[])
+        st = 0.0
+        for n, sh in enumerate(sc['shots']):
+            sh = dict(sh)
+            sh['scene'] = sc['id']
+            sh['t0'], sh['t1'] = st, st + float(sh['dur'])
+            last = S['keys'][-1][1] if S['keys'] else None
+            for kf in sh.get('cam', []):
+                tk, c = st + float(kf['t']), _cam_vec(kf)
+                if S['keys'] and tk <= S['keys'][-1][0] + 1e-9:
+                    if tk == st and last is not None and max(abs(a - b) for a, b in zip(c, last)) < 1e-9:
+                        continue              # the shot restates the camera it starts from: same key
+                    raise ValueError('%s shot %s: camera key at %.2f s is not after the previous key (%s) - a cut inside a scene is not allowed' % (sc['id'], sh['id'], tk, last))
+                S['keys'].append((tk, c, True) if kf.get('hold') else (tk, c))      # hold: zero camera velocity at this key (T-030: the camera stops at the end view of 3.2 instead of overshooting it)
+            if n == 0 and (not S['keys'] or S['keys'][0][0] != 0.0):
+                raise ValueError('%s: the first shot needs a camera key at t = 0' % sc['id'])
+            st = sh['t1']
+            S['shots'].append(sh)
+        S['dur'] = st
+        t += st
+        scenes.append(S)
+    return dict(scenes=scenes, total=t, raw=d)
+
+
+def hermite_cam(keys, tl):
+    """Camera (tx, ty, tz, az, el, dist) at scene time tl: cubic Hermite through the keys with Catmull-Rom tangents (distance interpolated
+    geometrically, as lerp_cam does), zero velocity only at the first and last key, so shot joins inside a scene have no velocity jump."""
+    ts = [k[0] for k in keys]
+    hold = [len(k) > 2 and bool(k[2]) for k in keys]
+    ps = [list(k[1][:5]) + [math.log(k[1][5])] for k in keys]
+    n = len(ts)
+    if n == 1:
+        q = ps[0]
+    else:
+        if tl <= ts[0]:
+            i, u = 0, 0.0
+        elif tl >= ts[-1]:
+            i, u = n - 2, 1.0
+        else:
+            i = bisect.bisect_right(ts, tl) - 1
+            u = (tl - ts[i]) / (ts[i + 1] - ts[i])
+        h = ts[i + 1] - ts[i]
+
+        def tan(j):
+            if j <= 0 or j >= n - 1 or hold[j]:
+                return [0.0] * 6
+            return [(ps[j + 1][m] - ps[j - 1][m]) / (ts[j + 1] - ts[j - 1]) for m in range(6)]
+        m0, m1 = tan(i), tan(i + 1)
+        h00, h10, h01, h11 = 2 * u ** 3 - 3 * u ** 2 + 1, u ** 3 - 2 * u ** 2 + u, -2 * u ** 3 + 3 * u ** 2, u ** 3 - u ** 2
+        q = [h00 * ps[i][m] + h10 * h * m0[m] + h01 * ps[i + 1][m] + h11 * h * m1[m] for m in range(6)]
+    return (q[0], q[1], q[2], q[3], q[4], math.exp(q[5]))
+
+
+def film_at(film, t):
+    """(scene, shot, scene-local time) for film time t (clamped to the last frame)."""
+    sc = film['scenes'][-1]
+    for S in film['scenes']:
+        if t >= S['t0']:
+            sc = S
+    tl = min(max(0.0, t - sc['t0']), sc['dur'] - 1e-6)
+    sh = sc['shots'][-1]
+    for x in sc['shots']:
+        if tl >= x['t0']:
+            sh = x
+    return sc, sh, tl
+
+
+def camera_motion(seq):
+    """T-030-N m-B (R-VID-04, category: camera path check, no mesh): per-frame camera speed and acceleration along every scene's path. seq = [(scene, shot, frame, (tx, ty, tz, az, el, dist))] in frame order.
+    Per frame pair (one scene only, a scene join is a cut): view-direction velocity (unit-sphere vector difference x fps, deg/s) and its acceleration (deg/s^2); zoom rate d(ln dist)/dt (1/s)
+    and its rate of change (1/s^2); target pan speed in camera distances per second (1/s) and its change (1/s^2). Follow shots: the target keys are offsets from the aircraft, so the aircraft's own
+    motion is not part of it. Returns the peak of each quantity (value, frame, shot) and the peak per shot."""
+    def vdir(c):
+        ar, er = math.radians(c[3]), math.radians(c[4])
+        return (-math.cos(er) * math.cos(ar), -math.cos(er) * math.sin(ar), math.sin(er))
+    names = (('view_speed', 'deg/s'), ('view_accel', 'deg/s^2'), ('zoom_rate', '1/s'), ('zoom_accel', '1/s^2'), ('pan_speed', 'dist/s'), ('pan_accel', 'dist/s^2'))
+    peak = {n_: dict(value=0.0, unit=u_, frame=0, shot='') for n_, u_ in names}
+    per_shot = {}
+    prev = vprev = None
+    for sc_, sh_, f, c in seq:
+        v = vdir(c)
+        cur = (sc_, c, v)
+        if prev is not None and prev[0] == sc_:
+            vel = tuple((v[i] - prev[2][i]) * FPS for i in range(3))                      # view-direction velocity vector (rad/s on the unit sphere)
+            zr = math.log(c[5] / prev[1][5]) * FPS
+            pn = tuple((c[i] - prev[1][i]) * FPS / c[5] for i in range(3))
+            now = dict(view_speed=math.degrees(math.sqrt(sum(x * x for x in vel))), zoom_rate=abs(zr), pan_speed=math.sqrt(sum(x * x for x in pn)))
+            if vprev is not None and vprev[0] == sc_:
+                now['view_accel'] = math.degrees(math.sqrt(sum(((vel[i] - vprev[1][i]) * FPS) ** 2 for i in range(3))))
+                now['zoom_accel'] = abs(zr - vprev[2]) * FPS
+                now['pan_accel'] = math.sqrt(sum(((pn[i] - vprev[3][i]) * FPS) ** 2 for i in range(3)))
+            for n_, v_ in now.items():
+                if v_ > peak[n_]['value']:
+                    peak[n_].update(value=v_, frame=f, shot='%s/%s' % (sc_, sh_))
+                ps = per_shot.setdefault('%s/%s' % (sc_, sh_), {})
+                ps[n_] = max(ps.get(n_, 0.0), v_)
+            vprev = (sc_, vel, zr, pn)
+        else:
+            vprev = None
+        prev = cur
+    return dict(peak=peak, per_shot={k_: {n_: round(x_, 3) for n_, x_ in v_.items()} for k_, v_ in per_shot.items()}, fps=FPS,
+                note='view = camera direction as a unit vector; speeds from the per-frame difference (no smoothing); a scene join is not a pair')
+
+
+# ---- scene 3 (T-028): servo arm / pushrod / horn / elevon posed from the SOLVED kinematics (AR-001), not hand keyframes
+KIN_CSV = os.path.join(REDESIGN, 'qp', 'A', 'mechanism', 'out', 'linkage_kinematics.csv')
+KIN_JSON = os.path.join(REDESIGN, 'qp', 'A', 'mechanism', 'out', 'linkage_kinematics.json')
+_KIN = {}
+
+
+def load_kin():
+    """AR-001 output: the elevon angle -> servo angle table (linkage_kinematics.csv, 0.05 deg steps, +-21 deg) and the CAD geometry constants it was solved with."""
+    if not _KIN:
+        import csv
+        rows = list(csv.DictReader(open(KIN_CSV, encoding='utf-8')))
+        d = [float(r['delta_deg']) for r in rows]
+        th = [float(r['theta_R_deg']) for r in rows]
+        if any(b <= a for a, b in zip(th, th[1:])) or any(b <= a for a, b in zip(d, d[1:])):
+            raise ValueError('linkage_kinematics.csv: delta and theta_R must both increase (the servo angle is inverted by interpolation)')
+        _KIN.update(delta=d, theta=th, geom=json.load(open(KIN_JSON, encoding='utf-8'))['geometry'])
+    return _KIN
+
+
+def _interp(xs, ys, x):
+    if x < xs[0] - 1e-9 or x > xs[-1] + 1e-9:
+        raise ValueError('kinematics table covers %.2f..%.2f, asked %.4f' % (xs[0], xs[-1], x))
+    i = min(max(bisect.bisect_right(xs, x) - 1, 0), len(xs) - 2)
+    u = (x - xs[i]) / (xs[i + 1] - xs[i])
+    return ys[i] * (1 - u) + ys[i + 1] * u
+
+
+def mech_state(shot, tl):
+    """Servo-arm angle (right side, deg) and elevon angle (deg) at scene time tl. The shot's 'mech' = {'sweep': [[t, elevon_deg], ...]} (t in s from
+    the shot start) names the commanded elevon end points; each is converted to a servo angle through the AR-001 table, the SERVO angle is eased
+    (smoothstep) between them, and the elevon angle is read back from the table at that servo angle (linear interpolation)."""
+    K = load_kin()
+    wp = shot['mech']['sweep']
+    t = tl - shot['t0']
+    th = [_interp(K['delta'], K['theta'], w[1]) for w in wp]
+    if t <= wp[0][0]:
+        q = th[0]
+    elif t >= wp[-1][0]:
+        q = th[-1]
+    else:
+        i = bisect.bisect_right([w[0] for w in wp], t) - 1
+        q = th[i] + (th[i + 1] - th[i]) * smooth((t - wp[i][0]) / (wp[i + 1][0] - wp[i][0]))
+    return dict(theta_R=q, theta_L=-q, delta=_interp(K['theta'], K['delta'], q))
+
+
+def mech_geom(sy, theta_deg, delta_deg):
+    """Arm-tip (Z-bend) point A and horn-hole point H in the CAD frame, m: the formulas of linkage_core.arm_pt / horn_pt on the AR-001 constants."""
+    G = load_kin()['geom']
+    th, d = math.radians(theta_deg), math.radians(delta_deg)
+    xh, hz, sv, sx, ar, zj = G['XH'], G['HINGE_Z'], G['SERVO_Y'], G['SV_XS'], G['ARM_R'], G['ROD_Z']
+    vx0, vz0 = G['HORN_XH'] - xh, zj - hz
+    A = (sx + ar * sy * math.sin(th), sy * sv - sy * ar * math.cos(th), zj)
+    H = (xh + vx0 * math.cos(d) + vz0 * math.sin(d), sy * (sv - ar), hz - vx0 * math.sin(d) + vz0 * math.cos(d))
+    return A, H
+
+
+def mech_state_log(sh, tl):
+    """Servo-arm and elevon angles of both sides from the logged elevon angles of a SITL run (dr right, dl left, trailing edge down +), through the AR-001 table (T-029)."""
+    K = load_kin()
+    a = sitl_at(sh['sitl']['run'], sitl_clock(sh, tl))
+    lo, hi = K['delta'][0], K['delta'][-1]
+    dR, dL = min(max(a['dr'], lo), hi), min(max(a['dl'], lo), hi)
+    return dict(theta_R=_interp(K['delta'], K['theta'], dR), theta_L=-_interp(K['delta'], K['theta'], dL), delta=dR, delta_L=dL)
+
+
+# ---- scene 4 (T-029): playback of an ALREADY EXECUTED ArduPilot SITL run (PD-007): the aircraft pose is read from the run's case.fwd.csv, no new simulation
+SITL_DIR = os.path.join(REDESIGN, 'qp', 'A', 'sitl')
+T097_DIR = os.path.join(REDESIGN, 'qp', 'A', 'mechanism', 'out', 'T097_data')       # F-5 rework: the 1.881 kg T-097 runs (sitl_<run>/case.fwd.csv, sum.json) are tracked here, not in the git-ignored runs/ folder
+T098_JSON = os.path.join(REDESIGN, 'qp', 'A', 'mechanism', 'out', 'T098_results.json')
+
+
+def run_dir(run):
+    """Folder of an executed SITL run: sitl/runs/<run>, or mechanism/out/T097_data/sitl_<run> for the T-097 runs (names starting T097_)."""
+    return os.path.join(T097_DIR, 'sitl_' + run) if run.startswith('T097_') else os.path.join(SITL_DIR, 'runs', run)
+
+
+CAD_MASS_JSON = os.path.join(SITL_DIR, 'cad_mass.json')
+# Column meanings (a_plant.py line 304 header, euler_rpy line 234): t s; pn, pe m north / east of the take-off point; alt m of the CG above ground (up); pitch deg (+90 = nose up,
+# 0 = level cruise); roll, hdg_nose deg (ZYX Euler of the body FRD frame: x nose, y right wing, z belly); V m/s airspeed; dl, dr deg left / right elevon (trailing edge down +).
+_SITL = {}
+
+
+def load_sitl(run):
+    if run not in _SITL:
+        import csv
+        rows = list(csv.DictReader(open(os.path.join(run_dir(run), 'case.fwd.csv'), encoding='utf-8')))
+        cols = {k: [float(r[k]) for r in rows] for k in rows[0]}
+        n = len(rows)
+        pre = {}
+        for k in ('pn', 'pe', 'alt'):                                   # prefix sums for the box-filtered camera target
+            acc = [0.0]
+            for v in cols[k]:
+                acc.append(acc[-1] + v)
+            pre[k] = acc
+        _SITL[run] = dict(cols=cols, n=n, t=cols['t'], pre=pre, cg=json.load(open(CAD_MASS_JSON, encoding='utf-8')))
+    return _SITL[run]
+
+
+def sitl_index(L, tlog):
+    """(i, u): row index and fraction for log time tlog (clamped to the log)."""
+    T = L['t']
+    if tlog <= T[0]:
+        return 0, 0.0
+    if tlog >= T[-1]:
+        return L['n'] - 2, 1.0
+    i = bisect.bisect_right(T, tlog) - 1
+    return i, (tlog - T[i]) / (T[i + 1] - T[i])
+
+
+def sitl_at(run, tlog):
+    """Scalar columns linearly interpolated at log time tlog (angles are not wrapped here: only pitch, alt, V, dl, dr, pn, pe are read through this)."""
+    L = load_sitl(run)
+    i, u = sitl_index(L, tlog)
+    return {k: v[i] * (1 - u) + v[i + 1] * u for k, v in L['cols'].items()}
+
+
+def sitl_clock(sh, tl):
+    """Log time at scene time tl for a shot with sitl = {run, t0, t1}: the log window t0..t1 plays over the shot's duration (time scale = (t1 - t0) / duration, shown on screen)."""
+    q = sh['sitl']
+    k = min(max((tl - sh['t0']) / (sh['t1'] - sh['t0']), 0.0), 1.0)
+    return q['t0'] + (q['t1'] - q['t0']) * k
+
+
+def sitl_scale(sh):
+    q = sh['sitl']
+    return (q['t1'] - q['t0']) / (sh['t1'] - sh['t0'])
+
+
+def sitl_smooth_pos(run, tlog, half=0.4, max_off=0.5):
+    """Camera target: position (north, east, up) averaged over +-half s of log time (the camera does not copy the hover wobble), kept within max_off m of the true position
+    (a wider average lags behind the aircraft while it accelerates: 1.5 s put it up to 2 m off-centre in the transition)."""
+    L = load_sitl(run)
+    T = L['t']
+    a = bisect.bisect_left(T, tlog - half)
+    b = bisect.bisect_right(T, tlog + half)
+    b = max(b, a + 1)
+    sm = [(L['pre'][k][b] - L['pre'][k][a]) / (b - a) for k in ('pn', 'pe', 'alt')]
+    raw = sitl_at(run, tlog)
+    d = [sm[0] - raw['pn'], sm[1] - raw['pe'], sm[2] - raw['alt']]
+    n = math.sqrt(sum(x * x for x in d))
+    if n > max_off:
+        d = [x * max_off / n for x in d]
+    return (raw['pn'] + d[0], raw['pe'] + d[1], raw['alt'] + d[2])
+
+
+# ---- scene 5 (T-029): FEA numbers read from the result files at draw time
+STRUCT_DIR = os.path.join(REDESIGN, 'qp', 'A', 'structures')
+FEA_OUT = os.path.join(STRUCT_DIR, 'out_fea')
+
+
+def fea_const(name):
+    """Allowables and required factors parsed from fea_arm.py (ALLOW = dict(...), KF, KP = ...): ALLOW.petg, ALLOW.cf_axial, KF, KP."""
+    src = open(os.path.join(STRUCT_DIR, 'fea_arm.py'), encoding='utf-8').read()
+    if name.startswith('ALLOW.'):
+        m = re.search(r'^ALLOW\s*=\s*dict\((.*?)\)', src, re.M)
+        return float(re.search(name[6:] + r'\s*=\s*([0-9.]+)', m.group(1)).group(1))
+    m = re.search(r'^KF, KP\s*=\s*([0-9.* ]+),\s*([0-9.* ]+)', src, re.M)
+    expr = m.group(1 if name == 'KF' else 2)
+    return float(np_prod(expr))
+
+
+def np_prod(expr):
+    r = 1.0
+    for f in expr.split('*'):
+        r *= float(f.strip())
+    return r
+
+
+def sitl_sum(run):
+    """sum.json of an executed SITL run (read at draw time)."""
+    return json.load(open(os.path.join(run_dir(run), 'sum.json'), encoding='utf-8'))
+
+
+_GIT = {}
+
+
+def git_rev():
+    """Short hash of HEAD, '-dirty' if the working tree has uncommitted changes ('—' if git is not available): printed on the closing card (R-VID-08 revision tag)."""
+    if 'rev' not in _GIT and os.environ.get('A_FILM_REV'):     # set once by the film driver before it writes any file, so its own outputs cannot mark the card dirty
+        _GIT['rev'] = os.environ['A_FILM_REV']
+    if 'rev' not in _GIT:
+        try:
+            rev = subprocess.run(['git', '-C', REDESIGN, 'rev-parse', '--short', 'HEAD'], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True, check=True).stdout.strip()
+            dirty = subprocess.run(['git', '-C', REDESIGN, 'status', '--porcelain', '--untracked-files=no'], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True, check=True).stdout.strip()
+            _GIT['rev'] = rev + ('-dirty' if dirty else '')
+        except Exception:
+            _GIT['rev'] = '—'
+    return _GIT['rev']
+
+
+def src_val(spec):
+    """Number (or text) from a record, read at draw time. Kinds: {file (relative to out_fea), path [keys; '@X' picks the list item whose 'case' starts with X], maxkey (max over the
+    children of a dict of that key)}; {const: name} (fea_arm.py); {param: 'a/b'} (params-A.json); {npz: file, key, reduce: nanmax | pct_over1} (arrays of out_fea; pct_over1 = % of the finite
+    entries above 1); {sum: run, path} (sitl/runs/<run>/sum.json); {calc: 'a*b+c', of: {a: spec, ...}}; {git: 'rev'}. Optional: times / div (const names, fea_arm.py)."""
+    if 'git' in spec:
+        return git_rev()
+    if 'claimval' in spec:               # T-047 F-2: the stored value of a proof claim (qp/A/proofs/claims.a*.json, written by run_all)
+        import glob
+        for fn_ in sorted(glob.glob(os.path.join(REDESIGN, 'qp', 'A', 'proofs', 'claims.a*.json'))):
+            for nd_ in json.load(open(fn_, encoding='utf-8'))['nodes']:
+                if nd_.get('id') == spec['claimval']:
+                    return nd_['value']
+        raise KeyError(spec['claimval'])
+    if 't101' in spec:                   # T-047 F-2: a run of mechanism/out/T101_results.json (AR-017 / AR-019): {t101: run tag, path}
+        v = json.load(open(os.path.join(REDESIGN, 'qp', 'A', 'mechanism', 'out', 'T101_results.json'), encoding='utf-8'))['runs'][spec['t101']]
+        for k_ in spec['path']:
+            v = v[k_]
+        return v
+    if 'rx' in spec:                     # T-047 F-2: first capture group of a regex over a repo text file (README claim count)
+        txt_ = open(os.path.join(os.path.dirname(REDESIGN), spec['rx']), encoding='utf-8').read()
+        return int(re.search(spec['pat'], txt_, re.S).group(1))
+    if 't098' in spec:                   # F-5: a row of mechanism/out/T098_results.json (AR-016): {t098: case, metric: prefix (optional), idx: n of the 'a / b / c' value}
+        rows = json.load(open(T098_JSON, encoding='utf-8'))['rows']
+        r = next(x for x in rows if x['case'] == spec['t098'] and x['metric'].startswith(spec.get('metric', '')))
+        v = r['value']
+        return float(str(v).split('/')[spec['idx']]) if 'idx' in spec else v
+    if 'calc' in spec:
+        v = eval(spec['calc'], {'__builtins__': {}}, {k_: src_val(q_) for k_, q_ in spec['of'].items()})
+    elif 'const' in spec:
+        v = fea_const(spec['const'])
+    elif 'param' in spec:
+        v = param_value(spec['param'])
+    elif 'npz' in spec:
+        import numpy as np
+        z = np.load(os.path.join(FEA_OUT, spec['npz']), allow_pickle=False)
+        arr = z[spec['key']]
+        fin = arr[np.isfinite(arr)]
+        v = float(fin.max()) if spec.get('reduce', 'nanmax') == 'nanmax' else 100.0 * float((fin > 1.0).sum()) / float(fin.size)
+    elif 'sum' in spec:
+        v = sitl_sum(spec['sum'])
+        for k in spec['path']:
+            v = v[k]
+    else:
+        o = json.load(open(os.path.join(FEA_OUT, spec['file']), encoding='utf-8'))
+        for k in spec['path']:
+            if k.startswith('@'):
+                o = next(c for c in o if c['case'].startswith(k[1:]))
+            else:
+                o = o[k]
+        v = max(c[spec['maxkey']] for c in o.values()) if 'maxkey' in spec else o
+    if spec.get('times'):
+        v *= fea_const(spec['times'])
+    if spec.get('div'):
+        v /= fea_const(spec['div'])
+    return v
+
+
+def source_hashes(film):
+    """SHA-256 (and size) of every record file the film reads from the git-ignored folders (sitl/runs, out_fea): printed into timing.json so a render can be traced to its sources (T-030 M-5)."""
+    import hashlib
+    paths = set()
+    for S in film['scenes']:
+        for sh in S['shots']:
+            if sh.get('sitl'):
+                for fn in ('case.fwd.csv', 'sum.json', 'result.json'):
+                    paths.add(os.path.join(run_dir(sh['sitl']['run']), fn))
+            if sh.get('fea'):
+                paths.add(os.path.join(FEA_OUT, sh['fea']['glb']))
+            for v in list(sh.get('vals', {}).values()) + list(sh.get('card', {}).get('vals', {}).values()):
+                for q in ([v] + list(v.get('of', {}).values())):
+                    if 'file' in q:
+                        paths.add(os.path.join(FEA_OUT, q['file']))
+                    if 'npz' in q:
+                        paths.add(os.path.join(FEA_OUT, q['npz']))
+    out = {}
+    for pth in sorted(paths):
+        if os.path.exists(pth):
+            h = hashlib.sha256()
+            with open(pth, 'rb') as f_:
+                for chunk in iter(lambda: f_.read(1 << 20), b''):
+                    h.update(chunk)
+            out[os.path.relpath(pth, REDESIGN).replace(os.sep, '/')] = dict(sha256=h.hexdigest(), bytes=os.path.getsize(pth))
+    return out
+
+
+# =====================================================================================================================
 # Blender worker
 # =====================================================================================================================
 def blender_render(argv):
@@ -310,7 +733,16 @@ def blender_render(argv):
     ap.add_argument('--no-rt', action='store_true', help='EEVEE ray tracing off (faster)')
     ap.add_argument('--camplan', action='store_true', help='no rendering: compute the per-step cameras and write cam_plan.json (timeline() needs it for the camera move times)')
     ap.add_argument('--audit', action='store_true', help='no rendering: dump what is visible and where the camera is, every --every frames')
+    ap.add_argument('--shot-list', default='', help='short-film mode: render the scenes of this shot-list JSON instead of the build film')
+    ap.add_argument('--scenes', default='', help='short-film mode: comma list of scene ids to render (default all)')
+    ap.add_argument('--dof', action='store_true', help='depth of field focused on the camera target (off by default)')
+    ap.add_argument('--motion-blur', action='store_true', help='EEVEE motion blur on (off by default)')
+    ap.add_argument('--cam-check', action='store_true', help='short-film mode, no rendering: camera-vs-mesh clearance and line of sight for EVERY frame (writes cam_clearance.json)')
+    ap.add_argument('--raw-prefix', default='raw_', help='short-film mode: file-name prefix of the raw frames (T-030-N: a partial re-render writes n_<frame>.png so that it never overwrites a raw frame of an earlier run)')
+    ap.add_argument('--tag', default='', help='short-film mode: name of the map file map_<tag>.json (default: the range, or "frames")')
+    add_res_args(ap)
     a = ap.parse_args(argv)
+    apply_res(a.width, a.height, a.fps)
     sys.path.insert(0, BL)
     sys.path.insert(0, ANIM)
     import bpy
@@ -514,7 +946,7 @@ def blender_render(argv):
         return
     old_plan = load_cam_plan()
     stale = [r['id'] for r in rows if old_plan.get(r['id'], {}).get('cam') != plan_json[r['id']]['cam'] or old_plan.get(r['id'], {}).get('wide') != plan_json[r['id']]['wide']]
-    if stale:
+    if stale and not a.shot_list:
         raise SystemExit('cam_plan.json is stale for %s: run with --camplan first (the driver does it)' % stale)
 
     # camera keyframes: one smooth move (smoothstep, distance geometric) between the views of consecutive steps, holds in between
@@ -571,6 +1003,16 @@ def blender_render(argv):
     cd.lens = 50
     cd.sensor_width = 36
     cd.clip_start, cd.clip_end = 0.02, 100
+    if a.dof:
+        cd.dof.use_dof = True
+        cd.dof.aperture_fstop = 5.6
+    if a.motion_blur:
+        sc.render.use_motion_blur = True
+        sc.render.motion_blur_shutter = 0.5
+
+    def set_focus(dist_):
+        if a.dof:
+            cd.dof.focus_distance = float(dist_)
 
     def look(ob, loc, target, up=Vector((0, 0, 1))):
         f = (Vector(target) - Vector(loc)).normalized()
@@ -595,8 +1037,9 @@ def blender_render(argv):
     MATS = {'move': bb._principled('moving part', bb.srgb('#E0661A'), 0.45),
             'fab': bb._principled('fabricated part', bb.srgb('#13897F'), 0.45),
             'ghost': bb._principled('ghost part', bb.srgb('#8FA6C0'), 0.5, alpha=0.20),
-            'ghost_spar': bb._principled('ghost spar', bb.srgb('#2E4A6B'), 0.3, metal=0.2, alpha=0.38)}
-    for m_ in (MATS['ghost'], MATS['ghost_spar']):          # see-through parts must not shadow what they hide
+            'ghost_spar': bb._principled('ghost spar', bb.srgb('#2E4A6B'), 0.3, metal=0.2, alpha=0.38),
+            'fab50': bb._principled('fabricated part, half see-through', bb.srgb('#13897F'), 0.45, alpha=0.5)}
+    for m_ in (MATS['ghost'], MATS['ghost_spar'], MATS['fab50']):          # see-through parts must not shadow what they hide
         if hasattr(m_, 'use_transparent_shadow'):
             m_.use_transparent_shadow = True
     tint_state = {}
@@ -611,6 +1054,529 @@ def blender_render(argv):
                 sl.material = MATS[mode]
             else:
                 sl.link = 'DATA'
+
+    if a.shot_list:
+        # ---- short-film mode (T-027): the concept A CAD at rest, parts shown / x-rayed per shot, one camera path per scene (hermite_cam)
+        film = load_film(a.shot_list, a.scenes.split(',') if a.scenes else None)
+        nfr = int(round(film['total'] * FPS))
+        sc.render.resolution_percentage = 100
+
+        def shot_modes(sh):
+            parts, modes, out = sh.get('parts', 'all'), sh.get('modes', {}), {}
+            if sh.get('fea') or sh.get('plate'):          # T-029: stress mesh / image plate shots show no CAD part
+                return out
+            for pid in be.objects:
+                if pid not in placed_ids or (parts != 'all' and not any(pid.startswith(x) for x in parts)):
+                    continue
+                m = 'normal'
+                for pref, mm in modes.items():
+                    if pid.startswith(pref):
+                        m = mm
+                if m != 'hidden':
+                    out[pid] = m
+            return out
+
+        def rax(axis, pt, ang):
+            return Matrix.Translation(Vector(pt)) @ Matrix.Rotation(ang, 4, axis) @ Matrix.Translation(-Vector(pt))
+
+        MECH_LOG = dict(gap_max=0.0, len_err_max=0.0, n=0)
+        ANNOT_CHECK = dict(n=0, worst_px=0.0)
+
+        def mech_mats(sh, tl):
+            """{part: world motion matrix} for the elevon group, servo arm group and pushrod of both sides, from the AR-001 solution at scene time tl."""
+            if not sh.get('mech'):
+                return {}, None
+            st = mech_state(sh, tl) if 'sweep' in sh['mech'] else mech_state_log(sh, tl)
+            G = load_kin()['geom']
+            mats = {}
+            for sy, s_ in ((1, 'R'), (-1, 'L')):
+                th = st['theta_R'] if sy == 1 else st['theta_L']
+                dl = st['delta'] if sy == 1 else st.get('delta_L', st['delta'])
+                M_el = rax('Y', (G['XH'], 0.0, G['HINGE_Z']), math.radians(dl))                 # elevon group: right-handed about +y through the hinge (CAD sense, linkage_core)
+                M_arm = rax('Z', (G['SV_XS'], sy * G['SERVO_Y'], 0.0), math.radians(th))        # servo arm group: counter-clockwise about +z through the spline axis
+                A0, H0 = (Vector(v) for v in mech_geom(sy, 0.0, 0.0))
+                A, H = (Vector(v) for v in mech_geom(sy, th, dl))
+                u = (H - A).normalized()
+                ex = Vector((1.0, 0.0, 0.0))                                                  # rod is parallel to x at neutral (L_ROD = HORN_XH - SV_XS)
+                ax_ = ex.cross(u)
+                R_ = Matrix.Rotation(math.acos(max(-1.0, min(1.0, ex.dot(u)))), 4, ax_) if ax_.length > 1e-12 else Matrix.Identity(4)
+                M_rod = Matrix.Translation(A) @ R_ @ Matrix.Translation(-A0)
+                for pid in ('WNG-006-', 'WNG-007-', 'WNG-010-', 'MEC-004-', 'MEC-005-'):
+                    mats[pid + s_] = M_el
+                for pid in ('MEC-002-', 'MEC-008-', 'HWC-002-'):
+                    mats[pid + s_] = M_arm
+                mats['MEC-003-' + s_] = M_rod
+                # connection check: arm-tip end of the rod on the arm tip (arm group), horn end of the rod on the horn hole (elevon group), rod length
+                g1 = (M_arm @ A0 - M_rod @ A0).length
+                g2 = (M_el @ H0 - M_rod @ H0).length
+                MECH_LOG['gap_max'] = max(MECH_LOG['gap_max'], g1, g2)
+                MECH_LOG['len_err_max'] = max(MECH_LOG['len_err_max'], abs((H - A).length - (H0 - A0).length))
+            MECH_LOG['n'] += 1
+            return mats, st
+
+        # ---- T-029: SITL playback pose (body -> CAD -> world) and FEA stress meshes
+        TW4 = Matrix(((1, 0, 0), (0, -1, 0), (0, 0, -1))).to_4x4()          # NED -> world (x north, y west, z up)
+        D4 = Matrix(((-1, 0, 0), (0, 1, 0), (0, 0, -1))).to_4x4()           # body FRD (x nose, y right, z belly) -> CAD (x aft, y right, z up), CG at the origin
+        floor_default = (floor.location.copy(), floor.scale.copy())
+
+        def row_quats(L):
+            if 'quats' not in L:
+                c = L['cols']
+                qs = []
+                for i in range(L['n']):
+                    ps, th, ph = (math.radians(c[k][i]) for k in ('hdg_nose', 'pitch', 'roll'))
+                    R = Matrix.Rotation(ps, 3, 'Z') @ Matrix.Rotation(th, 3, 'Y') @ Matrix.Rotation(ph, 3, 'X')      # body -> NED, ZYX Euler as a_plant.euler_rpy
+                    qs.append(R.to_quaternion())
+                L['quats'] = qs
+            return L['quats']
+
+        def sitl_pose(sh, tl):
+            q = sh['sitl']
+            L = load_sitl(q['run'])
+            tlog = sitl_clock(sh, tl)
+            i, u = sitl_index(L, tlog)
+            qs = row_quats(L)
+            qq = qs[i].slerp(qs[i + 1], u)
+            c = L['cols']
+            P = Vector((c['pn'][i] * (1 - u) + c['pn'][i + 1] * u, -(c['pe'][i] * (1 - u) + c['pe'][i + 1] * u), c['alt'][i] * (1 - u) + c['alt'][i + 1] * u))
+            cg = L['cg']
+            M = Matrix.Translation(P) @ TW4 @ qq.to_matrix().to_4x4() @ D4 @ Matrix.Translation(-Vector((cg['cg_x_m'], cg['cg_y_m'], cg['cg_z_m'])))
+            sp = sitl_smooth_pos(q['run'], tlog)
+            return dict(M=M, P=P, Psm=Vector((sp[0], -sp[1], sp[2])), tlog=tlog)
+
+        FEA_OBJS = {}
+
+        def fea_objs(name):
+            if name not in FEA_OBJS:
+                before = set(bpy.data.objects)
+                bpy.ops.import_scene.gltf(filepath=os.path.join(FEA_OUT, name))
+                new = [o for o in bpy.data.objects if o not in before and o.type == 'MESH']
+                pts = [o.matrix_world @ Vector(c_) for o in new for c_ in o.bound_box]
+                ctr_ = Vector([(min(p_[k_] for p_ in pts) + max(p_[k_] for p_ in pts)) / 2 for k_ in range(3)])
+                for o in new:
+                    for pl in o.data.polygons:
+                        pl.use_smooth = False
+                    mt = bpy.data.materials.new('fea utilisation')
+                    mt.use_nodes = True
+                    nt = mt.node_tree
+                    nt.nodes.clear()
+                    vc = nt.nodes.new('ShaderNodeVertexColor')
+                    vc.layer_name = o.data.color_attributes[0].name
+                    lw = nt.nodes.new('ShaderNodeLayerWeight')              # unlit: the data colour is shown as is, only darkened a little towards the silhouette so the form reads
+                    lw.inputs['Blend'].default_value = 0.5
+                    sh_ = nt.nodes.new('ShaderNodeMath')
+                    sh_.operation = 'MULTIPLY_ADD'
+                    sh_.inputs[1].default_value = -0.4
+                    sh_.inputs[2].default_value = 1.0
+                    nt.links.new(lw.outputs['Facing'], sh_.inputs[0])
+                    mx = nt.nodes.new('ShaderNodeMix')
+                    mx.data_type = 'RGBA'
+                    mx.blend_type = 'MULTIPLY'
+                    mx.inputs['Factor'].default_value = 1.0
+                    nt.links.new(vc.outputs['Color'], mx.inputs['A'])
+                    nt.links.new(sh_.outputs['Value'], mx.inputs['B'])
+                    em = nt.nodes.new('ShaderNodeEmission')
+                    nt.links.new(mx.outputs['Result'], em.inputs['Color'])
+                    ot = nt.nodes.new('ShaderNodeOutputMaterial')
+                    nt.links.new(em.outputs['Emission'], ot.inputs['Surface'])
+                    o.data.materials.clear()
+                    o.data.materials.append(mt)
+                    o.location = -ctr_
+                    o.hide_render = o.hide_viewport = True
+                FEA_OBJS[name] = new
+                print('FEAMESH', name, len(new), 'objects, centre (m)', tuple(round(x, 4) for x in ctr_), flush=True)
+            return FEA_OBJS[name]
+
+        trail = {}
+
+        def trail_obj(run, t_from):
+            """Flown path (CG) from log time t_from, drawn as a poly curve; bevel_factor_end reveals it up to the current log time (by arc length)."""
+            if 'ob' not in trail:
+                L = load_sitl(run)
+                c = L['cols']
+                idx_ = [i for i in range(0, L['n'], 5) if c['t'][i] >= t_from]
+                pts = [Vector((c['pn'][i], -c['pe'][i], c['alt'][i])) for i in idx_]
+                cum = [0.0]
+                for a_, b_ in zip(pts, pts[1:]):
+                    cum.append(cum[-1] + (b_ - a_).length)
+                cu = bpy.data.curves.new('sitl trail', 'CURVE')
+                cu.dimensions = '3D'
+                cu.bevel_depth = 0.006
+                cu.bevel_resolution = 2
+                cu.use_fill_caps = True
+                cu.bevel_factor_mapping_end = 'SPLINE'
+                cu.bevel_factor_mapping_start = 'SPLINE'
+                spl = cu.splines.new('POLY')
+                spl.points.add(len(pts) - 1)
+                for q_, p_ in zip(spl.points, pts):
+                    q_.co = (p_.x, p_.y, p_.z, 1.0)
+                ob = bpy.data.objects.new('sitl trail', cu)
+                sc.collection.objects.link(ob)
+                cu.materials.append(MATS['move'])
+                ob.hide_render = True
+                trail.update(ob=ob, cu=cu, ts=[c['t'][i] for i in idx_], cum=cum)
+            return trail
+
+        def trail_set(tlog, show):
+            tr = trail
+            tr['ob'].hide_render = not show
+            if show:
+                ts, cum = tr['ts'], tr['cum']
+
+                def arc(tt):
+                    j = min(max(bisect.bisect_right(ts, tt) - 1, 0), len(ts) - 2)
+                    u = min(max((tt - ts[j]) / (ts[j + 1] - ts[j]), 0.0), 1.0)
+                    return min(1.0, max(0.0, (cum[j] + (cum[j + 1] - cum[j]) * u) / cum[-1]))
+                tr['cu'].bevel_factor_start = arc(tlog - 12.0)                  # a 12 s tail of log time behind the aircraft
+                tr['cu'].bevel_factor_end = arc(tlog)
+
+        # ---- T-030 M-6: props turn in the SIMULATED flight. ILLUSTRATIVE rate (not the plant's RPM, which the run does not log): a fixed step per frame, not a divisor of the 180 deg blade
+        # symmetry, so a 60 fps film does not strobe; a prop turns only while the LOGGED thrust of its motor (th1..th4 of case.fwd.csv) is above 0.05 N. The real blade, adapter and spinner
+        # meshes (PRP-002, PRP-004, PRP-005) turn about the motor axis (amodel.common.motor_R / station); the motor body (PRP-001) is a body of revolution and stays.
+        SPIN_DEG_S = 47.0 * 60.0                                         # 47 deg per frame at 60 fps
+        SPIN_MOTOR = {'LR': 'th1', 'UL': 'th2', 'LL': 'th3', 'UR': 'th4'}       # a_plant.py mot order: 1 FR (CAD lower right), 2 RL (upper left), 3 FL (lower left), 4 RR (upper right)
+        SPIN_MIN_N = 0.05
+        CM = next((m_ for m_ in list(sys.modules.values()) if m_ is not None and all(callable(getattr(m_, n_, None)) for n_ in ('motor_R', 'station', 'mrot'))), None)
+        if CM is None:
+            sys.path.insert(0, CAD_A)
+            from amodel import common as CM
+
+        def spin_mats(sh, tl):
+            q = sh['sitl']
+            tlog = sitl_clock(sh, tl)
+            a_ = sitl_at(q['run'], tlog)
+            out = {}
+            for st_, col in SPIN_MOTOR.items():
+                if a_[col] <= SPIN_MIN_N:
+                    continue
+                R_ = CM.motor_R(st_)
+                ax_ = Vector((R_[0][0], R_[1][0], R_[2][0]))                      # motor axis (local +x in the station frame; the prop sits on the -x side, thrust along -x)
+                sense = -1.0 if st_ in ('UR', 'LL') else 1.0                      # APC MRP (UR, LL) turns clockwise seen from the thrust side, MR counter-clockwise (propulsion.py MRP)
+                ang = -sense * math.radians(SPIN_DEG_S * tl)                 # phase from the scene time (continuous over the S4 shots); + about the thrust axis (-x) is counter-clockwise seen from its tip
+                M_ = rax(ax_, CM.station(st_), ang)
+                for pre in ('PRP-002-', 'PRP-004-', 'PRP-005-'):
+                    out[pre + st_] = M_
+            return out
+
+        HINGE = {}
+
+        def hinge_objs():
+            """3.2: the hinge axes (right and left) as thin orange rods along the elevon span, through (XH, HINGE_Z), so that 'the horn hole sits over the hinge line' can be seen (T-030 M-8)."""
+            if not HINGE:
+                import bmesh
+                G = load_kin()['geom']
+                ys = [(rest['WNG-006-R'] @ Vector(c_)).y for c_ in items['WNG-006-R'].bound_box]
+                y0, y1 = min(ys), max(ys)
+                for sy_ in (1, -1):
+                    me = bpy.data.meshes.new('hinge axis')
+                    bm = bmesh.new()
+                    bmesh.ops.create_cone(bm, cap_ends=True, segments=12, radius1=0.0009, radius2=0.0009, depth=y1 - y0, matrix=Matrix.Rotation(math.pi / 2, 4, 'X'))
+                    bm.to_mesh(me)
+                    bm.free()
+                    me.materials.append(MATS['move'])
+                    ob = bpy.data.objects.new('hinge axis', me)
+                    sc.collection.objects.link(ob)
+                    ob.location = Vector((G['XH'], sy_ * (y0 + y1) / 2, G['HINGE_Z']))
+                    ob.hide_render = True
+                    HINGE[sy_] = ob
+            return HINGE
+
+        EXPL = {}
+
+        def explode_entries():
+            """T-030-N (R-VID-08), category ILLUSTRATIVE: the exploded view. One entry per assembly step with a motion direction, in build order: (step id, parts, offset vector m).
+            The direction is the plan's direction of the final motion into the seat (a_assembly_plan.STEPS = cad/out/_plan.json, the steps of cad/out/assembly.json), reversed: a part is
+            pulled back OUT along the line it is pushed in on. The distance is NOT the travel: layers of the same axis are staggered by 12 mm in build order (first built = nearest), at
+            least a quarter of the travel (spar and plugs), at most 0.30 m. Steps without a direction (wing core on the bench, flexible parts, wires) have no offset."""
+            if 'e' not in EXPL:
+                ent, rank = [], {}
+                for r_ in rows:
+                    if not r_['parts'] or not r_['dir']:
+                        continue
+                    d_ = -Vector(r_['dir']).normalized()
+                    key = tuple(round(c_, 2) for c_ in d_)
+                    n_ = rank.get(key, 0)
+                    rank[key] = n_ + 1
+                    L = min(0.30, max(0.04 + 0.012 * n_, 0.25 * r_['travel'] / 1000.0))
+                    ent.append((r_['id'], [p_ for p_ in r_['parts'] if p_ in items], d_ * L))
+                EXPL['e'] = ent
+            return EXPL['e']
+
+        def explode_w(sh, tl):
+            ex = sh['explode']
+            r_ = min(1.0, max(0.0, (tl - sh['t0'] - ex['from']) / (ex['to'] - ex['from'])))
+            return ex.get('p0', 0.0) + (ex.get('p1', 1.0) - ex.get('p0', 0.0)) * r_
+
+        def explode_mats(sh, tl):
+            """{part: world translation}: entry o of M starts moving when the global progress w passes its stagger (last built = first out when exploding), quintic ease over half of the range."""
+            w = explode_w(sh, tl)
+            ent = explode_entries()
+            M = max(1, len(ent) - 1)
+            tot = {}
+            for o, (_sid, parts, off) in enumerate(ent):
+                stag = 0.5 * (1.0 - o / M)
+                p_ = smooth((w - stag) / 0.5)
+                if p_ <= 0.0:
+                    continue
+                for pid in parts:
+                    tot[pid] = tot.get(pid, Vector()) + off * p_
+            return {pid: Matrix.Translation(v_) for pid, v_ in tot.items()}
+
+        def shot_pose(sh, tl):
+            """(mm, mst, air): world motion matrix per CAD part (mechanism poses, and for a SITL shot the aircraft pose on top), mechanism state, aircraft pose."""
+            mm, mst = mech_mats(sh, tl)
+            if sh.get('explode'):
+                mm = dict(mm)
+                mm.update(explode_mats(sh, tl))
+            if sh.get('props_spin') and sh.get('sitl'):
+                mm = dict(mm)
+                mm.update(spin_mats(sh, tl))
+            air = sitl_pose(sh, tl) if sh.get('sitl') else None
+            if air:
+                mm = {pid: air['M'] @ mm.get(pid, Matrix.Identity(4)) for pid in items}
+            return mm, mst, air
+
+        def shot_cam(S, sh, tl, air):
+            cam_c = hermite_cam(S['keys'], tl)
+            tgt = Vector(cam_c[:3])
+            if air and sh.get('follow'):
+                tgt = tgt + air['Psm']                       # keys of a follow shot are offsets from the (filtered) aircraft position
+            return cam_c, (tgt, cam_c[3], cam_c[4], cam_c[5])
+
+        def film_pose(t):
+            S, sh, tl = film_at(film, t)
+            vis = shot_modes(sh)
+            mm, mst, air = shot_pose(sh, tl)
+            for pid, ob in items.items():
+                if pid in be.wires:
+                    ends = [ob.get(k_) for k_ in ('part_a', 'part_b') if ob.get(k_) in placed_ids]
+                    on = bool(ends) and all(e_ in vis for e_ in ends) and sh.get('wires', True)
+                    ob.hide_render = not on
+                    if on:
+                        tint(pid, None)
+                        ob.matrix_world = (mm[pid] @ rest[pid]) if pid in mm else rest[pid]
+                elif pid in vis:
+                    ob.hide_render = False
+                    ob.matrix_world = (mm[pid] @ rest[pid]) if pid in mm else rest[pid]
+                    m = vis[pid]
+                    tint(pid, ('ghost_spar' if pid.startswith('WNG-002') else 'ghost') if m == 'ghost' else (None if m == 'normal' else m))
+                else:
+                    ob.hide_render = True
+            if sh.get('fea') and sh['fea']['glb'] not in FEA_OBJS:
+                fea_objs(sh['fea']['glb'])
+            for nm_, objs_ in FEA_OBJS.items():
+                for o_ in objs_:
+                    o_.hide_render = (sh.get('fea', {}).get('glb') != nm_)
+            if sh.get('hinge_line'):
+                hinge_objs()
+            for ob_ in HINGE.values():
+                ob_.hide_render = not sh.get('hinge_line')
+            if air and not trail:
+                trail_obj(sh['sitl']['run'], sh['sitl'].get('trail_from', 33.5))
+            if trail:
+                trail_set(air['tlog'] if air else 0.0, bool(air))
+            cam_c, cv_ = shot_cam(S, sh, tl, air)
+            ctr, view, dist = cam_view(cv_)
+            cd.clip_end = 900.0 if air else 100.0
+            cd.shift_x = float((sh.get('fea') or {}).get('shift_x', 0.0))      # moves a stress mesh left of the panels
+            if air:                                                         # ground at z = 0 under the flown path; the stage grid is scaled to 5 m cells
+                floor.location, floor.scale = Vector((200.0, 0.0, 0.0)), Vector((1000.0, 300.0, 1.0))
+            else:
+                floor.location, floor.scale = floor_default[0].copy(), floor_default[1].copy()
+            look(cam, ctr + view * dist, ctr)
+            set_focus(dist)
+            below = (ctr + view * dist).z < floor.location.z + 0.06
+            floor.hide_render = below or bool(sh.get('fea') or sh.get('plate'))
+            caz = math.atan2(view.y, view.x)
+            for lo_, daz, lel, dd in lights:
+                aa, ee = caz + math.radians(daz), math.radians(lel)
+                loc = ctr + Vector((math.cos(ee) * math.cos(aa), math.cos(ee) * math.sin(aa), math.sin(ee))) * dd
+                look(lo_, loc, ctr, Vector((0, 0, 1)) if lel < 85 else Vector((1, 0, 0)))
+            if air:
+                blob_s.default_value = (0.55, 0.9, 1.0)
+                blob_c.default_value = (air['P'].x, air['P'].y, 0.0)
+                blob_op.default_value = 0.35 * max(0.0, 1.0 - air['P'].z / 6.0)
+            else:
+                blob_s.default_value = (0.55, 0.9, 1.0)
+                blob_c.default_value = (full_c.x, 0.0, 0.0)
+                blob_op.default_value = 0.0 if below else 0.35
+            bpy.context.view_layer.update()
+            if sh.get('annot') and ANNOT_CHECK['n'] < 40:                     # T-030-N: the overlay projects the 2-D marks itself (cam_projector); compare it with Blender's own projection of the same points
+                G_ = load_kin()['geom']
+                pr_ = cam_projector(cam_c, W, H)
+                worst = 0.0
+                for q_ in ((0.42, -0.45, 0.0), (0.42, 0.45, 0.0), (G_['SV_XS'], G_['SERVO_Y'], G_['ROD_Z']), (0.1, 0.0, 0.0), (-0.1, 0.3, 0.2)):
+                    co_ = world_to_camera_view(sc, cam, Vector(q_))
+                    px_, py_, _z = pr_(q_)
+                    worst = max(worst, abs(px_ - co_.x * W), abs(py_ - (1.0 - co_.y) * H))
+                ANNOT_CHECK['n'] += 1
+                ANNOT_CHECK['worst_px'] = max(ANNOT_CHECK['worst_px'], worst)
+                print('ANNOTCHECK shot %s t=%.2f worst pixel difference %.3f (n %d, max so far %.3f)' % (sh['id'], t, worst, ANNOT_CHECK['n'], ANNOT_CHECK['worst_px']), flush=True)
+            return (tuple(sorted(vis.items())), tuple(round(v, 4) for v in cam_c), None if mst is None else (round(mst['theta_R'], 3), round(mst['delta'], 3), round(mst.get('delta_L', mst['delta']), 3)),
+                    None if air is None else tuple(round(x, 5) for r_ in air['M'] for x in r_), sh['id'] if (sh.get('fea') or sh.get('plate')) else None,
+                    tuple(round(x, 4) for r_ in mm['PRP-002-UR'] for x in r_) if (sh.get('props_spin') and 'PRP-002-UR' in mm) else None, bool(sh.get('hinge_line')),
+                    round(explode_w(sh, tl), 5) if sh.get('explode') else None)
+
+        if a.cam_check:
+            # ---- T-028: camera against the mesh, EVERY frame: (1) camera inside any visible part (closed-mesh ray parity), (2) distance to the nearest surface,
+            # (3) line of sight to the target: first non-x-ray surface hit between camera and target. BVHs are built once in part-local space; the query is
+            # moved into each part's local frame, so posed (mechanism) parts cost nothing extra.
+            from mathutils.bvhtree import BVHTree
+            loc_bvh = {}
+
+            def local_bvh(pid):
+                if pid not in loc_bvh:
+                    ob = items[pid]
+                    hv = ob.hide_viewport
+                    ob.hide_viewport = False
+                    bpy.context.view_layer.update()
+                    eo = ob.evaluated_get(bpy.context.evaluated_depsgraph_get())
+                    me = eo.to_mesh()
+                    verts = [v.co.copy() for v in me.vertices]
+                    polys = [tuple(pl.vertices) for pl in me.polygons]
+                    eo.to_mesh_clear()
+                    ob.hide_viewport = hv
+                    if polys:
+                        xs = [v.x for v in verts]
+                        ys = [v.y for v in verts]
+                        zs = [v.z for v in verts]
+                        loc_bvh[pid] = (BVHTree.FromPolygons(verts, polys), (min(xs), min(ys), min(zs)), (max(xs), max(ys), max(zs)))
+                    else:
+                        loc_bvh[pid] = None
+                return loc_bvh[pid]
+
+            def inside_test(bvh, pl):
+                par = []
+                for axv in (Vector((0, 0, 1)), Vector((1, 0, 0))):
+                    o_, n_ = pl.copy(), 0
+                    while n_ < 60:
+                        h_ = bvh.ray_cast(o_, axv)
+                        if h_[0] is None:
+                            break
+                        n_ += 1
+                        o_ = h_[0] + axv * 1e-6
+                    par.append(n_ % 2)
+                return all(par)
+
+            selftest = {}                                               # self-test of the inside test on solid parts: the middle of the part is inside, a point 0.2 m above is not
+            for _pid, _off in (('WNG-006-R', (0.0, 0.07, 0.0)), ('WNG-007-R', (0.0, 0.0, 0.0)), ('WNG-001', (0.0, 0.3, 0.0))):
+                _b = local_bvh(_pid)
+                _c = Vector(((_b[1][0] + _b[2][0]) / 2, (_b[1][1] + _b[2][1]) / 2, (_b[1][2] + _b[2][2]) / 2)) + Vector(_off)
+                selftest[_pid] = dict(centre_inside=bool(inside_test(_b[0], _c)), point_0p2_above_inside=bool(inside_test(_b[0], _c + Vector((0, 0, 0.2)))))
+            print('CAMCHECK selftest', selftest, flush=True)
+            inv_rest = {}
+            report = dict(shots={}, frames_checked=0, near_m=0.05)
+            per_shot = {}
+            cam_seq = []
+            t_cc = time.time()
+            for f in range(nfr):
+                t = f / FPS
+                S, sh, tl = film_at(film, t)
+                vis = shot_modes(sh)
+                mm, _mst, air = shot_pose(sh, tl)
+                ids = [pid for pid in vis]
+                if sh.get('wires', True):
+                    for pid, ob in be.wires.items():
+                        ends = [ob.get(k_) for k_ in ('part_a', 'part_b') if ob.get(k_) in placed_ids]
+                        if ends and all(e_ in vis for e_ in ends):
+                            ids.append(pid)
+                cam_c, cv_ = shot_cam(S, sh, tl, air)
+                cam_seq.append((S['id'], sh['id'], f, cam_c))
+                ctr, view, dist = cam_view(cv_)
+                P = ctr + view * dist
+                los = sh.get('los', True)                                          # false: the target is only a framing offset (nothing to keep in sight); [x, y, z]: the subject point
+                tgt_ = ctr if los is True else (Vector(los) if los else None)
+                dirn = (tgt_ - P).normalized() if tgt_ is not None else None
+                dist_t = (tgt_ - P).length if tgt_ is not None else 0.0
+                inside, mind, mind_pid, hit_d, hit_pid = [], 1e9, None, 1e9, None
+                for pid in ids:
+                    B = local_bvh(pid)
+                    if B is None:
+                        continue
+                    bvh, lo, hi = B
+                    if pid in mm:
+                        Mi = (mm[pid] @ rest[pid]).inverted()
+                    else:
+                        if pid not in inv_rest:
+                            inv_rest[pid] = rest[pid].inverted()
+                        Mi = inv_rest[pid]
+                    pl = Mi @ P
+                    bd = math.sqrt(max(lo[0] - pl.x, 0, pl.x - hi[0]) ** 2 + max(lo[1] - pl.y, 0, pl.y - hi[1]) ** 2 + max(lo[2] - pl.z, 0, pl.z - hi[2]) ** 2)
+                    if bd < 0.3:
+                        nr = bvh.find_nearest(pl)
+                        if nr[0] is not None and nr[3] < mind:
+                            mind, mind_pid = nr[3], pid
+                        if bd == 0.0 and inside_test(bvh, pl):
+                            inside.append(pid)
+                    if tgt_ is not None and vis.get(pid) != 'ghost':
+                        dl_ = Mi.to_3x3() @ dirn
+                        h_ = bvh.ray_cast(pl, dl_, dist_t)
+                        if h_[0] is not None and h_[3] < hit_d:
+                            hit_d, hit_pid = h_[3], pid
+                st = per_shot.setdefault('%s/%s' % (S['id'], sh['id']), dict(frames=0, inside_frames=0, inside_parts={}, min_clear_m=1e9, min_clear_f=None, min_clear_part=None,
+                                                                             blocked_frames=0, blockers={}, first_inside=None, last_inside=None, worst_block_f=None, worst_block_ratio=1.0))
+                st['frames'] += 1
+                if inside:
+                    st['inside_frames'] += 1
+                    st['first_inside'] = f if st['first_inside'] is None else st['first_inside']
+                    st['last_inside'] = f
+                    for pid in inside:
+                        st['inside_parts'][pid] = st['inside_parts'].get(pid, 0) + 1
+                if mind < st['min_clear_m']:
+                    st['min_clear_m'], st['min_clear_f'], st['min_clear_part'] = mind, f, mind_pid
+                if hit_pid is not None and hit_d < dist_t - 0.08:                    # something other than the target's own surface is in front of it
+                    st['blocked_frames'] += 1
+                    st['blockers'][hit_pid] = st['blockers'].get(hit_pid, 0) + 1
+                    if hit_d / dist_t < st['worst_block_ratio']:
+                        st['worst_block_ratio'], st['worst_block_f'] = hit_d / dist_t, f
+                report['frames_checked'] += 1
+            for k_, v in per_shot.items():
+                v['min_clear_m'] = None if v['min_clear_m'] > 1e8 else round(v['min_clear_m'], 4)
+                v['worst_block_ratio'] = round(v['worst_block_ratio'], 3)
+            report['shots'] = per_shot
+            report['cam_motion'] = camera_motion(cam_seq)
+            report['frames_inside_any_part'] = sum(v['inside_frames'] for v in per_shot.values())
+            report['seconds'] = round(time.time() - t_cc, 1)
+            report['mech'] = dict(MECH_LOG)
+            report['selftest'] = selftest
+            report['part_boxes_m'] = {pid: [[round(c_, 4) for c_ in (rest[pid] @ Vector(b_))] for b_ in (ob_.bound_box[0], ob_.bound_box[6])] for pid, ob_ in be.objects.items()}   # rest-pose world box corners, for placing cameras
+            os.makedirs(a.out, exist_ok=True)
+            json.dump(report, open(os.path.join(a.out, 'cam_clearance.json'), 'w'), indent=1)
+            print('CAMCHECK frames %d inside %d  %.0f s' % (report['frames_checked'], report['frames_inside_any_part'], report['seconds']), flush=True)
+            cmo = report['cam_motion']
+            for nm_, pk_ in cmo['peak'].items():
+                print('CAMCHECK motion peak %s %.4g %s at f%d (shot %s)' % (nm_, pk_['value'], pk_['unit'], pk_['frame'], pk_['shot']), flush=True)
+            for k_, v in per_shot.items():
+                print('CAMCHECK %s frames %d inside %d (%s) min_clear %s m @f%s (%s) blocked %d %s' % (k_, v['frames'], v['inside_frames'], v['inside_parts'], v['min_clear_m'], v['min_clear_f'], v['min_clear_part'], v['blocked_frames'], dict(sorted(v['blockers'].items(), key=lambda kv: -kv[1])[:3])), flush=True)
+            return
+
+        if a.frames:
+            frames = [int(f) for f in a.frames.split(',') if f.strip()]
+        elif a.range:
+            f0, f1 = [int(v) for v in a.range.split(':')]
+            frames = list(range(f0, min(f1, nfr), a.every))
+        else:
+            frames = list(range(0, nfr, a.every))
+        os.makedirs(a.out, exist_ok=True)
+        t0, prev_key, prev_name, n_new, fmap = time.time(), None, None, 0, {}
+        for f in frames:
+            key = film_pose(f / FPS)
+            name = '%s%05d.png' % (a.raw_prefix, f)
+            if key == prev_key and prev_name:
+                name = prev_name
+            else:
+                sc.render.filepath = os.path.join(a.out, name)
+                bpy.ops.render.render(write_still=True)
+                n_new += 1
+            prev_key, prev_name = key, name
+            fmap[f] = dict(raw=name, anc={})
+            print('FRAME %d / %d rendered %d  %.0f s' % (f, nfr, n_new, time.time() - t0), flush=True)
+        tag = a.tag or (a.range.replace(':', '_') if a.range else ('frames' if a.frames else 'all'))
+        json.dump(fmap, open(os.path.join(a.out, 'map_%s.json' % tag), 'w'))
+        print('RENDER_TOTAL %.1f s for %d frames (%d rendered)' % (time.time() - t0, len(frames), n_new))
+        if MECH_LOG['n']:
+            print('MECHCHECK poses %d  max connection gap %.3e m  max rod length error %.3e m' % (MECH_LOG['n'], MECH_LOG['gap_max'], MECH_LOG['len_err_max']))
+        return
 
     # ---- wire reveal curves (phase leads): the same strands as the wire meshes, drawn with a curve bevel so that a fraction can be shown
     wires = {wv.edge: wv for wv in ctx.wires}
@@ -831,6 +1797,7 @@ def blender_render(argv):
                     tint(p, None)
         ctr, view, dist = cam_view(cam_c)
         look(cam, ctr + view * dist, ctr)
+        set_focus(dist)
         below = (ctr + view * dist).z < floor.location.z + 0.06     # D-199: camera under the stage floor (views from below): hide the floor and its shadow blob so the frame is not blank
         floor.hide_render = below
         caz = math.atan2(view.y, view.x)
@@ -923,7 +1890,9 @@ def blender_encode(argv):
     ap.add_argument('--crf', default='MEDIUM')
     ap.add_argument('--w', type=int, default=W)
     ap.add_argument('--h', type=int, default=H)
+    ap.add_argument('--fps', type=int, default=FPS)
     a = ap.parse_args(argv)
+    apply_res(None, None, a.fps)
     names = [n.strip() for n in open(a.list) if n.strip()]
     sc = bpy.context.scene
     sc.sequence_editor_create()
@@ -1009,15 +1978,15 @@ def key_of(pid):
 
 
 SHORT = {'WNG-001': 'Wing core (XPS + tape)', 'WNG-002': 'Spar, CF 12x10, 900 mm', 'WNG-003': 'Spar plug (PETG)', 'WNG-004': 'Spar plug (PETG)', 'WNG-005': 'Spar plug (PETG)',
-         'CGE-001': 'Hub (PETG)', 'CGE-002': 'Arm, CF 12x10, 245 mm', 'CGE-003': 'Motor cup (PETG)', 'CGE-004': 'Bridge, CF 16x14, 108 mm', 'CGE-005': 'V strut, CF 6x4.5',
-         'CGE-006': 'Bridge saddle', 'CGE-007': 'Strut clamp', 'CGE-008': 'Pack tray (PETG)', 'PRP-001': 'Motor MN2212 KV780', 'PRP-002': 'Prop APC 9x4.5 (MR / MRP)',
+         'CGE-001': 'Hub (6061-T6, machined)', 'CGE-002': 'Arm, CF 12x10, 245 mm', 'CGE-003': 'Motor cup (PETG)', 'CGE-004': 'Bridge, CF 16x14, 108 mm', 'CGE-005': 'V strut, CF 6x4.5',
+         'CGE-006': 'Bridge saddle', 'CGE-007': 'Strut clamp', 'CGE-008': 'Pack tray (PETG)', 'PRP-001': 'Motor SunnySky X2216 880KV', 'PRP-002': 'Prop APC 9x4.5 (MR / MRP)',
          'PRP-003': 'ESC SpeedyBee 4-in-1', 'PRP-004': 'Prop adapter', 'PRP-005': 'Spinner nut', 'FIN-005': 'Rib saddle (PETG)', 'HRN-003': 'Phase-lead raceway',
          'HRN-004': 'Hub conduit', 'WNG-009': 'Damper stator + silicone', 'WNG-010': 'Damper rotor', 'FIN-002': 'Fin rib, CF 14x12', 'FIN-006': 'Rib fairing (XPS)',
          'WNG-006': 'Elevon (XPS + tape)', 'WNG-007': 'Balance: lead strip + tabs', 'WNG-008': 'Lens cap (PETG)', 'FIN-004': 'Fin fairing (XPS 3 mm)', 'FIN-003': 'Fin root block (PETG)',
          'FIN-001': 'Fin tube, CF 16x14, 360 mm', 'GER-001': 'Foot shoe (PETG)', 'GER-002': 'Foot pad (EVA/PE)', 'MEC-001': 'Servo EMAX ES3054HV', 'MEC-002': 'Servo arm',
          'HWC-002': 'Arm screw M2x6', 'MEC-004': 'Control horn', 'MEC-003': 'Pushrod + clevis', 'MEC-005': 'Clevis pin', 'AVN-006': 'Pitot probe', 'AVN-001': 'Avionics plate (PETG)',
          'HWC-003': 'M2 thin nuts', 'AVN-007': 'Foam-tape pads', 'AVN-002': 'Flight controller Kakute F405', 'AVN-003': 'Receiver RP3', 'AVN-004': 'GPS + compass',
-         'AVN-005': 'Airspeed board', 'HWC-001': 'FC screws M2x25', 'PWR-003': 'Anti-slip pad', 'PWR-001': 'Pack Tattu 2300 4S', 'HRN-002': 'XT60 female + tail', 'PWR-002': 'Pack strap',
+         'AVN-005': 'Airspeed board', 'HWC-001': 'FC screws M2x25', 'PWR-003': 'Anti-slip pad', 'PWR-001': 'Pack RDQ 2800 mAh 4S', 'HRN-002': 'XT60 female + tail', 'PWR-002': 'Pack strap',
          'AVN-008': 'Bay cover (PETG)'}
 
 
@@ -1110,7 +2079,9 @@ def title_alpha(row, t):
     return max(0.0, min(1.0, (t - row['t_title0']) / 0.5, (row['t_title1'] - t) / 0.7))
 
 
-def _init(rows, total, k):
+def _init(rows, total, k, fps=None):
+    if fps:
+        apply_res(None, None, fps)          # spawned overlay processes re-import the module: give them the run's frame rate
     _G['rows'], _G['total'], _G['k'], _G['F'] = rows, total, k, make_fonts(k)
 
 
@@ -1289,6 +2260,342 @@ def overlay(src, dst, f, fm, sw, sh):
     Image.alpha_composite(im, lay).convert('RGB').save(dst, optimize=False, compress_level=1)
 
 
+def _init_film(film, k, fps):
+    apply_res(None, None, fps)
+    _G['film'], _G['k'], _G['F'] = film, k, make_fonts(k)
+
+
+def fea_ramp():
+    """Utilisation colour ramp and the two status colours, parsed from fea_hub_figs.py (the same colours as the figures and the GLB skins)."""
+    src = open(os.path.join(STRUCT_DIR, 'fea_hub_figs.py'), encoding='utf-8').read()
+    ramp = re.findall(r"'(#[0-9a-fA-F]{6})'", re.search(r'^RAMP = \[(.*?)\]', src, re.M | re.S).group(1))
+    crit, nj = re.findall(r"'(#[0-9a-fA-F]{6})'", re.search(r'^CRIT, NJ = (.*)$', src, re.M).group(1))
+    return ramp, crit, nj
+
+
+def _hex(h):
+    return tuple(int(h[i:i + 2], 16) for i in (1, 3, 5))
+
+
+def cam_projector(cam_c, sw, sh):
+    """T-030-N: pixel position of a world point through the film camera (the one `look` / `cam_view` build in the worker: lens 50 mm, sensor 36 mm wide, no shift), in the overlay
+    process. Returns proj(p) -> (px, py, depth m). The worker checks it against world_to_camera_view (`ANNOTCHECK` line) so the 2-D marks sit on the 3-D parts."""
+    tx, ty, tz, az, el, dist = cam_c
+    ar, er = math.radians(az), math.radians(el)
+    view = (-math.cos(er) * math.cos(ar), -math.cos(er) * math.sin(ar), math.sin(er))
+    P = (tx + view[0] * dist, ty + view[1] * dist, tz + view[2] * dist)
+    fw = (-view[0], -view[1], -view[2])
+    r = (fw[1], -fw[0], 0.0)                                                                  # f x (0, 0, 1)
+    rn = math.hypot(r[0], r[1])
+    r = (r[0] / rn, r[1] / rn, 0.0)
+    u = (r[1] * fw[2] - r[2] * fw[1], r[2] * fw[0] - r[0] * fw[2], r[0] * fw[1] - r[1] * fw[0])      # r x f
+    th = 18.0 / 50.0
+    tv = th * sh / sw
+
+    def proj(p):
+        d_ = (p[0] - P[0], p[1] - P[1], p[2] - P[2])
+        zc = d_[0] * fw[0] + d_[1] * fw[1] + d_[2] * fw[2]
+        xc = d_[0] * r[0] + d_[1] * r[1] + d_[2] * r[2]
+        yc = d_[0] * u[0] + d_[1] * u[1] + d_[2] * u[2]
+        return (sw / 2 + xc / zc / th * sw / 2, sh / 2 - yc / zc / tv * sh / 2, zc)
+    return proj
+
+
+def _arrow_head(d, p0, p1, size, fill):
+    """Filled triangle with its tip at p1, pointing along p0 -> p1."""
+    dx, dy = p1[0] - p0[0], p1[1] - p0[1]
+    n = math.hypot(dx, dy) or 1.0
+    dx, dy = dx / n, dy / n
+    bx, by = p1[0] - dx * size, p1[1] - dy * size
+    d.polygon([(p1[0], p1[1]), (bx - dy * size * 0.45, by + dx * size * 0.45), (bx + dy * size * 0.45, by - dx * size * 0.45)], fill=fill)
+
+
+def annot_layer(shot, S, tl, sw, sh, k, F):
+    """T-030-N (R-VID-08): the 2-D marks of a shot's `annot` list, projected through the shot's own camera, as an RGBA layer (None when nothing is on).
+    kind 'dim': a dimension with extension lines, arrowheads and a leader to a label; the length is read from params-A.json at draw time (`param`), the line sits at x = at[0], z = at[1]
+    along y. kind 'arc': the rotation sense of the servo arm (AR-001: + = counter-clockwise about +z seen from above = elevon trailing edge down), drawn as an arc arrow ahead of the arm tip
+    in the direction it is turning now (faded in with the turning speed), with the label. Window `t` = [from, to] in shot-local seconds, 0.3 s fades."""
+    from PIL import Image, ImageDraw
+    items = shot.get('annot') or []
+    if not items:
+        return None
+    t = tl - shot['t0']
+    lay = Image.new('RGBA', (sw, sh), (0, 0, 0, 0))
+    d = ImageDraw.Draw(lay)
+    proj = cam_projector(hermite_cam(S['keys'], tl), sw, sh)
+    drawn = False
+    for an in items:
+        a0, a1 = an.get('t', [0.0, shot['dur']])
+        al = max(0.0, min(1.0, (t - a0) / 0.3, (a1 - t) / 0.3))
+        if al <= 0.0:
+            continue
+        if an['kind'] == 'dim':
+            v = float(param_value(an['param']))
+            x_, z_ = an['at']
+            xe = an.get('ext_from_x', x_ - 0.1)
+            pa, pb = proj((x_, -v / 2, z_)), proj((x_, v / 2, z_))
+            col, halo = INK + (int(255 * al),), (255, 255, 255, int(235 * al))
+            for sy in (-1, 1):                                                          # extension lines from the wing tips (x = ext_from_x, z = tip_z) out to just past the dimension line
+                tz_ = an.get('tip_z', 0.0)
+                p_in = proj((xe, sy * v / 2, tz_))
+                p_out = proj((x_ + 0.015 * (x_ - xe) / math.hypot(x_ - xe, z_ - tz_), sy * v / 2, z_ + 0.015 * (z_ - tz_) / math.hypot(x_ - xe, z_ - tz_)))
+                d.line((p_in[0], p_in[1], p_out[0], p_out[1]), fill=halo, width=int(7 * k))
+                d.line((p_in[0], p_in[1], p_out[0], p_out[1]), fill=col, width=max(2, int(2.5 * k)))
+            d.line((pa[0], pa[1], pb[0], pb[1]), fill=halo, width=int(8 * k))
+            d.line((pa[0], pa[1], pb[0], pb[1]), fill=col, width=max(2, int(3 * k)))
+            mid = ((pa[0] + pb[0]) / 2, (pa[1] + pb[1]) / 2)
+            hs = 18 * k
+            _arrow_head(d, mid, pa, hs, col)
+            _arrow_head(d, mid, pb, hs, col)
+            txt = an['label'].format(v=v)
+            tw_ = max(d.textlength(txt, font=F['h1']), d.textlength(an.get('cite', ''), font=F['mono']))
+            lx, ly = mid[0] - tw_ / 2 - 16 * k, mid[1] + 46 * k
+            d.line((mid[0], mid[1], mid[0], ly), fill=ORANGE + (int(255 * al),), width=max(2, int(2.5 * k)))
+            d.rounded_rectangle((lx, ly, lx + tw_ + 32 * k, ly + 62 * k), radius=int(8 * k), fill=(255, 255, 255, int(244 * al)), outline=ORANGE + (int(255 * al),), width=max(2, int(2 * k)))
+            d.text((lx + 16 * k, ly + 4 * k), txt, font=F['h1'], fill=INK + (int(255 * al),))
+            d.text((lx + 16 * k, ly + 38 * k), an.get('cite', ''), font=F['mono'], fill=MUTED + (int(255 * al),))
+            drawn = True
+        elif an['kind'] == 'arc':
+            G = load_kin()['geom']
+            dt = 0.1
+            th0 = mech_state(shot, tl - dt)['theta_R'] if tl - dt >= shot['t0'] else mech_state(shot, tl)['theta_R']
+            th1 = mech_state(shot, min(tl + dt, shot['t1'] - 1e-6))['theta_R']
+            vel = (th1 - th0) / (2 * dt)
+            al *= min(1.0, abs(vel) / 6.0)
+            if al <= 0.02:
+                continue
+            sg = 1.0 if vel > 0 else -1.0
+            th_now = mech_state(shot, tl)['theta_R']
+            cx, cy, cz = G['SV_XS'], G['SERVO_Y'], G['ROD_Z'] + 0.003                   # spindle of the right servo, arm plane
+            R_ = 2.8 * G['ARM_R']                                                      # twice the arm length: the arc sits clear of the arm, rod and horn
+            phi0 = math.radians(th_now - 90.0)                                          # arm tip angle in the xy plane (mech_geom: tip = spindle + ARM_R (sin th, -cos th))
+            pts = []
+            for i in range(25):
+                ph = phi0 + sg * math.radians(8.0 + 70.0 * i / 24.0)
+                pts.append(proj((cx + R_ * math.cos(ph), cy + R_ * math.sin(ph), cz)))
+            col, halo = INK + (int(255 * al),), (255, 255, 255, int(235 * al))             # dark: the moving parts of the scene are orange
+            xy = [(q[0], q[1]) for q in pts]
+            d.line(xy, fill=halo, width=int(11 * k), joint='curve')
+            d.line(xy, fill=col, width=max(3, int(5 * k)), joint='curve')
+            _arrow_head(d, pts[-4], pts[-1], 30 * k, col)
+            txt = ('Servo arm turns + (counter-clockwise seen from above): elevon trailing edge DOWN' if sg > 0 else 'Servo arm turns - (clockwise seen from above): elevon trailing edge UP')
+            lines_ = wrap(d, txt, F['body'], 470 * k)
+            bw_ = max(d.textlength(q_, font=F['body']) for q_ in lines_) + 32 * k
+            bh_ = (20 + 26 * len(lines_)) * k
+            ex, ey = pts[-1][0], pts[-1][1]
+            lx = min(max(40 * k, ex + 36 * k), sw - 40 * k - bw_)
+            ly = min(max(100 * k, ey - 120 * k - bh_), sh * 0.5 - bh_)
+            d.line((ex, ey, lx + 16 * k, ly + bh_), fill=col, width=max(2, int(2.5 * k)))
+            d.rounded_rectangle((lx, ly, lx + bw_, ly + bh_), radius=int(8 * k), fill=(255, 255, 255, int(244 * al)), outline=ORANGE + (int(255 * al),), width=max(2, int(2 * k)))
+            for j_, q_ in enumerate(lines_):
+                d.text((lx + 16 * k, ly + 10 * k + j_ * 26 * k), q_, font=F['body'], fill=INK + (int(255 * al),))
+            drawn = True
+    return lay if drawn else None
+
+
+def film_overlay(src, dst, f, sw, sh):
+    """T-027: Pillow pass of the short film: header, ILLUSTRATIVE (or other) tag, lower-third title (fades 0.4 s in / out), TODO placeholder
+    card, closing card (values read from params-A.json at draw time)."""
+    from PIL import Image, ImageDraw
+    film, k, F = _G['film'], _G['k'], _G['F']
+    t = f / FPS
+    S, shot, tl = film_at(film, t)
+    im = Image.open(src).convert('RGBA')
+    vals = {kk: src_val(v) for kk, v in shot.get('vals', {}).items()}           # T-029: numbers of the FEA shots, read from the result files at draw time
+    if shot.get('plate'):                                                        # image plate of an existing FEA figure (T-029), fitted between the header and the lower third
+        pl = Image.open(os.path.join(REDESIGN, shot['plate']['image'])).convert('RGBA')
+        bw_, bh_ = sw - 80 * k, sh - 96 * k - 150 * k
+        sc_ = min(bw_ / pl.size[0], bh_ / pl.size[1])
+        pl = pl.resize((int(pl.size[0] * sc_), int(pl.size[1] * sc_)), Image.LANCZOS)
+        im.alpha_composite(pl, (int((sw - pl.size[0]) / 2), int(92 * k)))
+    lay = Image.new('RGBA', im.size, (0, 0, 0, 0))
+    d = ImageDraw.Draw(lay)
+    x0, x1 = 40 * k, sw - 40 * k
+    hdr2 = 'SCENE %s  /  SHOT %s' % (S['id'], shot['id'])
+    hw_ = max(d.textlength('Concept A quad tailsitter', font=F['h2']), d.textlength(hdr2, font=F['mono']))
+    d.rounded_rectangle((x0 - 14 * k, 18 * k, x0 + hw_ + 14 * k, 76 * k), radius=int(8 * k), fill=DIP_RGB + (168,))             # T-030-N m-C: backing plate (about 66 % stage colour), the header stays legible over the black arm or the orange horn
+    d.text((x0, 26 * k), 'Concept A quad tailsitter', font=F['h2'], fill=INK + (235,))
+    d.text((x0, 52 * k), hdr2, font=F['mono'], fill=MUTED + (235,))
+    panel_left = None                    # T-030-N N-1: left edge of the readout panel at the bottom right; the lower third must end 24 px short of it
+    tag = shot.get('tag')
+    if tag and vals:
+        tag = tag.format(**vals)
+    if tag:
+        tw = d.textlength(tag, font=F['mono'])
+        d.rounded_rectangle((x1 - tw - 28 * k, 24 * k, x1, 24 * k + 36 * k), radius=int(6 * k), fill=(255, 255, 255, 235), outline=ORANGE + (255,), width=max(2, int(2 * k)))
+        d.text((x1 - tw - 14 * k, 24 * k + 8 * k), tag, font=F['mono'], fill=ORANGE + (255,))
+    if shot.get('sitl'):                 # T-029: live readout from the executed SITL run (same data as the aircraft pose)
+        run = shot['sitl']['run']
+        tlog = sitl_clock(shot, tl)
+        a_ = sitl_at(run, tlog)
+        sm_ = sitl_sum(run)
+        rows_ = [('Pitch (nose up +)', '%+6.1f deg' % a_['pitch']), ('Altitude (CG)', '%6.1f m' % a_['alt']), ('Airspeed', '%6.1f m/s' % a_['V']),
+                 ('Elevon left / right', '%+5.1f / %+5.1f deg' % (a_['dl'], a_['dr']))]
+        notes_ = [('Log time %6.1f s   time scale x%.1f' % (tlog, sitl_scale(shot)), INK),
+                  ('Run %s: %.3f kg, wind %.0f m/s (sum.json)' % (run, sm_['mass'], sm_['wind']), MUTED),
+                  (shot['sitl'].get('note', ''), MUTED),
+                  ('Prop rotation illustrative, not to rate' if shot.get('props_spin') else '', MUTED)]
+        ld_ = sm_.get('landing')
+        if shot['sitl'].get('landing_note') and ld_ and tlog >= ld_['t_touch']:
+            notes_.append(('Touch-down at %.1f s: sink %.2f m/s, lean %.1f deg, tipped over: %s (sum.json)' % (ld_['t_touch'], ld_['sink_ms'], ld_['lean_deg_at_touch'], 'yes' if ld_['tipped_over'] else 'no'), INK))
+        bw = 520 * k
+        wl_ = []
+        for tx_, col_ in notes_:
+            if tx_:
+                wl_ += [(ln_, col_) for ln_ in wrap(d, tx_, F['mono'], bw - 36 * k)]
+        bh_ = (12 + len(rows_) * 34 + 10 + 22 * len(wl_) + 12) * k
+        bx1, by1 = x1, sh - 44 * k
+        panel_left = bx1 - bw
+        d.rounded_rectangle((bx1 - bw, by1 - bh_, bx1, by1), radius=int(8 * k), fill=(255, 255, 255, 240), outline=(203, 210, 219, 255))
+        for i_, (lab_, val_) in enumerate(rows_):
+            d.text((bx1 - bw + 18 * k, by1 - bh_ + 12 * k + i_ * 34 * k), lab_, font=F['h2'], fill=SUB + (255,))
+            d.text((bx1 - 18 * k - d.textlength(val_, font=F['h1']), by1 - bh_ + 10 * k + i_ * 34 * k), val_, font=F['h1'], fill=INK + (255,))
+        yb_ = by1 - bh_ + 12 * k + len(rows_) * 34 * k + 6 * k
+        for j_, (ln_, col_) in enumerate(wl_):
+            d.text((bx1 - bw + 18 * k, yb_ + j_ * 22 * k), ln_, font=F['mono'], fill=col_ + (255,))
+    if shot.get('readout'):              # T-029: FEA numbers read from the result files (rows: label, value format, name in shot vals)
+        ro = shot['readout']
+        n_ = len(ro['rows'])
+        bw, bh_ = 500 * k, (46 + 32 * n_ + 58) * k
+        bx1, by1 = x1, sh - 44 * k
+        panel_left = bx1 - bw
+        d.rounded_rectangle((bx1 - bw, by1 - bh_, bx1, by1), radius=int(8 * k), fill=(255, 255, 255, 240), outline=(203, 210, 219, 255))
+        d.text((bx1 - bw + 18 * k, by1 - bh_ + 10 * k), ro['title'], font=F['mono'], fill=ORANGE + (255,))
+        for i_, r_ in enumerate(ro['rows']):
+            y_ = by1 - bh_ + 40 * k + i_ * 32 * k
+            d.text((bx1 - bw + 18 * k, y_ + 2 * k), r_['label'], font=F['body'], fill=SUB + (255,))
+            v_ = r_['fmt'] % tuple(vals[n] for n in r_['vals'])
+            d.text((bx1 - 18 * k - d.textlength(v_, font=F['h2']), y_), v_, font=F['h2'], fill=INK + (255,))
+        for j_, ln_ in enumerate(wrap(d, ro['src'], F['mono'], bw - 36 * k)[:2]):
+            d.text((bx1 - bw + 18 * k, by1 - 52 * k + j_ * 22 * k), ln_, font=F['mono'], fill=MUTED + (255,))
+        if ro.get('legend'):             # utilisation ramp, as in the figures
+            ramp, crit, nj = fea_ramp()
+            lw = 480 * k
+            ly = by1 - bh_ - 92 * k
+            d.rounded_rectangle((bx1 - lw - 12 * k, ly - 10 * k, bx1, ly + 78 * k), radius=int(8 * k), fill=(255, 255, 255, 240), outline=(203, 210, 219, 255))
+            sw_ = (lw - 20 * k) / len(ramp)
+            for i_, hx_ in enumerate(ramp):
+                d.rectangle((bx1 - lw - 2 * k + i_ * sw_, ly, bx1 - lw - 2 * k + (i_ + 1) * sw_, ly + 18 * k), fill=_hex(hx_) + (255,))
+            d.text((bx1 - lw - 2 * k, ly + 22 * k), '0', font=F['mono'], fill=MUTED + (255,))
+            d.text((bx1 - 22 * k, ly + 22 * k), '1', font=F['mono'], fill=MUTED + (255,))
+            d.text((bx1 - lw + 120 * k, ly + 22 * k), 'utilisation (1 = allowable)', font=F['mono'], fill=MUTED + (255,))
+            d.rectangle((bx1 - lw - 2 * k, ly + 50 * k, bx1 - lw + 14 * k, ly + 66 * k), fill=_hex(crit) + (255,))
+            d.text((bx1 - lw + 22 * k, ly + 48 * k), 'over 1', font=F['mono'], fill=INK + (255,))
+            d.rectangle((bx1 - lw + 130 * k, ly + 50 * k, bx1 - lw + 146 * k, ly + 66 * k), fill=_hex(nj) + (255,))
+            d.text((bx1 - lw + 154 * k, ly + 48 * k), 'not judged (pins, load ends)', font=F['mono'], fill=INK + (255,))
+    if shot.get('mech') and 'sweep' in shot['mech']:                 # readout of the solved linkage state (numbers from linkage_kinematics.csv through mech_state, AR-001)
+        st = mech_state(shot, tl)
+        rows_ = [('Servo arm', '%+5.1f deg' % st['theta_R']), ('Elevon', '%+5.1f deg' % st['delta'])]
+        bw, bh_ = 330 * k, 112 * k
+        bx1, by1 = x1, sh - 44 * k
+        panel_left = bx1 - bw
+        d.rounded_rectangle((bx1 - bw, by1 - bh_, bx1, by1), radius=int(8 * k), fill=(255, 255, 255, 240), outline=(203, 210, 219, 255))
+        for i_, (lab_, val_) in enumerate(rows_):
+            d.text((bx1 - bw + 18 * k, by1 - bh_ + 12 * k + i_ * 32 * k), lab_, font=F['h2'], fill=SUB + (255,))
+            d.text((bx1 - 18 * k - d.textlength(val_, font=F['h1']), by1 - bh_ + 10 * k + i_ * 32 * k), val_, font=F['h1'], fill=INK + (255,))
+        d.text((bx1 - bw + 18 * k, by1 - 30 * k), 'AR-001 table; + = trailing edge down', font=F['mono'], fill=MUTED + (255,))
+    an_ = annot_layer(shot, S, tl, sw, sh, k, F)                      # T-030-N: dimension call-out / motion arrow, projected through this shot's camera
+    if an_ is not None:
+        lay = Image.alpha_composite(lay, an_)
+        d = ImageDraw.Draw(lay)
+    if shot.get('todo'):
+        lines = wrap(d, shot['todo'], F['h1'], sw * 0.62)
+        bh = (60 + 36 * len(lines)) * k
+        y0 = sh * 0.38 - bh / 2
+        d.rounded_rectangle((sw * 0.19, y0, sw * 0.81, y0 + bh), radius=int(10 * k), fill=(255, 255, 255, 240), outline=ORANGE + (255,), width=max(2, int(3 * k)))
+        d.text((sw * 0.19 + 24 * k, y0 + 14 * k), 'TODO  PLACEHOLDER SHOT %s' % shot['id'], font=F['mono'], fill=ORANGE + (255,))
+        for i, ln in enumerate(lines):
+            d.text((sw * 0.19 + 24 * k, y0 + 46 * k + i * 36 * k), ln, font=F['h1'], fill=INK + (255,))
+    ll = Image.new('RGBA', im.size, (0, 0, 0, 0))
+    dl = ImageDraw.Draw(ll)
+    card = shot.get('card')
+    if card:
+        lines = card.get('lines', [])
+        rows_c, cites = [], []
+        for ln in lines:                          # value lines: a params-A.json key, or a text over values read from records at draw time (T-030 M-2: every line cites its record)
+            if 'key' in ln:
+                rows_c.append((ln['label'], ln['fmt'] % param_value(ln['key'])))
+                cites.append('params-A.json ' + ln['key'])
+            else:
+                lv = {n_: src_val(sp_) for n_, sp_ in ln.get('vals', {}).items()}
+                rows_c.append((ln['label'], ln['text'].format(**lv)))
+                if ln.get('cite'):
+                    cites.append(ln['cite'])
+        foot = wrap(dl, 'Sources: ' + '; '.join(cites), F['mono'], x1 - x0 - 60 * k)[:4]
+        rows_w = [(lab_, wrap(dl, txt_, F['h2'], x1 - (x0 + 400 * k) - 30 * k)) for lab_, txt_ in rows_c]            # T-030-N m-A: a value too long for the card wraps to a second line
+        bh = (96 + 36 * len(rows_c) + 30 * sum(len(w_) - 1 for _l, w_ in rows_w) + 12 + 22 * len(foot) + 18) * k
+        y1_ = sh - 40 * k
+        y0_ = y1_ - bh
+        dl.rounded_rectangle((x0, y0_, x1, y1_), radius=int(12 * k), fill=(255, 255, 255, 246), outline=(203, 210, 219, 255))
+        dl.rectangle((x0, y0_ + 12 * k, x0 + 6 * k, y1_ - 12 * k), fill=ORANGE + (255,))
+        dl.text((x0 + 30 * k, y0_ + 16 * k), card.get('kicker', ''), font=F['mono'], fill=ORANGE + (255,))
+        dl.text((x0 + 30 * k, y0_ + 40 * k), card['name'], font=F['big'], fill=INK + (255,))
+        y = y0_ + 100 * k
+        for lab_, wl2_ in rows_w:
+            dl.text((x0 + 30 * k, y + 2 * k), lab_, font=F['h2'], fill=SUB + (255,))
+            for jj_, tx2_ in enumerate(wl2_):
+                dl.text((x0 + 400 * k, y + jj_ * 30 * k), tx2_, font=F['h2'], fill=INK + (255,))
+            y += 36 * k + 30 * k * (len(wl2_) - 1)
+        for j_, ln_ in enumerate(foot):
+            dl.text((x0 + 30 * k, y + 8 * k + j_ * 22 * k), ln_, font=F['mono'], fill=MUTED + (255,))
+    elif shot.get('title'):
+        wsub = sw * (0.86 if shot.get('plate') else 0.40 if shot.get('readout') else 0.55)
+        if panel_left is not None:                                  # T-030-N N-1: layout guard, the lower third (x0 .. x0 + text + 52 px) ends at least 24 px left of the readout panel
+            wsub = min(wsub, panel_left - 24 * k - x0 - 52 * k)
+        sub = wrap(dl, shot.get('sub', '').format(**vals) if vals else shot.get('sub', ''), F['body'], wsub)
+        if len(sub) > 3:
+            raise ValueError('shot %s: the sub-title needs %d lines at %.0f px (max 3): shorten it' % (shot['id'], len(sub), wsub))
+        bh = (40 + 32 + 26 * len(sub)) * k
+        y1_ = sh - 44 * k
+        y0_ = y1_ - bh
+        wmax = max([dl.textlength(shot['title'], font=F['h1'])] + [dl.textlength(q, font=F['body']) for q in sub]) + 52 * k
+        if panel_left is not None and x0 + wmax > panel_left - 24 * k + 0.5:
+            raise ValueError('shot %s: the lower third (right edge %.0f px) overlaps the readout panel (left edge %.0f px, 24 px gap needed)' % (shot['id'], x0 + wmax, panel_left))
+        dl.rounded_rectangle((x0, y0_, x0 + wmax, y1_), radius=int(8 * k), fill=(255, 255, 255, 240), outline=(203, 210, 219, 255))
+        dl.rectangle((x0, y0_ + 8 * k, x0 + 5 * k, y1_ - 8 * k), fill=ORANGE + (255,))
+        dl.text((x0 + 24 * k, y0_ + 12 * k), shot['title'], font=F['h1'], fill=INK + (255,))
+        for i, q in enumerate(sub):
+            dl.text((x0 + 24 * k, y0_ + 50 * k + i * 26 * k), q, font=F['body'], fill=SUB + (255,))
+    a_ = shot_fade(shot, tl) / 12.0
+    if a_ < 1.0:
+        ll.putalpha(ll.getchannel('A').point(lambda v: int(v * a_)))
+    lay = Image.alpha_composite(lay, ll)
+    out = Image.alpha_composite(im, lay).convert('RGB')
+    dp = dip_level(film, t)
+    if dp > 0:                                    # T-030 m-1: a 0.4 s dip to the stage colour around each scene join (0.2 s either side), done here so it costs no Blender time
+        out = Image.blend(out, Image.new('RGB', out.size, DIP_RGB), min(1.0, dp / 12.0))
+    out.save(dst, optimize=False, compress_level=1)
+
+
+DIP_RGB = (240, 243, 247)
+DIP_S = 0.2
+
+
+def shot_fade(shot, tl):
+    """Opacity of a shot's lower third / card in twelfths: 0.4 s fade in and out for a title, 0.4 s fade in for the closing card (T-030 m-1)."""
+    if shot.get('card'):
+        return round(max(0.0, min(1.0, (tl - shot['t0'] + shot.get('fade_src_a', 0.0)) / 0.4)) * 12)       # fade_src_a: the highlight cut starts inside the source shot, whose card has already faded in
+    if shot.get('title'):                # title_delay (F-5): the lower third fades in this many seconds after the shot starts (caption timed to the view)
+        return round(max(0.0, min(1.0, (tl - shot['t0'] - shot.get('title_delay', 0.0)) / 0.4, (shot['t1'] - tl) / 0.4)) * 12)
+    return 12
+
+
+def dip_level(film, t):
+    """Dip to the stage colour in twelfths at film time t: 12 at a scene join, 0 DIP_S s away on either side (not at the very start and end of the film)."""
+    lv = 0.0
+    for i, S in enumerate(film['scenes']):
+        if i > 0:
+            lv = max(lv, 1.0 - (t - S['t0']) / DIP_S) if 0 <= t - S['t0'] < DIP_S else lv
+        if i < len(film['scenes']) - 1:
+            e = S['t0'] + S['dur']
+            lv = max(lv, 1.0 - (e - t) / DIP_S) if 0 < e - t <= DIP_S else lv
+    return round(lv * 12)
+
+
+def _film_job(args):
+    return film_overlay(*args)
+
+
 def _overlay_job(args):
     return overlay(*args)
 
@@ -1307,6 +2614,261 @@ def run(cmd, show=('FRAME', 'RENDER_TOTAL', 'ENCODED', 'PARTS', 'WIRES', 'Traceb
         raise SystemExit('blender failed')
 
 
+def RES_FLAGS(a):
+    return ['--width', str(W), '--height', str(H), '--fps', str(FPS)] + (['--dof'] if getattr(a, 'dof', False) else []) + (['--motion-blur'] if getattr(a, 'motion_blur', False) else [])
+
+
+def write_timing(path, d):
+    os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
+    json.dump(d, open(path, 'w'), indent=1)
+    print('TIMING', path, json.dumps(d))
+
+
+def contact_sheet(frames, name_of, work, fps, film, out, cols=8, tw=240):
+    """Grid of the given film frames (after overlay) with time stamps and scene / shot ids."""
+    from PIL import Image, ImageDraw
+    th = int(tw * H / W)
+    rows_n = (len(frames) + cols - 1) // cols
+    gap, lab = 4, 18
+    sheet = Image.new('RGB', (cols * (tw + gap) + gap, rows_n * (th + lab + gap) + gap), (24, 28, 34))
+    d = ImageDraw.Draw(sheet)
+    fnt = _font(['consola.ttf', 'cour.ttf'], 12)
+    for i, f in enumerate(frames):
+        x, y = gap + (i % cols) * (tw + gap), gap + (i // cols) * (th + lab + gap)
+        sheet.paste(Image.open(os.path.join(work, name_of[f])).convert('RGB').resize((tw, th), Image.LANCZOS), (x, y))
+        S, shot, _ = film_at(film, f / fps)
+        d.text((x + 2, y + th + 2), 'f%05d  %6.2fs  %s/%s' % (f, f / fps, S['id'], shot['id']), font=fnt, fill=(220, 226, 235))
+    sheet.save(out)
+
+
+FILM_OVERLAY_ONLY = ('id', 'title', 'sub', 'tag', 'readout', 'vals', 'card', 'annot', 'todo', 'src', 'fade_src_a', 'title_delay', 'cam')     # shot fields that do not change a raw (3-D) frame; 'cam' is compared per frame
+
+
+def shot_signature(sh):
+    return json.dumps({k_: v_ for k_, v_ in sh.items() if k_ not in FILM_OVERLAY_ONLY}, sort_keys=True)
+
+
+def film_reuse(old, new, nfr):
+    """T-030-N: {new frame: old frame} for every frame of `new` whose raw picture is the same as a frame of `old`: same scene and shot id, same 3-D shot fields (everything except the
+    overlay-only fields), same scene-local time, same camera (Hermite value, 1e-9). The old frame index differs from the new one when scenes before it grew or shrank."""
+    olds = {S['id']: S for S in old['scenes']}
+    out = {}
+    for f in range(nfr):
+        S, sh, tl = film_at(new, f / FPS)
+        So = olds.get(S['id'])
+        if So is None:
+            continue
+        sho = next((x for x in So['shots'] if x['id'] == sh['id']), None)
+        if sho is None or shot_signature(sho) != shot_signature(sh):
+            continue
+        g = int(round(So['t0'] * FPS)) + (f - int(round(S['t0'] * FPS)))
+        if g < 0 or g >= int(round(old['total'] * FPS)):
+            continue
+        So2, sho2, tlo = film_at(old, g / FPS)
+        if So2['id'] != S['id'] or sho2['id'] != sh['id'] or abs(tlo - tl) > 1e-6:
+            continue
+        ca, cb = hermite_cam(S['keys'], tl), hermite_cam(So['keys'], tlo)
+        if max(abs(((x - y + 180.0) % 360.0) - 180.0) if i_ == 3 else abs(x - y) for i_, (x, y) in enumerate(zip(ca, cb))) < 1e-9:       # azimuth modulo 360: -210 and 150 deg are the same view
+            out[f] = g
+    return out
+
+
+def write_clip_lists(film, name_of):
+    """T-030-N m-D: the frame lists of the mechanism clips named in the shot list's top-level `clips` ([{list, shot, from_s, trim_end_s}]); written to film/clips/<list> in the names of the
+    overlay pictures (lab_NNNNN.png) of THIS run, so the clip encode reads exactly the pictures of the film."""
+    out = []
+    for c in film['raw'].get('clips', []):
+        for S in film['scenes']:
+            for sh in S['shots']:
+                if sh['id'] == c['shot']:
+                    f0 = int(round((S['t0'] + sh['t0']) * FPS)) + int(round(c.get('from_s', 0.0) * FPS))
+                    f1 = int(round((S['t0'] + sh['t1']) * FPS)) - int(round(c.get('trim_end_s', 0.0) * FPS))
+                    if all(f in name_of for f in range(f0, f1)):
+                        pth = os.path.join(FILM_DIR, 'clips', c['list'])
+                        os.makedirs(os.path.dirname(pth), exist_ok=True)
+                        open(pth, 'w').write('\n'.join(name_of[f] for f in range(f0, f1)) + '\n')
+                        out.append((c['list'], f0, f1))
+    return out
+
+
+def film_incremental(a, film, work, base, nfr):
+    """T-030-N: render ONLY the frames that differ from an earlier film (`--changed-from OLD shot list`), into the existing work folder with new file names (n_<frame>.png, never
+    overwriting a raw frame of the earlier run), and write ONE consolidated map map_T030N.json (new frame -> raw file) so that the later `--skip-render` overlay + encode run sees the
+    complete new film. The earlier run's maps are moved to <work>/old_maps/ (read from there when this is run again)."""
+    t0 = time.time()
+    old = load_film(a.changed_from, [x for x in a.scenes.split(',') if x] or None)
+    old_dir = os.path.join(work, 'old_maps')
+    os.makedirs(old_dir, exist_ok=True)
+    for fn in os.listdir(work):
+        if fn.startswith('map_') and fn.endswith('.json') and fn not in ('map_frames.json', 'map_T030N.json') and not fn.startswith('map_n'):
+            shutil.move(os.path.join(work, fn), os.path.join(old_dir, fn))
+    old_map = {}
+    for fn in sorted(os.listdir(old_dir)):
+        if fn.startswith('map_') and fn.endswith('.json'):
+            for kk, v in json.load(open(os.path.join(old_dir, fn))).items():
+                old_map[int(kk)] = v
+    reuse = film_reuse(old, film, nfr)
+    changed = [f for f in range(nfr) if f not in reuse]
+    print('INCR reuse %d frames, render %d changed frames of %d (old film %d frames)' % (len(reuse), len(changed), nfr, len(old_map)), flush=True)
+    nw = max(1, min(a.workers, len(changed)))
+    per = (len(changed) + nw - 1) // nw if changed else 0
+    procs = []
+    for i in range(nw):
+        part = changed[i * per:(i + 1) * per]
+        if not part:
+            continue
+        print('> worker %d: %d frames, %d-%d' % (i, len(part), part[0], part[-1]), flush=True)
+        lg = open(os.path.join(work, 'worker_n%d.log' % i), 'w')
+        procs.append((subprocess.Popen(base + ['--frames', ','.join(str(x) for x in part), '--raw-prefix', 'n_', '--tag', 'n%d' % i], stdout=lg, stderr=subprocess.STDOUT), lg))
+    for pr, lg in procs:
+        pr.wait()
+        lg.close()
+        if pr.returncode != 0:
+            raise SystemExit('blender worker failed, see worker_n*.log in ' + work)
+    t_render = time.time() - t0
+    new_map = {}
+    for i in range(nw):
+        fn = os.path.join(work, 'map_n%d.json' % i)
+        if os.path.exists(fn):
+            for kk, v in json.load(open(fn)).items():
+                new_map[int(kk)] = v
+    cons = {}
+    for f in range(nfr):
+        e = old_map[reuse[f]] if f in reuse else new_map[f]
+        if not os.path.exists(os.path.join(work, e['raw'])):
+            raise SystemExit('missing raw frame %s for frame %d' % (e['raw'], f))
+        cons[f] = e
+    for i in range(nw):
+        fn = os.path.join(work, 'map_n%d.json' % i)
+        if os.path.exists(fn):
+            shutil.move(fn, os.path.join(old_dir, 'map_n%d.json' % i))
+    json.dump(cons, open(os.path.join(work, 'map_T030N.json'), 'w'))
+    frame_s = []
+    for i in range(nw):
+        try:
+            frame_s += [float(m_) for m_ in re.findall(r'RENDER_TOTAL ([0-9.]+) s', open(os.path.join(work, 'worker_n%d.log' % i)).read())]
+        except OSError:
+            pass
+    rendered = len({new_map[f]['raw'] for f in changed}) if changed else 0
+    print('INCR consolidated map written: %d frames, %d new raw pictures, %.0f s' % (len(cons), rendered, t_render), flush=True)
+    write_timing(a.timing or os.path.join(FILM_DIR, 'timing-incremental.json'),
+                 dict(film=os.path.basename(a.shot_list), changed_from=os.path.basename(a.changed_from), film_seconds=round(film['total'], 2), frames=nfr, frames_reused=len(reuse), frames_changed=len(changed),
+                      new_raw_pictures=rendered, seconds=round(time.time() - t0, 1), seconds_render=round(t_render, 1), seconds_frame_loop_per_worker=[round(x, 1) for x in frame_s],
+                      seconds_per_rendered_frame=round(sum(frame_s) / max(1, rendered), 2), workers=nw, samples=a.samples, resolution=[W, H], fps=FPS, dof=a.dof, motion_blur=a.motion_blur,
+                      ray_tracing=not getattr(a, 'no_rt', False), changed_frame_ranges=_ranges(changed), sources=source_hashes(film)))
+
+
+def _ranges(fr):
+    out = []
+    for f in fr:
+        if out and f == out[-1][1] + 1:
+            out[-1][1] = f
+        else:
+            out.append([f, f])
+    return out
+
+
+def film_driver(a):
+    """T-027 short-film mode: shot list -> Blender workers (render) -> Pillow overlay -> contact sheet (preview) or MP4 (full)."""
+    from PIL import Image
+    t0 = time.time()
+    scene_ids = [x for x in a.scenes.split(',') if x] or None
+    film = load_film(a.shot_list, scene_ids)
+    nfr = int(round(film['total'] * FPS))
+    every = max(1, a.every)
+    work = os.path.abspath(a.work if a.work != os.path.join(tempfile.gettempdir(), 'a_build_film') else os.path.join(tempfile.gettempdir(), 'a_film'))
+    os.makedirs(work, exist_ok=True)
+    for fn in os.listdir(work):
+        if fn.startswith('map_') and fn.endswith('.json') and not a.skip_render and not getattr(a, 'changed_from', ''):
+            os.remove(os.path.join(work, fn))
+    print('film: %d scenes, %.1f s, %d frames at %dx%d @ %d fps, every %d' % (len(film['scenes']), film['total'], nfr, W, H, FPS, every), flush=True)
+    me = os.path.abspath(__file__)
+    if getattr(a, 'cam_check', False):
+        run([a.blender, '-b', '--factory-startup', '-P', me, '--', 'render', '--out', work, '--shot-list', os.path.abspath(a.shot_list), '--scenes', ','.join(scene_ids or []),
+             '--cam-check'] + RES_FLAGS(a), show=('CAMCHECK', 'Traceback', 'Error', '  File'))
+        shutil.copy(os.path.join(work, 'cam_clearance.json'), os.path.join(FILM_DIR, 'cam-clearance.json'))
+        print('CAMCHECK written', os.path.join(FILM_DIR, 'cam-clearance.json'), '%.0f s' % (time.time() - t0))
+        return
+    base = [a.blender, '-b', '--factory-startup', '-P', me, '--', 'render', '--out', work, '--samples', str(a.samples), '--shot-list', os.path.abspath(a.shot_list),
+            '--scenes', ','.join(scene_ids or [])] + RES_FLAGS(a)
+    if a.no_rt if hasattr(a, 'no_rt') else False:
+        base.append('--no-rt')
+    if getattr(a, 'changed_from', ''):
+        return film_incremental(a, film, work, base, nfr)
+    nw = max(1, a.workers)
+    per = (nfr + every - 1) // every
+    cuts = [min(nfr, (per * i // nw) * every) for i in range(nw)] + [nfr]       # cut points are multiples of --every so the workers' frame sets are disjoint
+    t_r = time.time()
+    procs = []
+    for i in range(nw):
+        if cuts[i] >= cuts[i + 1] or a.skip_render:
+            continue
+        print('> worker %d: frames %d-%d' % (i, cuts[i], cuts[i + 1] - 1), flush=True)
+        lg = open(os.path.join(work, 'worker_%d.log' % i), 'w')
+        procs.append((subprocess.Popen(base + ['--range', '%d:%d' % (cuts[i], cuts[i + 1]), '--every', str(every)], stdout=lg, stderr=subprocess.STDOUT), lg))
+    for p, lg in procs:
+        p.wait()
+        lg.close()
+        if p.returncode != 0:
+            raise SystemExit('blender worker failed, see worker_*.log in ' + work)
+    t_render = time.time() - t_r
+    frame_s = []                          # per worker: seconds Blender spent in the frame loop (RENDER_TOTAL), without its start-up (CAD build, about a minute)
+    for i in range(nw):
+        try:
+            frame_s += [float(m_) for m_ in re.findall(r'RENDER_TOTAL ([0-9.]+) s', open(os.path.join(work, 'worker_%d.log' % i)).read())]
+        except OSError:
+            pass
+    os.environ.setdefault('A_FILM_REV', git_rev())     # revision tag read before this run writes clip lists, timing or films
+    fmap = {}
+    for fn in sorted(os.listdir(work)):
+        if fn.startswith('map_') and fn.endswith('.json') and fn != 'map_frames.json':
+            for kk, v in json.load(open(os.path.join(work, fn))).items():
+                fmap[int(kk)] = v
+    frames = sorted(fmap)
+    sw, sh = Image.open(os.path.join(work, fmap[frames[0]]['raw'])).size
+    k = sw / BASE_W
+    keys, jobs, name_of = {}, [], {}
+    for f in frames:
+        S, shot, tl = film_at(film, f / FPS)
+        fade = shot_fade(shot, tl)
+        key = (fmap[f]['raw'], S['id'], shot['id'], fade, dip_level(film, f / FPS), f if shot.get('sitl') else 0)
+        if key not in keys:
+            keys[key] = 'lab_%05d.png' % len(keys)
+            jobs.append((os.path.join(work, fmap[f]['raw']), os.path.join(work, keys[key]), f, sw, sh))
+        name_of[f] = keys[key]
+    if every == 1:                        # T-030-N: the frame list of the whole film and the clip lists (film/clips/list-*.txt), in the picture names of this run
+        lst = os.path.join(work, '_list.txt')
+        open(lst, 'w').write('\n'.join(name_of[f] for f in frames))
+        for nm_, f0_, f1_ in write_clip_lists(film, name_of):
+            print('CLIPLIST %s frames %d..%d (%d)' % (nm_, f0_, f1_ - 1, f1_ - f0_), flush=True)
+    if getattr(a, 'lists_only', False):
+        print('lists only: %d overlay pictures would be drawn (nothing drawn, nothing encoded)' % len(jobs), flush=True)
+        return
+    t_o = time.time()
+    with concurrent.futures.ProcessPoolExecutor(max_workers=8, initializer=_init_film, initargs=(film, k, FPS)) as ex:
+        list(ex.map(_film_job, jobs, chunksize=4))
+    t_overlay = time.time() - t_o
+    rendered = len({fmap[f]['raw'] for f in frames})
+    print('mapped %d frames, %d rendered, %d overlay pictures' % (len(frames), rendered, len(jobs)), flush=True)
+    if a.contact:
+        os.makedirs(os.path.dirname(os.path.abspath(a.contact)), exist_ok=True)
+        contact_sheet(frames, name_of, work, FPS, film, a.contact)
+        print('CONTACT', a.contact)
+    t_enc = 0.0
+    if not a.preview and every == 1:
+        t_e = time.time()
+        lst = os.path.join(work, '_list.txt')
+        open(lst, 'w').write('\n'.join(name_of[f] for f in frames))
+        os.makedirs(os.path.dirname(os.path.abspath(a.film_out)), exist_ok=True)
+        run([a.blender, '-b', '--factory-startup', '-P', me, '--', 'encode', '--src', work, '--list', lst, '--out', os.path.abspath(a.film_out), '--crf', a.crf, '--w', str(W), '--h', str(H), '--fps', str(FPS)])
+        t_enc = time.time() - t_e
+    write_timing(a.timing or os.path.join(FILM_DIR, 'timing.json'),
+                 dict(film=os.path.basename(a.shot_list), scenes=[S['id'] for S in film['scenes']], film_seconds=round(film['total'], 2), frames=nfr, frames_mapped=len(frames), every=every,
+                      rendered=rendered, overlay_pictures=len(jobs), seconds=round(time.time() - t0, 1), seconds_render=round(t_render, 1), seconds_overlay=round(t_overlay, 1),
+                      seconds_encode=round(t_enc, 1), seconds_blender_start_and_frames=round(t_render, 1), seconds_frame_loop_per_worker=[round(x, 1) for x in frame_s], seconds_per_rendered_frame=round(sum(frame_s) / max(1, rendered), 2), workers=nw, samples=a.samples,
+                      resolution=[W, H], fps=FPS, dof=a.dof, motion_blur=a.motion_blur, ray_tracing=not getattr(a, 'no_rt', False), preview=bool(a.preview), sources=source_hashes(film)))
+
+
 def driver():
     import argparse
     from PIL import Image
@@ -1322,13 +2884,29 @@ def driver():
     ap.add_argument('--crf', default='MEDIUM', help='H.264 quality of the whole film (lowered until under --max-mb)')
     ap.add_argument('--stage-crf', default='MEDIUM')
     ap.add_argument('--max-mb', type=float, default=13.0)
+    add_res_args(ap)
+    ap.add_argument('--shot-list', default='', help='short-film mode (T-027): shot-list JSON (see film/shots-main.json)')
+    ap.add_argument('--scenes', default='', help='short-film mode: comma list of scene ids (default all)')
+    ap.add_argument('--every', type=int, default=0, help='short-film preview: render every Nth frame (0 = all; with --preview no encode, writes a contact sheet)')
+    ap.add_argument('--contact', default='', help='short-film preview: contact-sheet PNG path')
+    ap.add_argument('--film-out', default=os.path.join(FILM_DIR, 'film.mp4'), help='short-film mode: MP4 written when not a preview')
+    ap.add_argument('--timing', default='', help='timing.json path (short film default film/timing.json; build film: animation/timing.json on a full run)')
+    ap.add_argument('--dof', action='store_true', help='depth of field on the camera target (off by default)')
+    ap.add_argument('--motion-blur', action='store_true', help='EEVEE motion blur (off by default)')
+    ap.add_argument('--no-rt', action='store_true', help='short film: EEVEE ray tracing off')
+    ap.add_argument('--cam-check', action='store_true', help='short film: no render, camera-vs-mesh clearance and camera speed / acceleration of every frame (film/cam-clearance.json)')
+    ap.add_argument('--changed-from', default='', help='short film (T-030-N): shot list of an EARLIER film whose raw frames are in --work; render only the frames that differ (names n_<frame>.png), write map_T030N.json, no overlay, no encode')
+    ap.add_argument('--lists-only', action='store_true', help='short film (T-030-N, with --skip-render): write _list.txt and the clip lists, draw nothing, encode nothing')
     a = ap.parse_args()
+    apply_res(a.width, a.height, a.fps)
     t0 = time.time()
+    if a.shot_list:
+        return film_driver(a)
     a.work = os.path.abspath(a.work)
     os.makedirs(a.work, exist_ok=True)
     os.makedirs(OUT, exist_ok=True)
     if not a.skip_camplan:           # the per-step cameras (cam_plan.json) give the camera move times of the schedule: refresh them first
-        run([a.blender, '-b', '--factory-startup', '-P', os.path.abspath(__file__), '--', 'render', '--out', a.work, '--camplan'], show=('CAMPLAN', 'Traceback', 'Error', '  File'))
+        run([a.blender, '-b', '--factory-startup', '-P', os.path.abspath(__file__), '--', 'render', '--out', a.work, '--camplan'] + RES_FLAGS(a), show=('CAMPLAN', 'Traceback', 'Error', '  File'))
     rows, total = timeline()
     nframes = int(total * FPS)
     print('%d steps, %d stages, %.1f s (%.1f min), %d frames' % (len(rows), len(STAGES), total, total / 60, nframes))
@@ -1336,7 +2914,7 @@ def driver():
     every, scale = (4, 0.5) if a.preview else (1, 1.0)
     chunk_maps = []
     if not a.skip_render:
-        base = [a.blender, '-b', '--factory-startup', '-P', me, '--', 'render', '--out', a.work, '--samples', str(a.samples), '--scale', str(scale)]
+        base = [a.blender, '-b', '--factory-startup', '-P', me, '--', 'render', '--out', a.work, '--samples', str(a.samples), '--scale', str(scale)] + RES_FLAGS(a)
         if a.frames:
             run(base + ['--frames', a.frames])
         else:
@@ -1375,7 +2953,7 @@ def driver():
         frames = [int(x) for x in a.frames.split(',')]
     print('mapped %d frames, %d distinct pictures' % (len(frames), len({fmap[f]['raw'] for f in frames})))
     # ---- overlays: one per distinct (picture, card state)
-    k = Image.open(os.path.join(a.work, fmap[frames[0]]['raw'])).size[0] / float(W)
+    k = Image.open(os.path.join(a.work, fmap[frames[0]]['raw'])).size[0] / BASE_W
     sw, sh = Image.open(os.path.join(a.work, fmap[frames[0]]['raw'])).size
     keys, jobs, name_of = {}, [], {}
     for f in frames:
@@ -1392,7 +2970,7 @@ def driver():
         name_of[f] = keys[key]
     print('%d overlay pictures' % len(jobs), flush=True)
     done = 0
-    with concurrent.futures.ProcessPoolExecutor(max_workers=8, initializer=_init, initargs=(rows, total, k)) as ex:
+    with concurrent.futures.ProcessPoolExecutor(max_workers=8, initializer=_init, initargs=(rows, total, k, FPS)) as ex:
         for _ in ex.map(_overlay_job, jobs, chunksize=8):
             done += 1
             if done % 300 == 0:
@@ -1400,12 +2978,15 @@ def driver():
     if a.frames or a.preview:
         print('test frames in', a.work)
         json.dump({str(f): name_of[f] for f in frames}, open(os.path.join(a.work, 'lab_index.json'), 'w'))
+        if a.timing:
+            write_timing(a.timing, dict(film='a-build (test frames)', frames=nframes, rendered=len({fmap[f]['raw'] for f in frames}), overlay_pictures=len(jobs),
+                         seconds=round(time.time() - t0, 1), workers=1, samples=a.samples, resolution=[sw, sh], fps=FPS))
         return
 
     def encode(names, out, crf):
         lst = os.path.join(a.work, '_list.txt')
         open(lst, 'w').write('\n'.join(names))
-        run([a.blender, '-b', '--factory-startup', '-P', me, '--', 'encode', '--src', a.work, '--list', lst, '--out', out, '--crf', crf])
+        run([a.blender, '-b', '--factory-startup', '-P', me, '--', 'encode', '--src', a.work, '--list', lst, '--out', out, '--crf', crf, '--w', str(W), '--h', str(H), '--fps', str(FPS)])
 
     # whole film: the CRF is lowered until the file is under the artifact limit
     allnames = [name_of[f] for f in frames]
@@ -1434,6 +3015,8 @@ def driver():
     for fn in sorted(os.listdir(OUT)):
         print('%-24s %7.2f MB' % (fn, os.path.getsize(os.path.join(OUT, fn)) / 1e6))
     print('total %.1f min' % ((time.time() - t0) / 60))
+    write_timing(a.timing or os.path.join(OUT, 'timing.json'), dict(film='a-build', frames=nframes, rendered=len({fmap[f]['raw'] for f in frames}), overlay_pictures=len(jobs),
+                 seconds=round(time.time() - t0, 1), workers=1 if a.preview else a.workers, samples=a.samples, resolution=[W, H], fps=FPS))
 
 
 if __name__ == '__main__':

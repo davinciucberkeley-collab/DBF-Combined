@@ -195,7 +195,7 @@
     },
     {
      "item": "PWR-001",
-     "text": "4S 2300 mAh pack"
+     "text": "4S 2800 mAh pack"
     },
     {
      "item": "CGE-008",
@@ -249,7 +249,7 @@
    "callouts": [
     {
      "item": "PRP-001-UR",
-     "text": "T-Motor MN2212 KV780"
+     "text": "SunnySky X2216 880KV"
     },
     {
      "item": "PRP-002-UR",
@@ -285,7 +285,7 @@
    },
    "caption": {
     "title": "Propulsion station (upper right)",
-    "sub": "MN2212 on a canted cup at the end of a CF arm, APC 9x4.5MR prop on its adapter and spinner nut"
+    "sub": "X2216 on a canted cup at the end of a CF arm, APC 9x4.5MR prop on its adapter and spinner nut"
    }
   },
   {
@@ -468,7 +468,7 @@
     },
     {
      "item": "PWR-001",
-     "text": "4S 2300 mAh pack"
+     "text": "4S 2800 mAh pack"
     }
    ],
    "camera": {

@@ -1,0 +1,569 @@
+{
+ "pair": [
+  "g1ms14",
+  "g1ms11"
+ ],
+ "worst_abs_change": {
+  "tube A axial (judged)": 0.03147338019982071,
+  "tube A hoop (judged)": 0.049538513218826186,
+  "tube A tau_st (judged)": 0.11206707917296477,
+  "tube A tau_sr (judged)": 0.22300342679288077,
+  "tube A tau_s,r raw max (incl. rings)": 0.29377589982543495,
+  "tube B axial (judged)": 0.031656260350931054,
+  "tube B hoop (judged)": 0.07836752491070342,
+  "tube B tau_st (judged)": 0.10430935447263301,
+  "tube B tau_sr (judged)": 0.24450209694445801,
+  "tube B tau_s,r raw max (incl. rings)": 0.3046642826544501,
+  "bond mean shear full": 0.052974075530941134,
+  "bond mean shear T-076c def.": 0.08366167238465083,
+  "hub von Mises max excl": 0.11739756059917861
+ },
+ "rows": [
+  {
+   "set": "RB z0.02",
+   "q": "tube A axial (judged)",
+   "coarse": 59.663249452764305,
+   "fine": 60.659315881745606,
+   "ratio": 0.9835793329597862
+  },
+  {
+   "set": "RB z0.02",
+   "q": "tube A hoop (judged)",
+   "coarse": 4.173873416056086,
+   "fine": 4.2389837584547,
+   "ratio": 0.9846401057166707
+  },
+  {
+   "set": "RB z0.02",
+   "q": "tube A tau_st (judged)",
+   "coarse": 1.9925034081631676,
+   "fine": 1.8084682504167906,
+   "ratio": 1.1017630017579592
+  },
+  {
+   "set": "RB z0.02",
+   "q": "tube A tau_sr (judged)",
+   "coarse": 6.553018817512722,
+   "fine": 8.243542006814407,
+   "ratio": 0.7949275702235474
+  },
+  {
+   "set": "RB z0.02",
+   "q": "tube A tau_s,r raw max (incl. rings)",
+   "coarse": 10.301976628351522,
+   "fine": 13.868129153050218,
+   "ratio": 0.742852659840254
+  },
+  {
+   "set": "RB z0.02",
+   "q": "tube B axial (judged)",
+   "coarse": 80.64022225338188,
+   "fine": 80.31201002439886,
+   "ratio": 1.0040867141649588
+  },
+  {
+   "set": "RB z0.02",
+   "q": "tube B hoop (judged)",
+   "coarse": 5.772727923626494,
+   "fine": 6.082006348487663,
+   "ratio": 0.949148618541302
+  },
+  {
+   "set": "RB z0.02",
+   "q": "tube B tau_st (judged)",
+   "coarse": 1.9932548311202043,
+   "fine": 1.921463414116421,
+   "ratio": 1.0373628852240189
+  },
+  {
+   "set": "RB z0.02",
+   "q": "tube B tau_sr (judged)",
+   "coarse": 8.718078317663224,
+   "fine": 11.539513587534467,
+   "ratio": 0.755497903055542
+  },
+  {
+   "set": "RB z0.02",
+   "q": "tube B tau_s,r raw max (incl. rings)",
+   "coarse": 13.304631925824483,
+   "fine": 19.13411262205116,
+   "ratio": 0.6953357173455499
+  },
+  {
+   "set": "RB z0.02",
+   "q": "bond mean shear full",
+   "coarse": 0.7540136474146107,
+   "fine": 0.7459275053802724,
+   "ratio": 1.010840385930287
+  },
+  {
+   "set": "RB z0.02",
+   "q": "bond mean shear T-076c def.",
+   "coarse": 0.5099766680575969,
+   "fine": 0.48070725168377015,
+   "ratio": 1.0608882355556422
+  },
+  {
+   "set": "RB z0.02",
+   "q": "hub von Mises max excl",
+   "coarse": 35.7177066569733,
+   "fine": 40.36350838122403,
+   "ratio": 0.8849009436847708
+  },
+  {
+   "set": "D1 z0.02",
+   "q": "tube A axial (judged)",
+   "coarse": 131.59524750361567,
+   "fine": 133.80355962701046,
+   "ratio": 0.9834958641642221
+  },
+  {
+   "set": "D1 z0.02",
+   "q": "tube A hoop (judged)",
+   "coarse": 9.46730219466851,
+   "fine": 9.395909539352186,
+   "ratio": 1.0075982697595498
+  },
+  {
+   "set": "D1 z0.02",
+   "q": "tube A tau_st (judged)",
+   "coarse": 3.759774781186195,
+   "fine": 3.3808884837974964,
+   "ratio": 1.1120670791729648
+  },
+  {
+   "set": "D1 z0.02",
+   "q": "tube A tau_sr (judged)",
+   "coarse": 14.67745780786552,
+   "fine": 18.889990398906225,
+   "ratio": 0.7769965732071192
+  },
+  {
+   "set": "D1 z0.02",
+   "q": "tube A tau_s,r raw max (incl. rings)",
+   "coarse": 22.472403202496977,
+   "fine": 31.744762032646328,
+   "ratio": 0.7079090143875184
+  },
+  {
+   "set": "D1 z0.02",
+   "q": "tube B axial (judged)",
+   "coarse": 124.4606161035836,
+   "fine": 126.28042701521167,
+   "ratio": 0.9855891292527158
+  },
+  {
+   "set": "D1 z0.02",
+   "q": "tube B hoop (judged)",
+   "coarse": 8.77219875249467,
+   "fine": 9.142204629039274,
+   "ratio": 0.9595277187988861
+  },
+  {
+   "set": "D1 z0.02",
+   "q": "tube B tau_st (judged)",
+   "coarse": 3.5414487773852077,
+   "fine": 3.5913718011349793,
+   "ratio": 0.9860991769958225
+  },
+  {
+   "set": "D1 z0.02",
+   "q": "tube B tau_sr (judged)",
+   "coarse": 14.202389241193705,
+   "fine": 17.642666554367626,
+   "ratio": 0.8050024182811388
+  },
+  {
+   "set": "D1 z0.02",
+   "q": "tube B tau_s,r raw max (incl. rings)",
+   "coarse": 21.264810934649645,
+   "fine": 29.267758773100375,
+   "ratio": 0.7265609608001096
+  },
+  {
+   "set": "D1 z0.02",
+   "q": "bond mean shear full",
+   "coarse": 1.2614417510927793,
+   "fine": 1.1979798747245725,
+   "ratio": 1.0529740755309411
+  },
+  {
+   "set": "D1 z0.02",
+   "q": "bond mean shear T-076c def.",
+   "coarse": 0.9260727764935841,
+   "fine": 0.854577401870932,
+   "ratio": 1.0836616723846508
+  },
+  {
+   "set": "D1 z0.02",
+   "q": "hub von Mises max excl",
+   "coarse": 59.6090040171646,
+   "fine": 65.10575278273855,
+   "ratio": 0.9155719958585395
+  },
+  {
+   "set": "RB z0.05",
+   "q": "tube A axial (judged)",
+   "coarse": 64.89713936102822,
+   "fine": 66.47847641323322,
+   "ratio": 0.9762127964188689
+  },
+  {
+   "set": "RB z0.05",
+   "q": "tube A hoop (judged)",
+   "coarse": 4.705767543445969,
+   "fine": 4.661133661075403,
+   "ratio": 1.009575756804251
+  },
+  {
+   "set": "RB z0.05",
+   "q": "tube A tau_st (judged)",
+   "coarse": 1.8303814149325368,
+   "fine": 1.655206868974487,
+   "ratio": 1.1058324184375712
+  },
+  {
+   "set": "RB z0.05",
+   "q": "tube A tau_sr (judged)",
+   "coarse": 7.272884956571623,
+   "fine": 9.292899396267988,
+   "ratio": 0.7826281816299875
+  },
+  {
+   "set": "RB z0.05",
+   "q": "tube A tau_s,r raw max (incl. rings)",
+   "coarse": 11.14053255036279,
+   "fine": 15.739012808816387,
+   "ratio": 0.7078291812636619
+  },
+  {
+   "set": "RB z0.05",
+   "q": "tube B axial (judged)",
+   "coarse": 82.78246048269122,
+   "fine": 85.45642086103945,
+   "ratio": 0.9687096610014085
+  },
+  {
+   "set": "RB z0.05",
+   "q": "tube B hoop (judged)",
+   "coarse": 5.972383964423196,
+   "fine": 6.12919593004708,
+   "ratio": 0.974415573035421
+  },
+  {
+   "set": "RB z0.05",
+   "q": "tube B tau_st (judged)",
+   "coarse": 2.2935384520760183,
+   "fine": 2.23242781632601,
+   "ratio": 1.027374070195282
+  },
+  {
+   "set": "RB z0.05",
+   "q": "tube B tau_sr (judged)",
+   "coarse": 9.370679241619177,
+   "fine": 12.10051542758551,
+   "ratio": 0.7744033134536457
+  },
+  {
+   "set": "RB z0.05",
+   "q": "tube B tau_s,r raw max (incl. rings)",
+   "coarse": 14.011448970179321,
+   "fine": 20.057590740131303,
+   "ratio": 0.6985609164985683
+  },
+  {
+   "set": "RB z0.05",
+   "q": "bond mean shear full",
+   "coarse": 0.8374641783991463,
+   "fine": 0.8183123630811949,
+   "ratio": 1.0234040400487645
+  },
+  {
+   "set": "RB z0.05",
+   "q": "bond mean shear T-076c def.",
+   "coarse": 0.6273408101901473,
+   "fine": 0.5913005182425919,
+   "ratio": 1.060950888483357
+  },
+  {
+   "set": "RB z0.05",
+   "q": "hub von Mises max excl",
+   "coarse": 43.930090555058456,
+   "fine": 49.68095765834545,
+   "ratio": 0.884244036863469
+  },
+  {
+   "set": "D1 z0.05",
+   "q": "tube A axial (judged)",
+   "coarse": 127.0516466523586,
+   "fine": 129.9870963634932,
+   "ratio": 0.9774173760838077
+  },
+  {
+   "set": "D1 z0.05",
+   "q": "tube A hoop (judged)",
+   "coarse": 9.3763709948417,
+   "fine": 8.93380364488516,
+   "ratio": 1.0495385132188262
+  },
+  {
+   "set": "D1 z0.05",
+   "q": "tube A tau_st (judged)",
+   "coarse": 3.4628852235029437,
+   "fine": 3.2519122937969946,
+   "ratio": 1.0648765743493078
+  },
+  {
+   "set": "D1 z0.05",
+   "q": "tube A tau_sr (judged)",
+   "coarse": 14.760804497277244,
+   "fine": 17.803389860075374,
+   "ratio": 0.829100784361229
+  },
+  {
+   "set": "D1 z0.05",
+   "q": "tube A tau_s,r raw max (incl. rings)",
+   "coarse": 22.684819396041945,
+   "fine": 30.044578042900355,
+   "ratio": 0.7550387082704413
+  },
+  {
+   "set": "D1 z0.05",
+   "q": "tube B axial (judged)",
+   "coarse": 130.23217422901794,
+   "fine": 131.7153520420417,
+   "ratio": 0.9887395220828142
+  },
+  {
+   "set": "D1 z0.05",
+   "q": "tube B hoop (judged)",
+   "coarse": 9.155179563310552,
+   "fine": 9.26487802875635,
+   "ratio": 0.9881597507160574
+  },
+  {
+   "set": "D1 z0.05",
+   "q": "tube B tau_st (judged)",
+   "coarse": 4.174531537891997,
+   "fine": 3.780219302665927,
+   "ratio": 1.104309354472633
+  },
+  {
+   "set": "D1 z0.05",
+   "q": "tube B tau_sr (judged)",
+   "coarse": 15.467567354266402,
+   "fine": 17.4609366737488,
+   "ratio": 0.8858383512449661
+  },
+  {
+   "set": "D1 z0.05",
+   "q": "tube B tau_s,r raw max (incl. rings)",
+   "coarse": 22.94807841477106,
+   "fine": 28.932549914074688,
+   "ratio": 0.7931578268394385
+  },
+  {
+   "set": "D1 z0.05",
+   "q": "bond mean shear full",
+   "coarse": 1.1607483344758713,
+   "fine": 1.1328488517013975,
+   "ratio": 1.024627718633931
+  },
+  {
+   "set": "D1 z0.05",
+   "q": "bond mean shear T-076c def.",
+   "coarse": 0.9096959975612869,
+   "fine": 0.8648630416675751,
+   "ratio": 1.0518382145307859
+  },
+  {
+   "set": "D1 z0.05",
+   "q": "hub von Mises max excl",
+   "coarse": 62.51175163819965,
+   "fine": 69.14535108186996,
+   "ratio": 0.9040629725660666
+  },
+  {
+   "set": "RB z0.10",
+   "q": "tube A axial (judged)",
+   "coarse": 82.99120344223367,
+   "fine": 85.0028034725209,
+   "ratio": 0.9763348978138406
+  },
+  {
+   "set": "RB z0.10",
+   "q": "tube A hoop (judged)",
+   "coarse": 6.01636480958334,
+   "fine": 5.963407509156652,
+   "ratio": 1.0088803759168519
+  },
+  {
+   "set": "RB z0.10",
+   "q": "tube A tau_st (judged)",
+   "coarse": 2.1044563532873175,
+   "fine": 2.0322610053143224,
+   "ratio": 1.0355246436280605
+  },
+  {
+   "set": "RB z0.10",
+   "q": "tube A tau_sr (judged)",
+   "coarse": 9.285237322684175,
+   "fine": 11.891796385937672,
+   "ratio": 0.7808103184195271
+  },
+  {
+   "set": "RB z0.10",
+   "q": "tube A tau_s,r raw max (incl. rings)",
+   "coarse": 14.221075882542067,
+   "fine": 20.13677511009167,
+   "ratio": 0.706224100174565
+  },
+  {
+   "set": "RB z0.10",
+   "q": "tube B axial (judged)",
+   "coarse": 106.31199321447866,
+   "fine": 109.78745342331277,
+   "ratio": 0.968343739649069
+  },
+  {
+   "set": "RB z0.10",
+   "q": "tube B hoop (judged)",
+   "coarse": 7.689009734595559,
+   "fine": 7.901021352681544,
+   "ratio": 0.9731665554841173
+  },
+  {
+   "set": "RB z0.10",
+   "q": "tube B tau_st (judged)",
+   "coarse": 2.9375271471530446,
+   "fine": 2.851903427524901,
+   "ratio": 1.030023358716061
+  },
+  {
+   "set": "RB z0.10",
+   "q": "tube B tau_sr (judged)",
+   "coarse": 12.005429665533041,
+   "fine": 15.570327340018935,
+   "ratio": 0.7710454252735346
+  },
+  {
+   "set": "RB z0.10",
+   "q": "tube B tau_s,r raw max (incl. rings)",
+   "coarse": 17.981005062451626,
+   "fine": 25.7973721311306,
+   "ratio": 0.6970091748513141
+  },
+  {
+   "set": "RB z0.10",
+   "q": "bond mean shear full",
+   "coarse": 1.0726215587115198,
+   "fine": 1.0488263335947514,
+   "ratio": 1.0226874787127174
+  },
+  {
+   "set": "RB z0.10",
+   "q": "bond mean shear T-076c def.",
+   "coarse": 0.8127075485708003,
+   "fine": 0.765889679604125,
+   "ratio": 1.0611287372234532
+  },
+  {
+   "set": "RB z0.10",
+   "q": "hub von Mises max excl",
+   "coarse": 56.93623747540952,
+   "fine": 64.50949480047011,
+   "ratio": 0.8826024394008214
+  },
+  {
+   "set": "D1 z0.10",
+   "q": "tube A axial (judged)",
+   "coarse": 119.27947386928217,
+   "fine": 123.15559679081532,
+   "ratio": 0.9685266198001793
+  },
+  {
+   "set": "D1 z0.10",
+   "q": "tube A hoop (judged)",
+   "coarse": 8.714305262681581,
+   "fine": 8.648782499634555,
+   "ratio": 1.0075759522279344
+  },
+  {
+   "set": "D1 z0.10",
+   "q": "tube A tau_st (judged)",
+   "coarse": 3.4443562209679164,
+   "fine": 3.277976611583337,
+   "ratio": 1.0507568018626632
+  },
+  {
+   "set": "D1 z0.10",
+   "q": "tube A tau_sr (judged)",
+   "coarse": 13.692792902378455,
+   "fine": 16.776019533366476,
+   "ratio": 0.8162122650813757
+  },
+  {
+   "set": "D1 z0.10",
+   "q": "tube A tau_s,r raw max (incl. rings)",
+   "coarse": 21.02604187782883,
+   "fine": 28.65771726334178,
+   "ratio": 0.7336956284625226
+  },
+  {
+   "set": "D1 z0.10",
+   "q": "tube B axial (judged)",
+   "coarse": 128.7463718883094,
+   "fine": 130.55393579429222,
+   "ratio": 0.9861546578815448
+  },
+  {
+   "set": "D1 z0.10",
+   "q": "tube B hoop (judged)",
+   "coarse": 8.746487050938516,
+   "fine": 9.490211431721818,
+   "ratio": 0.9216324750892966
+  },
+  {
+   "set": "D1 z0.10",
+   "q": "tube B tau_st (judged)",
+   "coarse": 3.6692142310931977,
+   "fine": 3.4196842479340437,
+   "ratio": 1.0729687202290399
+  },
+  {
+   "set": "D1 z0.10",
+   "q": "tube B tau_sr (judged)",
+   "coarse": 14.466956403111036,
+   "fine": 17.556247106338002,
+   "ratio": 0.8240346764023561
+  },
+  {
+   "set": "D1 z0.10",
+   "q": "tube B tau_s,r raw max (incl. rings)",
+   "coarse": 21.684290106418644,
+   "fine": 29.182208686167662,
+   "ratio": 0.7430654183724269
+  },
+  {
+   "set": "D1 z0.10",
+   "q": "bond mean shear full",
+   "coarse": 1.2302848730895748,
+   "fine": 1.1815875093255483,
+   "ratio": 1.0412135058805954
+  },
+  {
+   "set": "D1 z0.10",
+   "q": "bond mean shear T-076c def.",
+   "coarse": 0.9756496158800788,
+   "fine": 0.9148663579889951,
+   "ratio": 1.0664394939876178
+  },
+  {
+   "set": "D1 z0.10",
+   "q": "hub von Mises max excl",
+   "coarse": 73.55352697633657,
+   "fine": 83.28780388006514,
+   "ratio": 0.8831248219997975
+  }
+ ]
+}

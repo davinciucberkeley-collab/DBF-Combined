@@ -65,7 +65,7 @@ PHASES = [
      'All four motors at equal thrust: it climbs straight up'),
     (4.6, 9.6, 'Transition: pitches 90\u00b0 onto the wing',
      'Top-side motors speed up, belly-side motors slow \u2192 the nose tips over; elevons help once air flows'),
-    (9.6, 12.8, 'Cruise on the wing \u00b7 ~%d m/s' % (17 if A else 16),
+    (9.6, 12.8, 'Cruise on the wing \u00b7 ~%d m/s' % (18 if A else 16),
      'The same four motors now pull it forward; the wing carries the weight; elevons steer'),
     (12.8, 16.4, 'Back-transition to hover',
      'Belly-side motors speed up, top-side motors slow \u2192 the nose pitches back up'),
@@ -93,7 +93,7 @@ def bump(t, t0, t1):
     return math.sin(math.pi * seg(t, t0, t1))
 
 
-V_CRUISE = 17.0 if A else 16.0          # m/s (A: MISSION.md cruise 17 m/s), shown at the true speed against the ground grid
+V_CRUISE = 18.0 if A else 16.0          # m/s (A: cruise 18 m/s since D-255, A.param AIRSPEED_CRUISE; was 17, MISSION.md), shown at the true speed against the ground grid
 H_CRUISE = 4.2           # m above the ground
 
 

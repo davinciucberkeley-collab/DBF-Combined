@@ -1,0 +1,214 @@
+{
+ "branch": "concept-a-snapshot-73656c93",
+ "sha": "73656c93",
+ "usage_before": {
+  "usd": 49.060351,
+  "events": 1093,
+  "asOf": "2026-11-09T07:22:13.141Z"
+ },
+ "upload": {
+  "http": 200,
+  "response": "{\"object\": {\"9b537f21-ee4c-4643-8278-5328d9315e27\": {\"id\": \"9b537f21-ee4c-4643-8278-5328d9315e27\", \"type\": \"reference\", \"parent\": \"156a150c-6c18-59d2-9916-ac30064b357e\", \"children\": [], \"name\": \"concept-a.opt\", \"shortName\": \"\", \"documentation\": \"concept-a.opt\", \"references\": {}, \"relationship\": {\"in\": {}, \"out\": {}, \"inout\": {}}, \"tags\": [], \"comments\": [], \"approval\": {\"status\": \"unreviewed\"}, \"pos\": \"V\", \"location\": {\"type\": \"internal\", \"value\": \"\"}, \"citation\": {\"name\": \"\", \"authors\": \"\", \"title\": \"\", \"publication\": \"\", \"volume\": \"\", \"issue\": \"\", \"pages\": \"\", \"month\": \"\", \"year\": \"\", \"doi\": \"\", \"url\": \"\", \"isbn\": \"\", \"publisher\": \"\", \"edition\": \"\"}, \"fileType\": \".glb\", \"fileSize\": 2495644, \"assets\": {\"primary\": {\"version\": 1, \"sha256\": \"88a6ec9a9f89e673cf4e6296367dec68cc9ab7ed2eebb63e0b95f39c88610261\", \"byteSize\": 2495644, \"mediaType\": \"model/gltf-binary\", \"fileName\": \"concept-a.opt.glb\", \"fileType\": \".glb\", \"createdAt\": \"2026-11-24T07:03:27.955Z\", \"state\": \"committed\"}}, \"content\": [], \"createdAt\": 1795503807957, \"createdBy\": \"ai:39cd031b-0eaf-4506-9ebd-e48dd05858ec\", \"modifiedAt\": 1795503807957, \"modifiedBy\": \"ai:39cd031b-0eaf-4506-9ebd-e48dd05858ec\"}}}"
+ },
+ "session_keys": [
+  "branchName",
+  "chatId",
+  "dataPlane",
+  "ownerId",
+  "projectId",
+  "sessionId"
+ ],
+ "dataplane_keys": [
+  "connectionId",
+  "expiresAt",
+  "operations",
+  "ownerId",
+  "projectKey",
+  "token",
+  "url",
+  "userId"
+ ],
+ "owner_found": true,
+ "dashboard_probe": {
+  "http": 400,
+  "body": "{\"success\": false, \"error\": {\"code\": \"INVALID_OBJECT\", \"message\": \"1 of 1 objects are not valid; none were added\", \"details\": {\"objects\": {\"ed3402ed-0bf6-5337-bd5c-0b608b01f8a5\": [\"html, script, css, bindings, libraries, description, source, body, content, layout: not a field of type \\\"dashboard\\\"\"]}}}}"
+ },
+ "parts_posted": 131,
+ "commit": {
+  "http": 201,
+  "created": true
+ },
+ "tree_total": 1166,
+ "cad_parts_in_tree": 131,
+ "viewer_parts": 131,
+ "files_in_3d_package": [
+  {
+   "id": "9b537f21-ee4c-4643-8278-5328d9315e27",
+   "type": "reference",
+   "name": "concept-a.opt"
+  }
+ ],
+ "page_objects": [],
+ "usage_after": {
+  "usd": 49.060351,
+  "events": 1093,
+  "asOf": "2026-11-09T07:22:13.141Z"
+ },
+ "usage_unchanged": true,
+ "log": [
+  {
+   "step": "usage",
+   "http": 200,
+   "err": ""
+  },
+  {
+   "step": "packages3d[0]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "get_project",
+   "http": 200,
+   "err": ""
+  },
+  {
+   "step": "open_session",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "upload",
+   "http": 200
+  },
+  {
+   "step": "close_session",
+   "http": 200,
+   "err": ""
+  },
+  {
+   "step": "probe_dashboard",
+   "http": 400,
+   "err": "INVALID_OBJECT {\"objects\": {\"ed3402ed-0bf6-5337-bd5c-0b608b01f8a5\": [\"html, script, css, bindings, libraries, description, source, body, content, layout: not a field of type \\\"dashboard\\\"\"]}}"
+  },
+  {
+   "step": "cad_parts[0]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "cad_parts[40]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "cad_parts[80]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "cad_parts[120]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "cad_part_attrs[0]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "cad_part_attrs[40]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "cad_part_attrs[80]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "cad_part_attrs[120]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "cad_part_attrs[160]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "cad_part_attrs[200]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "cad_part_attrs[240]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "cad_part_attrs[280]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "cad_part_attrs[320]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "cad_part_attrs[360]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "cad_part_attrs[400]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "cad_part_attrs[440]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "cad_part_attrs[480]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "cad_part_attrs[520]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "cad_part_attrs[560]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "cad_part_attrs[600]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "cad_part_attrs[640]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "commit",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "tree",
+   "http": 200,
+   "err": ""
+  },
+  {
+   "step": "usage",
+   "http": 200,
+   "err": ""
+  }
+ ]
+}

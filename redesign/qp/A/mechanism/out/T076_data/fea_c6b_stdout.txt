@@ -1,0 +1,167 @@
+fillet: sleeve B, 10 junction edges at r 2.0 mm
+fillet: sleeve A, 13 junction edges at r 1.5 mm
+hub block volume 16878 mm3 = 21.44 g PETG
+hub aft-face nodes for the hub-group load: 3611
+chol flag 0, 322.2 s, nnz(R) 2014 M
+solved 734.8 s, residual 3.5e-10 
+relative residual per load case: 2.2e-10 3.5e-10 3.5e-10 2.3e-11 1.4e-11 1.5e-11 2.1e-10 2.8e-10 3.6e-10 2.3e-11 1.4e-11 1.5e-11 1.8e-10 2.4e-10 3.2e-10 2.2e-11 1.4e-11 1.5e-11 1.9e-10 3.0e-10 3.3e-10 2.2e-11 1.4e-11 1.6e-11 4.2e-12 3.7e-10 2.9e-10 2.8e-10 9.5e-11 1.2e-10
+equilibrium max error 2.4e-10
+mesh 375848 elements, 1747887 free dof, hub block 21.44 g, 1033 s
+landing combos: 301
+LANDING RB {
+ "A_all_through_arms RB": {
+  "whole hub": {
+   "p99_MPa": 9.598489853480839,
+   "p99_case": "hard 10 wide + drift .5 y@342",
+   "max_MPa": 169.45013851179195,
+   "max_case": "hard 10 wide + drift .5 y@342",
+   "RF_p99": 0.9663355861627464,
+   "RF_max_singular": 0.05473800375911237,
+   "allow_MPa": 9.27536231884058
+  },
+  "aft of block face (D-209 \"bridge boss\" definition)": {
+   "p99_MPa": 8.545813969650343,
+   "p99_case": "hard 10 wide + drift .5 y@342",
+   "max_MPa": 169.45013851179195,
+   "max_case": "hard 10 wide + drift .5 y@342",
+   "RF_p99": 1.0853690885129443,
+   "RF_max_singular": 0.05473800375911237,
+   "allow_MPa": 9.27536231884058
+  },
+  "last 12 mm before the bore mouth (collar in C6; block in base)": {
+   "p99_MPa": 4.201546229657356,
+   "p99_case": "hard 7/7 combo@345",
+   "max_MPa": 18.04379999607667,
+   "max_case": "hard 7/7 combo@345",
+   "RF_p99": 2.207606869435066,
+   "RF_max_singular": 0.5140470588710446,
+   "allow_MPa": 9.27536231884058
+  },
+  "collar extension only (x > 24)": {
+   "p99_MPa": 4.196121878552073,
+   "p99_case": "hard 7/7 combo@345",
+   "max_MPa": 18.04379999607667,
+   "max_case": "hard 7/7 combo@345",
+   "RF_p99": 2.210460655647392,
+   "RF_max_singular": 0.5140470588710446,
+   "allow_MPa": 9.27536231884058
+  }
+ },
+ "B_partition RB": {
+  "whole hub": {
+   "p99_MPa": 9.898236952458896,
+   "p99_case": "hard 10 wide + drift .5 y@342",
+   "max_MPa": 167.2322161583463,
+   "max_case": "hard 10 wide + drift .5 y@342",
+   "RF_p99": 0.9370721637994751,
+   "RF_max_singular": 0.055463968198914894,
+   "allow_MPa": 9.27536231884058
+  },
+  "aft of block face (D-209 \"bridge boss\" definition)": {
+   "p99_MPa": 9.023096280175325,
+   "p99_case": "hard 10 wide + drift .5 y@342",
+   "max_MPa": 167.2322161583463,
+   "max_case": "hard 10 wide + drift .5 y@342",
+   "RF_p99": 1.0279578130202942,
+   "RF_max_singular": 0.055463968198914894,
+   "allow_MPa": 9.27536231884058
+  },
+  "last 12 mm before the bore mouth (collar in C6; block in base)": {
+   "p99_MPa": 4.23861243138828,
+   "p99_case": "hard 7/7 combo@345",
+   "max_MPa": 17.468205616503525,
+   "max_case": "hard 7/7 combo@345",
+   "RF_p99": 2.1883015890185096,
+   "RF_max_singular": 0.5309854098624446,
+   "allow_MPa": 9.27536231884058
+  },
+  "collar extension only (x > 24)": {
+   "p99_MPa": 4.233599846241999,
+   "p99_case": "hard 7/7 combo@345",
+   "max_MPa": 17.468205616503525,
+   "max_case": "hard 7/7 combo@345",
+   "RF_p99": 2.1908925396135293,
+   "RF_max_singular": 0.5309854098624446,
+   "allow_MPa": 9.27536231884058
+  }
+ }
+}
+LANDING RBx1.5 {
+ "A_all_through_arms RBx1.5": {
+  "whole hub": {
+   "p99_MPa": 14.397734780221256,
+   "p99_case": "hard 10 wide + drift .5 y@342",
+   "max_MPa": 254.17520776768794,
+   "max_case": "hard 10 wide + drift .5 y@342",
+   "RF_p99": 0.6442237241084977,
+   "RF_max_singular": 0.036492002506074914,
+   "allow_MPa": 9.27536231884058
+  },
+  "aft of block face (D-209 \"bridge boss\" definition)": {
+   "p99_MPa": 12.818720954475515,
+   "p99_case": "hard 10 wide + drift .5 y@342",
+   "max_MPa": 254.17520776768794,
+   "max_case": "hard 10 wide + drift .5 y@342",
+   "RF_p99": 0.7235793923419629,
+   "RF_max_singular": 0.036492002506074914,
+   "allow_MPa": 9.27536231884058
+  },
+  "last 12 mm before the bore mouth (collar in C6; block in base)": {
+   "p99_MPa": 6.302319344486034,
+   "p99_case": "hard 7/7 combo@345",
+   "max_MPa": 27.065699994115,
+   "max_case": "hard 7/7 combo@345",
+   "RF_p99": 1.4717379129567105,
+   "RF_max_singular": 0.3426980392473632,
+   "allow_MPa": 9.27536231884058
+  },
+  "collar extension only (x > 24)": {
+   "p99_MPa": 6.29418281782811,
+   "p99_case": "hard 7/7 combo@345",
+   "max_MPa": 27.065699994115,
+   "max_case": "hard 7/7 combo@345",
+   "RF_p99": 1.473640437098261,
+   "RF_max_singular": 0.3426980392473632,
+   "allow_MPa": 9.27536231884058
+  }
+ },
+ "B_partition RBx1.5": {
+  "whole hub": {
+   "p99_MPa": 14.847355428688346,
+   "p99_case": "hard 10 wide + drift .5 y@342",
+   "max_MPa": 250.84832423751942,
+   "max_case": "hard 10 wide + drift .5 y@342",
+   "RF_p99": 0.6247147758663166,
+   "RF_max_singular": 0.036975978799276596,
+   "allow_MPa": 9.27536231884058
+  },
+  "aft of block face (D-209 \"bridge boss\" definition)": {
+   "p99_MPa": 13.534644420262984,
+   "p99_case": "hard 10 wide + drift .5 y@342",
+   "max_MPa": 250.84832423751942,
+   "max_case": "hard 10 wide + drift .5 y@342",
+   "RF_p99": 0.6853052086801964,
+   "RF_max_singular": 0.036975978799276596,
+   "allow_MPa": 9.27536231884058
+  },
+  "last 12 mm before the bore mouth (collar in C6; block in base)": {
+   "p99_MPa": 6.35791864708242,
+   "p99_case": "hard 7/7 combo@345",
+   "max_MPa": 26.202308424755287,
+   "max_case": "hard 7/7 combo@345",
+   "RF_p99": 1.4588677260123395,
+   "RF_max_singular": 0.3539902732416297,
+   "allow_MPa": 9.27536231884058
+  },
+  "collar extension only (x > 24)": {
+   "p99_MPa": 6.350399769363,
+   "p99_case": "hard 7/7 combo@345",
+   "max_MPa": 26.202308424755287,
+   "max_case": "hard 7/7 combo@345",
+   "RF_p99": 1.460595026409019,
+   "RF_max_singular": 0.3539902732416297,
+   "allow_MPa": 9.27536231884058
+  }
+ }
+}
+done 3330 s

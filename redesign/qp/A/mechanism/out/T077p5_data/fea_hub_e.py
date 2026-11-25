@@ -1,0 +1,762 @@
+"""T-077 p4 COPY of the T-076d copy with ONE more OFF-by-default switch: RC_R / RC_X0 (lightening: hub outer body turned to a cylinder of radius RC_R mm about the bridge axis for x >= RC_X0, i.e. the D-224 collar + aft-block pockets; the same cut as amodel/hub_body.py RC).  T-076d header follows: T-076d COPY of T076_data/fea_hub_c6.py (unchanged defaults) with three OFF-by-default geometry switches in GEO: DBL_TAP (doubler outer-end taper length, mm), DBL_TIP (tip thickness of the taper, mm), SLV_CH (45 deg internal chamfer at the sleeve mouth, mm).  OUT -> T076d_data/fea.
+fea_hub.py - 3-D FEA of the D-202 hub: two continuous 12 x 10 carbon arm tubes (UR-LL and UL-LR) crossing through a printed
+PETG hub block, with the bridge-tube socket behind it.
+
+    python -I redesign/qp/A/structures/fea_hub.py [--level 0|1] [--tag NAME] [--p k=v ...]
+
+Why: FEA-ARM.md (D-201) showed the 0.8 mm webs of the D-193 hub fail; printed-only fixes could not pass under the 1.47 kg gate,
+so the user chose continuous carbon arms (2026-11-16). With each opposite pair one tube, the balanced arm moments stay in the
+carbon; the hub only carries the net force and the unbalanced (differential-thrust) moments into the bridge tube.
+
+Model (mm, N, MPa; hub frame: x = hub axis (thrust is -x), y = span, z = up, origin = hub centre). Parameters in GEO, overridable:
+  - tube A along uA = (0, cos phi, sin phi) at x = XA (UR at +s, LL at -s); tube B along uB = (0, cos phi, -sin phi) at x = XB (LR +s, UL -s);
+    phi = PHI['UR'] from common.py (34.4 deg); stubs to s = +-S_END, the outer arm (to the motors) replaced by its exact end loads;
+  - hub: a sleeve (wall SLV_W) round each tube over s = +-L_SLV, a centre block (x XA-R..XB+R, |y|, |z| <= CB), the bridge boss
+    (r R_BR) from the block's aft face to HUB_X1 with the bridge bore (BR_RO; D-206: 16 mm, axis z BR_Z -2 mm) from X_BR0;
+  - phase-lead exits: a 4.8 mm hole through the tube wall and the sleeve wall at s = +-S_HOLE on each tube, on the tangential face
+    (the neutral axis of thrust bending);
+  - support: the bridge bore is fixed (the strut sockets, tray and saddle are left out: every net load goes into the bridge: conservative).
+Loads: for each motor, thrust along its axis n(st) (mrot = rotX(PHI) rotY(CANT), as the CAD), shaft torque by spin direction (MRP:
+UR, LL clockwise), the gyroscopic moment I w x Omega for a body rate about y or z (both signs), 1P; carried from the motor base point to
+the stub end exactly (force + moment). Combinations: every thrust pattern with each motor at idle (0) or at the spin cap (16), x torque
+sign x gyro axis/sign x 1P direction. Ground cases: 30 N strike on one prop (3 directions) and the blade stop.
+Same element, materials, allowables and factors as fea_arm.py (imported).
+"""
+import argparse
+import itertools
+import json
+import math
+import os
+import sys
+import time
+
+import numpy as np
+
+sys.dont_write_bytecode = True
+HERE = r'C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\qp\A\structures'
+sys.path.insert(0, HERE)
+import fea_arm as FA  # noqa: E402
+C, W = FA.C, FA.W
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fea'); FA.OUT = OUT   # T-076d: own scratch / mesh directory (git-ignored)
+
+PHI_D = C.PHI['UR']
+GEO = dict(COL_E=0.0, COL_Y=12.0, COL_ZLO=-16.0, COL_ZHI=8.0, XA=-6.5, XB=6.5, S_END=100.0, L_SLV=24.0, SLV_W=2.0, CB=10.0, R_BR=W.R_BR * 1e3, BR_RO=W.BR_RO * 1e3, BR_RI=W.BR_RI * 1e3, BR_Z=W.BR_Z * 1e3, BLK_Z=W.BLK_Z * 1e3, BLK_AFT=W.BLK_AFT * 1e3, X_BR0=15.0, X_HUB1=(W.HUB_X1 - C.HUB[0]) * 1e3,
+           S_HOLE=18.0, HOLE_R=2.4, TUBE_RO=6.0, TUBE_RI=5.0, DBL=1.0, DBL_T=1.0, DBL_S0=11.0, DBL_S1=25.0, BR_L=40.0, R_CB=3.0, PIN_R=1.5, PIN_C=1.0, PIN_S=8.0, E_PIN=70000.0, FIL=0.0, FIL_A=1.5, FMS=0.0, BORE_FR=0.0, BR_GAP=0.0, BR_CH=0.0, RC_R=0.0, RC_X0=15.5, SH_R=0.0, MO_R=0.0, SH_FMS=0.0, MO_FMS=0.0)   # FIL: fillet radius (mm) on the concave junctions sleeve/block, sleeve/sleeve, boss/block (0 = sharp); FMS: element size on the fillet faces (0 = no local refinement)   # PIN_*: 3 mm pins along x (D-202): one through both tubes at the crossing (PIN_C), one through each tube at s = +-PIN_S (0 = none); E_PIN pultruded CF rod, isotropic EST   # R_CB: edge radius of the centre block   # BR_L: modelled bridge tube aft of HUB_X1, fixed at its end   # DBL: carbon doubler sleeve 14 x 12 over each lead hole
+STATIONS = {'UR': ('A', 1), 'LL': ('A', -1), 'LR': ('B', 1), 'UL': ('B', -1)}
+SPIN = {s: (-1 if s in ('UR', 'LL') else 1) for s in STATIONS}        # propulsion.py MRP: UR, LL clockwise (-1), others CCW (+1)
+
+
+def axes():
+    p = math.radians(PHI_D)
+    return {'A': np.array([0.0, math.cos(p), math.sin(p)]), 'B': np.array([0.0, math.cos(p), -math.sin(p)])}
+
+
+def tube_x(t):
+    return GEO['XA'] if t == 'A' else GEO['XB']
+
+
+def fillet_junctions(occ, hub, g, U, xa0, xb1):
+    """Fillet radius FIL on every edge of the fused hub that lies on two different primitives (block faces incl. its R_CB
+    corners, sleeve A, sleeve B, bridge boss): the concave junctions that are sharp in the plain model."""
+    import gmsh
+    occ.synchronize()
+    tol, cb, rc = 0.02, g['CB'], g['R_CB']
+    rs = g['TUBE_RO'] + g['SLV_W'] + g['DBL'] * g['DBL_T']
+    def n_prims(p):
+        x, y, z = p
+        inx = xa0 - tol <= x <= xb1 + tol
+        ay, az = abs(y), abs(z - g.get('BLK_Z', 0.0))   # block frame (D-207: centred on the bridge axis)
+        corner = ay > cb - rc and az > cb - rc
+        blk = inx and ((not corner and ((abs(ay - cb) < tol and az <= cb + tol) or (abs(az - cb) < tol and ay <= cb + tol)))
+                       or (corner and abs(math.hypot(ay - (cb - rc), az - (cb - rc)) - rc) < tol)
+                       or ((abs(x - xa0) < tol or abs(x - xb1) < tol) and ay <= cb + tol and az <= cb + tol))
+        k = int(blk)
+        for t in ('A', 'B'):
+            u = U[t]; d = np.array(p) - np.array([tube_x(t), 0.0, 0.0]); sa = d @ u
+            k += int(abs(np.linalg.norm(d - sa * u) - rs) < tol and abs(sa) <= g['L_SLV'] + tol)
+        k += int(abs(math.hypot(y, z - g['BR_Z']) - g['R_BR']) < tol and xb1 - 0.5 - tol <= x <= g['X_HUB1'] + tol)
+        return k
+    ed = []
+    for d_, e in gmsh.model.getBoundary(gmsh.model.getBoundary(hub, combined=False, oriented=False), combined=False, oriented=False):
+        if d_ != 1 or e in ed:
+            continue
+        lo, hi = gmsh.model.getParametrizationBounds(1, e)
+        if all(n_prims(gmsh.model.getValue(1, e, [lo[0] + (hi[0] - lo[0]) * f])) >= 2 for f in (0.2, 0.5, 0.8)):
+            ed.append(e)
+    print('fillet: %d junction edges, r %.2f mm' % (len(ed), g['FIL']), flush=True)
+    return ed
+
+
+def staged_fillet(occ, hub_parts, g, U, xa0, xb1):
+    """D-207 junction fillets that OCC can build: the block first, then sleeve B fused and its block junction filleted at FIL,
+    then sleeve A fused and filleted at FIL_A (1.5 mm: 2 mm fails where A's exits run into B's fillets on the side faces).
+    hub_parts = [sleeve A, sleeve B, block] (+ boss, fused without a fillet if present)."""
+    import gmsh
+    rs = g['TUBE_RO'] + g['SLV_W'] + g['DBL'] * g['DBL_T']; cb, bz = g['CB'], g.get('BLK_Z', 0.0)
+    def on_sleeve(p, t):
+        u = U[t]; d = np.array(p) - np.array([tube_x(t), 0.0, 0.0]); sa = d @ u
+        return abs(np.linalg.norm(d - sa * u) - rs) < 0.02
+    def in_block(p):
+        return xa0 - 0.05 <= p[0] <= xb1 + 0.05 and abs(p[1]) <= cb + 0.05 and abs(p[2] - bz) <= cb + 0.05
+    vol = hub_parts[2][1]
+    for t, part, r in (('B', hub_parts[1], g['FIL']), ('A', hub_parts[0], g.get('FIL_A', 1.5))):
+        v, _ = occ.fuse([(3, vol)], [part]); occ.synchronize(); vol = v[0][1]
+        sel = []
+        for d_, e in gmsh.model.getBoundary(gmsh.model.getBoundary([(3, vol)], combined=False, oriented=False), combined=False, oriented=False):
+            if d_ != 1 or e in sel:
+                continue
+            lo, hi = gmsh.model.getParametrizationBounds(1, e)
+            if all(on_sleeve(p, t) and in_block(p) for p in (gmsh.model.getValue(1, e, [lo[0] + (hi[0] - lo[0]) * f]) for f in (0.2, 0.5, 0.8))):
+                sel.append(e)
+        out = occ.fillet([vol], sel, [r], removeVolume=False)
+        occ.remove([(3, vol)], recursive=True); vol = out[0][1]
+        print('fillet: sleeve %s, %d junction edges at r %.1f mm' % (t, len(sel), r), flush=True)
+    if len(hub_parts) > 3:
+        v, _ = occ.fuse([(3, vol)], hub_parts[3:]); vol = v[0][1]
+    return [(3, vol)]
+
+
+def fillet_hub(occ, hub, g, U, xa0, xb1):
+    """Fillet the junction edges; OCC cannot always do them all at once, so fall back to one edge at a time (re-detecting
+    the edges after each success) and report the edges it cannot round."""
+    ed = fillet_junctions(occ, hub, g, U, xa0, xb1)
+    try:
+        out = occ.fillet([hub[0][1]], ed, [g['FIL']], removeVolume=False)
+        occ.remove(hub, recursive=True); return [(3, out[0][1])], len(ed), 0
+    except Exception:
+        pass
+    done, failed = 0, set()
+    while True:
+        ed = fillet_junctions(occ, hub, g, U, xa0, xb1)
+        prog = False
+        for e in ed:
+            occ.synchronize()
+            key = tuple(np.round(gmsh_mid(e), 2))
+            if key in failed:
+                continue
+            try:
+                out = occ.fillet([hub[0][1]], [e], [g['FIL']], removeVolume=False)
+                occ.remove(hub, recursive=True); hub = [(3, out[0][1])]; done += 1; prog = True; break
+            except Exception:
+                failed.add(key)
+        if not prog:
+            break
+    print('fillet: %d edges rounded one by one, %d could not be rounded: %s' % (done, len(failed), sorted(failed)), flush=True)
+    return hub, done, len(failed)
+
+
+def gmsh_mid(e):
+    import gmsh
+    lo, hi = gmsh.model.getParametrizationBounds(1, e)
+    return gmsh.model.getValue(1, e, [0.5 * (lo[0] + hi[0])])
+
+
+def revolve_profile(occ, spec, zc):
+    """T-077 p5: solid of revolution about the bridge axis (y = 0, z = zc, direction +x) of a closed profile in the plane z = zc, drawn as (x, r) = (x, y).
+    spec = list of ('P', x, r, z) corner points in order, with ('A', xc, rc) between two points meaning a circular arc about (xc, rc) joining the previous and next points (counter-clockwise)."""
+    pts = []; items = []
+    for it in spec:
+        if it[0] == 'P': pts.append(occ.addPoint(it[1], it[2], zc)); items.append(('P', pts[-1]))
+        else: items.append(('A', occ.addPoint(it[1], it[2], zc)))
+    n = len(items); curves = []
+    pi_ = [i for i, it in enumerate(items) if it[0] == 'P']
+    for k, i in enumerate(pi_):
+        j = pi_[(k + 1) % len(pi_)]
+        if (i + 1) % n != j:                     # an arc item sits between them
+            curves.append(occ.addCircleArc(items[i][1], items[i + 1][1], items[j][1]))
+        else:
+            curves.append(occ.addLine(items[i][1], items[j][1]))
+    loop = occ.addCurveLoop(curves); sf = occ.addPlaneSurface([loop])
+    out = occ.revolve([(2, sf)], 0, 0, zc, 1, 0, 0, 2 * math.pi)
+    vols = [x for x in out if x[0] == 3]
+    occ.synchronize()
+    return vols
+
+
+def build_mesh(level, path):
+    import gmsh
+    g = GEO
+    U = axes()
+    gmsh.initialize(['-noenv'])
+    gmsh.option.setNumber('General.Terminal', 0)
+    occ = gmsh.model.occ
+    hub_parts, tubes = [], {}
+    ro, ri = g['TUBE_RO'], g['TUBE_RI']
+    for t in ('A', 'B'):
+        u, x0 = U[t], tube_x(t)
+        L = g['L_SLV']
+        hub_parts.append((3, occ.addCylinder(x0 - L * u[0], -L * u[1], -L * u[2], 2 * L * u[0], 2 * L * u[1], 2 * L * u[2], ro + g['SLV_W'] + g['DBL'] * g['DBL_T'])))
+    cb = g['CB']
+    xa0, xb1 = g['XA'] - ro - g['SLV_W'], g['XB'] + ro + g['SLV_W'] + g.get('BLK_AFT', 0.0)
+    bx = occ.addBox(xa0, -cb, -cb + g.get('BLK_Z', 0.0), xb1 - xa0, 2 * cb, 2 * cb)      # D-207: block centred on the bridge axis, 1.5 mm longer aft
+    if g['R_CB'] > 0:                                     # round the four block edges that run along x (FEA peak there, D-202)
+        occ.synchronize()
+        ed = [e for d_, e in occ.getEntities(1) if d_ == 1 and (lambda b: abs(b[3] - b[0]) > 1 and abs(b[4] - b[1]) < 0.1 and abs(b[5] - b[2]) < 0.1)(occ.getBoundingBox(1, e))
+              and e in [c[1] for c in gmsh.model.getBoundary(gmsh.model.getBoundary([(3, bx)], combined=False, oriented=False), combined=False, oriented=False) if c[0] == 1]]
+        bx = occ.fillet([bx], ed, [g['R_CB']])[0][1]
+    hub_parts.append((3, bx))
+    if g['X_HUB1'] - xb1 > 1.0:                           # separate bridge boss only if the block stops short of the tray face (D-207: it does not)
+        hub_parts.append((3, occ.addCylinder(xb1 - 0.5, 0, g['BR_Z'], g['X_HUB1'] - xb1 + 0.5, 0, 0, g['R_BR'])))
+    if g['COL_E'] > 0:   # T-076 C6 collar (T-071b H3): box from the block aft face
+        hub_parts.append((3, occ.addBox(xb1, -g['COL_Y'], g['COL_ZLO'], g['COL_E'], 2 * g['COL_Y'], g['COL_ZHI'] - g['COL_ZLO'])))
+    if g.get('FIL', 0) > 0:
+        hub = staged_fillet(occ, hub_parts, g, U, xa0, xb1)
+    else:
+        hub, _ = occ.fuse([hub_parts[0]], hub_parts[1:])
+    if g.get('RC_R', 0.0) > 0:                            # T-077 p4: lightening cut, everything outside the cylinder RC_R about the bridge axis for x >= RC_X0
+        occ.synchronize()                                 # T-077 p5: SH_R = concave fillet radius at the shoulder (revolved profile, so any radius; OCC edge fillet fails above the 0.75 mm step)
+        xe_ = g['X_HUB1'] + 3.0
+        bx_ = occ.addBox(g['RC_X0'], -40.0, g['BR_Z'] - 40.0, xe_ - g['RC_X0'], 80.0, 80.0)
+        cy_ = occ.addCylinder(g['RC_X0'] - 1.0, 0, g['BR_Z'], xe_ - g['RC_X0'] + 2.0, 0, 0, g['RC_R'])
+        keep = [(3, cy_)]
+        if g.get('SH_R', 0.0) > 0:
+            keep += revolve_profile(occ, [('P', g['RC_X0'], g['RC_R'] - 0.2, g['BR_Z']), ('P', g['RC_X0'], g['RC_R'] + g['SH_R'], g['BR_Z']), ('A', g['RC_X0'] + g['SH_R'], g['RC_R'] + g['SH_R']),
+                                       ('P', g['RC_X0'] + g['SH_R'], g['RC_R'], g['BR_Z']), ('P', g['RC_X0'] + g['SH_R'], g['RC_R'] - 0.2, g['BR_Z'])], g['BR_Z'])
+        cutter_, _ = occ.cut([(3, bx_)], keep)
+        hub, _ = occ.cut(hub, cutter_, removeTool=True)
+    ch = g.get('BR_CH', 0.0)                              # D-207: 45 deg chamfer: tube end outside edge and a matching conical bore floor corner
+    bc = occ.addCylinder(g['X_BR0'] + ch, 0, g['BR_Z'], g['X_HUB1'] - g['X_BR0'] - ch + 1, 0, 0, g['BR_RO'])   # bridge bore
+    if ch > 0:
+        bc = occ.fuse([(3, bc)], [(3, occ.addCone(g['X_BR0'], 0, g['BR_Z'], ch, 0, 0, g['BR_RO'] - ch, g['BR_RO']))])[0][0][1]
+    if g.get('BORE_FR', 0) > 0:                          # D-207: rounded bore floor corner (fillet the cutter's front circle)
+        occ.synchronize()
+        fe = [e for d_, e in gmsh.model.getBoundary([(3, bc)], combined=False, oriented=False, recursive=False) for e in [c_[1] for c_ in gmsh.model.getBoundary([(d_, e)], combined=False, oriented=False) if c_[0] == 1]
+              if occ.getBoundingBox(1, e)[3] < g['X_BR0'] + 0.01]
+        bc = occ.fillet([bc], sorted(set(fe)), [g['BORE_FR']])[0][1]
+    cuts = [(3, bc)]
+    for t in ('A', 'B'):
+        u, x0 = U[t], tube_x(t)
+        S = g['S_END'] + 1
+        cuts.append((3, occ.addCylinder(x0 - S * u[0], -S * u[1], -S * u[2], 2 * S * u[0], 2 * S * u[1], 2 * S * u[2], ro)))
+    if g['DBL']:
+        for t in ('A', 'B'):
+            u, x0 = U[t], tube_x(t)
+            for sg in (1, -1):
+                a0, a1 = sorted((sg * g['DBL_S0'], sg * g['DBL_S1']))
+                cuts.append((3, occ.addCylinder(x0 + a0 * u[0], a0 * u[1], a0 * u[2], (a1 - a0) * u[0], (a1 - a0) * u[1], (a1 - a0) * u[2], ro + g['DBL_T'])))
+    if g.get('SLV_CH', 0.0) > 0:                          # T-076d: 45 deg internal chamfer at each sleeve mouth (void; the epoxy fillet that would fill it is not modelled: conservative)
+        ch_ = g['SLV_CH']
+        for t in ('A', 'B'):
+            u, x0 = U[t], tube_x(t)
+            for sg in (1, -1):
+                rb = ro + (g['DBL_T'] if (g['DBL'] and g['DBL_S0'] < g['L_SLV'] <= g['DBL_S1']) else 0.0)
+                p0_ = sg * (g['L_SLV'] - ch_); dl = sg * (ch_ + 0.5)
+                cuts.append((3, occ.addCone(x0 + p0_ * u[0], p0_ * u[1], p0_ * u[2], dl * u[0], dl * u[1], dl * u[2], rb, rb + ch_ + 0.5)))
+    if g.get('MO_R', 0.0) > 0:                            # T-077 p5: rounded bridge-bore mouth edge (convex, radius MO_R) at the collar end face x = X_HUB1; modelled as a void (the adhesive fillet is not modelled: conservative)
+        xm_, rm_, rb_ = g['X_HUB1'], g['MO_R'], g['BR_RO']
+        cuts += revolve_profile(occ, [('P', xm_ - rm_, rb_ - 0.2, g['BR_Z']), ('P', xm_ - rm_, rb_, g['BR_Z']), ('A', xm_ - rm_, rb_ + rm_), ('P', xm_, rb_ + rm_, g['BR_Z']),
+                                      ('P', xm_ + 0.5, rb_ + rm_, g['BR_Z']), ('P', xm_ + 0.5, rb_ - 0.2, g['BR_Z'])], g['BR_Z'])
+    hub, _ = occ.cut(hub, cuts, removeTool=True)
+    dbls = []
+    if g['DBL']:
+        for t in ('A', 'B'):
+            u, x0 = U[t], tube_x(t)
+            for sg in (1, -1):
+                a0, a1 = sorted((sg * g['DBL_S0'], sg * g['DBL_S1']))
+                o = occ.addCylinder(x0 + a0 * u[0], a0 * u[1], a0 * u[2], (a1 - a0) * u[0], (a1 - a0) * u[1], (a1 - a0) * u[2], ro + g['DBL_T'])
+                tap = g.get('DBL_TAP', 0.0)
+                if tap > 0:                                   # T-076d: outer end tapered: cylinder to |s| = DBL_S1 - tap, then a cone down to the tip thickness DBL_TIP at DBL_S1
+                    ae = sg * g['DBL_S1']; ab = sg * (g['DBL_S1'] - tap); a0_ = sg * g['DBL_S0']
+                    cyl = occ.addCylinder(x0 + a0_ * u[0], a0_ * u[1], a0_ * u[2], (ab - a0_) * u[0], (ab - a0_) * u[1], (ab - a0_) * u[2], ro + g['DBL_T'])
+                    cone = occ.addCone(x0 + ab * u[0], ab * u[1], ab * u[2], (ae - ab) * u[0], (ae - ab) * u[1], (ae - ab) * u[2], ro + g['DBL_T'], ro + g.get('DBL_TIP', 0.4))
+                    occ.remove([(3, o)], recursive=True)
+                    o = occ.fuse([(3, cyl)], [(3, cone)])[0][0][1]
+                i = occ.addCylinder(x0 + (a0 - 1) * u[0], (a0 - 1) * u[1], (a0 - 1) * u[2], (a1 - a0 + 2) * u[0], (a1 - a0 + 2) * u[1], (a1 - a0 + 2) * u[2], ro)
+                dd, _ = occ.cut([(3, o)], [(3, i)])
+                dbls.append((t, dd))
+    for t in ('A', 'B'):
+        u, x0 = U[t], tube_x(t)
+        S = g['S_END']
+        o = occ.addCylinder(x0 - S * u[0], -S * u[1], -S * u[2], 2 * S * u[0], 2 * S * u[1], 2 * S * u[2], ro)
+        i = occ.addCylinder(x0 - (S + 1) * u[0], -(S + 1) * u[1], -(S + 1) * u[2], 2 * (S + 1) * u[0], 2 * (S + 1) * u[1], 2 * (S + 1) * u[2], ri)
+        tubes[t], _ = occ.cut([(3, o)], [(3, i)])
+    x_t0 = g['X_BR0'] + g.get('BR_GAP', 0.0)             # D-207: the tube stops BR_GAP short of the bore floor
+    o = occ.addCylinder(x_t0 + ch, 0, g['BR_Z'], g['X_HUB1'] + g['BR_L'] - x_t0 - ch, 0, 0, g['BR_RO'])   # bridge tube (D-206: 16 x 14 at z -2), bonded in the bore
+    if ch > 0:                                            # chamfered forward end, seated on the conical floor corner (BR_GAP 0)
+        o = occ.fuse([(3, o)], [(3, occ.addCone(x_t0, 0, g['BR_Z'], ch, 0, 0, g['BR_RO'] - ch, g['BR_RO']))])[0][0][1]
+    i = occ.addCylinder(x_t0 - 1, 0, g['BR_Z'], g['X_HUB1'] + g['BR_L'] - x_t0 + 2, 0, 0, g['BR_RI'])
+    tubes['BR'], _ = occ.cut([(3, o)], [(3, i)])
+    # pins along x (D-202): cut their volume out of hub and tubes, add them as their own bodies (bonded)
+    pins = []
+    xa0p, xb1p = g['XA'] - ro - g['SLV_W'], g['XB'] + ro + g['SLV_W']
+    if g['PIN_C']:
+        pins.append(occ.addCylinder(xa0p, 0, 0, xb1p - xa0p, 0, 0, g['PIN_R']))
+    if g['PIN_S']:
+        for t in ('A', 'B'):
+            u, x0 = U[t], tube_x(t)
+            for sg in (1, -1):
+                c = np.array([x0, 0, 0]) + sg * g['PIN_S'] * u
+                h = ro + g['SLV_W']
+                pins.append(occ.addCylinder(c[0] - h, c[1], c[2], 2 * h, 0, 0, g['PIN_R']))
+    if pins:
+        pv = [(3, q) for q in pins]
+        hub, _ = occ.cut(hub, pv, removeTool=False)
+        for t in ('A', 'B'):
+            tubes[t], _ = occ.cut(tubes[t], pv, removeTool=False)
+    tubes['PIN'] = [(3, q) for q in pins]
+    # phase-lead exit holes (tube wall + sleeve wall), tangential face tA = x_hat x u
+    holes = []
+    for t in ('A', 'B'):
+        u, x0 = U[t], tube_x(t)
+        tv = np.cross([1.0, 0, 0], u)
+        for sgn in (1, -1):
+            c = np.array([x0, 0, 0]) + sgn * g['S_HOLE'] * u
+            holes.append((3, occ.addCylinder(*c, *(tv * (ro + g['SLV_W'] + g['DBL_T'] + 1)), g['HOLE_R'])))
+    hub, _ = occ.cut(hub, holes, removeTool=False)
+    for t in ('A', 'B'):
+        tubes[t], _ = occ.cut(tubes[t], holes, removeTool=False)
+    for k, (t, dd) in enumerate(dbls):
+        dd2, _ = occ.cut(dd, holes, removeTool=False)
+        tubes[t] = tubes[t] + dd2
+    occ.remove(holes, recursive=True)
+    allin = hub + tubes['A'] + tubes['B'] + tubes['BR'] + tubes['PIN']
+    _, mp = occ.fragment(allin, [])
+    occ.synchronize()
+    groups = {'hub': [], 'A': [], 'B': [], 'BR': [], 'PIN': []}
+    for (d, tg), kids in zip(allin, mp[:len(allin)]):
+        k = 'hub' if (d, tg) in hub else 'A' if (d, tg) in tubes['A'] else 'B' if (d, tg) in tubes['B'] else 'BR' if (d, tg) in tubes['BR'] else 'PIN'
+        groups[k] += [kk[1] for kk in kids]
+    hub_vol = sum(occ.getMass(3, tg) for tg in set(groups['hub']))
+    for i, (k, v) in enumerate(groups.items()):
+        gmsh.model.addPhysicalGroup(3, sorted(set(v)), i + 1, name=k)
+    f = gmsh.model.mesh.field
+    s = {0: 1.0, 1: 0.78}[level] * g.get('MS', 1.0)       # MS: mesh-size scale (memory: the direct solve must fit in 64 GB)
+    b1 = f.add('Ball'); f.setNumber(b1, 'Radius', g['L_SLV'] + 10); f.setNumber(b1, 'VIn', 0.65 * s); f.setNumber(b1, 'VOut', 1.6 * s)
+    f.setNumber(b1, 'Thickness', 15)
+    b2 = f.add('Box'); f.setNumber(b2, 'VIn', 0.65 * s); f.setNumber(b2, 'VOut', 1.6 * s)
+    for k, v in zip(('XMin', 'XMax', 'YMin', 'YMax', 'ZMin', 'ZMax'), ((xb1 - 1, g['X_HUB1'] + 1, -13, 13, -17, 9) if g['COL_E'] > 0 else (xb1 - 1, g['X_HUB1'] + 1, -9, 9, -9, 9))):
+        f.setNumber(b2, k, v)
+    fl = [b1, b2]
+    if g.get('FIL', 0) > 0 and g.get('FMS', 0) > 0:     # local refinement on the fillet faces (blend surfaces: not plane / cylinder / cone)
+        fs = [tg for tg in set(groups['hub']) for d_, sf in gmsh.model.getBoundary([(3, tg)], combined=False, oriented=False)
+              if gmsh.model.getType(2, sf) not in ('Plane', 'Cylinder', 'Cone') for tg in [sf]]
+        fs = sorted(set(fs)); print('refine: %d fillet faces at %.2f mm' % (len(fs), g['FMS']), flush=True)
+        dd = f.add('Distance'); f.setNumbers(dd, 'SurfacesList', fs)
+        th = f.add('Threshold'); f.setNumber(th, 'InField', dd); f.setNumber(th, 'SizeMin', g['FMS']); f.setNumber(th, 'SizeMax', 0.65 * s)
+        f.setNumber(th, 'DistMin', 0.4); f.setNumber(th, 'DistMax', 2.5); fl.append(th)
+    for key_, fms_, lo_, hi_ in (('SH', g.get('SH_FMS', 0.0), g['RC_X0'] - 0.1, g['RC_X0'] + g.get('SH_R', 0.0) + 0.1), ('MO', g.get('MO_FMS', 0.0), g['X_HUB1'] - g.get('MO_R', 0.0) - 0.1, g['X_HUB1'] + 0.1)):
+        if fms_ <= 0 or g.get(key_ + '_R', 0.0) <= 0: continue          # local refinement on the new fillet faces only (non-planar hub faces inside the fillet x range)
+        fs = []
+        for tg in set(groups['hub']):
+            for d_, sf in gmsh.model.getBoundary([(3, tg)], combined=False, oriented=False):
+                bb = gmsh.model.getBoundingBox(2, sf)
+                if gmsh.model.getType(2, sf) not in ('Plane', 'Cylinder', 'Cone') and bb[0] >= lo_ - 1e-6 and bb[3] <= hi_ + 1e-6: fs.append(sf)
+        fs = sorted(set(fs)); print('refine %s: %d fillet faces at %.2f mm' % (key_, len(fs), fms_), flush=True)
+        dd = f.add('Distance'); f.setNumbers(dd, 'SurfacesList', fs)
+        th = f.add('Threshold'); f.setNumber(th, 'InField', dd); f.setNumber(th, 'SizeMin', fms_); f.setNumber(th, 'SizeMax', 0.65 * s)
+        f.setNumber(th, 'DistMin', 0.3 * g.get(key_ + '_R', 1.0) + 0.2); f.setNumber(th, 'DistMax', 1.5 * g.get(key_ + '_R', 1.0) + 1.5); fl.append(th)
+    mn = f.add('Min'); f.setNumbers(mn, 'FieldsList', fl); f.setAsBackgroundMesh(mn)
+    for k, v in (('Mesh.MeshSizeExtendFromBoundary', 0), ('Mesh.MeshSizeFromPoints', 0), ('Mesh.MeshSizeFromCurvature', 0),
+                 ('Mesh.ElementOrder', 2), ('Mesh.HighOrderOptimize', 1), ('General.NumThreads', 16)):
+        gmsh.option.setNumber(k, v)
+    gmsh.model.mesh.generate(3)
+    nt, xyz, _ = gmsh.model.mesh.getNodes()
+    X = xyz.reshape(-1, 3)
+    idx = {int(tg): i for i, tg in enumerate(nt)}
+    els, mat = [], []
+    for i, k in enumerate(groups):
+        for v in sorted(set(groups[k])):
+            et, _, en = gmsh.model.mesh.getElements(3, v)
+            for tt, e in zip(et, en):
+                if tt == 11:
+                    a = np.array([idx[int(n)] for n in e]).reshape(-1, 10)
+                    els.append(a); mat.append(np.full(len(a), i))
+    E = np.vstack(els); M = np.concatenate(mat)
+    used = np.unique(E)
+    remap = -np.ones(len(X), int); remap[used] = np.arange(len(used))
+    gmsh.finalize()
+    print('hub block volume %.0f mm3 = %.2f g PETG' % (hub_vol, hub_vol * 1.27e-3), flush=True)
+    np.savez_compressed(path, X=X[used], E=remap[E], M=M, hub_vol=hub_vol)
+
+
+# ---------------- rotated transversely isotropic stiffness ----------------
+VI = [(0, 0), (1, 1), (2, 2), (1, 2), (0, 2), (0, 1)]
+
+
+def to_tensor(Cv):
+    T = np.zeros((3, 3, 3, 3))
+    for a, (i, j) in enumerate(VI):
+        for b, (k, l) in enumerate(VI):
+            for (p, q) in {(i, j), (j, i)}:
+                for (r, s) in {(k, l), (l, k)}:
+                    T[p, q, r, s] = Cv[a, b]
+    return T
+
+
+def to_voigt(T):
+    return np.array([[T[i, j, k, l] for (k, l) in VI] for (i, j) in VI])
+
+
+def D_tube(u):
+    """FA.D_ti_y() has the fibre along y; rotate y -> u (u in the y-z plane: rotation about x)."""
+    ang = math.atan2(u[2], u[1])
+    c, s = math.cos(ang), math.sin(ang)
+    R = np.array([[1, 0, 0], [0, c, -s], [0, s, c]])
+    T = np.einsum('pi,qj,rk,sl,ijkl->pqrs', R, R, R, R, to_tensor(FA.D_ti_y()))
+    return to_voigt(T)
+
+
+# ---------------- loads ----------------
+def motor_frame(st):
+    phi = math.radians(C.PHI[st]); cant = math.radians(C.CANT)
+    rx = np.array([[1, 0, 0], [0, math.cos(phi), -math.sin(phi)], [0, math.sin(phi), math.cos(phi)]])
+    ry = np.array([[math.cos(cant), 0, math.sin(cant)], [0, 1, 0], [-math.sin(cant), 0, math.cos(cant)]])
+    R = rx @ ry
+    n = R @ np.array([-1.0, 0, 0])                         # plate -> motor = thrust direction on the airframe
+    t, sg = STATIONS[st]
+    u = axes()[t] * sg                                     # outward arm direction
+    station = np.array([tube_x(t), 0, 0]) + C.R_M * 1e3 * u
+    P = station + 12.0 * n
+    return n, u, station, P
+
+
+def stub_end(st):
+    t, sg = STATIONS[st]
+    return np.array([tube_x(t), 0, 0]) + sg * GEO['S_END'] * axes()[t]
+
+
+def to_stub(st, F, Mo, at):
+    """Force F (N) and moment Mo (N mm) applied at point `at` -> equivalent at the stub end."""
+    e = stub_end(st)
+    return F, Mo + np.cross(at - e, F)
+
+
+def flight_combos(T_hi, Q_hi):
+    gy = FA.M_GYRO * 1e3
+    out = []
+    for pattern in itertools.product((0, 1), repeat=4):
+        for qs in (1, -1):
+            for gax, gs in itertools.product((np.array([0, 1.0, 0]), np.array([0, 0, 1.0])), (1, -1)):
+                for pd in (0, 1, 2, 3):
+                    loads = {}
+                    for k, st in enumerate(('UR', 'LL', 'LR', 'UL')):
+                        n, u, station, P = motor_frame(st)
+                        on = pattern[k]
+                        T, Q = T_hi * on, Q_hi * on
+                        F = T * n
+                        Mo = qs * SPIN[st] * Q * 1e3 * n + (gs * gy * SPIN[st] * on) * np.cross(n, gax)
+                        t1 = u - (u @ n) * n; t1 /= np.linalg.norm(t1); t2 = np.cross(n, t1)
+                        pdir = [t1, t2, -t1, -t2][pd]
+                        Fp = FA.F_1P * on * pdir
+                        Pp = station + FA.X_PROP * n
+                        F1, M1 = to_stub(st, F, Mo, P)
+                        F2, M2 = to_stub(st, Fp, np.zeros(3), Pp)
+                        loads[st] = (F1 + F2, M1 + M2)
+                    out.append(loads)
+    return out
+
+
+def ground_combos():
+    out = []
+    for st in ('UR',):
+        n, u, station, P = motor_frame(st)
+        t1 = u - (u @ n) * n; t1 /= np.linalg.norm(t1); t2 = np.cross(n, t1)
+        Pp = station + FA.X_PROP * n
+        for d in (t1, t2, -t1, -t2):
+            out.append(('S2', {st: to_stub(st, FA.F_STRIKE * d, np.zeros(3), Pp)}))
+        for sg in (1, -1):
+            out.append(('S3', {st: to_stub(st, np.zeros(3), sg * FA.F_STRIKE * FA.R_BLADE * 1e3 * n, P)}))
+            out.append(('S1', {st: to_stub(st, sg * FA.F_STRIKE * n, np.zeros(3), P)}))
+    return out
+
+
+def end_nodes(X, st):
+    t, sg = STATIONS[st]
+    u = axes()[t]
+    s = (X - np.array([tube_x(t), 0, 0])) @ u
+    r = np.linalg.norm((X - np.array([tube_x(t), 0, 0])) - np.outer(s, u), axis=1)
+    return np.where((np.abs(s - sg * GEO['S_END']) < 0.02) & (r > GEO['TUBE_RI'] - 0.02))[0]
+
+
+def fixed_nodes(X):
+    r = np.hypot(X[:, 1], X[:, 2] - GEO['BR_Z'])
+    return np.where((r > GEO['BR_RI'] - 0.02) & (r < GEO['BR_RO'] + 0.02) & (np.abs(X[:, 0] - (GEO['X_HUB1'] + GEO['BR_L'])) < 0.02))[0]
+
+
+RELEASE = False          # --release: glue between the hub sleeves and the arm tubes has let go (pins-only case, D-202)
+K_PEN = 1.0e5            # N/mm per node pair: normal-only tie (bearing kept, no glue shear or torsion; separation not modelled)
+
+
+def release_interface(X, E, M):
+    """Duplicate the hub-side nodes on each arm-tube / hub interface (not at the pins) and return the node pairs with their
+    radial normals; the pairs are later tied in the normal direction only (frictionless, no glue)."""
+    U = axes(); pairs = []
+    pinn = np.unique(E[M == 4]) if (M == 4).any() else np.array([], int)
+    for t, mi in (('A', 1), ('B', 2)):
+        hubn = np.unique(E[M == 0]); tn = np.unique(E[M == mi])
+        itf = np.setdiff1d(np.intersect1d(hubn, tn), pinn)
+        new = np.arange(len(X), len(X) + len(itf))
+        X = np.vstack([X, X[itf]])
+        lut = np.full(len(X), -1); lut[itf] = new
+        Eh = E[M == 0]; m = np.isin(Eh, itf); Eh[m] = lut[Eh[m]]; E[M == 0] = Eh
+        u = U[t]; d = X[itf] - np.array([tube_x(t), 0, 0]); rv = d - np.outer(d @ u, u)
+        pairs.append((itf, new, rv / np.linalg.norm(rv, axis=1)[:, None]))
+        print('released %d interface nodes on tube %s' % (len(itf), t), flush=True)
+    return X, E, pairs
+
+
+def penalty(n_nodes, pairs):
+    from scipy.sparse import coo_matrix
+    R, Cc, V = [], [], []
+    for a, b, nv in pairs:
+        nn = K_PEN * np.einsum('ei,ej->eij', nv, nv)
+        for (p_, q_, sg) in ((a, a, 1), (b, b, 1), (a, b, -1), (b, a, -1)):
+            for i in range(3):
+                for j in range(3):
+                    R.append(3 * p_ + i); Cc.append(3 * q_ + j); V.append(sg * nn[:, i, j])
+    return coo_matrix((np.concatenate(V), (np.concatenate(R), np.concatenate(Cc))), shape=(3 * n_nodes, 3 * n_nodes)).tocsr()
+
+
+def run(level, tag):
+    os.makedirs(OUT, exist_ok=True)
+    import hashlib                                       # cache key includes the geometry, so --p never reuses a stale mesh
+    gh = hashlib.md5(json.dumps(GEO, sort_keys=True).encode()).hexdigest()[:8]
+    mp = os.path.join(OUT, 'hub_mesh_L%d_%s_%s.npz' % (level, tag, gh))
+    if not os.path.exists(mp):
+        build_mesh(level, mp)
+    d = np.load(mp); X, E, M = d['X'], d['E'], d['M']; hub_vol = float(d['hub_vol'])
+    U = axes()
+    Rx = np.array([[0, 1.0, 0], [-1.0, 0, 0], [0, 0, 1.0]])               # y -> x
+    D_br = to_voigt(np.einsum('pi,qj,rk,sl,ijkl->pqrs', Rx, Rx, Rx, Rx, to_tensor(FA.D_ti_y())))
+    Ds = [FA.D_iso(FA.E_PETG, FA.NU_PETG), D_tube(U['A']), D_tube(U['B']), D_br, FA.D_iso(GEO['E_PIN'], 0.3)]
+    if RELEASE:
+        E = E.copy(); X, E, pairs = release_interface(X, E, M)
+    K, Bs, dof, dets = FA.assemble(X, E, M, Ds)
+    if RELEASE:
+        K = (K + penalty(len(X), pairs)).tocsr()
+    fix = fixed_nodes(X)
+    fd = np.zeros(3 * len(X), bool); fd[(3 * fix[:, None] + np.arange(3)).ravel()] = True
+    free = np.where(~fd)[0]
+    Kf = K[free][:, free].tocsc()
+    sts = ('UR', 'LL', 'LR', 'UL')
+    basis = []
+    for st in sts:
+        nodes = end_nodes(X, st)
+        e = stub_end(st)
+        for k in range(6):
+            F = np.zeros(3); Mo = np.zeros(3)
+            (F if k < 3 else Mo)[k % 3] = 1.0
+            f = np.zeros((len(X), 3)); f[nodes] = FA.rbe3_loads(X, nodes, F, Mo, e)
+            basis.append(f.ravel()[free])
+    hubn = np.unique(E[M == 0]); pl = hubn[(np.abs(X[hubn, 0] - GEO['X_HUB1']) < 0.05) & (np.hypot(X[hubn, 1], X[hubn, 2] - GEO['BR_Z']) > GEO['BR_RO'] + 0.05)]
+    print('hub aft-face nodes for the hub-group load: %d' % len(pl), flush=True)
+    refp = np.array([24.0, 0.0, GEO['BR_Z']])
+    for k in range(6):
+        F = np.zeros(3); Mo = np.zeros(3); (F if k < 3 else Mo)[k % 3] = 1.0
+        f = np.zeros((len(X), 3)); f[pl] = FA.rbe3_loads(X, pl, F, Mo, refp); basis.append(f.ravel()[free])
+    RHS = np.column_stack(basis)
+    Uf = FA.solve(Kf, RHS)
+    Ub = np.zeros((RHS.shape[1], 3 * len(X))); Ub[:, free] = Uf.T
+    Rf = (K @ Ub.T).T.reshape(len(basis), -1, 3)
+    eq = []
+    for j in range(24):
+        st = sts[j // 6]; e = stub_end(st); k = j % 6
+        F = np.zeros(3); Mo = np.zeros(3); (F if k < 3 else Mo)[k % 3] = 1.0
+        Rs = -Rf[j, fix].sum(0); Mr = -np.cross(X[fix] - e, Rf[j, fix]).sum(0)
+        eq.append(max(np.linalg.norm(Rs - F), np.linalg.norm(Mr - Mo) / 100))
+    print('equilibrium max error %.1e' % max(eq), flush=True)
+    XE = X[E]
+    xg = np.stack([np.einsum('a,eai->ei', FA.Nq(FA.GP[g]), XE) for g in range(4)], 1)
+    S = np.zeros((len(basis), len(E), 4, 6))
+    for g in range(4):
+        for m, D in enumerate(Ds):
+            sm = M == m
+            S[:, sm, g] = np.einsum('kl,elj,bej->bek', D, Bs[g][sm], Ub[:, dof[sm]])
+    return dict(X=X, E=E, M=M, S=S, xg=xg, hub_vol=hub_vol, eq=max(eq), nel=len(E), ndof=len(free))
+
+
+def coeffs(loads):
+    c = np.zeros(24)
+    for i, st in enumerate(('UR', 'LL', 'LR', 'UL')):
+        if st in loads:
+            F, Mo = loads[st]
+            c[6 * i:6 * i + 3] = F; c[6 * i + 3:6 * i + 6] = Mo
+    return c
+
+
+def tube_stress(sig, xr, t):
+    """Axial, hoop, shear (axial planes) in the frame of tube t."""
+    u = axes()[t]; x0 = np.array([tube_x(t), 0, 0])
+    d = xr - x0; s = d @ u; rv = d - np.outer(s, u); rn = rv / np.maximum(np.linalg.norm(rv, axis=1), 1e-9)[:, None]
+    th = np.cross(u, rn)
+    T = FA_tensor(sig)
+    ax = np.einsum('i,eij,j->e', u, T, u)
+    hp = np.einsum('ei,eij,ej->e', th, T, th)
+    tr = np.einsum('i,eij,ej->e', u, T, rn); tt = np.einsum('i,eij,ej->e', u, T, th)
+    return ax, hp, np.hypot(tr, tt), s
+
+
+def FA_tensor(sig):
+    xx, yy, zz, yz, xz, xy = [sig[:, i] for i in range(6)]
+    return np.stack([np.stack([xx, xy, xz], -1), np.stack([xy, yy, yz], -1), np.stack([xz, yz, zz], -1)], -2)
+
+
+def evaluate(res, combos):
+    S, M, xg = res['S'], res['M'], res['xg']
+    Cs = np.array([coeffs(c) for c in combos])                 # (ncombo, 24)
+    out = {}
+    hub = M == 0
+    Sh = S[:, hub].reshape(24, -1, 6)
+    xh = xg[hub].reshape(-1, 3)
+    best = None
+    for ci in range(0, len(Cs), 64):
+        sig = np.einsum('ck,kps->cps', Cs[ci:ci + 64], Sh)
+        p1, vm = FA.principal(sig)
+        m = p1.max(1)
+        j = int(np.argmax(m))
+        if best is None or m[j] > best[0]:
+            best = (float(m[j]), ci + j, p1[j])
+    out['hub_peak'] = best[0]
+    p1b = best[2]
+    zones = {'bridge boss (aft of the block)': xh[:, 0] > GEO['XB'] + GEO['TUBE_RO'] + GEO['SLV_W'],
+             'centre block / crossing': (np.abs(xh[:, 1]) < GEO['CB']) & (np.abs(xh[:, 2]) < GEO['CB']) & (xh[:, 0] <= GEO['XB'] + GEO['TUBE_RO'] + GEO['SLV_W']),
+             'sleeves outside the block': ~((np.abs(xh[:, 1]) < GEO['CB']) & (np.abs(xh[:, 2]) < GEO['CB'])) & (xh[:, 0] <= GEO['XB'] + GEO['TUBE_RO'] + GEO['SLV_W'])}
+    out['hub_zones_worst_combo'] = {k: dict(max=float(p1b[z].max()), p99=float(np.percentile(p1b[z], 99)), p95=float(np.percentile(p1b[z], 95))) for k, z in zones.items() if z.any()}
+    out['hub_peak_at'] = xh[int(np.argmax(p1b))].round(2).tolist()
+    # envelope p99 / max per zone over all combos
+    env = {k: [0.0, 0.0] for k in zones}
+    for ci in range(0, len(Cs), 64):
+        sig = np.einsum('ck,kps->cps', Cs[ci:ci + 64], Sh)
+        p1, _ = FA.principal(sig)
+        for k, z in zones.items():
+            if z.any():
+                env[k][0] = max(env[k][0], float(p1[:, z].max()))
+                env[k][1] = max(env[k][1], float(np.percentile(p1[:, z], 99, axis=1).max()))
+    out['hub_zones_envelope'] = {k: dict(max=v[0], p99=v[1]) for k, v in env.items()}
+    for t, mi in (('A', 1), ('B', 2)):
+        sel = M == mi
+        St = S[:, sel].reshape(24, -1, 6); xt = xg[sel].reshape(-1, 3)
+        worst = [0.0, 0.0, 0.0, None, None]
+        u_ = axes()[t]; keep = np.abs((xt - np.array([tube_x(t), 0, 0])) @ u_) < GEO['S_END'] - 15   # skip the load-application zone at the stub ends
+        for ci in range(0, len(Cs), 32):
+            sig = np.einsum('ck,kps->cps', Cs[ci:ci + 32], St)
+            for c in range(sig.shape[0]):
+                ax, hp, sh, s = tube_stress(sig[c], xt, t)
+                ax, hp, sh, s = ax[keep], hp[keep], sh[keep], s[keep]
+                if np.abs(ax).max() > worst[0]:
+                    worst[0] = float(np.abs(ax).max()); worst[3] = float(s[np.argmax(np.abs(ax))])
+                worst[1] = max(worst[1], float(np.abs(hp).max()))
+                if sh.max() > worst[2]:
+                    worst[2] = float(sh.max()); worst[4] = float(s[np.argmax(sh)])
+        out['tube_' + t] = dict(axial=worst[0], axial_at_s=worst[3], hoop=worst[1], shear=worst[2], shear_at_s=worst[4])
+    # bond: PETG gauss points within 0.35 mm of a tube's outer surface, inside the sleeve
+    bmax = [0.0, 0.0, 0.0]
+    for t in ('A', 'B'):
+        u = axes()[t]; x0 = np.array([tube_x(t), 0, 0])
+        d = xh - x0; s = d @ u; rv = d - np.outer(s, u); r = np.linalg.norm(rv, axis=1)
+        sel = (r < GEO['TUBE_RO'] + 0.35) & (np.abs(s) < GEO['L_SLV'])
+        nr = rv[sel] / r[sel, None]
+        for ci in range(0, len(Cs), 64):
+            sig = np.einsum('ck,kps->cps', Cs[ci:ci + 64], Sh[:, sel])
+            for c in range(sig.shape[0]):
+                T = FA_tensor(sig[c]); tv = np.einsum('eij,ej->ei', T, nr); tn = np.einsum('ei,ei->e', tv, nr)
+                ts = np.linalg.norm(tv - tn[:, None] * nr, axis=1)
+                bmax[0] = max(bmax[0], float(ts.max())); bmax[1] = max(bmax[1], float(tn.max())); bmax[2] = max(bmax[2], float(np.percentile(ts, 99)))
+                for sg_ in (1, -1):                         # mean shear over each arm's bonded length (the quantity a lap-shear allowable is for)
+                    w = (s[sel] * sg_) > 0
+                    if w.any(): bmax.append(float(ts[w].mean()))
+    out['bond'] = dict(shear=bmax[0], peel=bmax[1], shear_p99=bmax[2], shear_mean_worst_arm=max(bmax[3:]) if len(bmax) > 3 else None)
+    pin = M == 4                                            # pin von Mises (max, p99) over all combos
+    if pin.any():
+        Sp = S[:, pin].reshape(24, -1, 6); pm = [0.0, 0.0]
+        for ci in range(0, len(Cs), 64):
+            sig = np.einsum('ck,kps->cps', Cs[ci:ci + 64], Sp)
+            _, vm = FA.principal(sig)
+            pm[0] = max(pm[0], float(vm.max())); pm[1] = max(pm[1], float(np.percentile(vm, 99, axis=1).max()))
+        out['pin_vm'] = dict(max=pm[0], p99=pm[1])
+    return out
+
+
+ALLOW = FA.ALLOW                     # cf_axial 350, cf_hoop 40, cf_shear 30, petg 20 MPa (fea_arm.py, EST)
+
+
+def element_fields(res, combos, fac_petg, fac_cf):
+    """Per element, enveloped over the combos and the 4 Gauss points: utilisation = stress x required factor / allowable
+    (PETG: max principal / 20; CFRP tubes and bridge: max of |axial| / 350, |hoop or transverse| / 40, shear / 30) and the
+    governing stress (MPa). Pins: von Mises only (no allowable in the analysis, utilisation NaN). NaN where the model is not
+    judged: tube stubs within 15 mm of the loaded ends, and the last 10 mm of the bridge at its fixed end."""
+    S, M, xg = res['S'], res['M'], res['xg']
+    ne = len(M); U = np.zeros(ne); SG = np.zeros(ne)
+    Cs = np.array([coeffs(c) for c in combos])
+    xgf = xg.reshape(-1, 3)
+    for ci in range(0, len(Cs), 4):
+        for c in Cs[ci:ci + 4]:
+            sig = np.einsum('k,kegs->egs', c, S)                       # (ne, 4, 6)
+            for m in range(5):
+                sel = M == m
+                if not sel.any():
+                    continue
+                sg = sig[sel]
+                if m == 0:
+                    p1, _ = FA.principal(sg); u = p1 * fac_petg / ALLOW['petg']; s_ = p1
+                elif m in (1, 2):
+                    ax, hp, sh, _ = tube_stress(sg.reshape(-1, 6), xg[sel].reshape(-1, 3), 'A' if m == 1 else 'B')
+                    ax, hp, sh = (v.reshape(-1, 4) for v in (ax, hp, sh))
+                    r = np.stack([np.abs(ax) / ALLOW['cf_axial'], np.abs(hp) / ALLOW['cf_hoop'], sh / ALLOW['cf_shear']])
+                    k = r.argmax(0); u = r.max(0) * fac_cf
+                    s_ = np.choose(k, [np.abs(ax), np.abs(hp), sh])
+                elif m == 3:
+                    ax = np.abs(sg[..., 0]); tr = np.maximum(np.abs(sg[..., 1]), np.abs(sg[..., 2])); sh = np.hypot(sg[..., 4], sg[..., 5])
+                    r = np.stack([ax / ALLOW['cf_axial'], tr / ALLOW['cf_hoop'], sh / ALLOW['cf_shear']])
+                    k = r.argmax(0); u = r.max(0) * fac_cf; s_ = np.choose(k, [ax, tr, sh])
+                else:
+                    _, vm = FA.principal(sg); u = np.full(vm.shape, np.nan); s_ = vm
+                ue = np.nanmax(u, 1) if m != 4 else u[:, 0]
+                U[sel] = np.fmax(U[sel], ue) if m != 4 else np.nan
+                SG[sel] = np.maximum(SG[sel], s_.max(1))
+    xc = xg.mean(1)
+    for m, t in ((1, 'A'), (2, 'B')):
+        sel = M == m; d = xc[sel] - np.array([tube_x(t), 0, 0]); s = d @ axes()[t]
+        far = np.abs(s) > GEO['S_END'] - 15
+        U[np.where(sel)[0][far]] = np.nan; SG[np.where(sel)[0][far]] = np.nan
+    far = (M == 3) & (xc[:, 0] > GEO['X_HUB1'] + GEO['BR_L'] - 10)
+    U[far] = np.nan; SG[far] = np.nan
+    return U, SG
+
+
+def save_fields(res, path):
+    """Surface skin of each material (corner nodes of the tet10 faces not shared with an element of the same material),
+    with per-vertex utilisation and stress (max over the adjacent elements), for F1, F2 (flight, required factors) and
+    S1, S2 (30 N prop strike, damage case at factor 1.0, D-202). Coordinates in mm, hub frame (x aft from the hub axis)."""
+    X, E, M = res['X'], res['E'], res['M']
+    cases = [('F1', flight_combos(FA.T_CAP, FA.Q_CAP), FA.KP, FA.KF), ('F2', flight_combos(FA.T_UNC, FA.Q_UNC), FA.KP, FA.KF)]
+    for k in ('S1', 'S2'):
+        cases.append((k, [c for kk, c in ground_combos() if kk == k], 1.0, 1.0))
+    fields = {}
+    for name, combos, fp, fc in cases:
+        fields[name] = element_fields(res, combos, fp, fc)
+        print('fields %s: max utilisation %.2f' % (name, np.nanmax(fields[name][0])), flush=True)
+    out = {'cases': np.array([c[0] for c in cases])}
+    C4 = E[:, :4]
+    for m in range(5):
+        el = np.where(M == m)[0]
+        if not len(el):
+            continue
+        f = np.concatenate([C4[el][:, [0, 1, 2]], C4[el][:, [0, 1, 3]], C4[el][:, [0, 2, 3]], C4[el][:, [1, 2, 3]]])
+        opp = np.concatenate([C4[el][:, 3], C4[el][:, 2], C4[el][:, 1], C4[el][:, 0]])
+        fe = np.tile(el, 4)
+        key = np.sort(f, 1)
+        _, inv, cnt = np.unique(key, axis=0, return_inverse=True, return_counts=True)
+        b = cnt[inv.ravel()] == 1
+        f, opp, fe = f[b], opp[b], fe[b]
+        a, bb, cc = X[f[:, 0]], X[f[:, 1]], X[f[:, 2]]
+        flip = np.einsum('ij,ij->i', np.cross(bb - a, cc - a), X[opp] - a) > 0
+        f[flip] = f[flip][:, [0, 2, 1]]
+        vid, tri = np.unique(f.ravel(), return_inverse=True)
+        tri = tri.reshape(-1, 3)
+        out['V%d' % m] = X[vid].astype(np.float32); out['T%d' % m] = tri.astype(np.int32)
+        for name in fields:
+            for j, lab in enumerate(('U', 'S')):
+                v = np.full(len(vid), -np.inf)
+                fv = fields[name][j][fe]
+                np.maximum.at(v, tri.ravel(), np.repeat(np.nan_to_num(fv, nan=-np.inf), 3))
+                v[~np.isfinite(v)] = np.nan
+                out['%s_%s_%d' % (lab, name, m)] = v.astype(np.float32)
+        print('skin material %d: %d vertices, %d triangles' % (m, len(vid), len(tri)), flush=True)
+    np.savez_compressed(path, **out)
+
+
+sys.path.insert(0, r'C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\qp\A\mechanism\out\T076_data')
+from t076_main import main   # noqa: E402
+if __name__ == '__main__':
+    main(sys.modules[__name__])

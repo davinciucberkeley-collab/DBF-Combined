@@ -1,0 +1,32 @@
+| Item | $ |
+|---|---|
+| Goods | 1,432.50 |
+| Tax 10.25 % | 146.83 |
+| Shipping (EST) | 67.84 |
+| FAA | 5.00 |
+| Spend | 1,652.17 |
+| Crash reserve | 346.94 |
+| **Total** | 1,999.12 |
+| **Margin** | 0.88 |
+
+Unverified goods (U + EST): 269.66 (19 % of goods); lines 16 of 53
++30 % on unverified lines: total 2,105.34, margin -105.34
+Growth absorbed: margin / (goods x 1.1025) = 0 %
+Margin >= $100 at +30 %: FAIL; R5 total <= $1,750 (replaced by G7): FAIL
+G7 (+30 % margin >= $100 AND total <= $1,800): FAIL (total 1,999.12, +30 % margin -105.34)
+
+| Subsystem | Nominal $ (incl tax) | +30 % unverified | Cap $ | Unverified share |
+|---|---|---|---|---|
+| propulsion | 162.09 | 162.09 | 165 | 0 % |
+| power | 279.75 | 282.39 | 280 | 3 % |
+| avionics | 340.49 | 340.49 | 345 | 0 % |
+| mechanisms | 56.18 | 56.18 | 60 | 0 % |
+| airframe | 480.73 | 526.55 | 485 | 32 % |
+| ground_test | 260.09 | 300.82 | 265 | 52 % |
+| shipping + FAA | 72.84 | | 75 | EST |
+| crash reserve | 346.94 | 363.98 | 350 | |
+
+Caps sum 2025; room left to $2,000: -25
+Over cap: none
+Spares:
+- M01 EMAX ES3054HV servo (2 elevons + 1 spare; 20.5 g; replaces ES3352HV which fails the 1.5x torque at the 7.2 V rail): 1 of 3

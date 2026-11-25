@@ -1,0 +1,13 @@
+film: 1 scenes, 11.0 s, 660 frames at 1920x1080 @ 60 fps, every 1
+> C:/Users/dillo/tools/blender/blender-4.5.14-windows-x64/blender.exe -b --factory-startup -P C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\showcase\concept-a\render_build_a.py -- render --out C:\Users\dillo\AppData\Local\Temp\t096f2\cm --shot-list C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\showcase\concept-a\film\shots-main.json --scenes S6 --cam-check --width 1920 --height 1080 --fps 60
+    CAMCHECK selftest {'WNG-006-R': {'centre_inside': True, 'point_0p2_above_inside': False}, 'WNG-007-R': {'centre_inside': False, 'point_0p2_above_inside': False}, 'WNG-001': {'centre_inside': False, 'point_0p2_above_inside': False}}
+    CAMCHECK frames 660 inside 0  1 s
+    CAMCHECK motion peak view_speed 22.34 deg/s at f196 (shot S6/6.1)
+    CAMCHECK motion peak view_accel 18.78 deg/s^2 at f302 (shot S6/6.2)
+    CAMCHECK motion peak zoom_rate 0.08812 1/s at f186 (shot S6/6.1)
+    CAMCHECK motion peak zoom_accel 0.2135 1/s^2 at f302 (shot S6/6.2)
+    CAMCHECK motion peak pan_speed 0.1238 dist/s at f331 (shot S6/6.2)
+    CAMCHECK motion peak pan_accel 0.4253 dist/s^2 at f360 (shot S6/6.2)
+    CAMCHECK S6/6.1 frames 300 inside 0 ({}) min_clear None m @fNone (None) blocked 0 {}
+    CAMCHECK S6/6.2 frames 360 inside 0 ({}) min_clear None m @fNone (None) blocked 0 {}
+CAMCHECK written C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\showcase\concept-a\film\cam-clearance.json 200 s

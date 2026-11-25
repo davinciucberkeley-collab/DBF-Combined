@@ -1,0 +1,24 @@
+# T-083b root block rows (6061 fitting TR 1.0 HR 38 TP 1.0 TE 2.0 RD 12.3 mm), tag sens_z002, zetas (0.02,). Demand: Fp 36 N / 24 mm, 1.873 kg, CG 22.26 mm; KF 1.725 KP 2.156; verdict at x2.23
+# plane x 287.00: A 339.9 mm2, Iy 21776 mm4, Iz 17194 mm4, pieces (t x b mm) [(5.2, np.float64(38.0)), (11.2, np.float64(38.0))], J 5761.5 mm4
+# plane x 288.00: A 277.3 mm2, Iy 17579 mm4, Iz 15641 mm4, pieces (t x b mm) [(3.9, np.float64(38.0)), (9.9, np.float64(38.0))], J 3790.6 mm4
+
+| row | RB | x1.5 | x2.23 | verdict at x2.23 | governing case |
+|---|---|---|---|---|---|
+| Q7c plug bond peel vs epoxy 2.0 (integrity class) | 0.37 | 0.25 | 0.17 | integrity class: < 1 | SITL Z5_b45 narrow (z drift) z0.02 mu0.40 |
+| Q1c ring bond peel, same stress vs epoxy 2.0 (integrity class, outside the RF minimum as T-069 F-3) | 0.41 | 0.27 | 0.18 | integrity class: < 1 | SITL Z5_b45 narrow (z drift) z0.02 mu0.40 |
+| Q2 fin tube 16x14 at the ring edge z +-19 mm (P4 formula), CF 350 / 30, KF | 3.10 | 2.07 | 1.39 | PASS | hard 16 wide + drift .5 y z0.02 mu0.40 |
+| Q3 ring 18.2/16 alone at the collar root z +-12.3 (one foot; fin tube share ignored), 6061 von Mises x KF | 3.45 | 2.30 | 1.55 | PASS | hard 7/7 combo z0.02 mu0.40 |
+| Q7a plug epoxy bond inside the rib (D23 x 31): shear, epoxy 2.0 | 3.85 | 2.57 | 1.73 | PASS | hard 7/7 combo z0.02 mu0.40 |
+| Q1a ring epoxy bond on the fin tube (D16 x 38): shear (axial + torsion), epoxy 2.0 | 5.14 | 3.43 | 2.31 | PASS | hard 16 wide + drift .5 y z0.02 mu0.40 |
+| Q5 plate aft face x 288.00 (ring side strips + plate): bending + axial, torsion by the Prandtl stress function, 6061 von Mises x KF | 5.16 | 3.44 | 2.31 | PASS | hard 7/7 combo z0.02 mu0.40 |
+| Q6b plug at the mouth x 255 (OD 22.8 / ID 20.8), 6061 von Mises x KF | 5.37 | 3.58 | 2.41 | PASS | SITL Z5_b45 narrow (z drift) z0.02 mu0.40 |
+| Q6a plug at its root x 286 (OD 22.8 / ID 20.8), 6061 von Mises x KF | 5.67 | 3.78 | 2.54 | PASS | SITL Z5_b45 narrow (z drift) z0.02 mu0.40 |
+| Q4 plate mid-plane x 287.00: bending + axial, torsion by the Prandtl stress function, 6061 von Mises x KF | 7.15 | 4.77 | 3.21 | PASS | hard 7/7 combo z0.02 mu0.40 |
+| Q8 rib end bearing on the plate face (Fx + bending of the rib-end annulus, KF), bearing yield 386 | 11.08 | 7.39 | 4.97 | PASS | SITL Z5_b45 narrow (z drift) z0.02 mu0.40 |
+| Q7b plug bearing on the 6061 (KP), bearing yield 386 | 71.65 | 47.77 | 32.13 | PASS | SITL Z5_b45 narrow (z drift) z0.02 mu0.40 |
+| Q1b ring bearing on the 6061 bore (6M/(D L^2) + V/(D L), KP), bearing yield 386 | 79.37 | 52.91 | 35.59 | PASS | SITL Z5_b45 narrow (z drift) z0.02 mu0.40 |
+| Q1d CF fin-tube wall bearing in the ring at x2.23 [MPa]; CF bearing allowable "-" (TP-4 coupon) = 10.84 | | | | record | SITL Z5_b45 narrow (z drift) z0.02 mu0.40 |
+| Q7d CF rib-wall bearing on the plug at x2.23 [MPa]; allowable "-" (TP-4 coupon); the PETG block put the same stress into the rib wall = 12.01 | | | | record | SITL Z5_b45 narrow (z drift) z0.02 mu0.40 |
+| max |My| at the junction x 286 [N m, RB] = 8.56 | | | | record | SITL Z5_b45 narrow (z drift) z0.02 mu0.40 |
+
+min RF at x2.23 (RF class): 1.39

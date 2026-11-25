@@ -1,0 +1,5 @@
+lines 21  goods 795.05  tax 81.49  ship 10.71  Order1 887.25
+BOM total 1939.17  remaining main order 1051.92  (goods 587.36; ship 52.41; FAA 5.00; reserve 346.94)
+Order1 + main = 1939.17  reconcile PASS
+unverified lines in Order 1: ['W06', 'G02', 'G03', 'B03'] 93.15
+deferred to main: ['W08', 'W09', 'V05', 'M01', 'M02', 'R01', 'R02', 'R08', 'R09', 'R14', 'R10', 'R05', 'R07', 'R06', 'G04', 'G05', 'B04', 'R11', 'R12', 'R13', 'T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T10', 'R15', 'T11', 'T12']

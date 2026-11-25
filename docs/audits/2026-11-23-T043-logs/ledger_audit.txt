@@ -1,0 +1,6 @@
+109 requirements, 93 tasks, {'VERIFIED COMPLETE': 62, 'IN PROGRESS': 6, 'BLOCKED': 6, 'NOT STARTED': 14, 'READY FOR REVIEW': 1, 'FAILED': 1, 'EXPLICITLY DEFERRED': 3}; 0 errors
+
+real	0m0.302s
+user	0m0.000s
+sys	0m0.030s
+rc=0

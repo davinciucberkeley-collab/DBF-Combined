@@ -7,10 +7,10 @@
    "name": "Phase-lead raceway (D-199, R): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 1.71,
+   "mass_g": 1.43,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0159,
+    -0.0204,
     0.019,
     0.0027
    ],
@@ -22,10 +22,10 @@
    "name": "Phase-lead raceway (D-199, L): closed 0.6 mm PETG channel under the tray plate, hub pad slot to the tray end, two bundles side by side",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 1.71,
+   "mass_g": 1.43,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0159,
+    -0.0204,
     -0.019,
     0.0027
    ],
@@ -37,10 +37,10 @@
    "name": "Hub conduit (D-199, D-202, UR): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 1.05,
+   "mass_g": 0.98,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0569,
+    -0.0659,
     0.012,
     0.0182
    ],
@@ -52,10 +52,10 @@
    "name": "Hub conduit (D-199, D-202, UL): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 0.77,
+   "mass_g": 0.72,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0522,
+    -0.0612,
     -0.013,
     0.0179
    ],
@@ -67,10 +67,10 @@
    "name": "Hub conduit (D-199, D-202, LR): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 0.97,
+   "mass_g": 0.9,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0517,
+    -0.0607,
     0.0156,
     -0.0168
    ],
@@ -82,10 +82,10 @@
    "name": "Hub conduit (D-199, D-202, LL): 0.6 mm PETG tunnel over the 4.8 mm tube exit hole, aft run, sideways step, then the drop / rise into the raceway window",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 1.25,
+   "mass_g": 1.22,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0559,
+    -0.0649,
     -0.0142,
     -0.0173
    ],
@@ -100,9 +100,9 @@
    "mass_g": 8.0,
    "material": "copper / silicone / nylon",
    "cg_xyz_m": [
-    0.1033,
+    0.0883,
     0.0635,
-    0.0164
+    0.0168
    ],
    "make_or_buy": "buy",
    "electrical": "bus",
@@ -114,7 +114,7 @@
    "name": "Harness remainder, bottom-up (D-198): phase-lead extensions, splices, ESC ribbon, sensor leads, servo ties, sleeves / ties / tape / solder - lumped",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 22.5,
+   "mass_g": 54.0,
    "material": "copper / silicone",
    "cg_xyz_m": [
     0.03,
@@ -506,7 +506,7 @@
    "part_b": "AVN-003",
    "via": "CT-JST-GH-4",
    "owner": "harness",
-   "notes": "RX UART (CRSF wire soldered at the RX pads) lead",
+   "notes": "RX UART (CRSF wire soldered at the RX pads), enclosed under the bay cover and the RX hood (T-022 Q4) lead",
    "wire": {
     "gauge_awg": 28,
     "connector": "CT-JST-GH-4",
@@ -544,7 +544,7 @@
    "part_b": "AVN-005",
    "via": "CT-JST-GH-4",
    "owner": "harness",
-   "notes": "airspeed I2C (plug on the MS4525 board, other end soldered to the FC) lead",
+   "notes": "airspeed I2C (plug on the MS4525 board, other end soldered to the FC), enclosed under the bay cover, through the window drop and in the core groove (T-022 Q4) lead",
    "wire": {
     "gauge_awg": 28,
     "connector": "CT-JST-GH-4",

@@ -30,6 +30,8 @@ not a narrative essay and not a line-by-line code walkthrough.
   body (Source Sans 3, 16 px, line-height 1.6), mono (Red Hat Mono) for labels, data and code;
   square hairline geometry, no drop shadows or pill badges. Original gripper spec: display grotesk,
   mono for code. Tabular numbers everywhere. Paragraphs capped at ~72 ch.
+  Exception: the concept A Explorer (redesign/site) ships Newsreader + IBM Plex Sans / Mono (explorer.css, D-242);
+  kept over this set at the UI-survey merge (2026-11-24, docs/audits/2026-11-23-T104-ui-survey-merge.md).
 - 44 px minimum touch targets; works at phone width.
 
 ## Section skeleton (gripper version)

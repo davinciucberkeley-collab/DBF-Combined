@@ -4,7 +4,7 @@ cases: trans    hover to 50 m, entry (held throttle, pre-climb, FBWA), cruise, o
        land     hover at 20 m, QLAND (wind and heading from the keys)
        takeoff  wind from t=5 s, arm, climb in QHOVER to 12 m
        battH / battC   battery low in hover / in cruise;  rcH / rcC  RC loss in hover / cruise;  moH / moC  motor 1 out in hover / cruise
-keys: mass wind from(deg, wind FROM; belly = 0 = the flight direction) turb gust seed r(entry T/W, default window centre) preclimb(s, 1.0) vrest slip inst
+keys: fw_hold(s, FBWA override held after "Transition FW done", default 3.0, T-101) mass wind from(deg, wind FROM; belly = 0 = the flight direction) turb gust seed r(entry T/W, default window centre) preclimb(s, 1.0) vrest slip inst
       speedup  chain  yawcmd(s of full yaw stick to go edge-on after the back-transition, default 0) es5 es6 tmax P:NAME=VALUE (SITL param override)
 Outputs: runs/<tag>/ (fwd.csv from the plant, result.json) and one line in results_fwd.jsonl."""
 import json, math, os, subprocess, sys, time
@@ -60,6 +60,7 @@ cfg = dict(out=os.path.join(run, "case"), fwd=1, mass=MASS, cant_deg=float(kv.ge
 if case == "takeoff": cfg["wind_t0"] = 5.0
 if case == "land": cfg["wind_alt"] = 14.0
 if "elv_scale" in kv: cfg["elv_scale"] = float(kv["elv_scale"])
+if "cm0" in kv: cfg["cm0"] = float(kv["cm0"])          # T-101 D-253: section Cm0 override (default off)
 if "cg" in kv: cfg["cg_aft"] = float(kv["cg"]) * 1e-3     # CG aft of the LE, mm (pack trim ends), re-references the aero arms (a_aero.set_cg)
 
 # ---- static thrust model for the entry throttle (same functions the plant uses)
@@ -180,10 +181,21 @@ try:
         if float(kv.get("gust", 0)) and case == "trans": cmd(gust=float(kv["gust"]))      # 1-cos gust, 2 s, peak 2 s after the mode change
         t_fw = st["t"]
         ok = run_for(30, lambda: seen("Transition FW done", t_fw)); mk["t_fwdone"] = st["t"] if ok else None
-        run_for(3.0)                                         # override held 3 s after the handover
+        run_for(float(kv.get("fw_hold", 3.0)))               # override held 3 s after the handover (T-101: key fw_hold, default unchanged)
         rc[5] = CRZ; rc[2] = 1500; mk["t_cruise_mode"] = st["t"]
         if "cthr" in kv: setp("THR_MIN", kv["cthr"]); setp("THR_MAX", kv["cthr"])      # F4 follow-up: pin the cruise throttle (percent) to read the duty it maps to
-        run_for(float(kv.get("cruise_s", 25)))
+        if kv.get("c3g", "0") == "1":     # T-101 C3G (opt-in): 1-cos vertical + side gust and a roll doublet start c3g_t s after the CRUISE command (AR-017 pitch peak, 1.14 s in T101C3_T074)
+            run_for(float(kv.get("c3g_pre", 0.4)))
+            t_ev = st["t"] + float(kv.get("c3g_lead", 0.74)); mk["t_c3g_cmd"] = st["t"]
+            cmd(gv_t0=t_ev, gv_dur=float(kv.get("gv_dur", 1.08)), gv_vert=float(kv.get("gv_vert", 3.0)), gv_side=float(kv.get("gv_side", 3.0)))
+            run_for(max(0.0, t_ev - st["t"])); mk["t_c3g0"] = st["t"]
+            st_ = float(kv.get("c3g_stick", 0.75)); leg = float(kv.get("c3g_leg", 1.5))     # roll stick (fraction of full = ROLL_LIMIT_DEG 45) in CRUISE = bank demand; doublet +, -, then centre
+            rc[0] = int(1500 + 500 * st_); run_for(leg); mk["t_c3g1"] = st["t"]
+            rc[0] = int(1500 - 500 * st_); run_for(leg); mk["t_c3g2"] = st["t"]
+            rc[0] = 1500
+            run_for(max(0.0, float(kv.get("cruise_s", 25)) - (st["t"] - mk["t_cruise_mode"])))
+        else:
+            run_for(float(kv.get("cruise_s", 25)))
         mk["t_cruise_end"] = st["t"]
         if case == "trans" and kv.get("chain", "0") == "1":
             mk["t_back"] = st["t"]; rc[5] = QLOI; rc[2] = 1500

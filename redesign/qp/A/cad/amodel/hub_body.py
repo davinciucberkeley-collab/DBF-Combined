@@ -23,7 +23,7 @@ import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 CACHE = os.path.join(HERE, 'hub_body_cache.npz')
-VERSION = 'hub_body v1'
+VERSION = 'hub_body v5 (octagonal sleeves, collar, T-077 p3; RC lightening cut, T-077 p4; shoulder fillet RC[3], T-077 p5)'
 
 
 def _params_key(p):
@@ -45,7 +45,17 @@ def _build(p):
 
         def sleeve(t):
             u, x0 = U[t], X0[t]
-            return (3, occ.addCylinder(x0 - L * u[0], -L * u[1], -L * u[2], 2 * L * u[0], 2 * L * u[1], 2 * L * u[2], rs))
+            if not p.get('OCT'):
+                return (3, occ.addCylinder(x0 - L * u[0], -L * u[1], -L * u[2], 2 * L * u[0], 2 * L * u[1], 2 * L * u[2], rs))
+            # D-221 s7.1.1: octagonal (prismatic) sleeve, apothem rs (= across flats / 2) = regular octagon as the intersection of a square and the same
+            # square turned 45 deg about the tube axis; flats face +-x and +-t. Built along +y, then turned about x by PHI and moved to the tube axis.
+            b1 = occ.addBox(-rs, -L, -rs, 2 * rs, 2 * L, 2 * rs)
+            b2 = occ.addBox(-rs, -L, -rs, 2 * rs, 2 * L, 2 * rs)
+            occ.rotate([(3, b2)], 0, 0, 0, 0, 1, 0, math.pi / 4)
+            o, _ = occ.intersect([(3, b1)], [(3, b2)])
+            occ.rotate(o, 0, 0, 0, 1, 0, 0, ph[t])
+            occ.translate(o, x0, 0, 0)
+            return o[0]
 
         def block():
             bx = occ.addBox(xa0, -cb, -cb + bz, xb1 - xa0, 2 * cb, 2 * cb)
@@ -64,10 +74,43 @@ def _build(p):
             b0, b1, bzz, br = p['BOSS']
             return [(3, occ.addCylinder(b0, 0, bzz, b1 - b0, 0, 0, br))]
 
+        def collar():                               # D-220 collar: box (x0, x1, y half, z0, z1), its four x-parallel edges rounded R_CB, fused to the block's aft face (no junction fillet)
+            if not p.get('COLLAR'):
+                return []
+            c0, c1, chy, cz0, cz1 = p['COLLAR']
+            cb_ = occ.addBox(c0, -chy, cz0, c1 - c0, 2 * chy, cz1 - cz0)
+            if rc > 0:
+                occ.synchronize()
+                bnd = [c[1] for c in gmsh.model.getBoundary(gmsh.model.getBoundary([(3, cb_)], combined=False, oriented=False), combined=False, oriented=False) if c[0] == 1]
+                ed = [e for d_, e in occ.getEntities(1) if d_ == 1 and e in bnd and (lambda b: abs(b[3] - b[0]) > 1 and abs(b[4] - b[1]) < 0.1 and abs(b[5] - b[2]) < 0.1)(occ.getBoundingBox(1, e))]
+                cb_ = occ.fillet([cb_], ed, [rc])[0][1]
+            return [(3, cb_)]
+
+        def rc_cut(v):                                  # T-077 p4 (D-224 hub pockets): turn the block aft of RC x0 and the collar to a cylinder of radius RC r about the bridge axis (everything outside it is removed)
+            if not p.get('RC'):                         # T-077 p5: RC[3] (optional) = concave fillet radius at the shoulder, a revolved profile (the OCC edge fillet fails above the 0.75 mm step)
+                return v
+            rcr, rcx0, rcz = p['RC'][:3]
+            shr = p['RC'][3] if len(p['RC']) > 3 else 0.0
+            xe_ = p['COLLAR'][1] + 3.0 if p.get('COLLAR') else rcx0 + 40.0
+            bx_ = occ.addBox(rcx0, -40.0, rcz - 40.0, xe_ - rcx0, 80.0, 80.0)
+            cy_ = occ.addCylinder(rcx0 - 1.0, 0, rcz, xe_ - rcx0 + 2.0, 0, 0, rcr)
+            keep = [(3, cy_)]
+            if shr > 0:
+                a_ = occ.addPoint(rcx0, rcr - 0.2, rcz); b_ = occ.addPoint(rcx0, rcr + shr, rcz); c_ = occ.addPoint(rcx0 + shr, rcr + shr, rcz)
+                d_ = occ.addPoint(rcx0 + shr, rcr, rcz); e_ = occ.addPoint(rcx0 + shr, rcr - 0.2, rcz)
+                cv = [occ.addLine(a_, b_), occ.addCircleArc(b_, c_, d_), occ.addLine(d_, e_), occ.addLine(e_, a_)]
+                sf_ = occ.addPlaneSurface([occ.addCurveLoop(cv)])
+                keep += [t_ for t_ in occ.revolve([(2, sf_)], 0, 0, rcz, 1, 0, 0, 2 * math.pi) if t_[0] == 3]
+            cut_, _ = occ.cut([(3, bx_)], keep)
+            out_, _ = occ.cut(v, cut_, removeTool=True)
+            occ.synchronize()
+            return out_
+
         # --- sharp reference body (same pieces, plain fuse) -> volume
-        parts = [sleeve('A'), sleeve('B'), block()] + boss()
+        parts = [sleeve('A'), sleeve('B'), block()] + boss() + collar()
         v, _ = occ.fuse([parts[0]], parts[1:])
         occ.synchronize()
+        v = rc_cut(v)
         vol_sharp = sum(occ.getMass(3, t) for _, t in v)
         occ.remove(v, recursive=True)
         occ.synchronize()
@@ -76,6 +119,10 @@ def _build(p):
         def on_sleeve(q, t):
             u = U[t]
             d = np.array(q) - np.array([X0[t], 0.0, 0.0])
+            if p.get('OCT'):
+                tt = np.cross([1.0, 0.0, 0.0], u)          # tangential direction t = x_hat cross u
+                a, b = d[0], d @ tt
+                return abs(max(abs(a), abs(b), (abs(a) + abs(b)) / math.sqrt(2.0)) - rs) < 0.02
             return abs(np.linalg.norm(d - (d @ u) * u) - rs) < 0.02
 
         def in_block(q):
@@ -93,7 +140,10 @@ def _build(p):
                 if d_ != 1 or e in sel:
                     continue
                 lo, hi = gmsh.model.getParametrizationBounds(1, e)
-                if all(on_sleeve(q, t) and in_block(q) for q in (gmsh.model.getValue(1, e, [lo[0] + (hi[0] - lo[0]) * f]) for f in (0.2, 0.5, 0.8))):
+                pts = [gmsh.model.getValue(1, e, [lo[0] + (hi[0] - lo[0]) * f]) for f in (0.2, 0.5, 0.8)]
+                if all(on_sleeve(q, t) and in_block(q) for q in pts):
+                    if p.get('OCT') and t == 'A' and all(on_sleeve(q, 'B') for q in pts):
+                        continue                                   # A / B crease (not a block junction): OCC cannot fillet it with the octagons
                     sel.append(e)
             out = occ.fillet([vol], sel, [r], removeVolume=False)
             occ.remove([(3, vol)], recursive=True)
@@ -102,7 +152,11 @@ def _build(p):
         if extra:
             v, _ = occ.fuse([(3, vol)], extra)
             vol = v[0][1]
+        for cq in collar():
+            v, _ = occ.fuse([(3, vol)], [cq])
+            vol = v[0][1]
         occ.synchronize()
+        vol = rc_cut([(3, vol)])[0][1]
         vol_fil = occ.getMass(3, vol)
 
         # --- surface mesh: fine on the blend faces (not plane / cylinder / cone), coarse elsewhere
@@ -210,7 +264,8 @@ def cad_params():
                 L_SLV=W.SLV_L * mm, R_SLV=W.SLV_R * mm, CB=W.CB * mm, R_CB=W.R_CB * mm, BLK_Z=W.BLK_Z * mm,
                 BLK_X0=W.BLK_X[0] * mm, BLK_X1=W.BLK_X[1] * mm,
                 BOSS=None if (W.HUB_X1 - C.HUB[0] - W.BLK_X[1]) <= 0.001 else ((W.BLK_X[1] - 0.0005) * mm, (W.HUB_X1 - C.HUB[0]) * mm, W.BR_Z * mm, W.R_BR * mm),
-                FIL=2.0, FIL_A=1.5, MS=1.5, MS_FIL=0.4, HUB_X=C.HUB[0])
+                FIL=W.HUB_FIL, FIL_A=W.HUB_FIL_A, MS=1.5, MS_FIL=0.4, HUB_X=C.HUB[0], OCT=True, COLLAR=(W.BLK_X[1] * mm - 0.0005 * 0, W.COL_X1 * mm, W.COL_HY * mm, W.COL_Z[0] * mm, W.COL_Z[1] * mm),
+                RC=(W.POCKET_R * mm, W.POCKET_X0 * mm, W.BR_Z * mm, W.POCKET_SH_R * mm) if W.POCKET_R > 0 else None)
 
 
 if __name__ == '__main__':

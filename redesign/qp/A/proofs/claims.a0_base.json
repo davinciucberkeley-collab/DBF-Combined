@@ -12,7 +12,7 @@
    "kind": "file",
    "url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/CLAUDE.md",
    "checked": "2026-11-15",
-   "where": "Hard constraints: $2,000, 2027-04-30, one car trunk, < 25 kg, 3-D physics pass"
+   "where": "Hard constraints: $2,000, 2027-04-30, one car trunk, < 25 kg, 3-D physics simulation (user wording; computed as interference + swept insertion checks)"
   },
   {
    "id": "SRC-A-REQ",
@@ -111,7 +111,7 @@
    "kind": "file",
    "url": "redesign/qp/A/cad/out/REPORT.md",
    "checked": "2026-11-15",
-   "where": "report_pose20 / report_pose21 / report.json: 96 parts, 444 bodies, tolerance 0.05 mm (2026-11-15, D-194)"
+   "where": "report_d212r3_pose20 / report_d212r3_pose21 / report.json: 96 parts, 444 bodies, tolerance 0.05 mm (2026-11-15, D-194)"
   },
   {
    "id": "SRC-A-ASSY",
@@ -120,7 +120,7 @@
    "kind": "file",
    "url": "redesign/qp/A/cad/out/ASSEMBLY.md",
    "checked": "2026-11-15",
-   "where": "35 steps, 96 of 96 parts (2026-11-15, D-194)"
+   "where": "step and part counts are computed from assembly.json; T-099 gates record 2026-11-23: 66 steps, 129 of 129 parts placed"
   },
   {
    "id": "SRC-A-SIZING",
@@ -138,7 +138,7 @@
    "kind": "repo",
    "url": "redesign/review/QP-4/BOARD.md",
    "checked": "2026-11-15",
-   "where": "s1 structure ceiling 494 g, s3 pitch-use basis, G1-G10"
+   "where": "s1 structure ceiling 494 g, s3 pitch-use basis (G5 basis superseded by D-245, 15 deg), G1-G10"
   },
   {
    "id": "SRC-A-FIXES",
@@ -177,6 +177,33 @@
    "where": "MS at the 103 kPa basis (compressive 103 V data sheet; tension 129, shear 86 EST)"
   },
   {
+   "id": "SRC-A-LINKLOADS",
+   "type": "source",
+   "title": "Elevon linkage strength checks, D-212 rev 3 (linkage_loads_check.json)",
+   "kind": "file",
+   "url": "redesign/qp/A/mechanism/out/linkage_loads_check.json",
+   "checked": "2026-11-15",
+   "where": "hand calculations + 1-D beam-on-foundation FE of the horn rib; stall force 51.0 N quasi-static; factors KP 2.156 hold, 1.4375 stall (printed / bonded)"
+  },
+  {
+   "id": "SRC-A-LINKKIN",
+   "type": "source",
+   "title": "Elevon linkage kinematics, D-212 rev 3 (linkage_kinematics.json)",
+   "kind": "file",
+   "url": "redesign/qp/A/mechanism/out/linkage_kinematics.json",
+   "checked": "2026-11-15",
+   "where": "free_play_budget_deg: hole clearances / horn radius + Z-bend freedom (K7)"
+  },
+  {
+   "id": "SRC-A-SERVOMD",
+   "type": "source",
+   "title": "QP-4 servo review (SERVO.md)",
+   "kind": "repo",
+   "url": "redesign/review/QP-4/SERVO.md",
+   "checked": "2026-11-15",
+   "where": "s4: free play <= 1 deg (flutter target)"
+  },
+  {
    "id": "SRC-A-ARMCUP",
    "type": "source",
    "title": "Arm and motor-cup checks (arm_cup_checks.md)",
@@ -213,6 +240,33 @@
    "where": "modes vs rotor bands, forced response, control-band GM, C1 loads at VD 24"
   },
   {
+   "id": "SRC-A-STRUCT-RUN",
+   "type": "source",
+   "title": "Structures run, T-084 rerun with the X2216 / 1.8796 kg model (structures_run.md)",
+   "kind": "file",
+   "url": "redesign/qp/A/structures/structures_run.md",
+   "checked": "2026-11-15",
+   "where": "s2 C1 loads, s4 modes vs rotor orders, band 94-321 Hz, forced-response sweep; beam FE fe_a.py"
+  },
+  {
+   "id": "SRC-A-T085",
+   "type": "source",
+   "title": "T-085 D-185 FE upgrade, D-236 (T085_report.md)",
+   "kind": "file",
+   "url": "redesign/qp/A/mechanism/out/T085_report.md",
+   "checked": "2026-11-15",
+   "where": "s3 strong modes in the band under credible pad / tray / hub / cell bounds; FEA-lite beam FE, EST springs bounded"
+  },
+  {
+   "id": "SRC-A-T084",
+   "type": "source",
+   "title": "T-084 static tip-over on the drawn pads (fin ends at FIN_H 0.1937, option T3)",
+   "kind": "file",
+   "url": "redesign/qp/A/mechanism/out/T084_data/tipover_t084.txt",
+   "checked": "2026-11-15",
+   "where": "minimum over the drawn and tallied CG and both pack-trim ends; pivot = outer pad edge on the CG z side (D-215 s4)"
+  },
+  {
    "id": "SRC-A-D195FL",
    "type": "source",
    "title": "Elevon flutter, lead 12.8 g (D-205; flutter_d205.md, else as flutter_d195.md)",
@@ -247,6 +301,33 @@
    "url": "redesign/qp/A/sitl/jobs_qp5.txt",
    "checked": "2026-11-15",
    "where": "cant 17, D-191 gains, CAD mass / CG / inertia 2026-11-15, S5010 aero; batch_qp5.sh"
+  },
+  {
+   "id": "SRC-A-AR017",
+   "type": "source",
+   "title": "Analysis record AR-017 (T-101 C3 controls, SITL transition pitch use at the 0.25 elevon chord)",
+   "kind": "file",
+   "url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/docs/analysis-records.md",
+   "checked": "2026-11-15",
+   "where": "AR-017 result: C3 elevon pitch use on the 15 deg basis 0.554 / 0.571 / 0.651 / 0.605 (Z5, Z5 Lua, T-074, T-074 Lua); worst 0.651 (T-074 without Lua)"
+  },
+  {
+   "id": "SRC-A-LATDIR",
+   "type": "source",
+   "title": "Lateral-directional stability script (D-260)",
+   "kind": "file",
+   "url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/qp/A/sitl/latdir_a.py",
+   "checked": "2026-11-15",
+   "where": "Cn_beta 0.209 /rad at 18 m/s, CG 23.49 mm (fins 0.233, propellers -0.024); spiral +0.245 /s (time to double 2.8 s), Dutch roll 9.40 rad/s, zeta 0.152; output redesign/qp/A/mechanism/out/T101_data/latdir_a_18.json"
+  },
+  {
+   "id": "SRC-A-AR015",
+   "type": "source",
+   "title": "Analysis records AR-015 / AR-016 (SITL transition pitch use, landing foam region)",
+   "kind": "file",
+   "url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/docs/analysis-records.md",
+   "checked": "2026-11-15",
+   "where": "AR-015 result (pitch use 0.69-0.79 of 15 deg, 0.52-0.59 of 20 deg); AR-016 result (landing: record run 17.2 mm at Fp 37.5 N / zeta 0.05; accepted region Fp 37.5-39.0 N, zeta 0.02-0.05)"
   },
   {
    "id": "SRC-A-FLUTTER",
@@ -347,6 +428,22 @@
    "status": "UNVERIFIED"
   },
   {
+   "id": "ASM-A-ROD-GRADE",
+   "type": "assumption",
+   "title": "The M02 pushrod is music wire (ASTM A228) or as strong",
+   "text": "The 1.2 mm M02 rod has a bending allowable >= the 1172 MPa the Z-bend leg needs at 1.5 x the 51 N stall force",
+   "basis": "D-212 rev 3: RMRC publishes 'steel' only; the A228 constants (S_ut = 2211 / d^0.145 MPa, bending 0.78 S_ut, Shigley Tables 10-4 / 10-6) are RECALLED, not re-read. Receipt test: 77 N along the formed rod, 10 s, no permanent set over 0.2 mm, else A228 wire",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-A-PETG-ALLOW",
+   "type": "assumption",
+   "title": "Printed PETG 20 MPa in-layer and bearing",
+   "text": "Printed PETG (Prusament, R03) carries 20 MPa in the layer plane and in hole bearing",
+   "basis": "structures/fea_arm.py ALLOW['petg'] and arm_cup_checks.py PETG_BEAR: EST, no coupon yet; the horn is printed lying flat so its bending and bearing are in the layer plane",
+   "status": "UNVERIFIED"
+  },
+  {
    "id": "ASM-A-TRUNK",
    "type": "assumption",
    "title": "The packed box fits the team's car trunk",
@@ -394,8 +491,8 @@
   {
    "id": "A-U4",
    "type": "requirement",
-   "title": "3-D physics pass",
-   "text": "No part interpenetration (collision gate at neutral and at the elevon stops), no open wire ends, every build step passes the assembly sweep",
+   "title": "3-D gates pass (interference + swept insertion checks)",
+   "text": "No part interpenetration (interference check, static, at neutral and at the elevon stops), no open wire ends, every build step passes the swept insertion check (straight-line build-step paths)",
    "ref": "qp/A/REQUIREMENTS-A.md#a-u4"
   },
   {
@@ -504,6 +601,13 @@
    "ref": "qp/A/REQUIREMENTS-A.md#a-p13"
   },
   {
+   "id": "A-P15",
+   "type": "requirement",
+   "title": "Directional stability",
+   "text": "Cn_beta >= 0.03 per rad (CL-A-CNBETA); spiral half not a claim: the bare airframe diverges (time to double 2.8 s, EST), so it is flown only in roll-stabilized modes (D-260)",
+   "ref": "qp/A/REQUIREMENTS-A.md#a-p15"
+  },
+  {
    "id": "A-P16",
    "type": "requirement",
    "title": "Motor and ESC current",
@@ -571,6 +675,54 @@
    "procedure": "FIXES2 s8 steps 1-7 on a 300 mm wing section with the real elevon, lead strip, caps, damper and ES3054HV at 7.2 V; c >= 7.1e-4 N m s/rad at 25 C, c(50 C) >= 4.0e-4"
   },
   {
+   "id": "T-A-HORN-RIB",
+   "type": "test",
+   "title": "Elevon horn: rib coupon, stall step, elevon-section torsion coupon, bench stall test (D-212 rev 3, review r3 M-1)",
+   "verifies": [
+    "CL-A-HORN-RIB-COUPON",
+    "CL-A-HORN-STALL-STEP",
+    "CL-A-ELEVON-TORSION-COUPON",
+    "CL-A-HORN-STALL-BENCH",
+    "CL-A-HORN-SHEAROUT-STALL"
+   ],
+   "state": "planned",
+   "procedure": "(1) horn-rib coupon 36.8 N / 30 s, no crack, no slip, set < 0.5 deg; (2) then 51 N / 5 s, hole elongation <= 0.1 mm, no crack; (3) elevon-section torsion coupon 0.161 N m / 30 s, twist set < 0.5 deg, no debond; (4) bench stall test 51 N / 5 s into the stop (BUILD D5b). >= 3 coupons, lowest governs. A pass replaces the analysis FAIL claims (CL-A-HORN-RIB-FOAM-*, CL-A-ELEVON-TORSION-FOAM, CL-A-HORN-BEARING-STALL) as the basis of A-P13"
+  },
+  {
+   "id": "T-A-FREEPLAY",
+   "type": "test",
+   "title": "TP-15 (TEST-PLAN-O4B.md, T-094): elevon linkage free play, dial gauge or laser pointer at the trailing edge, bench coupon then built elevon",
+   "verifies": [
+    "CL-A-LINKAGE-FREEPLAY"
+   ],
+   "state": "planned",
+   "procedure": "Servo locked at neutral, push the TE to both ends of the play, free play = atan(travel / radius); pass <= 1.0 deg (SERVO.md s4) on each of 3 coupons and each built elevon"
+  },
+  {
+   "id": "T-A-HORN-FOAM-COUPON",
+   "type": "test",
+   "title": "TP-16 / TP-17 (T-094): horn-rib and elevon-torsion foam coupons, n = 3 each, 10 kg cell on the lever rig",
+   "verifies": [
+    "CL-A-HORN-RIB-FOAM-HOLD",
+    "CL-A-HORN-RIB-FOAM-STALL",
+    "CL-A-ELEVON-TORSION-FOAM",
+    "CL-A-HORN-BEARING-STALL"
+   ],
+   "state": "planned",
+   "procedure": "TP-16: 36.8 N / 30 s then 51 N / 5 s along the chord, no crack, no slip, set < 0.5 deg, hole elongation <= 0.1 mm; TP-17: 0.161 N m / 30 s, no debond, twist set < 0.5 deg; lowest of 3 governs"
+  },
+  {
+   "id": "T-A-HORN-BENCH-STALL",
+   "type": "test",
+   "title": "TP-18 (T-094): bench stall of each built elevon, 51 N / 5 s into the +21 deg stop (BUILD D5b)",
+   "verifies": [
+    "CL-A-HORN-RIB-FOAM-STALL",
+    "CL-A-HORN-BEARING-STALL"
+   ],
+   "state": "planned",
+   "procedure": "Servo 7.2 V into the stop for 5 s: hole elongation <= 0.1 mm, no crack in horn, rib, slot tape, stop or keeper, TE set < 0.5 deg"
+  },
+  {
    "id": "T-A-SERVO-RAIL",
    "type": "test",
    "title": "Servo rail voltage under two-servo load (M12)",
@@ -613,10 +765,11 @@
    "verifies": [
     "CL-A-VIB-LOW",
     "CL-A-VIB-HIGH",
+    "CL-A-VIB-IN-BAND",
     "CL-A-VIB-GM-SHIFT"
    ],
    "state": "planned",
-   "procedure": "Cage pitch mode 12-16 Hz, roll 21-43 Hz and fin f1 within +-20 % of FE, else re-tune (BOARD QP-4, STRUCTURES-R)"
+   "procedure": "TP-10b (TEST-PLAN-O4B.md): rule applied to the measured modes with pack and motors installed (T-085, D-236). Measured modes against the FE (T-089 / T-091): rate-loop band 16-18 / 26.8-29.7 / 42-47 Hz (the 26.8-29.7 Hz symmetric wing-flap / cage mode limits the pitch gain margin) and the 94.6-108.7 Hz wing-flap / cage-bounce mode (D-185, VIB-FC); fin f1 within +-20 % of FE, else re-tune (BOARD QP-4, STRUCTURES-R). With the FC 75 mm off centre (D-239) the pitch-rate mode shape at the FC site is measured here; the FC benefit is credited only after this test / the tether hover"
   },
   {
    "id": "T-A-TETHER-VIBE",
@@ -634,7 +787,8 @@
    "title": "First cruise: roll rate and measured stall (M8 extended)",
    "verifies": [
     "CL-A-ROLL-GATE",
-    "CL-A-STALL"
+    "CL-A-STALL",
+    "CL-A-STALL-PRED"
    ],
    "state": "planned",
    "procedure": "Measure the peak roll rate (>= 90 deg/s) and the clean stall; the measured CLmax replaces 0.75"

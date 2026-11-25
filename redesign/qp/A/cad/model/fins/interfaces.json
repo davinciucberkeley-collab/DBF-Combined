@@ -4,15 +4,15 @@
  "parts": [
   {
    "id": "FIN-001-R",
-   "name": "Fin tube 16x14 x 0.36 m (R)",
+   "name": "Fin tube 16x14 x 0.3874 m (R; T-084: 2 x FIN_H, was 0.36 m)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 27.1,
+   "mass_g": 29.2,
    "material": "CFRP tube",
    "cg_xyz_m": [
     0.294,
     0.38,
-    -0.0
+    0.0
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -22,11 +22,11 @@
    "name": "Fin rib tube 14x12 (R)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 14.1,
+   "mass_g": 26.0,
    "material": "CFRP tube",
    "cg_xyz_m": [
     0.1782,
-    0.38,
+    0.383,
     0.0
    ],
    "make_or_buy": "make",
@@ -34,25 +34,25 @@
   },
   {
    "id": "FIN-003-R",
-   "name": "Fin root block (R)",
+   "name": "Fin root fitting (R; T-083b, replaces the PETG root block): machined 6061-T6, ring OD 18.2 / bore 16.2 x 38 mm on the fin tube, plug OD 22.8 / ID 20.8 x 31 mm bonded inside the 25x23 rib end, end plate 2.0 mm x 24.6 mm diameter notched by the fin tube; mass = drawn volume (voxel 0.2 mm) x 2.70 g/cm3",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 3.2,
-   "material": "PETG (printed)",
+   "mass_g": 12.04,
+   "material": "Al 6061-T6 (machined)",
    "cg_xyz_m": [
-    0.2831,
-    0.38,
-    0.0
+    0.283,
+    0.3818,
+    -0.0
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "FIN-004-R",
-   "name": "Fin fairing 3 mm XPS + tape (R)",
+   "name": "Fin fairing 3 mm XPS + tape (R; T-084: 2 x FIN_H tall, mass scaled from the listed 8.4 g at 0.36 m by height, EST)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 8.4,
+   "mass_g": 9.04,
    "material": "XPS foam + tape",
    "cg_xyz_m": [
     0.2395,
@@ -64,45 +64,75 @@
   },
   {
    "id": "FIN-005-R",
-   "name": "Rib saddle on spar (R)",
+   "name": "Fin node bulkheads (R, T-077 p8, D-226 s3; replaces the printed rib saddle): two 0.5 mm CF sheet bulkheads (waterjet, BOM T2) at |y| 369.5..370.0 and 396.0..396.5 mm (0.5 mm from the 25 mm rib flanks), cut to the cell inside the 3 skin plies from the LE to x 176, spar holes 12 mm (flox), slotted into the core; rib bonded between them by flox fillets (12 mm wide per flank, EST) over x 70.5..176; 2-ply 1080 tape laps 8 mm on both skins. Mass = plates 5.02 + tape laps 2.07 + flox 2.91 g (EST)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 1.0,
-   "material": "PETG (printed)",
+   "mass_g": 10.0,
+   "material": "CF fabric laminate (cut sheet) + glass tape + flox",
    "cg_xyz_m": [
-    0.0671,
-    0.38,
-    0.0
+    0.0854,
+    0.383,
+    -0.0007
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "FIN-009-R",
+   "name": "Fin node in-plane plates (R, T-077 p8, D-226 s3): two 0.5 mm CF sheet plates (waterjet, BOM T2) under the upper and lower skin plies, x 58..168, |y - 383| <= 20 mm, bent to the airfoil, notched round the rib; plus the two rib straps (undrawn laminate: 4 plies 0/90 1080 over the rib top and bottom, 8 mm laps on the skin, x 70.5..176). Mass = plates 5.09 (notch EST) + straps 4.08 g (EST)",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 9.2,
+   "material": "CF fabric laminate (cut sheet) + glass tape",
+   "cg_xyz_m": [
+    0.113,
+    0.383,
+    -0.0008
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "FIN-006-R",
-   "name": "Rib fairing, upper (R): XPS + tape blister over the 14 mm rib where the S5010 skin is thinner than the tube (D-194); mass EST",
+   "name": "Rib fairing, upper (R, T-077 p8): XPS + tape blister over the 25 mm rib and its strap, half-round R 13.9 mm about the rib axis, x 70.5..176.2 (stops 7.5 mm ahead of the hinge, clear of the damper notch), trimmed to the skin; mass EST",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 0.3,
+   "mass_g": 0.6,
    "material": "XPS foam + tape",
    "cg_xyz_m": [
-    0.1569,
-    0.38,
-    0.004
+    0.1234,
+    0.383,
+    0.0062
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "FIN-010-R",
+   "name": "Rib fairing, lower (R, T-077 p8): XPS + tape blister under the 25 mm rib (it stands 0.9..4 mm proud of the lower skin), half-round R 13.9 mm, x 70.5..176.2, trimmed to the skin; mass EST",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 0.4,
+   "material": "XPS foam + tape",
+   "cg_xyz_m": [
+    0.1234,
+    0.383,
+    -0.0062
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "FIN-001-L",
-   "name": "Fin tube 16x14 x 0.36 m (L)",
+   "name": "Fin tube 16x14 x 0.3874 m (L; T-084: 2 x FIN_H, was 0.36 m)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 27.1,
+   "mass_g": 29.2,
    "material": "CFRP tube",
    "cg_xyz_m": [
     0.294,
     -0.38,
-    -0.0
+    0.0
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -112,11 +142,11 @@
    "name": "Fin rib tube 14x12 (L)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 14.1,
+   "mass_g": 26.0,
    "material": "CFRP tube",
    "cg_xyz_m": [
     0.1782,
-    -0.38,
+    -0.383,
     0.0
    ],
    "make_or_buy": "make",
@@ -124,25 +154,25 @@
   },
   {
    "id": "FIN-003-L",
-   "name": "Fin root block (L)",
+   "name": "Fin root fitting (L; T-083b, replaces the PETG root block): machined 6061-T6, ring OD 18.2 / bore 16.2 x 38 mm on the fin tube, plug OD 22.8 / ID 20.8 x 31 mm bonded inside the 25x23 rib end, end plate 2.0 mm x 24.6 mm diameter notched by the fin tube; mass = drawn volume (voxel 0.2 mm) x 2.70 g/cm3",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 3.2,
-   "material": "PETG (printed)",
+   "mass_g": 12.04,
+   "material": "Al 6061-T6 (machined)",
    "cg_xyz_m": [
-    0.2831,
-    -0.38,
-    0.0
+    0.283,
+    -0.3818,
+    -0.0
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "FIN-004-L",
-   "name": "Fin fairing 3 mm XPS + tape (L)",
+   "name": "Fin fairing 3 mm XPS + tape (L; T-084: 2 x FIN_H tall, mass scaled from the listed 8.4 g at 0.36 m by height, EST)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 8.4,
+   "mass_g": 9.04,
    "material": "XPS foam + tape",
    "cg_xyz_m": [
     0.2395,
@@ -154,30 +184,60 @@
   },
   {
    "id": "FIN-005-L",
-   "name": "Rib saddle on spar (L)",
+   "name": "Fin node bulkheads (L, T-077 p8, D-226 s3; replaces the printed rib saddle): two 0.5 mm CF sheet bulkheads (waterjet, BOM T2) at |y| 369.5..370.0 and 396.0..396.5 mm (0.5 mm from the 25 mm rib flanks), cut to the cell inside the 3 skin plies from the LE to x 176, spar holes 12 mm (flox), slotted into the core; rib bonded between them by flox fillets (12 mm wide per flank, EST) over x 70.5..176; 2-ply 1080 tape laps 8 mm on both skins. Mass = plates 5.02 + tape laps 2.07 + flox 2.91 g (EST)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 1.0,
-   "material": "PETG (printed)",
+   "mass_g": 10.0,
+   "material": "CF fabric laminate (cut sheet) + glass tape + flox",
    "cg_xyz_m": [
-    0.0671,
-    -0.38,
-    0.0
+    0.0854,
+    -0.383,
+    -0.0007
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "FIN-009-L",
+   "name": "Fin node in-plane plates (L, T-077 p8, D-226 s3): two 0.5 mm CF sheet plates (waterjet, BOM T2) under the upper and lower skin plies, x 58..168, |y - 383| <= 20 mm, bent to the airfoil, notched round the rib; plus the two rib straps (undrawn laminate: 4 plies 0/90 1080 over the rib top and bottom, 8 mm laps on the skin, x 70.5..176). Mass = plates 5.09 (notch EST) + straps 4.08 g (EST)",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 9.2,
+   "material": "CF fabric laminate (cut sheet) + glass tape",
+   "cg_xyz_m": [
+    0.113,
+    -0.383,
+    -0.0008
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "FIN-006-L",
-   "name": "Rib fairing, upper (L): XPS + tape blister over the 14 mm rib where the S5010 skin is thinner than the tube (D-194); mass EST",
+   "name": "Rib fairing, upper (L, T-077 p8): XPS + tape blister over the 25 mm rib and its strap, half-round R 13.9 mm about the rib axis, x 70.5..176.2 (stops 7.5 mm ahead of the hinge, clear of the damper notch), trimmed to the skin; mass EST",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 0.3,
+   "mass_g": 0.6,
    "material": "XPS foam + tape",
    "cg_xyz_m": [
-    0.1569,
-    -0.38,
-    0.004
+    0.1234,
+    -0.383,
+    0.0062
+   ],
+   "make_or_buy": "make",
+   "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
+  },
+  {
+   "id": "FIN-010-L",
+   "name": "Rib fairing, lower (L, T-077 p8): XPS + tape blister under the 25 mm rib (it stands 0.9..4 mm proud of the lower skin), half-round R 13.9 mm, x 70.5..176.2, trimmed to the skin; mass EST",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 0.4,
+   "material": "XPS foam + tape",
+   "cg_xyz_m": [
+    0.1234,
+    -0.383,
+    -0.0062
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -206,7 +266,7 @@
    "part_b": "FIN-005-R",
    "via": "CT-EPOXY",
    "owner": "fins",
-   "notes": "rib start in the saddle socket"
+   "notes": "rib bonded between the two fin bulkheads: flox fillets on both flanks, x 70.5..176 (T-077 p8, D-226)"
   },
   {
    "id": "E-FIN-04",
@@ -214,10 +274,66 @@
    "part_b": "WNG-002",
    "via": "CT-EPOXY",
    "owner": "fins",
-   "notes": "saddle wraps the spar (60 mm)"
+   "notes": "spar through the 12 mm holes of both bulkheads, flox (D-226)"
   },
   {
    "id": "E-FIN-05",
+   "part_a": "FIN-005-R",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "owner": "fins",
+   "notes": "bulkheads in their core slots (core segments bonded on both faces, D-226)"
+  },
+  {
+   "id": "E-FIN-06",
+   "part_a": "FIN-005-R",
+   "part_b": "WNG-011",
+   "via": "CT-EPOXY",
+   "owner": "fins",
+   "notes": "bulkhead 2-ply 1080 tape laps 8 mm on both skins (D-226)"
+  },
+  {
+   "id": "E-FIN-07",
+   "part_a": "FIN-009-R",
+   "part_b": "WNG-014-R",
+   "via": "CT-EPOXY",
+   "owner": "fins",
+   "notes": "in-plane plates under the skin plies, wet-laid (D-226)"
+  },
+  {
+   "id": "E-FIN-08",
+   "part_a": "FIN-009-R",
+   "part_b": "FIN-005-R",
+   "via": "CT-EPOXY",
+   "owner": "fins",
+   "notes": "plates bonded on the bulkhead edges (D-226)"
+  },
+  {
+   "id": "E-FIN-09",
+   "part_a": "FIN-002-R",
+   "part_b": "FIN-009-R",
+   "via": "CT-EPOXY",
+   "owner": "fins",
+   "notes": "rib straps (4-ply 0/90 1080) over the rib onto the skin over the plates; flox in the plate notch (D-226)"
+  },
+  {
+   "id": "E-FIN-10",
+   "part_a": "FIN-010-R",
+   "part_b": "FIN-002-R",
+   "via": "CT-CA",
+   "owner": "fins",
+   "notes": "lower rib fairing under the rib (foam-safe CA)"
+  },
+  {
+   "id": "E-FIN-11",
+   "part_a": "FIN-010-R",
+   "part_b": "WNG-001",
+   "via": "CT-CA",
+   "owner": "fins",
+   "notes": "lower rib fairing bonded on the lower skin"
+  },
+  {
+   "id": "E-FIN-12",
    "part_a": "FIN-004-R",
    "part_b": "FIN-001-R",
    "via": "CT-CA",
@@ -225,7 +341,7 @@
    "notes": "fairing in the tube slot (foam-safe CA)"
   },
   {
-   "id": "E-FIN-06",
+   "id": "E-FIN-13",
    "part_a": "FIN-004-R",
    "part_b": "FIN-002-R",
    "via": "CT-CA",
@@ -233,7 +349,7 @@
    "notes": "fairing round the rib"
   },
   {
-   "id": "E-FIN-07",
+   "id": "E-FIN-14",
    "part_a": "FIN-006-R",
    "part_b": "FIN-002-R",
    "via": "CT-CA",
@@ -241,7 +357,7 @@
    "notes": "rib fairing over the rib top (foam-safe CA), sits on the core skin"
   },
   {
-   "id": "E-FIN-08",
+   "id": "E-FIN-15",
    "part_a": "FIN-006-R",
    "part_b": "WNG-001",
    "via": "CT-CA",
@@ -249,7 +365,7 @@
    "notes": "rib fairing bonded on the upper skin"
   },
   {
-   "id": "E-FIN-09",
+   "id": "E-FIN-16",
    "part_a": "FIN-003-L",
    "part_b": "FIN-001-L",
    "via": "CT-EPOXY",
@@ -257,7 +373,7 @@
    "notes": "root block wraps the tube"
   },
   {
-   "id": "E-FIN-10",
+   "id": "E-FIN-17",
    "part_a": "FIN-003-L",
    "part_b": "FIN-002-L",
    "via": "CT-EPOXY",
@@ -265,23 +381,79 @@
    "notes": "rib end in the block socket"
   },
   {
-   "id": "E-FIN-11",
+   "id": "E-FIN-18",
    "part_a": "FIN-002-L",
    "part_b": "FIN-005-L",
    "via": "CT-EPOXY",
    "owner": "fins",
-   "notes": "rib start in the saddle socket"
+   "notes": "rib bonded between the two fin bulkheads: flox fillets on both flanks, x 70.5..176 (T-077 p8, D-226)"
   },
   {
-   "id": "E-FIN-12",
+   "id": "E-FIN-19",
    "part_a": "FIN-005-L",
    "part_b": "WNG-002",
    "via": "CT-EPOXY",
    "owner": "fins",
-   "notes": "saddle wraps the spar (60 mm)"
+   "notes": "spar through the 12 mm holes of both bulkheads, flox (D-226)"
   },
   {
-   "id": "E-FIN-13",
+   "id": "E-FIN-20",
+   "part_a": "FIN-005-L",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "owner": "fins",
+   "notes": "bulkheads in their core slots (core segments bonded on both faces, D-226)"
+  },
+  {
+   "id": "E-FIN-21",
+   "part_a": "FIN-005-L",
+   "part_b": "WNG-011",
+   "via": "CT-EPOXY",
+   "owner": "fins",
+   "notes": "bulkhead 2-ply 1080 tape laps 8 mm on both skins (D-226)"
+  },
+  {
+   "id": "E-FIN-22",
+   "part_a": "FIN-009-L",
+   "part_b": "WNG-014-L",
+   "via": "CT-EPOXY",
+   "owner": "fins",
+   "notes": "in-plane plates under the skin plies, wet-laid (D-226)"
+  },
+  {
+   "id": "E-FIN-23",
+   "part_a": "FIN-009-L",
+   "part_b": "FIN-005-L",
+   "via": "CT-EPOXY",
+   "owner": "fins",
+   "notes": "plates bonded on the bulkhead edges (D-226)"
+  },
+  {
+   "id": "E-FIN-24",
+   "part_a": "FIN-002-L",
+   "part_b": "FIN-009-L",
+   "via": "CT-EPOXY",
+   "owner": "fins",
+   "notes": "rib straps (4-ply 0/90 1080) over the rib onto the skin over the plates; flox in the plate notch (D-226)"
+  },
+  {
+   "id": "E-FIN-25",
+   "part_a": "FIN-010-L",
+   "part_b": "FIN-002-L",
+   "via": "CT-CA",
+   "owner": "fins",
+   "notes": "lower rib fairing under the rib (foam-safe CA)"
+  },
+  {
+   "id": "E-FIN-26",
+   "part_a": "FIN-010-L",
+   "part_b": "WNG-001",
+   "via": "CT-CA",
+   "owner": "fins",
+   "notes": "lower rib fairing bonded on the lower skin"
+  },
+  {
+   "id": "E-FIN-27",
    "part_a": "FIN-004-L",
    "part_b": "FIN-001-L",
    "via": "CT-CA",
@@ -289,7 +461,7 @@
    "notes": "fairing in the tube slot (foam-safe CA)"
   },
   {
-   "id": "E-FIN-14",
+   "id": "E-FIN-28",
    "part_a": "FIN-004-L",
    "part_b": "FIN-002-L",
    "via": "CT-CA",
@@ -297,7 +469,7 @@
    "notes": "fairing round the rib"
   },
   {
-   "id": "E-FIN-15",
+   "id": "E-FIN-29",
    "part_a": "FIN-006-L",
    "part_b": "FIN-002-L",
    "via": "CT-CA",
@@ -305,7 +477,7 @@
    "notes": "rib fairing over the rib top (foam-safe CA), sits on the core skin"
   },
   {
-   "id": "E-FIN-16",
+   "id": "E-FIN-30",
    "part_a": "FIN-006-L",
    "part_b": "WNG-001",
    "via": "CT-CA",

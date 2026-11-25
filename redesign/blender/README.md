@@ -107,7 +107,7 @@ then checks the exported meshes against each other.
 ## Build film (`showcase/animation/`)
 
 The build film shows the aircraft put together the way a person would, in `BUILD-GUIDE.md` order, and every motion in
-it passes a swept-path physics check first. Two commands, run from the repo root:
+it passes a swept insertion check (straight-line build-step paths) first. Two commands, run from the repo root:
 
 ```
 python -I redesign/showcase/animation/assembly_check.py   # plan + check (~25 min) -> build/assembly_plan.json, ASSEMBLY-CHECK.md

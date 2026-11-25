@@ -1,0 +1,54 @@
+{
+ "h_mm": 0.25,
+ "rho": 1.27,
+ "rows": [
+  {
+   "id": "FIN-005-R",
+   "listed_g": 14.39,
+   "vol_cm3": 14.477625,
+   "solid_g": 18.38658375,
+   "cls": "S",
+   "build_axis": "z",
+   "core_frac": 0.36264148988525396,
+   "computed_g": 14.385940875000003,
+   "name": "Rib saddle on spar (R)",
+   "material": "PETG (printed)"
+  },
+  {
+   "id": "CGE-007-R",
+   "listed_g": 2.94,
+   "vol_cm3": 5.92371875,
+   "solid_g": 7.5231228125,
+   "cls": "S",
+   "build_axis": "z",
+   "core_frac": 0.2632082887122215,
+   "computed_g": 6.335033843750001,
+   "name": "Strut clamp on spar (R)",
+   "material": "PETG (printed)"
+  },
+  {
+   "id": "CGE-007-L",
+   "listed_g": 2.94,
+   "vol_cm3": 5.926125,
+   "solid_g": 7.52617875,
+   "cls": "S",
+   "build_axis": "z",
+   "core_frac": 0.2632965259760805,
+   "computed_g": 6.33720871875,
+   "name": "Strut clamp on spar (L)",
+   "material": "PETG (printed)"
+  },
+  {
+   "id": "CGE-006",
+   "listed_g": 9.67,
+   "vol_cm3": 9.482843749999999,
+   "solid_g": 12.043211562499998,
+   "cls": "S",
+   "build_axis": "z",
+   "core_frac": 0.32806944119478926,
+   "computed_g": 9.67260575,
+   "name": "Bridge saddle on spar",
+   "material": "PETG (printed)"
+  }
+ ]
+}

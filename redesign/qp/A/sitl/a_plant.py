@@ -13,7 +13,25 @@ CANT = math.radians(cfg.get("cant_deg", 14.0))
 TSCALE = cfg.get("thrust_scale", 0.767)     # 1.0 = maker table at 14.8 V; 0.767 = sagged pack, hot (sizing_a.py: 13.16 V, x0.97)
 DOWNLOAD = 0.97                             # 3 % slipstream download (sizing_a.py DOWNLOAD)
 KQ = 0.0204                                 # prop torque / thrust, m (sizing: 65 N mm at 3.19 N)
+if os.environ.get('A_MOTOR', 'mn2212').lower() == 'x2216': KQ = 0.0145       # T-097: X2216 + APC 9x4.5MR shaft torque / thrust, m (T089_report s1.1, prop_a.py T-083 model)
 TAU_M = 0.04                                # motor + ESC + rotor lag, s (EST)
+# T-101 / AM-062 (D-258), opt-in cfg x2216_hover=1 (with A_MOTOR=x2216): hover-mode static thrust and rpm from the X2216 V3 880KV + APC 9x4.5MR model
+#   (prop_a.full: pack rest voltage cfg vrest, default 14.92 V = 3.73 V/cell sag, pack R 30 mohm, four motors at one duty), x DER 0.93 x hot 0.97 when vrest < 15.5 V
+#   (the mission_gate_a.py 'sag' basis). Below duty 0.5 the APC table ends (5000 rpm), so thrust ~ duty^2 from the 0.5 point (EST). Default off: the MN2212 table below is unchanged.
+XH = bool(cfg.get("x2216_hover", 0)) and os.environ.get('A_MOTOR', 'mn2212').lower() == 'x2216'
+if XH:
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+    import prop_a as _PA
+    _VR = cfg.get("vrest", 14.92); _K = _PA.DER * (0.97 if _VR < 15.5 else 1.0)
+    XH_U = [0.5 + 0.02 * k for k in range(26)]
+    _R = [_PA.full(_VR, u) for u in XH_U]
+    XH_T = [r[2] * _K for r in _R]; XH_N = [r[0] for r in _R]
+def xh(u):
+    """X2216 hover model: (thrust N incl. derate / hot, rpm) at duty u."""
+    u = min(max(u, 0.0), 1.0)
+    if u <= 0.5: f = (u / 0.5) ** 2; return XH_T[0] * f, XH_N[0] * math.sqrt(f)
+    k = min(int((u - 0.5) / 0.02), len(XH_U) - 2); w = (u - XH_U[k]) / 0.02
+    return XH_T[k] + w * (XH_T[k + 1] - XH_T[k]), XH_N[k] + w * (XH_N[k + 1] - XH_N[k])
 WIND = cfg.get("wind", 0.0); WFROM = math.radians(cfg.get("wind_from_deg", 0.0))
 GUST = cfg.get("gust", 0.0); GUST_T = cfg.get("gust_s", 2.0)            # 1-cos gust on top of WIND, m/s, rise time s
 TURB = cfg.get("turb", 0.0)                                             # OU turbulence sigma, m/s (vertical 0.5x), tau 2 s
@@ -38,6 +56,7 @@ if FWD:
     import a_aero as AE
     AE.SLIP = cfg.get("slip", 0.0)
     if "cg_aft" in cfg and CADM: AE.set_cg(cfg["cg_aft"])
+    if "cm0" in cfg: AE.CM0 = cfg["cm0"]   # T-101 D-253 opt-in: section Cm0 sensitivity (reflex trim study); default = a_aero.CM0 (S5010 +0.008)
     VREST = cfg.get("vrest", 14.92)            # pack rest voltage, V (14.92 = 3.73 V/cell, the T/W-sag state of MASS-GATE; 16.8 fresh)
     HOT = cfg.get("hot", 0.97 if VREST < 15.5 else 1.0)   # winding-hot thrust factor used with the sag state (sizing_a.py)
     RPACK = cfg.get("rpack", 0.030)            # pack resistance, ohm (prop_a.py EST)
@@ -115,6 +134,7 @@ pos = (0.0, 0.0, FOOT_X); vel = (0.0, 0.0, 0.0); om = (0.0, 0.0, 0.0)
 uf = [0.0] * 4
 feet = [(FOOT_X, sy * (CADM["fin_y_m"] if CADM else 0.45), sz * 0.18) for sy in (1, -1) for sz in (1, -1)]
 turb = [0.0, 0.0, 0.0]
+GV = dict(t0=None, dur=1.08, vert=0.0, side=0.0)                 # T-101 C3G 1-cos gust set by cmd.json (gv_t0 = plant time of the start, s)
 
 def air_wind(t, tw0):
     s = 0.0 if tw0 is None else min(max((t - tw0) / RAMP, 0.0), 1.0)
@@ -122,6 +142,9 @@ def air_wind(t, tw0):
     if GUST and tw0 is not None:
         tg = t - (tw0 + RAMP + cfg.get("gust_at", 20.0))
         if 0 <= tg <= GUST_T: w += GUST * 0.5 * (1 - math.cos(2 * math.pi * tg / GUST_T))
+    if GV["t0"] is not None and 0.0 <= t - GV["t0"] <= GV["dur"]:      # T-101 C3G, opt-in (cmd key gv_t0; default off): 1-cos gust, vertical (+ = downdraft) and side (+ = air moving east = body y in cruise)
+        f = 0.5 * (1.0 - math.cos(2.0 * math.pi * (t - GV["t0"]) / GV["dur"]))
+        return (-w * math.cos(WFROM) + turb[0], -w * math.sin(WFROM) + turb[1] + GV["side"] * f, turb[2] + GV["vert"] * f)
     return (-w * math.cos(WFROM) + turb[0], -w * math.sin(WFROM) + turb[1], turb[2])
 
 # ---- forward-flight loads (fwd=1): motors from APC data, wing / elevons / fins from a_aero.airframe
@@ -182,8 +205,12 @@ def step(t, dt, pwm, tw0):
         for i in range(4):
             u = min(max((pwm[i] - 1000.0) / 1000.0, 0.0), 1.0)
             uf[i] += (u - uf[i]) * min(1.0, dt / TAU_M)
-            ts = tstat(uf[i]) * TSCALE * DOWNLOAD
-            rpm = 4248.0 * math.sqrt(max(ts, 0.05) / 3.2); v0 = rpm * 4.5 * 0.0254 / 60.0
+            if XH:
+                ts, rpm = xh(uf[i]); ts *= DOWNLOAD; rpm = max(rpm, 1000.0)
+            else:
+                ts = tstat(uf[i]) * TSCALE * DOWNLOAD
+                rpm = 4248.0 * math.sqrt(max(ts, 0.05) / 3.2)
+            v0 = rpm * 4.5 * 0.0254 / 60.0
             rv = add(vrel, sc(cross(om, mpos[i]), -1.0))
             vc = -rv[0]                                          # air flowing through the disc from the thrust side
             fct = 1 - (vc / v0) ** 2 if vc >= 0 else 1 + 0.3 * (-vc / v0)
@@ -260,6 +287,7 @@ try:
                         if "elv_dead" in c: ST["elv_dead"] = bool(c["elv_dead"])
                         if "wind" in c: WIND = float(c["wind"]); evlog.append((round(t, 2), "wind", WIND))
                         if "wind_from" in c: WFROM = math.radians(float(c["wind_from"]))
+                        if "gv_t0" in c: GV.update(t0=float(c["gv_t0"]), dur=float(c.get("gv_dur", 1.08)), vert=float(c.get("gv_vert", 0.0)), side=float(c.get("gv_side", 0.0))); evlog.append((round(t, 2), "gv", c["gv_t0"]))
                         if "gust" in c: GUST = float(c["gust"]); cfg["gust_at"] = t - (tw0 if tw0 is not None else 0) - RAMP + 1.0
                 except Exception: pass
         aspec, wn, vrel, thr, touch = step(t, dt, pwm, tw0)

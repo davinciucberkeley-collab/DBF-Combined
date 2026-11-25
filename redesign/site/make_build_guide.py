@@ -149,8 +149,8 @@ def stage_video(n):
     nn = '%02d' % n
     return ('<figure class="md-clip" id="build-clip-%d"><video src="assets/animation/build/a-stage-%s.mp4?v=%s" data-poster="assets/animation/build/a-stage-%s.webp?v=%s" '
             'controls muted playsinline preload="none" aria-label="Stage %d build clip"></video>'
-            '<figcaption><span class="ds-source">Stage %d clip · assets/animation/build/a-stage-%s.mp4 · same CAD as the collision check</span></figcaption></figure>'
-            % (n, nn, FILM_V, nn, FILM_V, n, n, nn))
+            '<figcaption><b class="ds-mono">FIG BG-%s</b> Stage %d clip <span class="ds-source">assets/animation/build/a-stage-%s.mp4 · same CAD as the collision check</span></figcaption></figure>'
+            % (n, nn, FILM_V, nn, FILM_V, n, nn, n, nn))
 
 
 def render(md):
@@ -248,7 +248,7 @@ def main():
     with open(SRC, encoding='utf-8') as f:
         md = f.read().replace('\r\n', '\n')
     title, toc, body = render(md)
-    nav = '<nav class="md-toc" aria-label="Build guide sections">%s</nav>' % ''.join(
+    nav = '<nav class="md-toc" aria-label="Build guide sections"><p class="md-toc-h">Stages</p>%s</nav>' % ''.join(
         '<a href="#%s"%s>%s</a>' % (hid, ' data-stage="%s"' % n if n else '', esc(re.sub(r'^Stage (\d+)[.:]\s*', r'\1 · ', t)))
         for hid, t, n in toc)
     block = '%s\n<div class="md-wrap">%s\n<article class="md">\n%s\n</article></div>\n%s' % (BEGIN, nav, body, END)

@@ -1,0 +1,10 @@
+V_rest 14.92 duty 0.90: pack 34.0 A, motor 9.25 A, thrust 7.72 N
+V_rest 14.92 duty 1.00: pack 43.9 A, motor 10.75 A, thrust 9.12 N
+V_rest 16.8 duty 0.90: pack 41.0 A, motor 11.15 A, thrust 9.47 N
+V_rest 16.8 duty 1.00: pack 52.9 A, motor 12.96 A, thrust 11.16 N
+limit 41.0 A at sag: equivalent duty 0.974, thrust 8.75 N vs 9.12 N at duty 1.0 (-4.1 %)
+   T/W sag 1.878, window +-6.1 %, +-5 % mass 1676 g
+limit 43.9 A at sag: equivalent duty 1.000, thrust 9.12 N vs 9.12 N at duty 1.0 (-0.0 %)
+   T/W sag 1.957, window +-8.1 %, +-5 % mass 1747 g
+limit 45.0 A at sag: equivalent duty 1.000, thrust 9.12 N vs 9.12 N at duty 1.0 (-0.0 %)
+   T/W sag 1.957, window +-8.1 %, +-5 % mass 1747 g

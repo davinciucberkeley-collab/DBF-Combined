@@ -1,0 +1,878 @@
+{
+ "1.2:20:0.024": {
+  "xf": 0.34750000000000003,
+  "zf": 0.19121883674498658,
+  "agg": {
+   "0.02|0.40": {
+    "stats": {
+     "stroke": 24.76320976726265,
+     "n": 48.01344587263081,
+     "tilt": 3.078767614176725,
+     "Ffoot": 402.1340810587285
+    },
+    "fins": {
+     "hub|My_P0": [
+      58.22699974762711,
+      "hard 10 narrow + drift .5"
+     ],
+     "hub|My_S": [
+      96.58516767753582,
+      "hard 10 narrow + drift .5"
+     ],
+     "hub|Mz_P0": [
+      16.902760593583075,
+      "hard 10 narrow + drift .5"
+     ],
+     "hub|Mx": [
+      24.836596511312095,
+      "hard 10 narrow + drift .5"
+     ],
+     "R|My_P0": [
+      26.102810670624038,
+      "hard 10 narrow + drift .5"
+     ],
+     "R|My_S": [
+      49.981888800537355,
+      "hard 10 narrow + drift .5"
+     ],
+     "R|Mz_P0": [
+      112.25975906306216,
+      "hard 10 narrow + drift .5"
+     ],
+     "R|Mx": [
+      57.147481865680675,
+      "hard 10 narrow + drift .5"
+     ],
+     "L|My_P0": [
+      32.124189077002995,
+      "hard 10 narrow + drift .5"
+     ],
+     "L|My_S": [
+      46.60327887699847,
+      "hard 10 narrow + drift .5"
+     ],
+     "L|Mz_P0": [
+      129.16251965664503,
+      "hard 10 narrow + drift .5"
+     ],
+     "L|Mx": [
+      64.95114767634232,
+      "hard 10 narrow + drift .5"
+     ]
+    },
+    "legs": {
+     "hub|My_P0": [
+      101.87543019146571,
+      "hard 10 narrow + drift .5"
+     ],
+     "hub|My_S": [
+      59.72102836447511,
+      "hard 10 narrow + drift .5"
+     ],
+     "hub|Mz_P0": [
+      91.43949746764844,
+      "hard 10 narrow + drift .5"
+     ],
+     "hub|Mx": [
+      49.52853872081514,
+      "hard 10 narrow + drift .5"
+     ],
+     "R|My_P0": [
+      65.98384131007917,
+      "hard 10 narrow + drift .5"
+     ],
+     "R|My_S": [
+      36.19523829705465,
+      "hard 10 narrow + drift .5"
+     ],
+     "R|Mz_P0": [
+      53.876776684170295,
+      "hard 10 narrow + drift .5"
+     ],
+     "R|Mx": [
+      75.36537343632247,
+      "hard 10 narrow + drift .5"
+     ],
+     "L|My_P0": [
+      35.89158888138661,
+      "hard 10 narrow + drift .5"
+     ],
+     "L|My_S": [
+      23.525790067420456,
+      "hard 10 narrow + drift .5"
+     ],
+     "L|Mz_P0": [
+      86.48796203960671,
+      "hard 10 narrow + drift .5"
+     ],
+     "L|Mx": [
+      34.851640278611676,
+      "hard 10 narrow + drift .5"
+     ]
+    }
+   },
+   "0.02|0.30": {
+    "stats": {
+     "stroke": 24.431356132678772,
+     "n": 27.2511259815915,
+     "tilt": 3.3713280608664276,
+     "Ffoot": 235.80651551072228
+    },
+    "fins": {
+     "hub|My_P0": [
+      15.037406749763832,
+      "hard 10 narrow"
+     ],
+     "hub|My_S": [
+      23.142222487629162,
+      "hard 10 narrow"
+     ],
+     "hub|Mz_P0": [
+      14.160317670517731,
+      "hard 10 narrow"
+     ],
+     "hub|Mx": [
+      7.092110518652298,
+      "hard 10 narrow + drift .5"
+     ],
+     "R|My_P0": [
+      25.215928326509985,
+      "hard 10 narrow"
+     ],
+     "R|My_S": [
+      29.01590944632815,
+      "hard 10 narrow"
+     ],
+     "R|Mz_P0": [
+      57.930089551997334,
+      "hard 10 narrow + drift .5"
+     ],
+     "R|Mx": [
+      32.20245660882682,
+      "hard 10 narrow + drift .5"
+     ],
+     "L|My_P0": [
+      20.969360376267,
+      "hard 10 narrow"
+     ],
+     "L|My_S": [
+      23.41932199269922,
+      "hard 10 narrow"
+     ],
+     "L|Mz_P0": [
+      54.68691149431419,
+      "hard 10 narrow + drift .5"
+     ],
+     "L|Mx": [
+      29.726428946733424,
+      "hard 10 narrow + drift .5"
+     ]
+    },
+    "legs": {
+     "hub|My_P0": [
+      29.564412741758453,
+      "hard 10 narrow"
+     ],
+     "hub|My_S": [
+      16.470463457603294,
+      "hard 10 narrow"
+     ],
+     "hub|Mz_P0": [
+      49.77168702009257,
+      "hard 10 narrow + drift .5"
+     ],
+     "hub|Mx": [
+      15.08442255638115,
+      "hard 10 narrow + drift .5"
+     ],
+     "R|My_P0": [
+      18.525028205880776,
+      "hard 10 narrow"
+     ],
+     "R|My_S": [
+      9.793706960380714,
+      "hard 10 narrow"
+     ],
+     "R|Mz_P0": [
+      31.6987352781983,
+      "hard 10 narrow"
+     ],
+     "R|Mx": [
+      20.590778408777823,
+      "hard 10 narrow"
+     ],
+     "L|My_P0": [
+      12.734235208290388,
+      "hard 10 narrow"
+     ],
+     "L|My_S": [
+      6.944153694126262,
+      "hard 10 narrow"
+     ],
+     "L|Mz_P0": [
+      33.41547600017024,
+      "hard 10 narrow + drift .5"
+     ],
+     "L|Mx": [
+      13.991928663516699,
+      "hard 10 narrow"
+     ]
+    }
+   },
+   "0.10|0.40": {
+    "stats": {
+     "stroke": 22.173414828220604,
+     "n": 9.109609623072926,
+     "tilt": 2.9881684796729506,
+     "Ffoot": 44.574561809415215
+    },
+    "fins": {
+     "hub|My_P0": [
+      5.4928930504979245,
+      "hard 7/7 combo"
+     ],
+     "hub|My_S": [
+      8.454488908265024,
+      "hard 7/7 combo"
+     ],
+     "hub|Mz_P0": [
+      9.687437441212644,
+      "hard 10 wide + drift .5 y"
+     ],
+     "hub|Mx": [
+      2.576887690580885,
+      "SITL Ta_h5 wide (y drift)"
+     ],
+     "R|My_P0": [
+      4.95831388376074,
+      "hard 7/7 combo"
+     ],
+     "R|My_S": [
+      5.240495921204486,
+      "hard 10 wide"
+     ],
+     "R|Mz_P0": [
+      23.72382574181986,
+      "hard 10 wide + drift .5 y"
+     ],
+     "R|Mx": [
+      5.61527265033033,
+      "hard 10 narrow neg"
+     ],
+     "L|My_P0": [
+      6.598192975322723,
+      "hard 7/7 combo"
+     ],
+     "L|My_S": [
+      6.823030662164505,
+      "hard 7/7 combo"
+     ],
+     "L|Mz_P0": [
+      19.903982600786662,
+      "hard level"
+     ],
+     "L|Mx": [
+      5.610592340166615,
+      "hard 10 narrow neg"
+     ]
+    },
+    "legs": {
+     "hub|My_P0": [
+      14.144607729666307,
+      "hard 7/7 combo"
+     ],
+     "hub|My_S": [
+      7.465920640163413,
+      "hard 7/7 combo"
+     ],
+     "hub|Mz_P0": [
+      37.06169891244886,
+      "hard 10 wide + drift .5 y"
+     ],
+     "hub|Mx": [
+      4.83957927747687,
+      "SITL Ta_h5 wide (y drift)"
+     ],
+     "R|My_P0": [
+      8.019826828996166,
+      "hard 7/7 combo"
+     ],
+     "R|My_S": [
+      4.1219692014082305,
+      "hard 7/7 combo"
+     ],
+     "R|Mz_P0": [
+      23.025310611841647,
+      "hard 10 wide + drift .5 y"
+     ],
+     "R|Mx": [
+      9.297052063761848,
+      "hard 7/7 combo"
+     ],
+     "L|My_P0": [
+      6.124780900670165,
+      "hard 7/7 combo"
+     ],
+     "L|My_S": [
+      3.3439514387551923,
+      "hard 7/7 combo"
+     ],
+     "L|Mz_P0": [
+      18.057130633945462,
+      "hard 10 wide + drift .5 y"
+     ],
+     "L|Mx": [
+      6.0524868852284115,
+      "hard 7/7 combo"
+     ]
+    }
+   },
+   "0.10|0.30": {
+    "stats": {
+     "stroke": 18.50052280942771,
+     "n": 9.109575391562467,
+     "tilt": 2.476528825534033,
+     "Ffoot": 46.810561447325576
+    },
+    "fins": {
+     "hub|My_P0": [
+      5.826041800271239,
+      "hard 10 narrow neg"
+     ],
+     "hub|My_S": [
+      9.167787344617256,
+      "SITL Z5_b45 narrow (z drift)"
+     ],
+     "hub|Mz_P0": [
+      9.455302149133479,
+      "hard 10 wide + drift .5 y"
+     ],
+     "hub|Mx": [
+      1.73431194680754,
+      "SITL Ta_h5 wide (y drift)"
+     ],
+     "R|My_P0": [
+      5.64085065952779,
+      "hard 7/7 combo"
+     ],
+     "R|My_S": [
+      5.832399380129663,
+      "SITL Ta_h5 wide (y drift)"
+     ],
+     "R|Mz_P0": [
+      22.4603188206114,
+      "hard 10 wide + drift .5 y"
+     ],
+     "R|Mx": [
+      5.522778970971317,
+      "hard 10 narrow neg"
+     ],
+     "L|My_P0": [
+      6.166919330048677,
+      "hard 7/7 combo"
+     ],
+     "L|My_S": [
+      6.166410794304242,
+      "hard 7/7 combo"
+     ],
+     "L|Mz_P0": [
+      19.902822457566476,
+      "hard level"
+     ],
+     "L|Mx": [
+      5.513265637450703,
+      "hard 10 narrow neg"
+     ]
+    },
+    "legs": {
+     "hub|My_P0": [
+      13.134261658025034,
+      "SITL Z5_b45 narrow (z drift)"
+     ],
+     "hub|My_S": [
+      7.1277825496153975,
+      "SITL Z5_b45 narrow (z drift)"
+     ],
+     "hub|Mz_P0": [
+      35.362727893465554,
+      "hard 10 wide + drift .5 y"
+     ],
+     "hub|Mx": [
+      3.405707580061599,
+      "SITL Tb_h5 narrow (z drift)"
+     ],
+     "R|My_P0": [
+      6.813402336210704,
+      "hard 7/7 combo"
+     ],
+     "R|My_S": [
+      3.5682967760763247,
+      "SITL Z5_b45 narrow (z drift)"
+     ],
+     "R|Mz_P0": [
+      22.357711221987632,
+      "hard 10 wide + drift .5 y"
+     ],
+     "R|Mx": [
+      7.945283750429431,
+      "hard 7/7 combo"
+     ],
+     "L|My_P0": [
+      6.509625084725019,
+      "SITL Z5_b45 narrow (z drift)"
+     ],
+     "L|My_S": [
+      3.5594857735390777,
+      "SITL Z5_b45 narrow (z drift)"
+     ],
+     "L|Mz_P0": [
+      16.673281449258702,
+      "hard 10 wide + drift .5 y"
+     ],
+     "L|Mx": [
+      7.060915343463746,
+      "SITL Z5_b45 narrow (z drift)"
+     ]
+    }
+   }
+  }
+ },
+ "1.0:20:0.024": {
+  "xf": 0.34750000000000003,
+  "zf": 0.19121883674498658,
+  "agg": {
+   "0.02|0.40": {
+    "stats": {
+     "stroke": 23.724210082055773,
+     "n": 5.673364690529832,
+     "tilt": 3.1793121267149522,
+     "Ffoot": 24.64742561627865
+    },
+    "fins": {
+     "hub|My_P0": [
+      3.7255018361241135,
+      "hard 7/7 combo"
+     ],
+     "hub|My_S": [
+      5.7436097362978025,
+      "hard 7/7 combo"
+     ],
+     "hub|Mz_P0": [
+      5.4718433627800165,
+      "hard 10 wide + drift .5 y"
+     ],
+     "hub|Mx": [
+      1.6291479102990458,
+      "SITL Tb_h5 wide (y drift)"
+     ],
+     "R|My_P0": [
+      3.979474993004021,
+      "SITL Tb_h5 narrow (z drift)"
+     ],
+     "R|My_S": [
+      4.623554238430506,
+      "hard 16 wide + drift .5 y"
+     ],
+     "R|Mz_P0": [
+      13.620959265223192,
+      "hard 7/7 combo"
+     ],
+     "R|Mx": [
+      3.477750923862783,
+      "SITL Ta_h5 narrow (z drift)"
+     ],
+     "L|My_P0": [
+      4.429747887309536,
+      "hard 7/7 combo"
+     ],
+     "L|My_S": [
+      4.605393234615766,
+      "hard 7/7 combo"
+     ],
+     "L|Mz_P0": [
+      12.392700694894577,
+      "hard level"
+     ],
+     "L|Mx": [
+      3.43864028437758,
+      "hard 10 narrow neg"
+     ]
+    },
+    "legs": {
+     "hub|My_P0": [
+      9.535913422790735,
+      "hard 7/7 combo"
+     ],
+     "hub|My_S": [
+      5.037349435896858,
+      "hard 7/7 combo"
+     ],
+     "hub|Mz_P0": [
+      20.926602523744794,
+      "hard 10 wide + drift .5 y"
+     ],
+     "hub|Mx": [
+      3.3088045161546757,
+      "SITL Tb_h5 wide (y drift)"
+     ],
+     "R|My_P0": [
+      5.257539241507686,
+      "hard 7/7 combo"
+     ],
+     "R|My_S": [
+      2.7165362724189666,
+      "hard 7/7 combo"
+     ],
+     "R|Mz_P0": [
+      13.006845536840402,
+      "hard 10 wide + drift .5 y"
+     ],
+     "R|Mx": [
+      6.01429562056426,
+      "hard 7/7 combo"
+     ],
+     "L|My_P0": [
+      4.27837418128306,
+      "hard 7/7 combo"
+     ],
+     "L|My_S": [
+      2.3208131634778963,
+      "hard 7/7 combo"
+     ],
+     "L|Mz_P0": [
+      11.463589114737356,
+      "hard 10 wide + drift .5 y"
+     ],
+     "L|Mx": [
+      4.340591518925686,
+      "hard 7/7 combo"
+     ]
+    }
+   },
+   "0.02|0.30": {
+    "stats": {
+     "stroke": 19.26574134604686,
+     "n": 5.673360656331601,
+     "tilt": 2.5451570056981727,
+     "Ffoot": 25.076134561507708
+    },
+    "fins": {
+     "hub|My_P0": [
+      4.532098114112247,
+      "hard 10 narrow neg"
+     ],
+     "hub|My_S": [
+      7.212348337771232,
+      "SITL Z5_b45 narrow (z drift)"
+     ],
+     "hub|Mz_P0": [
+      5.175811216034487,
+      "hard 10 wide + drift .5 y"
+     ],
+     "hub|Mx": [
+      2.2719209112355374,
+      "SITL Lb_5e narrow (z drift)"
+     ],
+     "R|My_P0": [
+      3.723042401547151,
+      "hard 7/7 combo"
+     ],
+     "R|My_S": [
+      4.1626642284173245,
+      "hard 7/7 combo"
+     ],
+     "R|Mz_P0": [
+      12.65048312797112,
+      "hard 7/7 combo"
+     ],
+     "R|Mx": [
+      3.4126247928626716,
+      "hard 10 narrow neg"
+     ],
+     "L|My_P0": [
+      4.004261774981705,
+      "SITL Z5_gb45 narrow (z drift)"
+     ],
+     "L|My_S": [
+      4.565710482828045,
+      "SITL Z5_gb45 narrow (z drift)"
+     ],
+     "L|Mz_P0": [
+      12.391490888508613,
+      "hard level"
+     ],
+     "L|Mx": [
+      3.4061879268455195,
+      "hard 10 narrow neg"
+     ]
+    },
+    "legs": {
+     "hub|My_P0": [
+      9.597723917499918,
+      "SITL Z5_b45 narrow (z drift)"
+     ],
+     "hub|My_S": [
+      5.293101438848353,
+      "SITL Z5_b45 narrow (z drift)"
+     ],
+     "hub|Mz_P0": [
+      19.346554983374,
+      "hard 10 wide + drift .5 y"
+     ],
+     "hub|Mx": [
+      4.576740606934899,
+      "SITL Lb_5e narrow (z drift)"
+     ],
+     "R|My_P0": [
+      4.799606573723955,
+      "SITL Z5_b45 narrow (z drift)"
+     ],
+     "R|My_S": [
+      2.6321510311439025,
+      "SITL Z5_b45 narrow (z drift)"
+     ],
+     "R|Mz_P0": [
+      12.233445574568083,
+      "hard 10 wide + drift .5 y"
+     ],
+     "R|Mx": [
+      5.0545480584041735,
+      "SITL Z5_b45 narrow (z drift)"
+     ],
+     "L|My_P0": [
+      4.798117343775969,
+      "SITL Z5_b45 narrow (z drift)"
+     ],
+     "L|My_S": [
+      2.660950407704451,
+      "SITL Z5_b45 narrow (z drift)"
+     ],
+     "L|Mz_P0": [
+      10.813091679052684,
+      "SITL Z5_gb45 wide (y drift)"
+     ],
+     "L|Mx": [
+      5.1907464081779064,
+      "SITL Z5_b45 narrow (z drift)"
+     ]
+    }
+   },
+   "0.10|0.40": {
+    "stats": {
+     "stroke": 16.936018149510844,
+     "n": 8.315657501901084,
+     "tilt": 2.0926885740454475,
+     "Ffoot": 41.955511936971874
+    },
+    "fins": {
+     "hub|My_P0": [
+      3.908503000631243,
+      "SITL Tb_h5 narrow (z drift)"
+     ],
+     "hub|My_S": [
+      6.1239768676281505,
+      "SITL Tb_h5 narrow (z drift)"
+     ],
+     "hub|Mz_P0": [
+      8.955017626747548,
+      "hard 10 wide + drift .5 y"
+     ],
+     "hub|Mx": [
+      3.226365259007476,
+      "hard 7/7 combo"
+     ],
+     "R|My_P0": [
+      5.948837832338202,
+      "hard 7/7 combo"
+     ],
+     "R|My_S": [
+      6.3327003840485885,
+      "hard 7/7 combo"
+     ],
+     "R|Mz_P0": [
+      21.87597884291014,
+      "hard 10 wide + drift .5 y"
+     ],
+     "R|Mx": [
+      5.108598126223303,
+      "hard 10 narrow neg"
+     ],
+     "L|My_P0": [
+      5.803009081391892,
+      "hard 7/7 combo"
+     ],
+     "L|My_S": [
+      6.148847723619905,
+      "hard 7/7 combo"
+     ],
+     "L|Mz_P0": [
+      18.17017631658687,
+      "hard level"
+     ],
+     "L|Mx": [
+      5.103444396972099,
+      "hard 10 narrow neg"
+     ]
+    },
+    "legs": {
+     "hub|My_P0": [
+      9.382036445910567,
+      "hard 7/7 combo"
+     ],
+     "hub|My_S": [
+      4.993251087429049,
+      "SITL Tb_h5 narrow (z drift)"
+     ],
+     "hub|Mz_P0": [
+      34.20094355973846,
+      "hard 10 wide + drift .5 y"
+     ],
+     "hub|Mx": [
+      6.829152686475954,
+      "hard 7/7 combo"
+     ],
+     "R|My_P0": [
+      6.7189505903945035,
+      "hard 7/7 combo"
+     ],
+     "R|My_S": [
+      3.280607457754121,
+      "hard 7/7 combo"
+     ],
+     "R|Mz_P0": [
+      21.279982343575874,
+      "hard 10 wide + drift .5 y"
+     ],
+     "R|Mx": [
+      8.502027250795956,
+      "hard 7/7 combo"
+     ],
+     "L|My_P0": [
+      4.593490371421819,
+      "SITL Tb_h5 narrow (z drift)"
+     ],
+     "L|My_S": [
+      2.4830768359077675,
+      "SITL Tb_h5 narrow (z drift)"
+     ],
+     "L|Mz_P0": [
+      16.38393925820685,
+      "hard 10 wide + drift .5 y"
+     ],
+     "L|Mx": [
+      4.963023277489795,
+      "SITL Tb_h5 narrow (z drift)"
+     ]
+    }
+   },
+   "0.10|0.30": {
+    "stats": {
+     "stroke": 13.899137518039396,
+     "n": 8.315621571313958,
+     "tilt": 1.782305103620219,
+     "Ffoot": 44.962409031658524
+    },
+    "fins": {
+     "hub|My_P0": [
+      5.704190865136629,
+      "SITL Z5_b45 narrow (z drift)"
+     ],
+     "hub|My_S": [
+      9.167787344617256,
+      "SITL Z5_b45 narrow (z drift)"
+     ],
+     "hub|Mz_P0": [
+      8.83105658450041,
+      "hard 10 wide + drift .5 y"
+     ],
+     "hub|Mx": [
+      2.346992489312027,
+      "hard 7/7 combo"
+     ],
+     "R|My_P0": [
+      5.040965202498991,
+      "SITL Ta_h5 wide (y drift)"
+     ],
+     "R|My_S": [
+      5.832399380129663,
+      "SITL Ta_h5 wide (y drift)"
+     ],
+     "R|Mz_P0": [
+      20.937552381034205,
+      "hard 10 wide + drift .5 y"
+     ],
+     "R|Mx": [
+      5.0606038814571,
+      "hard 10 narrow neg"
+     ],
+     "L|My_P0": [
+      5.2396849574208915,
+      "hard 7/7 combo"
+     ],
+     "L|My_S": [
+      5.651938755890296,
+      "hard 7/7 combo"
+     ],
+     "L|Mz_P0": [
+      18.16935736986385,
+      "hard level"
+     ],
+     "L|Mx": [
+      5.052009898295227,
+      "hard 10 narrow neg"
+     ]
+    },
+    "legs": {
+     "hub|My_P0": [
+      13.134261658025034,
+      "SITL Z5_b45 narrow (z drift)"
+     ],
+     "hub|My_S": [
+      7.1277825496153975,
+      "SITL Z5_b45 narrow (z drift)"
+     ],
+     "hub|Mz_P0": [
+      32.98480845100274,
+      "hard 10 wide + drift .5 y"
+     ],
+     "hub|Mx": [
+      4.9575727125148825,
+      "hard 7/7 combo"
+     ],
+     "R|My_P0": [
+      6.624636573300033,
+      "SITL Z5_b45 narrow (z drift)"
+     ],
+     "R|My_S": [
+      3.5682967760763247,
+      "SITL Z5_b45 narrow (z drift)"
+     ],
+     "R|Mz_P0": [
+      20.878312654468946,
+      "hard 10 wide + drift .5 y"
+     ],
+     "R|Mx": [
+      7.057306141709081,
+      "SITL Z5_b45 narrow (z drift)"
+     ],
+     "L|My_P0": [
+      6.509625084725019,
+      "SITL Z5_b45 narrow (z drift)"
+     ],
+     "L|My_S": [
+      3.5594857735390777,
+      "SITL Z5_b45 narrow (z drift)"
+     ],
+     "L|Mz_P0": [
+      15.1256459263954,
+      "hard 10 wide + drift .5 y"
+     ],
+     "L|Mx": [
+      7.060915343463746,
+      "SITL Z5_b45 narrow (z drift)"
+     ]
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,115 @@
+ M docs/analysis-records.md
+ M docs/integration/davinci-import-2026-11-23.md
+ M docs/session-log.md
+ M docs/task-ledger.md
+ M redesign/params/CHANGE-LOG.md
+ M redesign/qp/A/A.param
+ M redesign/qp/A/BOM-A.csv
+ M redesign/qp/A/BUILD-GUIDE-A.md
+ M redesign/qp/A/TEST-PLAN-O4B.md
+ M redesign/qp/A/cad/a_assembly_plan.py
+ M redesign/qp/A/cad/a_build_steps.py
+ M redesign/qp/A/cad/a_linkage_blender.py
+ M redesign/qp/A/cad/amodel/common.py
+ M redesign/qp/A/cad/amodel/electrical.py
+ M redesign/qp/A/cad/amodel/wing.py
+ M redesign/qp/A/cad/collide_a.py
+ M redesign/qp/A/cad/linkage_poses_a.py
+ M redesign/qp/A/cad/model/assembly/interfaces.json
+ M redesign/qp/A/cad/model/avionics/interfaces.json
+ M redesign/qp/A/cad/model/cage/interfaces.json
+ M redesign/qp/A/cad/model/fins/interfaces.json
+ M redesign/qp/A/cad/model/harness/interfaces.json
+ M redesign/qp/A/cad/model/landing/interfaces.json
+ M redesign/qp/A/cad/model/mechanisms/interfaces.json
+ M redesign/qp/A/cad/model/power/interfaces.json
+ M redesign/qp/A/cad/model/propulsion/interfaces.json
+ M redesign/qp/A/cad/model/wing/interfaces.json
+ M redesign/qp/A/cad/out/ASSEMBLY.md
+ M redesign/qp/A/cad/out/REPORT.md
+ M redesign/qp/A/cad/out/STOP_CHECK.md
+ M redesign/qp/A/cad/out/_job.json
+ M redesign/qp/A/cad/out/_plan.json
+ M redesign/qp/A/cad/out/assembly.json
+ M redesign/qp/A/cad/out/report.json
+ M redesign/qp/A/cad/parts_links_a.py
+ M redesign/qp/A/drawings/core_hand.py
+ M redesign/qp/A/mechanism/elevon_dynamics.py
+ M redesign/qp/A/mechanism/elevon_linkage.py
+ M redesign/qp/A/mechanism/elevon_sweep_collision.py
+ M redesign/qp/A/mechanism/linkage_core.py
+ M redesign/qp/A/mechanism/linkage_loads_check.py
+ M redesign/qp/A/mechanism/linkage_poses_report.py
+ M redesign/qp/A/mechanism/out/T101_results.json
+ M redesign/qp/A/mechanism/out/linkage_dynamics.json
+ M redesign/qp/A/mechanism/out/linkage_dynamics.png
+ M redesign/qp/A/mechanism/out/linkage_dynamics_freeswing.csv
+ M redesign/qp/A/mechanism/out/linkage_dynamics_freeswing_zhi.csv
+ M redesign/qp/A/mechanism/out/linkage_dynamics_freeswing_zlo.csv
+ M redesign/qp/A/mechanism/out/linkage_dynamics_steps.csv
+ M redesign/qp/A/mechanism/out/linkage_dynamics_steps_zhi.csv
+ M redesign/qp/A/mechanism/out/linkage_dynamics_steps_zlo.csv
+ M redesign/qp/A/mechanism/out/linkage_dynamics_zhi.json
+ M redesign/qp/A/mechanism/out/linkage_dynamics_zhi.png
+ M redesign/qp/A/mechanism/out/linkage_dynamics_zlo.json
+ M redesign/qp/A/mechanism/out/linkage_dynamics_zlo.png
+ M redesign/qp/A/mechanism/out/linkage_kinematics.csv
+ M redesign/qp/A/mechanism/out/linkage_kinematics.json
+ M redesign/qp/A/mechanism/out/linkage_kinematics.png
+ M redesign/qp/A/mechanism/out/linkage_kinematics_zhi.csv
+ M redesign/qp/A/mechanism/out/linkage_kinematics_zhi.json
+ M redesign/qp/A/mechanism/out/linkage_kinematics_zhi.png
+ M redesign/qp/A/mechanism/out/linkage_kinematics_zlo.csv
+ M redesign/qp/A/mechanism/out/linkage_kinematics_zlo.json
+ M redesign/qp/A/mechanism/out/linkage_kinematics_zlo.png
+ M redesign/qp/A/mechanism/out/linkage_loads_check.json
+ M redesign/qp/A/mechanism/out/linkage_sweep_collision.csv
+ M redesign/qp/A/mechanism/out/linkage_sweep_collision.json
+ M redesign/qp/A/mechanism/out/linkage_sweep_collision.png
+ M redesign/qp/A/mechanism/out/linkage_sweep_collision_zhi.csv
+ M redesign/qp/A/mechanism/out/linkage_sweep_collision_zhi.json
+ M redesign/qp/A/mechanism/out/linkage_sweep_collision_zhi.png
+ M redesign/qp/A/mechanism/out/linkage_sweep_collision_zlo.csv
+ M redesign/qp/A/mechanism/out/linkage_sweep_collision_zlo.json
+ M redesign/qp/A/mechanism/out/linkage_sweep_collision_zlo.png
+ M redesign/qp/A/params-A.json
+ M redesign/qp/A/proofs/claims.a0_base.json
+ M redesign/qp/A/proofs/claims.a1_flight.json
+ M redesign/qp/A/proofs/claims.a2_struct.json
+ M redesign/qp/A/proofs/claims.a3_program.json
+ M redesign/qp/A/proofs/claims_a0_base.py
+ M redesign/qp/A/proofs/claims_a1_flight.py
+ M redesign/qp/A/proofs/claims_a2_struct.py
+ M redesign/qp/A/proofs/explain_a.py
+ M redesign/qp/A/proofs/gen_params_a.py
+ M redesign/qp/A/proofs/out/CHAIN.md
+ M redesign/qp/A/proofs/out/graph.js
+ M redesign/qp/A/proofs/out/graph.json
+ M redesign/qp/A/sitl/a_aero.py
+ M redesign/qp/A/sitl/cad_mass.json
+ M redesign/qp/A/structures/landing_a.py
+ M tools/mesh_to_step.py
+?? docs/audits/2026-11-23-T101-chord.md
+?? docs/audits/2026-11-23-T101-linkage-scout.md
+?? docs/audits/2026-11-23-T101-scout-trim.md
+?? docs/audits/2026-11-24-T101-D250-revert-status.txt
+?? docs/audits/2026-11-24-T101-D250-revert.patch
+?? docs/audits/2026-11-24-T101-servo-scout.md
+?? docs/integration/davinci-step-parts.csv
+?? redesign/qp/A/cad/out/REPORT_linkage_poses_t101.md
+?? redesign/qp/A/cad/out/glb/
+?? redesign/qp/A/cad/out/linkage_poses_tables_linkage_poses_t101.md
+?? redesign/qp/A/cad/out/report_linkage_poses_t101.json
+?? redesign/qp/A/mechanism/out/T101_data/chord/
+?? redesign/qp/A/mechanism/out/T101_data/sitl_T101C4_T074/
+?? redesign/qp/A/mechanism/out/T101_data/sitl_T101C4_T074_lua/
+?? redesign/qp/A/mechanism/out/T101_data/sitl_T101C4_Z5/
+?? redesign/qp/A/mechanism/out/T101_data/sitl_T101C4_Z5_lua/
+?? redesign/qp/A/mechanism/out/T101_data/sitl_T101C5_T074/
+?? redesign/qp/A/mechanism/out/T101_data/sitl_T101C5_T074_lua/
+?? redesign/qp/A/mechanism/out/T101_data/sitl_T101C5_Z5/
+?? redesign/qp/A/mechanism/out/T101_data/sitl_T101C5_Z5_lua/
+?? redesign/qp/A/sims3d/
+?? tools/davinci_step_assemble.py
+?? tools/davinci_step_build.py
+?? tools/davinci_step_upload.py

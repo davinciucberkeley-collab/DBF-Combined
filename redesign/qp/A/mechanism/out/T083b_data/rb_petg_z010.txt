@@ -1,0 +1,15 @@
+# T-083b root block rows (drawn PETG block), tag petg_z010, zetas (0.1,). Demand: Fp 36 N / 24 mm, 1.913 kg, CG 24.41 mm; KF 1.725 KP 2.156; verdict at x2.23
+
+| row | RB | x1.5 | x2.23 | verdict at x2.23 | governing case |
+|---|---|---|---|---|---|
+| P6 ring-to-socket junction PETG 16.5 x 29, interlayer 9.5 | 0.56 | 0.38 | 0.25 | FAIL | hard 7/7 combo z0.10 mu0.30 |
+| P8 socket wall PETG box 29 / bore 25, interlayer 9.5 | 0.69 | 0.46 | 0.31 | FAIL | hard 7/7 combo z0.10 mu0.30 |
+| P6 stress part Fx (sigma) at RB [MPa] = 0.64 | | | | record | hard 10 wide + drift .5 y z0.10 mu0.30 |
+| P6 stress part Mx + V (tau) at RB [MPa] = 8.36 | | | | record | SITL Tb_h5 wide (y drift) z0.10 mu0.40 |
+| P6 stress part My (sigma) at RB [MPa] = 15.04 | | | | record | hard 7/7 combo z0.10 mu0.30 |
+| P6 stress part Mz (sigma) at RB [MPa] = 7.32 | | | | record | hard 10 wide z0.10 mu0.40 |
+| P8 sigma at RB [MPa] = 13.66 | | | | record | hard 7/7 combo z0.10 mu0.30 |
+| P8 tau at RB [MPa] = 4.89 | | | | record | SITL Tb_h5 wide (y drift) z0.10 mu0.40 |
+| max |My| at the junction x 286 [N m, RB] = 16.16 | | | | record | hard 7/7 combo z0.10 mu0.30 |
+
+min RF at x2.23 (RF class): 0.25

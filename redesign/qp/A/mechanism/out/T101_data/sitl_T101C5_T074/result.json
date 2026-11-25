@@ -1,0 +1,184 @@
+{
+ "tag": "T101C5_T074",
+ "args": [
+  "inst=2",
+  "speedup=8",
+  "case=trans",
+  "mass=1.882",
+  "wind=0",
+  "hold=25",
+  "cruise_s=8",
+  "r=1.33",
+  "fw_hold=1.0",
+  "P:TECS_SPDWEIGHT=0.5"
+ ],
+ "case": "trans",
+ "mass": 1.882,
+ "cfg": {
+  "out": "C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\redesign\\qp\\A\\sitl\\runs\\T101C5_T074\\case",
+  "fwd": 1,
+  "mass": 1.882,
+  "cant_deg": 17.0,
+  "arm": 1.2,
+  "wind": 0.0,
+  "wind_from_deg": 0.0,
+  "gust": 0.0,
+  "gust_at": 20.0,
+  "turb": 0.0,
+  "seed": 1,
+  "inst": 2,
+  "vrest": 14.92,
+  "slip": 0.0,
+  "es5": 1.0,
+  "es6": -1.0,
+  "cmd_file": "C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\redesign\\qp\\A\\sitl\\runs\\T101C5_T074\\cmd.json",
+  "max_t": 900.0,
+  "wind_alt": 40.0
+ },
+ "marks": {
+  "t_armed": 33.025,
+  "t_climb_done": 64.924,
+  "t_qstab": 95.025,
+  "alt_qstab": 50.528,
+  "t_fbwa": 96.124,
+  "alt_fbwa": 51.123,
+  "t_fwdone": 102.624,
+  "t_cruise_mode": 103.624,
+  "t_cruise_end": 111.723
+ },
+ "armed": true,
+ "reached_alt": true,
+ "thst_hover": 0.41168615221977234,
+ "entry": {
+  "r_target": 1.33,
+  "window": [
+   1.33,
+   1.4542597072085293
+  ],
+  "u_out": 0.7311164605585645,
+  "stick": 1705,
+  "th_hover": 0.41168615221977234,
+  "static_T_over_W": 1.3299999999999434,
+  "u_cap_ratio": 1.8178246340106614
+ },
+ "events": [
+  [
+   0.0,
+   "Barometer 1 calibration complete"
+  ],
+  [
+   0.0,
+   "Barometer 2 calibration complete"
+  ],
+  [
+   0.0,
+   "Airspeed 1 calibration started"
+  ],
+  [
+   0.0,
+   "ArduPilot Ready"
+  ],
+  [
+   0.0,
+   "AHRS: DCM active"
+  ],
+  [
+   3.42,
+   "Airspeed 1 calibrated"
+  ],
+  [
+   3.72,
+   "EKF3 IMU0 initialised"
+  ],
+  [
+   3.72,
+   "EKF3 IMU1 initialised"
+  ],
+  [
+   5.42,
+   "EKF3 IMU1 tilt alignment complete"
+  ],
+  [
+   5.42,
+   "EKF3 IMU0 tilt alignment complete"
+  ],
+  [
+   5.52,
+   "EKF3 IMU1 MAG0 initial yaw alignment complete"
+  ],
+  [
+   5.52,
+   "EKF3 IMU0 MAG0 initial yaw alignment complete"
+  ],
+  [
+   9.02,
+   "GPS 1: probing for u-blox at 230400 baud"
+  ],
+  [
+   9.02,
+   "GPS 1: detected u-blox"
+  ],
+  [
+   19.22,
+   "EKF3 IMU1 origin set"
+  ],
+  [
+   19.32,
+   "Field Elevation Set: 5m"
+  ],
+  [
+   19.42,
+   "EKF3 IMU0 origin set"
+  ],
+  [
+   30.02,
+   "Throttle armed"
+  ],
+  [
+   55.02,
+   "EKF3 IMU0 is using GPS"
+  ],
+  [
+   55.02,
+   "AHRS: EKF3 active"
+  ],
+  [
+   55.22,
+   "EKF3 IMU1 is using GPS"
+  ],
+  [
+   102.62,
+   "Transition FW done"
+  ]
+ ],
+ "modes": [
+  [
+   0.0,
+   16
+  ],
+  [
+   0.0,
+   "MANUAL"
+  ],
+  [
+   2.02,
+   "QHOVER"
+  ],
+  [
+   65.22,
+   "QLOITER"
+  ],
+  [
+   95.33,
+   "QSTAB"
+  ],
+  [
+   96.42,
+   "FBWA"
+  ],
+  [
+   104.02,
+   "CRUISE"
+  ]
+ ]
+}

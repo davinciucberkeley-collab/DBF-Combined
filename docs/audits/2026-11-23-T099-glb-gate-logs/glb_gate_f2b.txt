@@ -1,0 +1,6 @@
+job: 129 parts, 14 wires (9 s)
+  GLB: part pairs penetrate > 0.05 mm: 0 (export artefact 0, real clash 0)
+  GLB: wire ends not seated: 0
+  GLB: bad wire entries: 0
+collide_glb_a: PASS (129 part bodies, 44 wire strands, 316 s)
+exit 0

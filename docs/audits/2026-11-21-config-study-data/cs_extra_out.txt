@@ -1,0 +1,3 @@
+1-ii + coupon: basic 1602.6 pred 1.838 CG 25.54 SM 6.19 window +10.67 TW fresh 2.392/2.321 sag 2.060 cruise 241 1.3Vs 17.36
+3 alone rib 14x12: total 2010.69 spend 1692.60 reserve 318.08; held 327.43 -> 2020.03
+3 alone rib 16x14: total 2071.24 held -> 2050.31

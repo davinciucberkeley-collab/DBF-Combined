@@ -1,0 +1,35 @@
+29 records with lateral_speed_ms: 22 under key 'landing', 7 at the top level
+max lateral speed m/s: 0.52 (R5_b45 landing), n = 29
+max peak sink last 1 s m/s: 0.34 (Z5_b0 landing), n = 29
+max lean at touch deg: 29.1 (Z5_b0 landing), n = 29
+tipped_over true: []
+run | key | lean | lateral | sink peak | tipped
+La_3b toplevel 5.0 0.16 0.31 False
+La_5e toplevel 9.5 0.32 0.3 False
+Lb_3b toplevel 5.3 0.4 0.3 False
+Lb_5e toplevel 12.1 0.45 0.32 False
+R5_b0 landing 0.0 0.0 0.3 False
+R5_b45 landing 1.5 0.52 0.31 False
+R5_gb45 landing 7.5 0.47 0.32 False
+R5_l0 toplevel 0.1 0.02 0.31 False
+R5_l4 toplevel 5.4 0.07 0.3 False
+Ta_h0 landing 0.0 0.0 0.3 False
+Ta_h3 landing 11.3 0.11 0.3 False
+Ta_h5 landing 18.8 0.11 0.3 False
+Ta_h5y landing 9.3 0.0 0.3 False
+Tb_h0 landing 0.0 0.02 0.3 False
+Tb_h3 landing 10.3 0.12 0.3 False
+Tb_h5 landing 16.5 0.09 0.31 False
+Tb_h5y landing 5.0 0.16 0.31 False
+Z4_b0 landing 10.2 0.19 0.32 False
+Z4_b45 landing 6.1 0.18 0.33 False
+Z4_b90 landing 6.6 0.07 0.32 False
+Z4_gb0 landing 0.0 0.02 0.3 False
+Z4_gb45 landing 7.3 0.32 0.33 False
+Z5_b0 landing 29.1 0.16 0.34 False
+Z5_b45 landing 17.2 0.21 0.32 False
+Z5_b90 landing 9.9 0.1 0.31 False
+Z5_gb0 landing 0.0 0.01 0.3 False
+Z5_gb0_rerun landing 0.0 0.03 0.29 False
+Z5_gb45 landing 11.0 0.5 0.32 False
+d_land toplevel 8.2 0.07 0.3 False

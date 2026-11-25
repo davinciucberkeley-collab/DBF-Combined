@@ -1,0 +1,5 @@
+| demand | Mz N m | block sigma MPa (solid 20x20) | RF block solid | RF block with 16 mm bore removed | CF bridge bearing p MPa (L 30) | RF bearing (40 MPa EST) | bore bond tau MPa | RF bond (2.0 MPa EST, KP) | RF bridge tube bending |
+|---|---|---|---|---|---|---|---|---|---|
+| RB x1.0 | 17.5 | 13.1 | 10.59 | 8.04 | 7.92 | 2.93 | 0.52 | 1.80 | 1.80 |
+| RB x1.5 (floor) | 26.3 | 19.7 | 7.06 | 5.36 | 11.88 | 1.95 | 0.77 | 1.20 | 1.20 |
+| D-1 dynamic env (as-built, zeta 1 %, enveloped over kd/nom/hi) | 15.7 | 11.8 | 11.79 | 8.94 | 9.72 | 2.39 | 0.50 | 1.85 | 1.50 |

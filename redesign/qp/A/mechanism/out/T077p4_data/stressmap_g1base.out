@@ -1,0 +1,12 @@
+hub aft-face nodes for the hub-group load: 3611
+chol flag 0, 162.3 s, nnz(R) 2791 M
+solved 490.5 s, residual 1.2e-09 
+relative residual per load case: 5.8e-10 1.1e-09 1.3e-09 7.4e-11 4.5e-11 4.2e-11 5.6e-10 1.0e-09 1.3e-09 7.4e-11 4.5e-11 4.2e-11 5.6e-10 9.4e-10 1.2e-09 7.4e-11 4.5e-11 4.2e-11 5.8e-10 9.9e-10 1.2e-09 7.4e-11 4.5e-11 4.2e-11 2.3e-11 1.0e-09 9.8e-10 1.2e-09 3.8e-10 4.1e-10
+equilibrium max error 3.5e-10
+RB z0.02 max 67.8 max excl 40.4
+D1 z0.02 max 107.8 max excl 65.1
+RB z0.05 max 73.3 max excl 49.7
+D1 z0.05 max 111.7 max excl 69.1
+RB z0.10 max 92.9 max excl 64.5
+D1 z0.10 max 113.6 max excl 83.3
+hub vol 22674 mm3, RF (139.1 / max excl of max(rb, d1)): 1.095 ; wall 1621 s

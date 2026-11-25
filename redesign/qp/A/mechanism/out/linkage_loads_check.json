@@ -1,0 +1,329 @@
+{
+ "inputs": {
+  "F_hold_N": 17.63725202661139,
+  "F_stall_N": 50.993721868355266,
+  "F_stall_at_delta_deg": 21.0,
+  "min_arm_lever_ratio": 0.9159143643901201,
+  "tau_stall_Nm": 0.397,
+  "dynamic_step_peak_N_not_used": 42.736829375300886,
+  "hinge_vd_Nm": 0.151,
+  "KP": 2.15625,
+  "K_stall_printed": 1.4375,
+  "arm_joint_state": "mid"
+ },
+ "z_bend_leg": {
+  "model": "sigma = K 32 F e / (pi d^3); e = rod axis above the arm mid-plane: LO 1.6 mm (rod on the arm), HI 1.9 mm (rod against the keeper) governs (review r3 m-3)",
+  "e_mm": 1.9000000000000006,
+  "e_lo_mm": 1.5999999999999999,
+  "e_hi_mm": 1.9000000000000006,
+  "e_ratio_hi_over_lo": 1.1875000000000004,
+  "K_curved_wire": 1.625,
+  "A228_Sut_MPa_recalled": 2153.3144853188387,
+  "A228_bending_allow_MPa_recalled": 1679.5852985486943,
+  "hold": {
+   "F_N": 17.63725202661139,
+   "sigma_nominal_MPa": 197.53355929356408,
+   "sigma_K_MPa": 320.99203385204163,
+   "required_yield_MPa": {
+    "1.5": 481.4880507780625
+   },
+   "required_yield_MPa_rod_on_arm_LO": {
+    "1.5": 405.4636217078419
+   }
+  },
+  "stall": {
+   "F_N": 50.993721868355266,
+   "sigma_nominal_MPa": 571.1190931038464,
+   "sigma_K_MPa": 928.0685262937503,
+   "required_yield_MPa": {
+    "1.0": 928.0685262937503,
+    "1.5": 1392.1027894406254
+   },
+   "required_yield_MPa_rod_on_arm_LO": {
+    "1.0": 781.5313905631577,
+    "1.5": 1172.2970858447366
+   }
+  },
+  "required_yield_MPa_governing": 1392.1027894406254,
+  "collapse_Fc_N_at_required_yield": 211.01347545205257,
+  "music_wire_ok_recalled": true,
+  "receipt_test_load_N": 90.83256707800786,
+  "receipt_test": "form the Z-bend on an M02 rod, clamp the arm-hole end in a 2 mm plate with a 1.3 mm hole (rod resting on the plate), load the rod end along its axis with 91 N for 10 s (= 1.5 x the 51.0 N stall force x e_hi / e_lo = 1.90 / 1.60, so the rod resting on the plate sees the moment of the keeper-lifted hi state, review r3 m-3): pass = no permanent set over 0.2 mm at the far end; a rod that fails is replaced by ASTM A228 music wire 1.2 mm and the test repeated"
+ },
+ "keeper_bridge_MEC008": {
+  "model": "the rod is a two-force member pinned at the clevis, loaded by the arm hole at the arm\nmid-plane, so the axial force F acts with the eccentricity e_hi (rod axis above the arm mid-plane, rod lifted against the keeper) and the moment F e_hi is\nbalanced by a vertical couple V L over the rod length L: V = F e_hi / L. The keeper bridge reacts V (worst direction = the one that lifts the rod) at the Z-bend\nleg, a cantilever of length a = spacer end to the leg axis from the spacer face, section b x t at the spacer end:\nsigma = 6 V a / (b t^2).",
+  "b_mm": 3.1000000000000005,
+  "t_mm": 0.8,
+  "a_mm": 2.0,
+  "L_rod_mm": 43.249999999999986,
+  "e_hi_mm": 1.9000000000000006,
+  "allowable_MPa_EST": 20.0,
+  "creep_and_preload": "\"-\" (not analysed): retorque / inspect at D5b and each preflight",
+  "hold": {
+   "F_N": 17.63725202661139,
+   "V_N": 0.7748156959667436,
+   "sigma_MPa": 4.686385257863368,
+   "factor": 2.15625,
+   "factored_MPa": 10.105018212267886,
+   "ok": true,
+   "utilisation": 0.5052509106133943
+  },
+  "stall": {
+   "F_N": 50.993721868355266,
+   "V_N": 2.2401866254306375,
+   "sigma_MPa": 13.54951587962079,
+   "factor": 1.4375,
+   "factored_MPa": 19.477429076954884,
+   "ok": true,
+   "utilisation": 0.9738714538477442
+  }
+ },
+ "stall_8p4V_informational": {
+  "note": "8.4 V is NOT available from the Kakute (5.3 / 7.2 V); informational, not a claim. Checks are linear in F.",
+  "tau_stall_Nm": 0.46091255000000003,
+  "F_stall_N": 59.20313949706395,
+  "scale_vs_7V2": 1.1609887909319898,
+  "leg_required_yield_MPa_1p0": 1077.4771562438148,
+  "leg_required_yield_MPa_1p5": 1616.215734365722
+ },
+ "servo_speed_torque_T056": {
+  "model": "DC-motor torque-speed line omega_servo = OMEGA_NL (1 - tau / tau_stall) (the law of elevon_dynamics.py: tau = tau_stall (duty - omega / OMEGA_NL));\ntau on the servo shaft = g (Q + preload + damper) with g = d delta / d theta (virtual work through the solved linkage, 0.905-0.930), Q = the VD hinge moment\n0.146 N m at the +-20 deg end (the linear load of elevon_dynamics.py peaks there), so the loaded speed is the SLOWEST point (conservative: along a sinusoid\nthe load is lower away from the end points). Elevon rate = g omega_servo.",
+  "gearing_min": 0.9089071642665859,
+  "gearing_max": 0.9284517098185211,
+  "gearing_at_end_points_max": 0.9282128971785047,
+  "omega_nl_rad_s_6V": 8.055365778435366,
+  "omega_nl_deg_s_6V": 461.5384615384615,
+  "omega_nl_source": "SERVO.md s2: 0.13 s / 60 deg at 6.0 V (7.2 V \"-\", not published)",
+  "crossover_Hz": 2.2,
+  "roll_amp_deg": 11.0,
+  "step_s": 0.25,
+  "required_elevon_rate_deg_s": {
+   "R1_step_deg_s": 80.0,
+   "R2_sine_deg_s": 152.053084433746,
+   "R3_sine_full_throw_deg_s": 276.4601535159018
+  },
+  "cases": {
+   "6.0V_pair_0.333": {
+    "tau_stall_Nm": 0.333,
+    "tau_hold_Nm": 0.14016014747395422,
+    "torque_margin_hold": 2.3758536645509807,
+    "tau_loaded_Nm": 0.15788901381006365,
+    "torque_margin_loaded": 2.1090764453098068,
+    "servo_speed_loaded_rad_s": 4.235985121869313,
+    "elevon_rate_loaded_deg_s": 225.28104756638385,
+    "elevon_rate_no_load_deg_s": 428.4059525439252,
+    "speed_margin_R1": 2.816013094579798,
+    "speed_margin_R2": 1.4815947233516689,
+    "speed_margin_R3": 0.8148770978434179,
+    "sine_limit_Hz_at_11deg": 3.259508391373672,
+    "sine_limit_Hz_at_20deg": 1.7927296152555194,
+    "ok": true
+   },
+   "7.2V_EST_0.397_speed_at_6V": {
+    "tau_stall_Nm": 0.397,
+    "tau_hold_Nm": 0.14016014747395422,
+    "torque_margin_hold": 2.8324741886688867,
+    "tau_loaded_Nm": 0.15788901381006365,
+    "torque_margin_loaded": 2.5144244708348147,
+    "servo_speed_loaded_rad_s": 4.8517039178900365,
+    "elevon_rate_loaded_deg_s": 258.0266241874484,
+    "elevon_rate_no_load_deg_s": 428.4059525439252,
+    "speed_margin_R1": 3.225332802343105,
+    "speed_margin_R2": 1.696950937551538,
+    "speed_margin_R3": 0.9333230156533457,
+    "sine_limit_Hz_at_11deg": 3.733292062613384,
+    "sine_limit_Hz_at_20deg": 2.053310634437361,
+    "ok": true
+   }
+  },
+  "ok": true,
+  "cross_check": "AR-002 (linkage_dynamics.json): hold_margin 2.93 at 0.397 N m and 2.46 at 0.333 N m for tau = g x 0.146; this adds preload + damper (g x 0.1653 N m) and the speed",
+  "not_modelled": "servo rotor / gear inertia, BEC rail sag under load (lowers torque and speed), stall current: all \"-\""
+ },
+ "motor_mount_evidence_D209": {
+  "category": "FEA (cited record, not rerun)",
+  "change_log": "redesign/params/CHANGE-LOG.md D-209 (2026-11-18) and D-210",
+  "report": "redesign/review/QP-5/FEA-ARM.md section 8 (D-209, run `current`) and 8.1 (D-210, run `current_d210`)",
+  "script": "redesign/qp/A/structures/fea_arm.py",
+  "results_D209": "arm tube axial F2 29.9 / 203 MPa allowed, S2 79.8 / 350; tube shear S2 9.6 / 30 (tightest, ratio 3.1); cup 99th percentile F2 0.75 / 9.3, S2 3.1 / 20; cup bond mean F2 0.09 / 0.93, S2 0.45 / 2.0 (all PASS)",
+  "results_D210": "run current_d210 (167 k elements, 0.81 M unknowns): every point under 1 in every case; cup peak F2 4.4 / 9.3, S2 18.0 / 20, S3 13.6; cup 99th percentile F2 0.98, S2 4.2; bond mean 0.07 / 0.35"
+ },
+ "horn_blade": {
+  "model": "horizontal sections of the drawn outline (slices of electrical.horn_profile, hole not deducted below the hole edge); sigma = 6 F (z_hole - z) / (t w^2); bearing F / (d_pin t); shear-out F / (2 t e)",
+  "governing_z_mm": 0.47877796842399917,
+  "governing_width_mm": 17.265894645948883,
+  "governing_lever_mm": 8.971222031576001,
+  "print": "lying flat (profile plane = layer plane)",
+  "allowable_inlayer_MPa_EST": 20.0,
+  "allowable_bearing_MPa_EST": 20.0,
+  "ligament_mm": 1.65,
+  "hold": {
+   "F_N": 17.63725202661139,
+   "factor": 2.15625,
+   "root_sigma_MPa": 1.5923026124513628,
+   "root_factored_MPa": 3.433402508098251,
+   "root_ok": true,
+   "bearing_MPa": 8.818626013305696,
+   "bearing_factored_MPa": 19.015162341190408,
+   "bearing_ok": true,
+   "shearout_MPa": 2.6723109131229377,
+   "shearout_factored_MPa": 5.762170406421334,
+   "shearout_ok": true
+  },
+  "stall": {
+   "F_N": 50.993721868355266,
+   "factor": 1.4375,
+   "root_sigma_MPa": 4.603746458183407,
+   "root_factored_MPa": 6.617885533638647,
+   "root_ok": true,
+   "bearing_MPa": 25.496860934177633,
+   "bearing_factored_MPa": 36.651737592880345,
+   "bearing_ok": false,
+   "shearout_MPa": 7.726321495205343,
+   "shearout_factored_MPa": 11.106587149357681,
+   "shearout_ok": true
+  }
+ },
+ "horn_rib_foam": {
+  "model": "The rib is a 2 mm PETG plate in a slot through the elevon, bonded on both faces. MODEL: Euler-Bernoulli beam along x\n   (EI = E t d(x)^3 / 12, d = rib depth) on an elastic foundation of foam shear on its two faces: transverse k_z = 2 G d / l, rotational\n   k_t = 2 G d^3 / (12 l), axial k_x = 2 G d / l (the rib is axially rigid: uniform u); the horn force F (along x, at the hole height) and its moment\n   about the rib mid-depth are applied over the blade base. Face shear tau = (G / l) x local displacement. VALIDITY: linear elastic foam, Winkler\n   (no coupling between springs), small rotations. The rib is NOT rigid (lambda L >> 1, printed below), which is why a rigid-rib / weld-group\n   formula is not used. INPUTS: E_PETG 2.1 GPa (fe_a.py nom, EST); foam G = E / (2 (1 + nu)), E 5-10 MPa (CHAIN.md ASM-D5 \"8-10\", review r2 5-10),\n   nu 0.1 EST; shear penetration l 2-8 mm EST (the foundation is swept over G / l). ALLOWABLE: foam shear 86 kPa (EST, foam_103.py: 100 x 103/120).\n   Skin (tape) paths are ignored: conservative for the foam faces.",
+  "allowable_kPa_EST": 85.83333333333333,
+  "sweep": [
+   {
+    "E_foam_MPa": 5.0,
+    "l_mm": 2.0,
+    "G_over_l_MPa_per_mm": 1.1363636363636362,
+    "hold_peak_kPa": 185.02122902619888,
+    "stall_peak_kPa": 534.9428062016924,
+    "lambda_L_front": 3.780077178101373,
+    "at_x_mm": 2.500000000000002
+   },
+   {
+    "E_foam_MPa": 5.0,
+    "l_mm": 4.0,
+    "G_over_l_MPa_per_mm": 0.5681818181818181,
+    "hold_peak_kPa": 163.14929988427807,
+    "stall_peak_kPa": 471.70556991229677,
+    "lambda_L_front": 3.1786533484478214,
+    "at_x_mm": 2.500000000000002
+   },
+   {
+    "E_foam_MPa": 5.0,
+    "l_mm": 8.0,
+    "G_over_l_MPa_per_mm": 0.28409090909090906,
+    "hold_peak_kPa": 142.78154732650893,
+    "stall_peak_kPa": 412.8172858395259,
+    "lambda_L_front": 2.6729182060439896,
+    "at_x_mm": 2.500000000000002
+   },
+   {
+    "E_foam_MPa": 10.0,
+    "l_mm": 2.0,
+    "G_over_l_MPa_per_mm": 2.2727272727272725,
+    "hold_peak_kPa": 207.13149688723277,
+    "stall_peak_kPa": 598.869139491976,
+    "lambda_L_front": 4.4952946754575605,
+    "at_x_mm": 2.500000000000002
+   },
+   {
+    "E_foam_MPa": 10.0,
+    "l_mm": 4.0,
+    "G_over_l_MPa_per_mm": 1.1363636363636362,
+    "hold_peak_kPa": 185.02122902619888,
+    "stall_peak_kPa": 534.9428062016924,
+    "lambda_L_front": 3.780077178101373,
+    "at_x_mm": 2.500000000000002
+   },
+   {
+    "E_foam_MPa": 10.0,
+    "l_mm": 8.0,
+    "G_over_l_MPa_per_mm": 0.5681818181818181,
+    "hold_peak_kPa": 163.14929988427807,
+    "stall_peak_kPa": 471.70556991229677,
+    "lambda_L_front": 3.1786533484478214,
+    "at_x_mm": 2.500000000000002
+   }
+  ],
+  "hold": {
+   "F_N": 17.63725202661139,
+   "factor": 2.15625,
+   "peak_kPa_range": [
+    142.78154732650893,
+    207.13149688723277
+   ],
+   "factored_kPa_max": 446.62729016309567,
+   "factored_kPa_min": 307.8727114227849,
+   "ok": false
+  },
+  "stall": {
+   "F_N": 50.993721868355266,
+   "factor": 1.4375,
+   "peak_kPa_range": [
+    412.8172858395259,
+    598.869139491976
+   ],
+   "factored_kPa_max": 860.8743880197154,
+   "ok": false
+  }
+ },
+ "elevon_torsion_foam_only": {
+  "model": "Saint-Venant thin open section, foam only: tau = T t_max / J",
+  "J_mm4": 2756.737236411379,
+  "t_max_mm": 8.63661226185769,
+  "section_area_mm2": 246.04983722578766,
+  "outboard_span_fraction": 0.5112903225806451,
+  "allowable_kPa_EST": 85.83333333333333,
+  "thickness_over_chord": 0.14100591447930924,
+  "hold": {
+   "T_Nm": 0.07720483870967741,
+   "factor": 2.15625,
+   "tau_kPa": 241.8758842401484,
+   "factored_kPa": 521.5448753928199,
+   "ok": false,
+   "bredt_q_N_per_m": 156.8886197612689,
+   "bredt_note": "tape skin shear flow if the elevon cell is closed (nose face taped): tape strength \"-\", not credited"
+  },
+  "stall": {
+   "T_Nm": 0.46684887463424785,
+   "factor": 1.4375,
+   "tau_kPa": 1462.5959492422685,
+   "factored_kPa": 2102.481677035761,
+   "ok": false,
+   "bredt_q_N_per_m": 948.687631534265,
+   "bredt_note": "tape skin shear flow if the elevon cell is closed (nose face taped): tape strength \"-\", not credited"
+  }
+ },
+ "horn_rib_vs_elevon_body_hold": 0.8563544792319214,
+ "free_play": {
+  "total_known_deg": 1.2801189760845506,
+  "guide_deg": 1.0,
+  "ok": false,
+  "parts": {
+   "arm_hole_clearance_mm": 0.10000000000000026,
+   "horn_hole_clearance_mm": 0.10000000000000005,
+   "arm_hole_deg": 0.6258395818153696,
+   "horn_hole_deg": 0.6258395818153681,
+   "zbend_z_freedom_deg": 0.028439812453813,
+   "clevis_cheek_holes_deg": "-",
+   "total_known_deg": 1.2801189760845506,
+   "model": "slop along the rod = sum of the diametral clearances, elevon free play = slop / horn radius (small angle, rod along the horn tangent at neutral); clevis cheek holes are vendor parts with no published size (\"-\"): measured at E1"
+  },
+  "basis": "FLUTTER basis (review r3 m-7): the 1 deg guide is the SERVO.md s4 flutter limit, kept as the claim limit because it is the only sourced number (a control-precision limit has none). Not in the budget: servo gear backlash (\"-\") and the clevis cheek holes (\"-\"): measure the BUILT value at BUILD D5b / E1 and compare it with 1 deg.",
+  "mitigation": "hinge viscous damper: flutter has no instability for any K 0.01-20 N m/rad (FIXES2 s1, CL-A-FLUTTER-ELEVON-*), preload strips remove low-amplitude slack; E1 bench measurement"
+ },
+ "pass": {
+  "rod_leg_music_wire_recalled": true,
+  "blade_root_hold": true,
+  "blade_root_stall": true,
+  "hole_bearing_hold": true,
+  "hole_bearing_stall": false,
+  "rib_foam_hold": false,
+  "rib_foam_stall": false,
+  "elevon_torsion_foam_hold": false,
+  "elevon_torsion_foam_stall": false,
+  "free_play_le_1deg": false,
+  "keeper_bridge_hold": true,
+  "keeper_bridge_stall": true,
+  "servo_speed_margin_ge_1": true
+ },
+ "git_head": "41f0827ed4b2f2ebb857b06d6b6a3800824f1cc3"
+}

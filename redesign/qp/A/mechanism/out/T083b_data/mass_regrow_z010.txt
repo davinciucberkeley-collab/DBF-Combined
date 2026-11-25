@@ -1,0 +1,2 @@
+regrow (TR 1.3, HR 60) mass g 17.92
+HR 60 TR 1.0 mass g 15.25

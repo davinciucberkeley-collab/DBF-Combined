@@ -1,0 +1,102 @@
+[
+ {
+  "board": "FC Kakute H743-Wing 28 g, 4 bosses 6x6 on the 25 x 25 pattern, x 34.5 / 59.5",
+  "row": "mount f_z 872 Hz / f_horizontal 659 Hz vs 304 Hz (A-P10(a) 1.2 x top 2P band)",
+  "rf": 2.167644963687026
+ },
+ {
+  "board": "FC Kakute H743-Wing 28 g, 4 bosses 6x6 on the 25 x 25 pattern, x 34.5 / 59.5",
+  "row": "landing RB x1.5 (n 17.9 g, F 4.9 N along x, lever 7.5 mm): foam bearing under one boss (dN 0.74 N, 6 x 6 mm punch, no skin spreading)",
+  "rf": 2.32555996191891
+ },
+ {
+  "board": "FC Kakute H743-Wing 28 g, 4 bosses 6x6 on the 25 x 25 pattern, x 34.5 / 59.5",
+  "row": "landing RB x1.5: boss base bond peel / tension (epoxy 2.0 MPa)",
+  "rf": 45.15650411493029
+ },
+ {
+  "board": "FC Kakute H743-Wing 28 g, 4 bosses 6x6 on the 25 x 25 pattern, x 34.5 / 59.5",
+  "row": "landing RB x1.5: M2 screw shear (FC: 4 screws; ESC held by tape + tie: not a screw row)",
+  "rf": 431.36648062789794
+ },
+ {
+  "board": "FC Kakute H743-Wing 28 g, 4 bosses 6x6 on the 25 x 25 pattern, x 34.5 / 59.5",
+  "row": "landing x1.97 (n 23.5 g, F 6.5 N along x, lever 7.5 mm): foam bearing under one boss (dN 0.97 N, 6 x 6 mm punch, no skin spreading)",
+  "rf": 1.7707309354712515
+ },
+ {
+  "board": "FC Kakute H743-Wing 28 g, 4 bosses 6x6 on the 25 x 25 pattern, x 34.5 / 59.5",
+  "row": "landing x1.97: boss base bond peel / tension (epoxy 2.0 MPa)",
+  "rf": 34.38312496060683
+ },
+ {
+  "board": "FC Kakute H743-Wing 28 g, 4 bosses 6x6 on the 25 x 25 pattern, x 34.5 / 59.5",
+  "row": "landing x1.97: M2 screw shear (FC: 4 screws; ESC held by tape + tie: not a screw row)",
+  "rf": 328.4516349958614
+ },
+ {
+  "board": "FC Kakute H743-Wing 28 g, 4 bosses 6x6 on the 25 x 25 pattern, x 34.5 / 59.5",
+  "row": "landing x2.23 (n 26.6 g, F 7.3 N along x, lever 7.5 mm): foam bearing under one boss (dN 1.10 N, 6 x 6 mm punch, no skin spreading)",
+  "rf": 1.5642780012907465
+ },
+ {
+  "board": "FC Kakute H743-Wing 28 g, 4 bosses 6x6 on the 25 x 25 pattern, x 34.5 / 59.5",
+  "row": "landing x2.23: boss base bond peel / tension (epoxy 2.0 MPa)",
+  "rf": 30.37433012215042
+ },
+ {
+  "board": "FC Kakute H743-Wing 28 g, 4 bosses 6x6 on the 25 x 25 pattern, x 34.5 / 59.5",
+  "row": "landing x2.23: M2 screw shear (FC: 4 screws; ESC held by tape + tie: not a screw row)",
+  "rf": 290.15682553446055
+ },
+ {
+  "board": "ESC SpeedyBee 4-in-1 20 g, 4 bosses 6x6 on the 20 x 20 pattern",
+  "row": "mount f_z 1031 Hz / f_horizontal 780 Hz vs 304 Hz (A-P10(a) 1.2 x top 2P band)",
+  "rf": 2.564792109321303
+ },
+ {
+  "board": "ESC SpeedyBee 4-in-1 20 g, 4 bosses 6x6 on the 20 x 20 pattern",
+  "row": "landing RB x1.5 (n 17.9 g, F 3.5 N along x, lever 7.4 mm): foam bearing under one boss (dN 0.65 N, 6 x 6 mm punch, no skin spreading)",
+  "rf": 2.62980955088312
+ },
+ {
+  "board": "ESC SpeedyBee 4-in-1 20 g, 4 bosses 6x6 on the 20 x 20 pattern",
+  "row": "landing RB x1.5: boss base bond peel / tension (epoxy 2.0 MPa)",
+  "rf": 51.06426312394407
+ },
+ {
+  "board": "ESC SpeedyBee 4-in-1 20 g, 4 bosses 6x6 on the 20 x 20 pattern",
+  "row": "landing RB x1.5: M2 screw shear (FC: 4 screws; ESC held by tape + tie: not a screw row)",
+  "rf": null
+ },
+ {
+  "board": "ESC SpeedyBee 4-in-1 20 g, 4 bosses 6x6 on the 20 x 20 pattern",
+  "row": "landing x1.97 (n 23.5 g, F 4.6 N along x, lever 7.4 mm): foam bearing under one boss (dN 0.86 N, 6 x 6 mm punch, no skin spreading)",
+  "rf": 2.002393059048061
+ },
+ {
+  "board": "ESC SpeedyBee 4-in-1 20 g, 4 bosses 6x6 on the 20 x 20 pattern",
+  "row": "landing x1.97: boss base bond peel / tension (epoxy 2.0 MPa)",
+  "rf": 38.88141862229245
+ },
+ {
+  "board": "ESC SpeedyBee 4-in-1 20 g, 4 bosses 6x6 on the 20 x 20 pattern",
+  "row": "landing x1.97: M2 screw shear (FC: 4 screws; ESC held by tape + tie: not a screw row)",
+  "rf": null
+ },
+ {
+  "board": "ESC SpeedyBee 4-in-1 20 g, 4 bosses 6x6 on the 20 x 20 pattern",
+  "row": "landing x2.23 (n 26.6 g, F 5.2 N along x, lever 7.4 mm): foam bearing under one boss (dN 0.97 N, 6 x 6 mm punch, no skin spreading)",
+  "rf": 1.7689301911769866
+ },
+ {
+  "board": "ESC SpeedyBee 4-in-1 20 g, 4 bosses 6x6 on the 20 x 20 pattern",
+  "row": "landing x2.23: boss base bond peel / tension (epoxy 2.0 MPa)",
+  "rf": 34.348159051980325
+ },
+ {
+  "board": "ESC SpeedyBee 4-in-1 20 g, 4 bosses 6x6 on the 20 x 20 pattern",
+  "row": "landing x2.23: M2 screw shear (FC: 4 screws; ESC held by tape + tie: not a screw row)",
+  "rf": null
+ }
+]

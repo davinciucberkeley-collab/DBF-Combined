@@ -1,0 +1,32 @@
+## robustness matrix: min over stations and 23 cases (P15 rows, P16 rows)
+n=1 skin stiffness x1.0 foam x1.0: P15 1.15 (P15 skin wrinkling)  P16 4.64 (P16 foam bending + axial)  skin mass 27.0 g
+n=1 skin stiffness x1.0 foam x0.5: P15 0.70 (P15 skin wrinkling)  P16 4.81 (P16 cove CF strip)  skin mass 27.0 g
+n=1 skin stiffness x0.7 foam x1.0: P15 0.94 (P15 foam shear (cell))  P16 4.48 (P16 foam bending + axial)  skin mass 27.0 g
+n=1 skin stiffness x0.7 foam x0.5: P15 0.65 (P15 skin wrinkling)  P16 4.65 (P16 cove CF strip)  skin mass 27.0 g
+n=2 skin stiffness x1.0 foam x1.0: P15 2.12 (P15 skin wrinkling)  P16 5.15 (P16 foam bending + axial)  skin mass 53.9 g
+n=2 skin stiffness x1.0 foam x0.5: P15 1.32 (P15 skin wrinkling)  P16 5.36 (P16 cove CF strip)  skin mass 53.9 g
+n=2 skin stiffness x0.7 foam x1.0: P15 1.73 (P15 foam shear (cell))  P16 4.84 (P16 foam bending + axial)  skin mass 53.9 g
+n=2 skin stiffness x0.7 foam x0.5: P15 1.21 (P15 skin wrinkling)  P16 5.03 (P16 cove CF strip)  skin mass 53.9 g
+
+## fine cap-strip scan (n=1): P16 min
+strip 0.10 mm2 (0.12 g): P16 0.88
+strip 0.20 mm2 (0.25 g): P16 1.01
+strip 0.30 mm2 (0.37 g): P16 1.14
+strip 0.40 mm2 (0.50 g): P16 1.27
+strip 0.50 mm2 (0.62 g): P16 1.40
+strip 0.75 mm2 (0.93 g): P16 1.72
+strip 1.00 mm2 (1.24 g): P16 2.04
+
+## strut: peak compression and Euler options (hand calc, E 70 GPa EST (iter2_margins.py), pinned-pinned, L 0.2862 m)
+peak strut compression, limit load, over 23 cases: 227.6 N; x KF = 392.7 N
+6x4.5 pinned: Pcr 367 N, RF 0.93; two struts 11.0 g (CF 1.55 g/cm3 EST), delta vs 6x4.5 +0.0 g
+6x4.5 fixed-pinned (K 0.7, NOT credited): Pcr 748 N, RF 1.91; two struts 11.0 g (CF 1.55 g/cm3 EST), delta vs 6x4.5 +0.0 g
+6x4.0 pinned: Pcr 431 N, RF 1.10; two struts 13.9 g (CF 1.55 g/cm3 EST), delta vs 6x4.5 +3.0 g
+6x4.0 fixed-pinned (K 0.7, NOT credited): Pcr 879 N, RF 2.24; two struts 13.9 g (CF 1.55 g/cm3 EST), delta vs 6x4.5 +3.0 g
+7x5.0 pinned: Pcr 735 N, RF 1.87; two struts 16.7 g (CF 1.55 g/cm3 EST), delta vs 6x4.5 +5.7 g
+7x5.0 fixed-pinned (K 0.7, NOT credited): Pcr 1500 N, RF 3.82; two struts 16.7 g (CF 1.55 g/cm3 EST), delta vs 6x4.5 +5.7 g
+8x6.0 pinned: Pcr 1159 N, RF 2.95; two struts 19.5 g (CF 1.55 g/cm3 EST), delta vs 6x4.5 +8.5 g
+8x6.0 fixed-pinned (K 0.7, NOT credited): Pcr 2366 N, RF 6.02; two struts 19.5 g (CF 1.55 g/cm3 EST), delta vs 6x4.5 +8.5 g
+8x6.5 pinned: Pcr 957 N, RF 2.44; two struts 15.2 g (CF 1.55 g/cm3 EST), delta vs 6x4.5 +4.2 g
+8x6.5 fixed-pinned (K 0.7, NOT credited): Pcr 1952 N, RF 4.97; two struts 15.2 g (CF 1.55 g/cm3 EST), delta vs 6x4.5 +4.2 g
+wall 34 s

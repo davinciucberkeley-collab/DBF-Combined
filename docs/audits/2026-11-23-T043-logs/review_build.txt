@@ -1,0 +1,13 @@
+cfd3d_viz.json missing (removed 2026-11-19, batch 2; recoverable from git 8d15f419^, or regenerate: py analysis/cfd3d/postprocess.py pack); CFD panel skipped
+CAD mesh: 114 parts, 397 components, 70432 triangles
+wrote review/vtol-review.html 5986858 bytes
+wrote VTOL-Review.html (project root)
+wrote build-manual.html
+wrote test-plan.html
+wrote flight-software.html
+wrote templates.html 12 templates
+
+real	0m0.366s
+user	0m0.000s
+sys	0m0.016s
+rc=0

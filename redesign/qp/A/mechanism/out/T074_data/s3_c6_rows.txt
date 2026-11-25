@@ -1,0 +1,44 @@
+## ../T071b_data/centre_run.txt
+   hub bearing RB/x1.5/2T = 1.94 / 1.29 / 0.61
+   bridge bending RB = 4.24
+   collar interlayer RB/x1.5/2T = 2.51 / 1.67 / 0.80
+   saddle socket bearing RB/x1.5/2T = 1.69 / 1.13 / 0.67
+   saddle body shear RB = 1.30
+   saddle body shear x1.5 = 0.87
+   N2 min rows RB = 1.39
+   N2 rows RB = skin->plate bond, lap 5.0 mm 3.92; plate shear flow at the ear edge (r_eq 15.8 mm) 2.88; plate->ear bond, ear 41.5 x 19.0 mm, 2 face(s) 1.39; CF pins: 4 x 3 mm at r 17 mm, 2 shear plane(s), 118 N each 1.67
+   N2 min rows x1.5 = 0.93
+   N2 rows x1.5 = skin->plate bond, lap 5.0 mm 2.62; plate shear flow at the ear edge (r_eq 15.8 mm) 1.92; plate->ear bond, ear 41.5 x 19.0 mm, 2 face(s) 0.93; CF pins: 4 x 3 mm at r 17 mm, 2 shear plane(s), 177 N each 1.11
+## s3_centre_m164_cgcad.txt
+   hub bearing RB/x1.5/2T = 1.76 / 1.17 / 0.60
+   bridge bending RB = 3.89
+   collar interlayer RB/x1.5/2T = 2.27 / 1.52 / 0.78
+   saddle socket bearing RB/x1.5/2T = 1.56 / 1.04 / 0.65
+   saddle body shear RB = 1.24
+   saddle body shear x1.5 = 0.83
+   N2 min rows RB = 1.33
+   N2 rows RB = skin->plate bond, lap 5.0 mm 3.75; plate shear flow at the ear edge (r_eq 15.8 mm) 2.75; plate->ear bond, ear 41.5 x 19.0 mm, 2 face(s) 1.33; CF pins: 4 x 3 mm at r 17 mm, 2 shear plane(s), 123 N each 1.60
+   N2 min rows x1.5 = 0.89
+   N2 rows x1.5 = skin->plate bond, lap 5.0 mm 2.50; plate shear flow at the ear edge (r_eq 15.8 mm) 1.83; plate->ear bond, ear 41.5 x 19.0 mm, 2 face(s) 0.89; CF pins: 4 x 3 mm at r 17 mm, 2 shear plane(s), 185 N each 1.06
+## s3_centre_m164_cg19.3.txt
+   hub bearing RB/x1.5/2T = 1.82 / 1.21 / 0.60
+   bridge bending RB = 3.98
+   collar interlayer RB/x1.5/2T = 2.35 / 1.56 / 0.78
+   saddle socket bearing RB/x1.5/2T = 1.59 / 1.06 / 0.65
+   saddle body shear RB = 1.24
+   saddle body shear x1.5 = 0.83
+   N2 min rows RB = 1.32
+   N2 rows RB = skin->plate bond, lap 5.0 mm 3.74; plate shear flow at the ear edge (r_eq 15.8 mm) 2.74; plate->ear bond, ear 41.5 x 19.0 mm, 2 face(s) 1.32; CF pins: 4 x 3 mm at r 17 mm, 2 shear plane(s), 124 N each 1.59
+   N2 min rows x1.5 = 0.88
+   N2 rows x1.5 = skin->plate bond, lap 5.0 mm 2.50; plate shear flow at the ear edge (r_eq 15.8 mm) 1.83; plate->ear bond, ear 41.5 x 19.0 mm, 2 face(s) 0.88; CF pins: 4 x 3 mm at r 17 mm, 2 shear plane(s), 185 N each 1.06
+## s3_centre_m164_cg26.0.txt
+   hub bearing RB/x1.5/2T = 1.81 / 1.21 / 0.60
+   bridge bending RB = 4.04
+   collar interlayer RB/x1.5/2T = 2.35 / 1.56 / 0.78
+   saddle socket bearing RB/x1.5/2T = 1.62 / 1.08 / 0.65
+   saddle body shear RB = 1.26
+   saddle body shear x1.5 = 0.84
+   N2 min rows RB = 1.35
+   N2 rows RB = skin->plate bond, lap 5.0 mm 3.80; plate shear flow at the ear edge (r_eq 15.8 mm) 2.79; plate->ear bond, ear 41.5 x 19.0 mm, 2 face(s) 1.35; CF pins: 4 x 3 mm at r 17 mm, 2 shear plane(s), 122 N each 1.62
+   N2 min rows x1.5 = 0.90
+   N2 rows x1.5 = skin->plate bond, lap 5.0 mm 2.54; plate shear flow at the ear edge (r_eq 15.8 mm) 1.86; plate->ear bond, ear 41.5 x 19.0 mm, 2 face(s) 0.90; CF pins: 4 x 3 mm at r 17 mm, 2 shear plane(s), 182 N each 1.08

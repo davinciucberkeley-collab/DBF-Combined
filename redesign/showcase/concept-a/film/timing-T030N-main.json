@@ -1,0 +1,73 @@
+{
+ "film": "shots-main.json",
+ "scenes": [
+  "S1",
+  "S2",
+  "S3",
+  "S4",
+  "S5",
+  "S6"
+ ],
+ "film_seconds": 119.9,
+ "frames": 7194,
+ "frames_mapped": 7194,
+ "every": 1,
+ "rendered": 6704,
+ "overlay_pictures": 6738,
+ "seconds": 447.4,
+ "seconds_render": 0.0,
+ "seconds_overlay": 135.9,
+ "seconds_encode": 311.4,
+ "seconds_blender_start_and_frames": 0.0,
+ "seconds_frame_loop_per_worker": [
+  4780.6,
+  4110.0,
+  3650.6
+ ],
+ "seconds_per_rendered_frame": 1.87,
+ "workers": 3,
+ "samples": 24,
+ "resolution": [
+  1920,
+  1080
+ ],
+ "fps": 60,
+ "dof": false,
+ "motion_blur": false,
+ "ray_tracing": true,
+ "preview": false,
+ "sources": {
+  "qp/A/sitl/runs/Z5_gb0/case.fwd.csv": {
+   "sha256": "07729f67e48468591d023699e1e381b4a10a004a3cf04a2c702a57ed2cfa7bc8",
+   "bytes": 1098835
+  },
+  "qp/A/sitl/runs/Z5_gb0/result.json": {
+   "sha256": "4cf658e3dce43c8f71f5184fafbb8e48654668882e17a5e71fff409ae0f8633c",
+   "bytes": 3124
+  },
+  "qp/A/sitl/runs/Z5_gb0/sum.json": {
+   "sha256": "9fecf1a1a27449f28febc20a5bedd5837dcf80f957c99c77d7bf297875abd933",
+   "bytes": 1487
+  },
+  "qp/A/structures/out_fea/hub_F2.glb": {
+   "sha256": "12e1aea35baaca86efa53519676732bd4cc9dd2dea63d0010474707a3779475d",
+   "bytes": 3257212
+  },
+  "qp/A/structures/out_fea/hub_S2.glb": {
+   "sha256": "a73cb30fd625c67eb98a58f425cb122b49479e42e525c4163ac8623e648673fc",
+   "bytes": 3257212
+  },
+  "qp/A/structures/out_fea/hub_fields_L0_d209.npz": {
+   "sha256": "ef8e0173b747d911e3b876b81e383d07646e302d6a5810fd6818fcde7e70169c",
+   "bytes": 3163448
+  },
+  "qp/A/structures/out_fea/hub_result_L0_d209.json": {
+   "sha256": "82e50dc5a7cd51a08010a782045277c7ced32efc589b1e2c57afc71185603c58",
+   "bytes": 8514
+  },
+  "qp/A/structures/out_fea/result_L0_current_d210.json": {
+   "sha256": "dae6f0ed6e155422d761cc48b9fd688c887977019f735d9501822d3198cdfbe6",
+   "bytes": 9334
+  }
+ }
+}

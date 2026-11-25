@@ -1,0 +1,32 @@
+build_a exit 1 16 s
+wire_inventory exit 0 9 s
+cad_mass exit 0 8 s
+mission_gate exit 0 0 s
+prop_sched exit 0 8 s
+proofs exit 1 1 s
+bbox exit 0 8 s
+collide_pose21 exit 1 975 s
+collide_linkage exit 1 1128 s
+assembly exit 1 2253 s
+drawings exit 0 236 s
+build_guide exit 0 5 s
+parts_links exit 0 4 s
+GATES_DONE
+build_a exit 1 4 s (run 2)
+wire_inventory exit 0 10 s (run 2)
+cad_mass exit 0 8 s (run 2)
+collide_pose21 exit 0 984 s (run 2)
+collide_linkage exit 0 1129 s (run 2)
+assembly exit 1 2244 s (run 2)
+drawings exit 0 235 s (run 2)
+build_guide exit 0 5 s (run 2)
+parts_links exit 0 4 s (run 2)
+GATES_DONE_R2
+build_a exit 1 4 s (run 3)
+collide_pose21 exit 0 982 s (run 3)
+assembly exit 0 2243 s (run 3)
+drawings exit 0 221 s (run 3)
+build_guide exit 0 4 s (run 3)
+GATES_DONE_R3
+build_a exit 1 (standalone after run 3; runs 2-3 hit OSError 22 writing model/wing/interfaces.json, a Windows file lock)
+build_a exit 1 (standalone retry 1 after run 3)

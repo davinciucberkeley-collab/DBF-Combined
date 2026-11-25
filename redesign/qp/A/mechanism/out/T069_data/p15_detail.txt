@@ -1,0 +1,25 @@
+bored foam E,G x 0.5 {'sh_spar': 0.6771, 'sh_foam': 0.3229, 'GJs': 3.162, 'GJf': 1.5079, 'J_s': 0.0, 'J_f': 0.0, 'tau_unit': 56428.6387, 'xn': 0.0608, 'EIs': 38.2992, 'EIf': 217.1156, 'Jsolid': 0.0, 'Jbored': 0.0}
+    [('P15 y 0.38 (fin s', 0.227), ('P16 y 0.38 (fin s', 0.546), ('P15 y 0.228 (moto', 0.227), ('P16 y 0.228 (moto', 0.422), ('P15 y 0.060 (outb', 0.227), ('P16 y 0.060 (outb', 0.193)]
+bored foam E,G x 1 {'sh_spar': 0.5118, 'sh_foam': 0.4882, 'GJs': 3.162, 'GJf': 3.0158, 'J_s': 0.0, 'J_f': 0.0, 'tau_unit': 56428.6387, 'xn': 0.0615, 'EIs': 42.2939, 'EIf': 428.8862, 'Jsolid': 0.0, 'Jbored': 0.0}
+    [('P15 y 0.38 (fin s', 0.15), ('P16 y 0.38 (fin s', 0.506), ('P15 y 0.228 (moto', 0.15), ('P16 y 0.228 (moto', 0.391), ('P15 y 0.060 (outb', 0.15), ('P16 y 0.060 (outb', 0.178)]
+bored foam E,G x 2 {'sh_spar': 0.3439, 'sh_foam': 0.6561, 'GJs': 3.162, 'GJf': 6.0315, 'J_s': 0.0, 'J_f': 0.0, 'tau_unit': 56428.6387, 'xn': 0.0629, 'EIs': 56.81, 'EIf': 838.285, 'Jsolid': 0.0, 'Jbored': 0.0}
+    [('P15 y 0.38 (fin s', 0.112), ('P16 y 0.38 (fin s', 0.484), ('P15 y 0.228 (moto', 0.112), ('P16 y 0.228 (moto', 0.374), ('P15 y 0.060 (outb', 0.112), ('P16 y 0.060 (outb', 0.171)]
+solid foam E,G x 0.5 {'sh_spar': 0.6213, 'sh_foam': 0.3787, 'GJs': 3.162, 'GJf': 1.9273, 'J_s': 0.0, 'J_f': 0.0, 'tau_unit': 47688.574, 'xn': 0.0608, 'EIs': 38.2992, 'EIf': 217.1156, 'Jsolid': 0.0, 'Jbored': 0.0}
+    [('P15 y 0.38 (fin s', 0.229), ('P16 y 0.38 (fin s', 0.546), ('P15 y 0.228 (moto', 0.229), ('P16 y 0.228 (moto', 0.422), ('P15 y 0.060 (outb', 0.229), ('P16 y 0.060 (outb', 0.193)]
+solid foam E,G x 1 {'sh_spar': 0.4507, 'sh_foam': 0.5493, 'GJs': 3.162, 'GJf': 3.8545, 'J_s': 0.0, 'J_f': 0.0, 'tau_unit': 47688.574, 'xn': 0.0615, 'EIs': 42.2939, 'EIf': 428.8862, 'Jsolid': 0.0, 'Jbored': 0.0}
+    [('P15 y 0.38 (fin s', 0.158), ('P16 y 0.38 (fin s', 0.506), ('P15 y 0.228 (moto', 0.158), ('P16 y 0.228 (moto', 0.391), ('P15 y 0.060 (outb', 0.158), ('P16 y 0.060 (outb', 0.178)]
+solid foam E,G x 2 {'sh_spar': 0.2909, 'sh_foam': 0.7091, 'GJs': 3.162, 'GJf': 7.709, 'J_s': 0.0, 'J_f': 0.0, 'tau_unit': 47688.574, 'xn': 0.0629, 'EIs': 56.81, 'EIf': 838.285, 'Jsolid': 0.0, 'Jbored': 0.0}
+    [('P15 y 0.38 (fin s', 0.122), ('P16 y 0.38 (fin s', 0.484), ('P15 y 0.228 (moto', 0.122), ('P16 y 0.228 (moto', 0.374), ('P15 y 0.060 (outb', 0.122), ('P16 y 0.060 (outb', 0.171)]
+{'A': 0.0035072000000000002, 'xc': 0.095857299270073, 'Iz': 1.0154925880338688e-05, 'x0': 0.0, 'x1': 0.245, 'enclosed': 0.00361984}
+fin 0 x0 0.06 max |My| 9.29 max|Mx| 2.09 max|Mz| 8.08
+fin 0 x0 0.1225 max |My| 8.09 max|Mx| 2.09 max|Mz| 6.26
+fin 1 x0 0.06 max |My| 9.63 max|Mx| 3.31 max|Mz| 5.19
+fin 1 x0 0.1225 max |My| 9.04 max|Mx| 3.31 max|Mz| 4.02
+Tmax limit 9.634621343112354 cap spar alone (limit N m) 3.0550850297952925 cap foam alone 0.7068052480439212 sum 3.7618902778392136 elastic-share cap 1.4478857591221475
+enclosed area 0.00361984 skin torque needed (limit) from share-cap 8.186735583990206 q N/m 1130.8145641782794
+
+## bounds
+spar alone in-plane M cap (limit N m) 17.82 ; torsion cap 3.06
+y 0.38 (fin station): max Mz 13.34 N m, max T 9.63 N m (limit)  -> spar-alone in-plane RF 1.34, spar-alone torsion RF 0.32, spar+foam ductile-sum torsion RF 0.39
+y 0.228 (motor station): max Mz 23.33 N m, max T 9.63 N m (limit)  -> spar-alone in-plane RF 0.76, spar-alone torsion RF 0.32, spar+foam ductile-sum torsion RF 0.39
+y 0.060 (outboard of tray slot end 0.057): max Mz 38.70 N m, max T 9.63 N m (limit)  -> spar-alone in-plane RF 0.46, spar-alone torsion RF 0.32, spar+foam ductile-sum torsion RF 0.39

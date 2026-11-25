@@ -1,0 +1,94 @@
+
+## spar only (T-066 model)
+  kd: strong in band: [(np.float64(203.4), 0.01, 0.52)];  highest strong below 68.8 Hz (margin 37 %), lowest strong above 442.4 Hz (margin 38 %);  max coupling of any in-band mode 0.518 at 203 Hz
+  nom: strong in band: [(np.float64(217.9), 0.01, 0.52)];  highest strong below 71.5 Hz (margin 31 %), lowest strong above 478.5 Hz (margin 49 %);  max coupling of any in-band mode 0.518 at 218 Hz
+  hi: strong in band: [(np.float64(247.1), 0.01, 0.52)];  highest strong below 83.9 Hz (margin 12 %), lowest strong above 537.7 Hz (margin 68 %);  max coupling of any in-band mode 0.518 at 247 Hz
+  nom modes 60-600 Hz (f, cx, cy, top groups):
+       71.5  cx 0.795 cy 0.560  rib 41%, arm 29%, spar 21%
+      147.9  cx 0.000 cy 0.074  spar 63%, rib 26%, bridge 9%
+      180.0  cx 0.053 cy 0.000  spar 62%, bridge 18%, rib 14%
+      208.4  cx 0.033 cy 0.011  spar 74%, rib 18%, bridge 6%
+      217.9  cx 0.015 cy 0.518  spar 66%, bridge 18%, rib 10%
+      313.9  cx 0.000 cy 0.007  fin 54%, rib 42%, spar 3%
+      314.1  cx 0.002 cy 0.005  fin 54%, rib 42%, spar 4%
+      385.7  cx 0.034 cy 0.000  spar 57%, fin 27%, bridge 15%
+      390.6  cx 0.000 cy 0.065  spar 83%, bridge 9%, rib 6%
+      395.4  cx 0.033 cy 0.235  fin 88%, spar 9%, bridge 3%
+      410.8  cx 0.022 cy 0.000  fin 69%, spar 20%, bridge 10%
+      436.8  cx 0.043 cy 0.249  fin 84%, spar 10%, bridge 3%
+      437.9  cx 0.000 cy 0.221  bridge 53%, spar 25%, arm 20%
+      444.4  cx 0.007 cy 0.000  fin 95%, spar 3%, bridge 2%
+      454.1  cx 0.035 cy 0.073  bridge 64%, spar 18%, arm 17%
+      460.2  cx 0.060 cy 0.177  arm 86%, fin 5%, bridge 4%
+      460.4  cx 0.025 cy 0.059  arm 80%, bridge 17%, spar 3%
+      463.6  cx 0.000 cy 0.000  arm 100%, fin 0%, spar 0%
+      463.6  cx 0.000 cy 0.000  arm 100%, bridge 0%, spar 0%
+      478.5  cx 0.101 cy 0.599  spar 38%, bridge 26%, arm 18%
+      493.1  cx 0.000 cy 0.173  bridge 86%, arm 12%, spar 2%
+      500.5  cx 0.032 cy 0.038  spar 57%, bridge 39%, rib 2%
+      513.4  cx 0.029 cy 0.074  bridge 56%, spar 40%, rib 3%
+      556.7  cx 0.003 cy 0.000  bridge 86%, spar 14%, rib 0%
+      562.2  cx 0.063 cy 0.593  bridge 76%, spar 17%, rib 4%
+      589.0  cx 0.000 cy 0.389  arm 61%, bridge 33%, spar 6%
+
+## cell nominal
+  kd: strong in band: none;  highest strong below 83.0 Hz (margin 13 %), lowest strong above 654.3 Hz (margin 104 %);  max coupling of any in-band mode 0.257 at 166 Hz
+  nom: strong in band: none;  highest strong below 88.5 Hz (margin 6 %), lowest strong above 700.8 Hz (margin 118 %);  max coupling of any in-band mode 0.257 at 177 Hz
+  hi: strong in band: [(np.float64(100.9), 0.74, 0.91)];  highest strong below 50.2 Hz (margin 87 %), lowest strong above 794.8 Hz (margin 148 %);  max coupling of any in-band mode 0.911 at 101 Hz
+  nom modes 60-600 Hz (f, cx, cy, top groups):
+       65.3  cx 0.000 cy 0.119  rib 70%, spar 22%, bridge 4%
+       72.6  cx 0.070 cy 0.361  rib 66%, spar 26%, bridge 4%
+       88.5  cx 0.756 cy 0.947  arm 40%, spar 39%, bridge 13%
+      139.7  cx 0.018 cy 0.000  rib 72%, spar 19%, fin 6%
+      177.4  cx 0.029 cy 0.257  rib 82%, fin 10%, spar 8%
+      199.7  cx 0.000 cy 0.061  spar 74%, rib 14%, bridge 8%
+      277.0  cx 0.020 cy 0.017  spar 70%, rib 14%, fin 10%
+      321.6  cx 0.000 cy 0.002  fin 53%, rib 39%, spar 7%
+      324.8  cx 0.033 cy 0.000  fin 60%, spar 22%, bridge 11%
+      325.1  cx 0.017 cy 0.029  fin 45%, rib 35%, spar 19%
+      386.1  cx 0.018 cy 0.261  fin 97%, bridge 1%, spar 1%
+      447.3  cx 0.013 cy 0.000  fin 86%, spar 10%, bridge 4%
+      459.8  cx 0.033 cy 0.031  arm 98%, bridge 2%, spar 0%
+      460.3  cx 0.010 cy 0.012  fin 89%, rib 8%, arm 2%
+      462.1  cx 0.028 cy 0.018  arm 97%, fin 2%, bridge 1%
+      463.6  cx 0.000 cy 0.000  arm 100%, bridge 0%, spar 0%
+      463.6  cx 0.000 cy 0.000  arm 100%, bridge 0%, spar 0%
+      484.5  cx 0.000 cy 0.221  bridge 78%, arm 20%, spar 2%
+      488.1  cx 0.011 cy 0.014  bridge 99%, arm 0%, spar 0%
+      491.7  cx 0.028 cy 0.000  fin 48%, spar 24%, rib 15%
+      495.5  cx 0.000 cy 0.277  bridge 65%, arm 31%, spar 3%
+      549.9  cx 0.121 cy 0.135  bridge 92%, arm 7%, spar 0%
+      565.4  cx 0.000 cy 0.167  spar 83%, arm 11%, bridge 3%
+      568.7  cx 0.061 cy 0.110  bridge 93%, spar 5%, arm 2%
+      575.3  cx 0.011 cy 0.000  bridge 100%, spar 0%, arm 0%
+
+## cell lower bound
+  kd: strong in band: none;  highest strong below 78.5 Hz (margin 20 %), lowest strong above 622.0 Hz (margin 94 %);  max coupling of any in-band mode 0.209 at 148 Hz
+  nom: strong in band: none;  highest strong below 83.3 Hz (margin 13 %), lowest strong above 666.3 Hz (margin 108 %);  max coupling of any in-band mode 0.209 at 159 Hz
+  hi: strong in band: [(np.float64(95.5), 0.78, 0.85)];  highest strong below 83.6 Hz (margin 12 %), lowest strong above 755.5 Hz (margin 135 %);  max coupling of any in-band mode 0.853 at 95 Hz
+  nom modes 60-600 Hz (f, cx, cy, top groups):
+       63.6  cx 0.000 cy 0.123  rib 70%, spar 22%, bridge 5%
+       70.6  cx 0.219 cy 0.499  rib 61%, spar 27%, bridge 5%
+       83.3  cx 0.832 cy 0.930  arm 43%, spar 34%, rib 12%
+      117.2  cx 0.040 cy 0.000  rib 48%, spar 40%, bridge 8%
+      158.9  cx 0.038 cy 0.209  rib 65%, spar 27%, fin 7%
+      185.9  cx 0.000 cy 0.066  spar 72%, rib 16%, bridge 9%
+      259.4  cx 0.024 cy 0.012  spar 75%, rib 13%, bridge 6%
+      281.6  cx 0.043 cy 0.000  bridge 30%, fin 30%, spar 21%
+      319.2  cx 0.000 cy 0.004  fin 54%, rib 40%, spar 6%
+      320.8  cx 0.013 cy 0.024  fin 50%, rib 39%, spar 11%
+      381.9  cx 0.019 cy 0.317  fin 95%, spar 3%, bridge 1%
+      420.8  cx 0.013 cy 0.000  fin 83%, bridge 8%, spar 7%
+      453.1  cx 0.008 cy 0.057  fin 93%, spar 4%, rib 3%
+      459.7  cx 0.034 cy 0.030  arm 98%, bridge 2%, spar 0%
+      462.0  cx 0.029 cy 0.015  arm 99%, bridge 1%, fin 0%
+      463.6  cx 0.000 cy 0.000  arm 100%, bridge 0%, spar 0%
+      463.6  cx 0.000 cy 0.000  arm 100%, bridge 0%, spar 0%
+      464.2  cx 0.013 cy 0.000  fin 83%, rib 9%, bridge 4%
+      482.3  cx 0.000 cy 0.250  bridge 65%, arm 26%, spar 9%
+      487.9  cx 0.011 cy 0.014  bridge 99%, arm 0%, spar 0%
+      492.9  cx 0.000 cy 0.198  bridge 75%, arm 16%, spar 9%
+      525.6  cx 0.000 cy 0.202  spar 77%, arm 16%, bridge 3%
+      545.6  cx 0.120 cy 0.233  bridge 88%, arm 7%, spar 3%
+      565.4  cx 0.061 cy 0.112  bridge 92%, spar 6%, arm 2%
+      573.0  cx 0.011 cy 0.000  bridge 99%, spar 1%, rib 0%

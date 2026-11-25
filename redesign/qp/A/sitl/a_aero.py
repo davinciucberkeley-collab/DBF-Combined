@@ -1,7 +1,7 @@
 """Concept A forward-flight aerodynamics and APC 9x4.5MR / MN2212 / pack model for a_plant.py (QP-3 SITL-FLIGHT). Pure stdlib.
 Every constant is EST unless a source is named. Body frame FRD in cruise attitude: x nose (chord), y right wing, z belly. u, v, w = body velocity relative to the air.
 Self test: python a_aero.py  (prints Vs, L/D at 17 m/s, trim, prop thrust and power vs airspeed)."""
-import math, bisect
+import os, math, bisect
 import a_apc_data as D
 
 RHO = 1.225
@@ -128,6 +128,8 @@ def fatt_f(vf, u):
 
 # ---------------- APC 9x4.5MR, MN2212 KV780, pack
 DIA = 9 * 0.0254; KV = 780.0; RM = 0.173; I0 = 0.5; KT = 60 / (2 * math.pi * KV)
+if os.environ.get("A_MOTOR", "mn2212").lower() == "x2216":   # T-097: SunnySky X2216 V3 880KV short shaft (D-227; prop_a.py T-083: Kv 880, Rm 89 mohm, I0 0.5 A). Default stays MN2212 so old runs reproduce.
+    KV = 880.0; RM = 0.089; I0 = 0.5; KT = 60 / (2 * math.pi * KV)
 DER = 0.93          # prop_a.py R3 derate on thrust (same rpm, same power)
 DOWNLOAD = 0.97     # sizing_a.py slipstream download
 

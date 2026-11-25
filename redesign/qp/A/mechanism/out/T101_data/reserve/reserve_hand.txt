@@ -1,0 +1,42 @@
+T-101 reserve hand derivation (reserve_hand.py)
+V 17.0 m/s q 177.0 Pa M 1.8807 kg; Ixx (roll) 0.1011 Iyy 0.0402 Izz 0.1129 kg m2
+roll axis: body x (nose / chord axis in cruise, a_aero.py header l.2); I_roll = Ixx = 0.1011 kg m2 = cad_mass.json I_cad_axes.Ixx 0.0882 x M/mass_basic 1.1461 (a_plant.py l.66-68: I = (Ixx, Iyy, Izz) x M/basic, "diagonal terms are the same in body axes"); pitch axis Iyy 0.0402, yaw Izz 0.1129
+CLA 3.737 CLD 0.3226 SM 0.0761 x_e 0.1923 y_e 0.1950 Clp -0.30 CLB -0.040 CMQ -1.00
+Cl_delta 0.0699 /rad; steady p 8.800 deg/s per deg diff; L_p 0.2783 N m s/rad; tau 0.363 s; p at 20 deg 176, at mixer cap 114 deg/s
+roll criteria: name | bank | t s | p_ss req deg/s | pb/2V | delta deg | within 20 | within mixer cap
+  A-P11 steady 90 deg/s                           None     -     90.0 0.0416    10.2 True True
+  MIL-F-8785C Cl I L1 Cat A 60 deg 1.3 s            60  1.30     63.4 0.0293     7.2 True True
+  MIL-F-8785C Cl I L1 Cat A 45 deg 1.3 s            45  1.30     47.5 0.0220     5.4 True True
+  MIL-F-8785C Cl I L1 Cat B 60 deg 1.7 s            60  1.70     44.8 0.0207     5.1 True True
+  MIL-F-8785C Cl I L2 Cat B 60 deg 2.5 s            60  2.50     28.1 0.0130     3.2 True True
+  MIL-F-8785C Cl I L1 Cat C 30 deg 1.3 s            30  1.30     31.7 0.0146     3.6 True True
+  FAR 23.157 30 to 30 deg in 4 s (landing)          60  4.00     16.5 0.0076     1.9 True True
+  FAR 23.157 30 to 30 deg in 5 s (takeoff)          60  5.00     12.9 0.0060     1.5 True True
+  MIL Cl I L1 Cat A 60 deg 1.3 s, b/V scaled        60  0.28    729.0 0.3368    82.8 False False
+  MIL Cl I L1 Cat B 60 deg 1.7 s, b/V scaled        60  0.36    455.9 0.2106    51.8 False False
+  MIL Cl I L2 Cat B 60 deg 2.5 s, b/V scaled        60  0.53    239.3 0.1105    27.2 False False
+governing roll 90 deg/s -> delta_roll 10.23 deg; time to 90 % of steady 0.84 s
+plant check: {"mixer_cap_single_axis_deg": 13.0, "p_at_mixer_cap_degs": 114.4062911690508, "implied_delta_for_106p9_deg": 12.14705927269795, "sitl_roll_141_degs": 106.9, "sitl_roll_150_degs": 106.4}
+gust w 3.0 m/s (8 - 5); sigma_w {'light 15 kt W20': 0.77, 'moderate 30 kt W20': 1.54, 'RFS limit W20 = 8 m/s': 0.8}; Dryden 3 sigma at W20 = 8 m/s 2.40
+gust static 3.79 deg per m/s -> 11.4 deg at w; dyn peak T 1.1 s: 3.71 deg (1 m/s 1.24); worst over T 3.71 deg (1 m/s 1.24); lateral static 5.79 deg (1 m/s 1.93)
+dyn peak vs T (w 3): 0.5s 5.35, 1.0s 3.88, 2.0s 2.45, 3.0s 1.86, 4.0s 1.51, 6.0s 1.11
+dyn peak vs T (w 1): 0.5s 1.78, 1.0s 1.29, 2.0s 0.82, 3.0s 0.62, 4.0s 0.50, 6.0s 0.37
+M_delta 60.1 1/s2, M_alpha 67.5 1/s2 (wn 8.22 rad/s), M_q 1.71 1/s, Z_alpha 4.552 1/s, Kq 0.230, Kth 3.46 1/s
+mixer: {"MIXING_GAIN": 0.65, "single_axis_cap_deg": 13.0, "saturates_when_r_plus_p_above": 1.5384615384615383, "servo5_deg": [-19.88, 19.04], "servo6_deg": [-19.04, 19.88], "pwm_limit_deg": 19.04, "pitch_cmd_fraction_at_peak": 0.7507692307692307, "roll_cmd_fraction_at_governing": 0.7866700255758908, "stops_deg": 20.0, "note": "surface = G (roll +- pitch) x 500 us; a full single-axis command gives G x 20 = 13 deg; the PWM limit (SERVO5/6 MIN/MAX) clips before the 20 deg stop"}
+combination rows: case | roll deg/s | d_roll | pitch | gust | lateral | total | margin(20) | margin(pwm) | ok
+  A-P11 90 deg/s + vertical gust 3 m/s (dyn) + side gust 3 m/s     90.0  10.23  9.76   3.71  5.79  29.49  -9.49 -10.45 False
+  A-P11 + vertical gust 3 m/s (dyn), no side gust                  90.0  10.23  9.76   3.71  0.00  23.70  -3.70  -4.66 False
+  A-P11 + vertical gust 3 m/s static-hold bound + side gust        90.0  10.23  9.76  11.36  5.79  37.13 -17.13 -18.09 False
+  A-P11 + gust 1 m/s (dyn) + side gust 1 m/s                       90.0  10.23  9.76   1.24  1.93  23.15  -3.15  -4.11 False
+  pitch + vertical gust 3 m/s only (no roll)                        0.0   0.00  9.76   3.71  0.00  13.47   6.53   5.57 True
+  pitch + roll 90 only (no gust)                                   90.0  10.23  9.76   0.00  0.00  19.99   0.01  -0.95 True
+  MIL-F-8785C Cl I L1 Cat A 60 deg 1.3 s + gust 3 m/s dyn + side   63.4   7.20  9.76   3.71  5.79  26.46  -6.46  -7.42 False
+  MIL-F-8785C Cl I L1 Cat A 45 deg 1.3 s + gust 3 m/s dyn + side   47.5   5.40  9.76   3.71  5.79  24.66  -4.66  -5.62 False
+  MIL-F-8785C Cl I L1 Cat B 60 deg 1.7 s + gust 3 m/s dyn + side   44.8   5.09  9.76   3.71  5.79  24.35  -4.35  -5.31 False
+  MIL-F-8785C Cl I L2 Cat B 60 deg 2.5 s + gust 3 m/s dyn + side   28.1   3.19  9.76   3.71  5.79  22.45  -2.45  -3.41 False
+  MIL-F-8785C Cl I L1 Cat C 30 deg 1.3 s + gust 3 m/s dyn + side   31.7   3.60  9.76   3.71  5.79  22.86  -2.86  -3.82 False
+  FAR 23.157 30 to 30 deg in 4 s (landing) + gust 3 m/s dyn + side   16.5   1.87  9.76   3.71  5.79  21.13  -1.13  -2.09 False
+  FAR 23.157 30 to 30 deg in 5 s (takeoff) + gust 3 m/s dyn + side   12.9   1.47  9.76   3.71  5.79  20.73  -0.73  -1.69 False
+  MIL Cl I L1 Cat B 60 deg 1.7 s, b/V scaled + gust 3 m/s dyn + side  455.9  51.81  9.76   3.71  5.79  71.07 -51.07 -52.03 False
+  MIL Cl I L2 Cat B 60 deg 2.5 s, b/V scaled + gust 3 m/s dyn + side  239.3  27.19  9.76   3.71  5.79  46.45 -26.45 -27.41 False
+RESULT NO: combined 29.49 deg vs stop 20 deg, margin -9.49 deg (pwm -10.45); roll that fits with gust+side 7 deg/s; gust that fits with 90 deg/s (static) 0.00 m/s

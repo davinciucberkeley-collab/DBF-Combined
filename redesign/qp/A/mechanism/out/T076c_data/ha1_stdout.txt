@@ -1,0 +1,56 @@
+hub aft-face nodes for the hub-group load: 3611
+chol flag 0, 151.0 s, nnz(R) 2391 M
+solved 339.6 s, residual 1.1e-09 
+relative residual per load case: 5.4e-10 9.5e-10 1.1e-09 6.1e-11 4.2e-11 3.9e-11 5.2e-10 9.4e-10 1.1e-09 6.1e-11 4.2e-11 3.9e-11 5.2e-10 8.5e-10 1.0e-09 6.1e-11 4.2e-11 3.9e-11 5.4e-10 8.6e-10 1.0e-09 6.1e-11 4.2e-11 3.9e-11 2.3e-11 9.6e-10 9.2e-10 9.7e-10 3.6e-10 3.8e-10
+equilibrium max error 1.9e-10
+mesh 427333 elements, 1967196 free dof, hub volume 20548 mm3 = 55.5 g aluminium (2.70 g/cm3), 482 s; equilibrium err 1.9e-10
+landing combos from cache 301
+combos: landing 301 (A 24 / B 30 coeffs), dynamic D-1 1024
+judge: 1113332 hub Gauss points, hub volume 20550 mm3 (sum of weights), 478 tied-edge nodes, exclusion 0.50 mm removes 0.29 % of the hub volume
+  judge combos 24 / 301
+  judge combos 264 / 301
+A_RB whole hub: old p99 18.7 | vol-weighted p99 21.0 p99.9 34.4 | max excl 81.7 (RF at scale 1: 4.04 / 1.70 / 1.24)  [1165 s]
+   whole hub                                                    old p99   18.7  w p99   21.0  w p99.9   34.4  max excl   81.7  max  112.4  RF(p99.9, max excl) 4.04 / 1.70  (excluded vol 0.29 %)
+   collar (x > 24)                                              old p99   21.6  w p99   23.4  w p99.9   40.1  max excl   81.7  max  112.4  RF(p99.9, max excl) 3.47 / 1.70  (excluded vol 0.09 %)
+   aft block / bore wall (x > floor+2, <= 24)                   old p99   20.1  w p99   19.4  w p99.9   26.0  max excl   33.4  max   33.4  RF(p99.9, max excl) 5.35 / 4.16  (excluded vol 0.00 %)
+   floor band (tube-B surface to floor+2 mm, r < bore+2)        old p99   20.1  w p99   18.2  w p99.9   22.9  max excl   33.2  max   33.2  RF(p99.9, max excl) 6.06 / 4.19  (excluded vol 1.42 %)
+   sleeves outside the block box                                old p99   16.5  w p99   20.9  w p99.9   32.6  max excl   50.6  max   50.6  RF(p99.9, max excl) 4.27 / 2.75  (excluded vol 0.79 %)
+   block forward of the floor band                              old p99   16.3  w p99   18.3  w p99.9   25.8  max excl   48.5  max   48.5  RF(p99.9, max excl) 5.40 / 2.87  (excluded vol 0.00 %)
+judge: 1113332 hub Gauss points, hub volume 20550 mm3 (sum of weights), 478 tied-edge nodes, exclusion 0.50 mm removes 0.29 % of the hub volume
+  judge combos 24 / 301
+  judge combos 264 / 301
+B_RB whole hub: old p99 18.9 | vol-weighted p99 20.5 p99.9 33.6 | max excl 81.7 (RF at scale 1: 4.15 / 1.70 / 1.24)  [1461 s]
+   whole hub                                                    old p99   18.9  w p99   20.5  w p99.9   33.6  max excl   81.7  max  112.4  RF(p99.9, max excl) 4.15 / 1.70  (excluded vol 0.29 %)
+   collar (x > 24)                                              old p99   21.7  w p99   23.4  w p99.9   40.1  max excl   81.7  max  112.4  RF(p99.9, max excl) 3.47 / 1.70  (excluded vol 0.09 %)
+   aft block / bore wall (x > floor+2, <= 24)                   old p99   20.4  w p99   19.5  w p99.9   25.9  max excl   33.6  max   33.6  RF(p99.9, max excl) 5.36 / 4.14  (excluded vol 0.00 %)
+   floor band (tube-B surface to floor+2 mm, r < bore+2)        old p99   20.3  w p99   18.1  w p99.9   22.8  max excl   33.7  max   33.7  RF(p99.9, max excl) 6.10 / 4.13  (excluded vol 1.42 %)
+   sleeves outside the block box                                old p99   15.5  w p99   19.1  w p99.9   29.3  max excl   43.2  max   43.2  RF(p99.9, max excl) 4.75 / 3.22  (excluded vol 0.79 %)
+   block forward of the floor band                              old p99   16.2  w p99   18.0  w p99.9   24.9  max excl   41.8  max   41.8  RF(p99.9, max excl) 5.58 / 3.33  (excluded vol 0.00 %)
+judge: 1113332 hub Gauss points, hub volume 20550 mm3 (sum of weights), 478 tied-edge nodes, exclusion 0.50 mm removes 0.29 % of the hub volume
+  judge combos 24 / 1024
+  judge combos 264 / 1024
+  judge combos 504 / 1024
+  judge combos 744 / 1024
+  judge combos 984 / 1024
+A_DYN whole hub: old p99 -1.0 | vol-weighted p99 21.8 p99.9 35.0 | max excl 79.1 (RF at scale 1: 3.97 / 1.76 / 1.18)  [1769 s]
+   whole hub                                                    old p99   -1.0  w p99   21.8  w p99.9   35.0  max excl   79.1  max  117.5  RF(p99.9, max excl) 3.97 / 1.76  (excluded vol 0.29 %)
+   collar (x > 24)                                              old p99   -1.0  w p99   21.9  w p99.9   37.1  max excl   79.1  max  117.5  RF(p99.9, max excl) 3.75 / 1.76  (excluded vol 0.09 %)
+   aft block / bore wall (x > floor+2, <= 24)                   old p99   -1.0  w p99   19.2  w p99.9   24.7  max excl   37.3  max   37.3  RF(p99.9, max excl) 5.63 / 3.73  (excluded vol 0.00 %)
+   floor band (tube-B surface to floor+2 mm, r < bore+2)        old p99   -1.0  w p99   16.5  w p99.9   20.1  max excl   33.1  max   33.1  RF(p99.9, max excl) 6.92 / 4.20  (excluded vol 1.42 %)
+   sleeves outside the block box                                old p99   -1.0  w p99   24.6  w p99.9   38.8  max excl   66.8  max   66.8  RF(p99.9, max excl) 3.58 / 2.08  (excluded vol 0.79 %)
+   block forward of the floor band                              old p99   -1.0  w p99   21.2  w p99.9   28.5  max excl   64.2  max   64.2  RF(p99.9, max excl) 4.88 / 2.17  (excluded vol 0.00 %)
+F1 whole hub: w p99.9 9.6 max excl 21.2 -> RF 14.48 / 6.57
+F2 whole hub: w p99.9 11.0 max excl 24.0 -> RF 12.70 / 5.81
+S1 whole hub (factor 1.0): w p99.9 20.5 max excl 44.1 -> RF 11.73 / 5.44
+S2 whole hub (factor 1.0): w p99.9 26.6 max excl 61.0 -> RF 9.03 / 3.93
+S3 whole hub (factor 1.0): w p99.9 7.8 max excl 18.6 -> RF 30.67 / 12.89
+TUBE/BOND RF landing RB x1.0 {"tube A": {"axial": 1.45, "hoop": 1.5, "shear": 0.77}, "tube B": {"axial": 1.37, "hoop": 1.58, "shear": 0.74}, "bond (mean shear, worst arm; x KP)": 0.89}
+TUBE/BOND RF landing RB x1.5 {"tube A": {"axial": 0.96, "hoop": 1.0, "shear": 0.52}, "tube B": {"axial": 0.91, "hoop": 1.06, "shear": 0.5}, "bond (mean shear, worst arm; x KP)": 0.6}
+TUBE/BOND RF landing RB x1.50 {"tube A": {"axial": 0.96, "hoop": 1.0, "shear": 0.52}, "tube B": {"axial": 0.91, "hoop": 1.06, "shear": 0.5}, "bond (mean shear, worst arm; x KP)": 0.6}
+TUBE/BOND RF D-1 dynamic wrenches {"tube A": {"axial": 1.16, "hoop": 1.24, "shear": 0.63}, "tube B": {"axial": 1.2, "hoop": 1.34, "shear": 0.65}, "bond (mean shear, worst arm; x KP)": 0.84}
+TUBE/BOND RF F1 {"tube A": {"axial": 4.75, "hoop": 4.8, "shear": 2.52}, "tube B": {"axial": 4.68, "hoop": 4.71, "shear": 2.48}, "bond (mean shear, worst arm; x KP)": 2.63}
+TUBE/BOND RF F2 {"tube A": {"axial": 4.09, "hoop": 4.11, "shear": 2.17}, "tube B": {"axial": 4.01, "hoop": 4.04, "shear": 2.13}, "bond (mean shear, worst arm; x KP)": 2.29}
+TUBE/BOND RF S1 (factor 1.0) {"tube A": {"axial": 2.62, "hoop": 2.64, "shear": 1.41}, "tube B": {"axial": 79.55, "hoop": 12.71, "shear": 16.79}, "bond (mean shear, worst arm; x KP)": 1.41}
+TUBE/BOND RF S2 (factor 1.0) {"tube A": {"axial": 2.52, "hoop": 2.02, "shear": 1.22}, "tube B": {"axial": 35.47, "hoop": 8.45, "shear": 10.28}, "bond (mean shear, worst arm; x KP)": 1.15}
+TUBE/BOND RF S3 (factor 1.0) {"tube A": {"axial": 8.06, "hoop": 6.62, "shear": 4.13}, "tube B": {"axial": 126.78, "hoop": 29.62, "shear": 37.96}, "bond (mean shear, worst arm; x KP)": 4.12}
+done 6228 s

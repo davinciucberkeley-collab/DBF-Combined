@@ -1,0 +1,8 @@
+  self-checks (max error, m): horn_hole 0.00e+00, rod_clevis_end 2.78e-17, rod_joint 0.00e+00, arm_tip 3.93e-17
+  static                                              0 part pairs penetrate > 0.05 mm
+  linkage zj=mid delta -21 deg                        2 part pairs penetrate > 0.05 mm
+  linkage zj=mid delta +0 deg                         0 part pairs penetrate > 0.05 mm
+  linkage zj=mid delta +21 deg                        2 part pairs penetrate > 0.05 mm
+  wire ends not on a termination: 0; wire folds: 0
+collide_a --linkage-poses: FAIL, 4 (486 bodies in 115 parts, 4 poses, 175 s)
+rc=1 wall=183 s

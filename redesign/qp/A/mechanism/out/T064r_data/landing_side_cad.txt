@@ -1,0 +1,30 @@
+## 1. Part capacity at the worst simulated foot load (30 N plateau, mu 0.40), RF = capacity / demand, factors as structures_a.py
+worst foot: normal 46.4 N, side 18.6 N (resultant 50.0 N); both maxima taken as simultaneous (conservative)
+- [BASELINE GEOMETRY, NOT THE A LOAD PATH, superseded by landing_path_a.py] shoe bond on fin corner, 1,500 mm2, allowable 0.1 MPa (C6 paper/foam value EST): 71.9 kPa -> RF 1.39
+- [BASELINE GEOMETRY, NOT THE A LOAD PATH] foam bearing at the fin slot (65 x 23 mm, both feet 18.6 N), allowable 120 kPa EST: 52.9 kPa -> RF 2.27
+- [BASELINE GEOMETRY, NOT THE A LOAD PATH] fin skin 0.1 mm CFRP bending at the root, M = 18.6 x 0.18 = 3.34 N m (structures_a.py s6 geometry), allowable 450 MPa EST: 31.8 MPa -> RF 14.1
+- rib torsion alone, ONE foot loaded sideways, lever 0.177 m, 30 MPa EST: capacity 24.4 N per foot (structures_a.py s6 row: 15 N gives RF 1.60); at 41.3 MPa (Tap Plastics pultruded shear sheet, checked 2026-11-18, test method not stated): 33.5 N
+- rib root bending alone, both feet sideways, arm 0.2670 m, 350 MPa EST: capacity 47.1 N per foot
+- rib root, combined bending + torsion + axial, all four feet resolved in the body frame each time step (landing_a.py): see the RF column below; minimum is the governing number
+
+## 2. Pad friction sweep (30 N plateau): side load per foot N / rib RF
+hard 7/7 combo               mu 0.30:  13.3 N RF  1.53  mu 0.40:  17.0 N RF  1.24  mu 0.50:  20.9 N RF  1.04  mu 0.60:  24.5 N RF  0.89  mu 0.70:  28.0 N RF  0.78
+hard 10 wide + drift .5 y    mu 0.30:  14.2 N RF  1.94  mu 0.40:  18.6 N RF  1.49  mu 0.50:  22.7 N RF  1.07  mu 0.60:  26.5 N RF  1.02  mu 0.70:  30.6 N RF  1.17
+hard 10 wide                 mu 0.30:  13.9 N RF  1.80  mu 0.40:  17.9 N RF  1.55  mu 0.50:  21.5 N RF  0.96  mu 0.60:  24.3 N RF  0.94  mu 0.70:  28.3 N RF  1.15
+normal 10 wide .5 + drift    mu 0.30:  11.9 N RF  2.31  mu 0.40:  16.0 N RF  1.78  mu 0.50:  19.9 N RF  1.08  mu 0.60:  24.0 N RF  0.97  mu 0.70:  27.9 N RF  1.07
+mu at RF = 1 (linear interp.) hard 7/7 combo: 0.53
+RF stays >= 1 over mu 0.30-0.70: hard 10 wide + drift .5 y (RF at 0.70 = 1.17)
+mu at RF = 1 (linear interp.) hard 10 wide: 0.49
+mu at RF = 1 (linear interp.) normal 10 wide .5 + drift: 0.57
+
+## 3. Plateau sweep at mu 0.40 (foot geometry lever: pad area x 0.17 MPa): worst stroke / n / side / rib RF over the four cases + hard narrow + drift
+Fp   24 N: stroke  20.3 mm  n 25.16  side  77.7 N  rib RF min  0.45  tilt_end max 3.0
+Fp   27 N: stroke  19.4 mm  n  9.85  side  17.2 N  rib RF min  1.36  tilt_end max 2.8
+Fp   30 N: stroke  17.5 mm  n 10.79  side  18.6 N  rib RF min  1.24  tilt_end max 2.5
+
+## 4. Touchdown envelopes: controlled (SITL touchdown records, 29 runs) and stated structural limits
+SITL max: sink .35, lat .52 (x), lean 0      stroke   3.0 mm  n 6.91  Fmax  33.2 N  side  13.3 N  tilt_end   0.2  drift   32 mm  rib RF 3.07
+SITL max: sink .35, lat .52 (y), lean 0      stroke   2.6 mm  n 7.18  Fmax  32.7 N  side  13.1 N  tilt_end   0.1  drift   56 mm  rib RF 3.42
+SITL lean 29 narrow, sink .35, lat .52 (x)   stroke  21.9 mm  n 140.17  Fmax 999.9 N  side 400.0 N  tilt_end 177.9  drift  643 mm  rib RF 0.11
+SITL lean 29 wide, sink .35, lat .52 (y)     stroke   9.0 mm  n 6.24  Fmax  43.0 N  side  17.2 N  tilt_end   0.5  drift  227 mm  rib RF 1.55
+SITL lean 19 wide, sink .35, lat .52 (y)     stroke   7.7 mm  n 5.49  Fmax  42.3 N  side  16.9 N  tilt_end   0.4  drift  165 mm  rib RF 1.30

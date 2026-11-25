@@ -1,0 +1,234 @@
+{
+ "branch": "concept-a-snapshot-2aba012d",
+ "sha": "2aba012d",
+ "usage_before": {
+  "usd": 49.060351,
+  "events": 1093,
+  "asOf": "2026-11-09T07:22:13.141Z"
+ },
+ "bom_total_computed": 1939.17,
+ "bom_parts": {
+  "goods": 1382.41,
+  "tax": 141.7,
+  "ship": 63.12,
+  "spend": 1592.23,
+  "reserve": 346.94,
+  "total": 1939.17,
+  "margin": 60.83
+ },
+ "bom_ext_sum": 1382.41,
+ "commit": {
+  "http": 201,
+  "created": true
+ },
+ "counts": {
+  "Hard constraints (requirements)": [
+   6,
+   6
+  ],
+  "Parts (parts)": [
+   6,
+   6
+  ],
+  "Bill of materials (items)": [
+   53,
+   53
+  ],
+  "Requirements (REQUIREMENTS-A)": [
+   45,
+   45
+  ],
+  "Bench and flight tests": [
+   11,
+   11
+  ],
+  "tree_objects_total": 367,
+  "tree_keys": [
+   "objectCount",
+   "tree"
+  ]
+ },
+ "package_ids": {
+  "root": "7a556fc3-9624-5b25-9553-13347611b24f",
+  "hard": "0fa81edb-47ad-54a8-b047-236e0029ccac",
+  "parts": "e9ab1cd7-b5d5-52a2-a936-0ad81bc8761a",
+  "bom": "51c7184b-2671-5ac6-ac40-7b6a59a99abb",
+  "reqs": "f22e6fbb-80c9-5b29-a0db-928aac70f94f",
+  "tests": "2c955c34-c5b7-5011-ae73-444a2caec674"
+ },
+ "spots": {
+  "BOM total": {
+   "http": 200,
+   "result": "{\"sessionId\": \"6d2fb6ba-c1fc-4b84-9e60-ff65603d7c7f\", \"toolbox\": \"Core\", \"tool\": \"ReadObject\", \"isError\": false, \"content\": {\"text\": \"Object Details:\\nName: BOM total\\nType: attribute\\nCanonical ID: ba6b75bc-f241-5c2f-bb48-4888abb430cc\\nDocumentation: Committed bom_a.py totals() at 2aba012d: goods x 1.1025 + shipping + FAA $5 + crash reserve $346.94 = $1,939.17. Sum of qty x unit cost alone is $1,382.41.\\nCreated By: ai:7812a928-16da-4079-bb90-47e796290d6a (2026-11-24T19:56:33.964Z)\\nModified By: ai:7812a928-16da-4079-bb90-47e796290d6a (2026-11-24T19:56:34.732Z)\\nReferences: N/A \\nParent: 51c7184b-2671-5ac6-ac40-7b6a59a99abb\\nAttribute Value: 1939.17\\nResolved Value: 1939.17  USD\\nKind: numb"
+  },
+  "Aircraft mass": {
+   "http": 200,
+   "result": "{\"sessionId\": \"6d2fb6ba-c1fc-4b84-9e60-ff65603d7c7f\", \"toolbox\": \"Core\", \"tool\": \"ReadObject\", \"isError\": false, \"content\": {\"text\": \"Object Details:\\nName: Mass\\nType: attribute\\nCanonical ID: df0f8200-2701-5757-8121-5f67daa93124\\nDocumentation: N/A\\nCreated By: ai:7812a928-16da-4079-bb90-47e796290d6a (2026-11-24T19:56:34.181Z)\\nModified By: ai:7812a928-16da-4079-bb90-47e796290d6a (2026-11-24T19:56:34.732Z)\\nReferences: N/A \\nParent: 39572b65-aedc-52da-ba6f-fc9bd934b710\\nAttribute Value: 1640.98\\nResolved Value: 1640.98  g\\nKind: number\\nUnit: g\\nEnums: [] (free-form)\\nCAD UUID Value: [df0f8200-2701-5757-8121-5f67daa93124] => 1640.98\\n\\n\\n\", \"parts\": []}}"
+  },
+  "P01 unit cost": {
+   "http": 200,
+   "result": "{\"sessionId\": \"6d2fb6ba-c1fc-4b84-9e60-ff65603d7c7f\", \"toolbox\": \"Core\", \"tool\": \"ReadObject\", \"isError\": false, \"content\": {\"text\": \"Object Details:\\nName: Unit cost\\nType: attribute\\nCanonical ID: 67f404a9-82fa-5faa-a99d-fa34b1b86c1e\\nDocumentation: N/A\\nCreated By: ai:7812a928-16da-4079-bb90-47e796290d6a (2026-11-24T19:56:33.275Z)\\nModified By: ai:7812a928-16da-4079-bb90-47e796290d6a (2026-11-24T19:56:33.297Z)\\nReferences: N/A \\nParent: 86980fd8-c3b3-5fdf-b08e-6e1bd591b374\\nAttribute Value: 22.99\\nResolved Value: 22.99  USD\\nKind: number\\nUnit: USD\\nEnums: [] (free-form)\\nCAD UUID Value: [67f404a9-82fa-5faa-a99d-fa34b1b86c1e] => 22.99\\n\\n\\n\", \"parts\": []}}"
+  },
+  "A-U1 requirement": {
+   "http": 200,
+   "result": "{\"sessionId\": \"6d2fb6ba-c1fc-4b84-9e60-ff65603d7c7f\", \"toolbox\": \"Core\", \"tool\": \"ReadObject\", \"isError\": false, \"content\": {\"text\": \"Object Details:\\nName: A-U1 Total physical spend <= $2,000 incl. tax, shipping, packs, charger, radio, test gear, tools, crash reserve. Makers Pass outside\\nType: requirement\\nCanonical ID: 5c737287-2532-5972-a5b7-d06ed781ad72\\nDisplay Short Name: A-U1\\nDocumentation: Requirement: Total physical spend <= $2,000 incl. tax, shipping, packs, charger, radio, test gear, tools, crash reserve. Makers Pass outside\\nClass: USER\\nDisp: carry\\nBasis: root `CLAUDE.md`. BOM-A (QP-4): $1,760.76 total / +$239.24 nominal, +$126.36 at +30 % on the 11 unverified lines; gate G7 "
+  },
+  "TP-1 test": {
+   "http": 200,
+   "result": "{\"sessionId\": \"6d2fb6ba-c1fc-4b84-9e60-ff65603d7c7f\", \"toolbox\": \"Core\", \"tool\": \"ReadObject\", \"isError\": false, \"content\": {\"text\": \"Object Details:\\nName: TP-1 Bench derate and one-motor current\\nType: test\\nCanonical ID: 958a5f46-d525-58f1-979e-9cae6b583571\\nDisplay Short Name: TP-1\\nDocumentation: Purpose / closes: Bench derate and one-motor current. `T-A-BENCH-THRUST`, `T-A-BENCH-MOTOR`, `CL-A-WINDOW-PRED`; derate 0.93 is EST (T-074 check 3). Threshold 0.873 repo arithmetic, about 0.905 with the 3 % download\\nPass number: **Derate >= 0.889 (at 1.913 kg, T-083)**; full lines in the T-083c re-spec\\nSpecimen: 1 X2216 V3 880KV + APC 9x4.5MR (+ MRP) on the stand (T-083c; was MN2212); repeat "
+  }
+ },
+ "usage_after": {
+  "usd": 49.060351,
+  "events": 1093,
+  "asOf": "2026-11-09T07:22:13.141Z"
+ },
+ "usage_unchanged": true,
+ "log": [
+  {
+   "step": "usage",
+   "http": 200,
+   "err": ""
+  },
+  {
+   "step": "create_branch",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "package_root[0]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "packages[0]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "bom_items[0]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "bom_items[40]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "bom_attrs[0]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "bom_attrs[40]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "bom_attrs[80]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "bom_attrs[120]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "bom_attrs[160]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "bom_attrs[200]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "parts[0]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "part_attrs[0]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "requirements[0]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "requirements[40]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "tests[0]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "hard_req[0]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "hard_constraints[0]",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "commit",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "tree",
+   "http": 200,
+   "err": ""
+  },
+  {
+   "step": "open_session",
+   "http": 201,
+   "err": ""
+  },
+  {
+   "step": "read BOM total",
+   "http": 200,
+   "err": ""
+  },
+  {
+   "step": "read Aircraft mass",
+   "http": 200,
+   "err": ""
+  },
+  {
+   "step": "read P01 unit cost",
+   "http": 200,
+   "err": ""
+  },
+  {
+   "step": "read A-U1 requirement",
+   "http": 200,
+   "err": ""
+  },
+  {
+   "step": "read TP-1 test",
+   "http": 200,
+   "err": ""
+  },
+  {
+   "step": "close_session",
+   "http": 200,
+   "err": ""
+  },
+  {
+   "step": "usage",
+   "http": 200,
+   "err": ""
+  }
+ ]
+}

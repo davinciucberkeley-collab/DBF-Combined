@@ -1,0 +1,197 @@
+diff --git a/redesign/qp/A/TEST-PLAN-O4B.md b/redesign/qp/A/TEST-PLAN-O4B.md
+index 619b1b06..749967ac 100644
+--- a/redesign/qp/A/TEST-PLAN-O4B.md
++++ b/redesign/qp/A/TEST-PLAN-O4B.md
+@@ -29,6 +29,7 @@ Limits not relaxed: RF >= 1.0, KF 1.725, KP 2.156, A-P3 window >= +-5 %, A-P16 (
+ | TP-8 | Glass skin. P15 wrinkling RF 1.13 baseline, 0.87 at zeta 0.10, 0.54 at the 1.61 floor; allowable is dry Vf 50 % x 0.70 EST (T-071) | Foam sandwich beams, 1 ply +-45 glass, n = 3 flexure + n = 3 torsion | Frame (low load), caliper, scale | Measured/EST wrinkling stress ratio r >= 1.15 (zeta 0.10) | 2 plies, +27 g (T-071) | 1.5 days (cure 24 h) | Team lab |
+ | TP-9 | Pad friction drag. T-068 hold point; P9a rib 0.86, 1.23 at mu 0.30 | Actual pad + UHMW face, n = 5 per surface | G02 cell (98 N is enough: breakaway about 9 N), 30 N dead load | Max of 5 <= 0.30 per surface | Face not approved: drag test at design mu 0.40 and RMRC rib twist coupon (T-068 F3b) | 0.5 day | Team lab, RFS |
+ | TP-10 | Tap test A-P10, hi-corner mode vs the re-based limit 88.0 Hz (84 Hz as modelled, margin 4.5 %) | Built cage and fin | Hammer, FC accelerometer | Mode <= limit | Reviewer, `T-A-TAP` | after the build | Team lab |
++| TP-10b | **T-A-TAP (D-233 A, T-085): D-185 (a) / A-P10(a) measured on the built airframe.** Decides the case the beam FE cannot (wing cell, pack on the tray, hub joint; `T085_report.md`). Measures every mode below 400 Hz and its motor coupling cx, cy (the FE definition) | The assembled airframe: 4 motors with props, ESC, FC, wiring, **pack with tray, straps and pad installed**, fins, no battery change; weighed; hung free-free (method in the TP-10b sheet near the end of this file) | Pendulum hammer (steel, soft-tip option; $0, shop or team stock), 1 kg reference mass on the G02 scale, H743-Wing IMU raw batch log (V03 in the BOM; **rate >= 2 kHz to be confirmed before the test, as TP-3**), laptop FFT / ring-down fit script (team, $0) | **No mode with cx or cy >= 0.5 / (1 + u) inside 94-321 Hz** (u = the measured repeatability, TP-10b sheet; band and 0.5 unchanged, A-P10(a)). Also: every measured mode in 60-400 Hz within +-20 % of the updated FE (A-P10(c) tap tolerance) | Strong mode in band: the D-233 C design trade (bridge soft in z / stiff in torsion, or the tray carried by the wing centre node, `T085_report.md` s6) before the first tethered hover; no Dillon-level limit change. Frequency outside +-20 %: re-tune the rate loop (A-P10(c)) | 0.5 day (setup 1 h, 60 hit sets, fit) | Team lab, Jacobs makerspace (`T-A-TAP`), after the build |
+ 
+ Existing coupons carried unchanged: RMRC rib twist (`ASM-A-RIB-TWIST`), horn stall bench, C-6 pad cup (folded into TP-3). H-1 motor-base temperature is run inside TP-1.
+ 
+@@ -286,6 +287,22 @@ Rib torsion coupon (T083_report s10): the line rises from 79 to about 92 MPa at
+ | **Pass** | **Bearing stress on the CF wall at failure (min of 5) >= 48.5 MPa** (the s3 demand, RF 1.0), no wall crushing at that load. The CF wall bearing allowable has no source value ("—"); the test sets it. |
+ | On fail | Longer socket than drawn or a bonded wall doubler; the reviewer rules and the saddle-loadpath row is re-run. |
+ 
++### TP-10b (new, T-085): T-A-TAP: modal tap test of the built airframe (D-185 (a), A-P10(a) and (c))
++Why a test: the beam FE puts the governing mode at 84-107 Hz (band edge 94 Hz) or places strong modes at 230-330 Hz depending on the wing cell, the pack on its tray and the hub joint, none of which it can settle (`T085_report.md`, `T066_record.md` s5). D-185 (a) is therefore judged on the measured modes; the rule is not changed.
++**Method (category: test; the processing is the FE metric applied to measured driving-point data).**
++| Step | Action |
++|---|---|
++| 1 Setup | Fully assembled airframe as flown (4 motors with props and nuts, ESC, FC, wiring, pack on the tray with both straps and the pad, fins, pack at the nominal tray position). Weigh it (G02 scale) and mark the pack position. Hang it free-free from two soft elastic cords (bungee loops, 0.6 m or longer) round the spar at |y| 0.15 m, level, nose up not required: the rigid-body hang modes must be < 2 Hz (check by one tap and the FFT; if not, lengthen the cords). The FE is free-free. |
++| 2 Sensor | The H743-Wing IMU (V03) is the accelerometer: take the FC off its stack and tape it (rigid, 3 axes aligned to x aft, y right, z up) to the station being tested; log the raw IMU batch (ArduPilot `INS_LOG_BAT_*` raw batch logging). **Confirm the logged accelerometer rate is >= 2 kHz and the range is not clipped by the hit before the test** (D-223 / TP-3 rule); if not, use a +-16 g I2C accelerometer on the Nano (about $5-10 EST, not in the BOM, so a purchase to approve). Phone accelerometers are not used (rate about 400 Hz or less, below the 321 Hz band edge needs). Mass of the FC and tape stays on the station; the FE lump is corrected by the weighed mass. |
++| 3 Impulse | Pendulum hammer released from a fixed angle (fixed height, marked) at the motor cup (X-mount plate) so the hit is at the driving point. Calibrate the impulse I (N s) by hitting the 1 kg reference mass hung free with the FC on it: I = m x (peak velocity change = integral of the logged acceleration); repeat 5 times, I is the mean, u_I the scatter. A soft tip lengthens the pulse to about 2-4 ms (flat to > 100 Hz only: check the pulse width on the reference mass; use the hard tip for the 100-400 Hz band). |
++| 4 Driving points | Four motor stations (UR, LL, LR, UL), three axes each: hit along x (thrust), y, z at the station while the FC sits on the same cup: 12 sets, 5 hits each (60 hits), 2 s record per hit. Plus one set each at the hub (x, y, z) and on the pack (z) for the shape check. |
++| 5 Processing | For each record fit the sum of decaying sinusoids (or read the FFT peaks, then a half-power / log-decrement damping zeta_k): the acceleration amplitude of mode k at the driving point is A_k = omega_k x phi^2 x I, so **phi_ik^2 = A_k / (omega_k I)** (mass-normalised, kg^-1; the same quantity as the FE `v` squared). cx_k = sqrt(sum over the 4 motors of phi_x^2), cy_k = sqrt(sum over the 4 motors of (phi_y^2 + phi_z^2)): the FE definition used in `structures_a.py`. u = sqrt(u_I^2 + (scatter of A_k over the 5 hits)^2 + (0.10 sensor-mass allowance EST)^2), as a fraction. |
++| 6 Pass rule | **D-185 (a), unchanged: no mode in 94-321 Hz (hover 1P / 1.2 to cruise 2P x 1.2) with cx or cy >= 0.5.** Applied to the measurement as: pass if every mode in the band has max(cx_k, cy_k) x (1 + u) < 0.5; fail if any mode has max(cx_k, cy_k) / (1 + u) >= 0.5; between the two the mode is "undecided" and counts as a fail until the FE with the stiffness updated to the measured frequencies (change the hub-joint and tray / pad stiffness only, keep the CAD masses) gives cx, cy < 0.5 for it. A mode seen only at one motor station (phi^2 at one motor >= 0.25 kg^-1 alone) is strong by itself. |
++| 7 A-P10(c) | Every measured mode in 60-400 Hz within +-20 % of the FE (the corner that brackets it: kd / nom / hi). Modes that move more than 20 %: re-run the rate-loop gain-margin check with the measured frequencies (`fu_cage.py` method, D-191). |
++| 8 Record | Frequencies, zeta, phi^2 by station and axis, I, u, the hang-mode frequency, the FC rate, photographs of the hang; one table in `T-A-TAP` evidence. |
++| Equipment | In the BOM: FC (V03), motors and props, G02 scale + caliper. $0: pendulum hammer, 1 kg reference mass (weighed on G02), bungee cords, laptop and Python. Not in the BOM, only if the IMU rate fails: a +-16 g I2C accelerometer ($5-10 EST). No force hammer, force frame or purchase is needed (the impulse is calibrated on the reference mass). |
++| When / who | After the build and before the first tethered hover (the VIBE check in A-P10(d) is the second line); about 0.5 day, 2 people, team lab or the Jacobs makerspace. The result closes the D-185 (a) row; the test does not gate the 2026-12-15 go/no-go (s0 item 6). |
++
+ ### TP-11 (new): A-P6 stall, CLmax measurement (gates A-P6, not the 15 Dec go/no-go)
+ A-P6 (DERIVED): clean stall Vs <= cruise / 1.3. Vs = sqrt(2 m g / (rho S CLmax)), S 0.22 m^2, rho 1.225, CLmax 0.75 EST gives 1.3 Vs = 17.71 m/s at 1.913 kg (T083_report s2.3) and **17.53 m/s at 1.873 kg** (T083b_report s0), both > 17.0. D-228: A-P6 is gated by a measured stall; **pass line CLmax >= 0.81**. (T083_report s2.3 needs 0.81 at 1.913 kg by 2 m g / (rho S (17/1.3)^2); the same formula at 1.873 kg gives about 0.80, arithmetic by T-083c; the line stays at 0.81, not relaxed, per D-228.) A cruise-speed re-derivation alone has zero margin (196 s available against 196 s needed, T083_report s2.3) and is not used.
+ Specimen and rig (decided T-083c, 2026-11-22, engineering team): **in-flight stall of the built aircraft**. A wind tunnel for the wing panel is not on the Jacobs list (`docs/reference/jacobs-equipment.md`), so that option is dropped. Method: wing-borne flight at >= 40 m AGL, calm air (wind <= 3 m/s), a 1 g power-off deceleration at about 1 m/s per s until the stall break or the elevon stop; Vs from the on-board airspeed sensor (BOM V05, MS4525, calibrated against GPS ground speed in two opposite legs); three runs, the lowest CLmax is used. Recovery: switch to the VTOL hover mode (quad motors) at the break, as in the transition test. Mass at the test is weighed; CLmax = 2 m g / (rho S Vs^2), rho from the day's temperature and pressure. Needs the built wing, so it cannot run before 15 Dec.
+diff --git a/redesign/qp/A/structures/fe_a.py b/redesign/qp/A/structures/fe_a.py
+index 93ae2a1e..516bb82a 100644
+--- a/redesign/qp/A/structures/fe_a.py
++++ b/redesign/qp/A/structures/fe_a.py
+@@ -36,6 +36,7 @@ def prop_box(w, h, t):
+ class Frame:
+     def __init__(self):
+         self.n = {}; self.el = []; self.mass = {}
++        self.rot = {}; self.springs = []; self.se = []        # T-085: rotary-inertia lumps, diagonal global springs, superelements (all empty by default: T-066 / T-084 numbers unchanged)
+     def node(self, name, xyz): self.n[name] = np.array(xyz, float)
+     def beam(self, a, b, EA, EIy, EIz, GJ, rhoA, vref, grp, nseg=4):
+         pa, pb = self.n[a], self.n[b]
+@@ -44,6 +45,15 @@ class Frame:
+         for i in range(nseg): self.el.append((names[i], names[i+1], EA, EIy, EIz, GJ, rhoA, np.array(vref, float), grp))
+     def lump(self, name, m):
+         self.mass[name] = self.mass.get(name, 0.0)+m
++    def lump_rot(self, name, Ix, Iy, Iz):
++        """T-085: rotary inertia (kg m2, global axes) added on a node, on top of the default m * 1e-5 lump rotary term."""
++        a = self.rot.get(name, np.zeros(3)); self.rot[name] = a+np.array([Ix, Iy, Iz], float)
++    def spring(self, a, b, k, grp, kr=(0.0, 0.0, 0.0)):
++        """T-085: grounded-free translational (kx, ky, kz in N/m) + rotational (N m/rad) springs between nodes a and b, global axes, no offset."""
++        self.springs.append((a, b, np.array(list(k)+list(kr), float), grp))
++    def superelement(self, names, K, grp):
++        """T-085: a symmetric 6 n x 6 n stiffness (SI, global axes) over the listed nodes (hub joint from the solid hub FEA)."""
++        self.se.append((list(names), np.array(K, float), grp))
+     def solve(self, nmodes=14):
+         names = list(self.n); idx = {k: i for i, k in enumerate(names)}; N = len(names)
+         K = np.zeros((6*N, 6*N)); M = np.zeros((6*N, 6*N)); Kg = {}
+@@ -74,6 +84,15 @@ class Frame:
+             i = idx[nm]
+             for q in range(3): M[6*i+q, 6*i+q] += m
+             for q in range(3, 6): M[6*i+q, 6*i+q] += m*1e-5
++        for nm, Ir in self.rot.items():
++            i = idx[nm]
++            for q in range(3): M[6*i+3+q, 6*i+3+q] += Ir[q]
++        for (a, b, k6, grp) in self.springs:
++            ia, ib = idx[a], idx[b]
++            for q in range(6):
++                for (p1, p2, sg) in ((ia, ia, 1), (ib, ib, 1), (ia, ib, -1), (ib, ia, -1)): K[6*p1+q, 6*p2+q] += sg*k6[q]
++        for (names_, Kse, grp) in self.se:
++            dof = [6*idx[nm]+q for nm in names_ for q in range(6)]; K[np.ix_(dof, dof)] += Kse
+         w2, V = eigh(K, M)
+         f = np.sqrt(np.abs(w2))/(2*math.pi); keep = [i for i in range(len(f)) if f[i] > 2.0][:nmodes]
+         self._names, self._idx, self._K, self._V = names, idx, K, V
+@@ -98,6 +117,10 @@ class Frame:
+                     kk[p, q] = kk[q, p] = c*vv
+                 kk[0, 0] = kk[6, 6] = EA/L; kk[0, 6] = kk[6, 0] = -EA/L
+                 e[grp] = e.get(grp, 0.0)+0.5*ul@kk@ul
++            for (a, b, k6, grp) in self.springs:
++                ia, ib = idx[a], idx[b]; du = v[6*ia:6*ia+6]-v[6*ib:6*ib+6]; e[grp] = e.get(grp, 0.0)+0.5*float(k6@(du*du))
++            for (names_, Kse, grp) in self.se:
++                dof = [6*idx[nm]+q for nm in names_ for q in range(6)]; ue = v[dof]; e[grp] = e.get(grp, 0.0)+0.5*float(ue@Kse@ue)
+             tot = sum(e.values())
+             cy = math.sqrt(sum(v[6*idx[m]+1]**2+v[6*idx[m]+2]**2 for m in names if m.startswith("m+") or m.startswith("m-") and ">" not in m))
+             cx = math.sqrt(sum(v[6*idx[m]]**2 for m in names if (m.startswith("m+") or m.startswith("m-")) and ">" not in m))
+@@ -105,9 +128,61 @@ class Frame:
+         return res
+ 
+ 
++def hub_superelement(Fl, pts_mm, pb_mm):
++    """T-085: stiffness (SI, 36 x 36, global axes) of the hub as a superelement from the solid hub FEA flexibility.
++    Fl: 30 x 30 generalised flexibility of five masters (four stub ends UR, LL, LR, UL and the hub centre), load = N and N mm, displacement = mm and rad (work conjugates),
++    bridge bore fixed.  The sixth node is the bore (fixed in the FEA, free here): K = T^T Kq T with the rigid-body transfer T of that node (rigid motions strain nothing)."""
++    P = np.diag([1, 1, 1, 1e3, 1e3, 1e3]); Q = np.diag([1e-3, 1e-3, 1e-3, 1, 1, 1]); n = Fl.shape[0]//6
++    Fs = np.zeros_like(Fl)
++    for i in range(n):
++        for j in range(n): Fs[6*i:6*i+6, 6*j:6*j+6] = Q@Fl[6*i:6*i+6, 6*j:6*j+6]@P
++    Fs = 0.5*(Fs+Fs.T); Kq = np.linalg.inv(Fs); Kq = 0.5*(Kq+Kq.T)
++    T = np.zeros((6*n, 6*(n+1)))
++    for i in range(n):
++        r = (np.array(pts_mm[i], float)-np.array(pb_mm, float))*1e-3
++        sk = np.array([[0, -r[2], r[1]], [r[2], 0, -r[0]], [-r[1], r[0], 0]])
++        T[6*i:6*i+6, 6*i:6*i+6] = np.eye(6); T[6*i:6*i+3, 6*n:6*n+3] = -np.eye(3); T[6*i:6*i+3, 6*n+3:6*n+6] = sk; T[6*i+3:6*i+6, 6*n+3:6*n+6] = -np.eye(3)
++    K = T.T@Kq@T; return 0.5*(K+K.T)
++
++
++def _link(F, a, b, grp="rigid"):
++    """T-085: stiff massless link between two nodes (EA 1e7 N, EI 2e2 N m2: at least 80x the soft springs it joins; the nodes carry small lumps)."""
++    d = F.n[b]-F.n[a]; ax = int(np.argmin(np.abs(d))); vref = [0, 0, 0]; vref[ax] = 1
++    F.beam(a, b, 1e7, 2e2, 2e2, 2e2, 0.0, tuple(vref), grp, nseg=1)
++
++
++def add_pack(F, x_hubnode, kind, pack_g, c):
++    """T-085: the pack (pack_g = 295.7 g incl. tray CGE-008 13.3 g, straps 8.9 g, pad 3.5 g) on the drawn tray, instead of a lump on the hub node.
++    c['mode'] = 'rigid': one lump at (x, 0, z) rigid on the hub (T-084 pack_place; c['rot'] adds the pack's box rotary inertia).
++    c['mode'] = 'tray':  tray plate as a cantilever beam from the hub aft face (x_face) to the pack x (section: width c['w'] x t x solid fraction, PETG corner modulus),
++        pack cell (pack_g - tray_g) lumped at its CG (x, 0, z) with the box rotary inertia of 107 (y) x 33 (x) x 46 (z) mm, tied to the hub / tray by pad springs
++        (collar-top patch to the hub, four plate patches to the tray; stiffness E_pad A / t, shear E_pad / 3; strap preload assumed to keep contact)."""
++    x, z = c['x'], c['z']; mt = c.get('tray_g', 13.3); mp = pack_g-mt
++    Ix, Iy, Iz = [mp*1e-3/12*v for v in ((0.107**2+0.046**2), (0.033**2+0.046**2), (0.107**2+0.033**2))]
++    if c['mode'] == 'rigid':
++        F.node('pack', (x, 0, z)); F.beam(c.get('anchor', 'hub'), 'pack', 1e9, 1e5, 1e5, 1e5, 0.0, (0, 0, 1), 'tray', nseg=1); F.lump('pack', pack_g*1e-3)
++        if c.get('rot'): F.lump_rot('pack', Ix, Iy, Iz)
++        return
++    E_ = E_PETG[kind]; G_ = G_PETG[kind]; w, t, s = c['w'], c.get('t', 1.2e-3), c['solid']
++    zt = 0.0074; xf = x_hubnode+0.024                     # plate mid-plane (plate 6.8..8.0 on the 2.0 mm root pad), hub aft face (hub x + 24 mm)
++    F.node('tr0', (xf, 0, zt)); F.node('trc', (x, 0, zt)); F.node('pk', (x, 0, z))
++    _link(F, c.get('anchor', 'hub'), 'tr0'); F.lump('tr0', 0.15*mt*1e-3)
++    F.beam('tr0', 'trc', E_*w*t*s, E_*w*t**3/12*s, E_*t*w**3/12*s, G_*w*t**3/3*s, 0.0, (0, 0, 1), 'tray', nseg=1); F.lump('trc', 0.85*mt*1e-3)
++
++    def pad(nameH, posH, rigidH, nameP, posP, k):
++        F.node(nameH, posH); F.node(nameP, posP); _link(F, c.get('anchor', 'hub') if rigidH == 'hub' else rigidH, nameH); _link(F, 'pk', nameP); F.lump(nameH, 3e-4); F.lump(nameP, 3e-4)
++        F.spring(nameH, nameP, k, 'pad')
++    Ep, tp = c['pad_E'], c.get('pad_t', 1.0e-3); xc = c['collar_x']; A_c = c['collar_A']
++    pad('cpH', (xc, 0, 0.008), 'hub', 'cpP', (xc, 0, 0.009), (Ep/3*A_c/tp, Ep/3*A_c/tp, Ep*A_c/tp))
++    A_p = c['pad_A']-A_c; kz = Ep*A_p/4/tp; kx = Ep/3*A_p/4/tp
++    for i, (dx, dy) in enumerate(((-7.5e-3, -26e-3), (7.5e-3, -26e-3), (-7.5e-3, 26e-3), (7.5e-3, 26e-3))):
++        pad('ppH%d' % i, (x+dx, dy, 0.008), 'trc', 'ppP%d' % i, (x+dx, dy, 0.009), (kx, kx, kz))
++    F.lump('pk', mp*1e-3-3.0e-3); F.lump_rot('pk', Ix, Iy, Iz)       # 3.0 g = the ten light pad-node lumps (3e-4 kg each), taken from the pack cell
++
++
+ def build(kind="nom", y_fin=Y_FIN, rib_wall=0.8e-3, rib_wh=(30e-3, 14e-3), arm_len_scale=1.0, hub_bridge=(24e-3, 30e-3, 1.5e-3),
+           foot_pad_m=0.003, wing_g=212.0, pack_g=270.0, motor_g=65.0+11.06+5.0+4.3+2.9, avionics_g=110.0, fin_skin_t=0.1e-3, fin_core=15e-3,
+-          fin_E_skin=50e9, root_fix=None, verbose=False, arm_tube=(14e-3, 12e-3), bridge_cf=True, bridge_tube=(8e-3, 6e-3), spar_tube=(16e-3, 14e-3), rib_tube=None, bridge_cfg='single', bridge_yv=0.12, vtube=(8e-3, 6e-3), fin_strip=None, arm_E_scale=1.0, fin_tube=None, x_fin=None, root_g=6.0, centre_extra_g=65.0, x_hub=None, hub_extra_g=20.0, wing_cell=None, h_fin=None):
++          fin_E_skin=50e9, root_fix=None, verbose=False, arm_tube=(14e-3, 12e-3), bridge_cf=True, bridge_tube=(8e-3, 6e-3), spar_tube=(16e-3, 14e-3), rib_tube=None, bridge_cfg='single', bridge_yv=0.12, vtube=(8e-3, 6e-3), fin_strip=None, arm_E_scale=1.0, fin_tube=None, x_fin=None, root_g=6.0, centre_extra_g=65.0, x_hub=None, hub_extra_g=20.0, wing_cell=None, h_fin=None, hub_se=None, pack_cfg=None, bridge_f=(1.0, 1.0, 1.0)):
+     E = E_CF[kind]; G = G_CF[kind]; Ep = E_PETG[kind]; Gp = G_PETG[kind]
+     F = Frame()
+     A_a = math.pi/4*(arm_tube[0]**2-arm_tube[1]**2); I_a = math.pi/64*(arm_tube[0]**4-arm_tube[1]**4)
+@@ -142,23 +217,40 @@ def build(kind="nom", y_fin=Y_FIN, rib_wall=0.8e-3, rib_wh=(30e-3, 14e-3), arm_l
+             F.beam("hub", "s+0.000", E*A_b, E*I_b, E*I_b, G*2*I_b, RHO_CF*A_b, (0, 0, 1), "bridge", nseg=3)
+         F._pending_braces = (E*A_b, E*I_b, G*2*I_b, RHO_CF*A_b)
+     elif bridge_cfg == 'single+V':
+-        F.beam("hub", "s+0.000", E*A_b, E*I_b, E*I_b, G*2*I_b, RHO_CF*A_b, (0, 0, 1), "bridge", nseg=3)
++        if hub_se is None:
++            F.beam("hub", "s+0.000", E*A_b, E*I_b*bridge_f[0], E*I_b*bridge_f[1], G*2*I_b*bridge_f[2], RHO_CF*A_b, (0, 0, 1), "bridge", nseg=3)   # T-085: bridge_f scales (z-bending, y-bending, torsion) for the option sketches; default 1
++        else:   # T-085: the bridge starts at the superelement's fixed-bore node 'bb' (hub FEA models the block and 40 mm of bridge); hub -> bb is inside the superelement
++            pb = hub_se["pts_mm"]["bb"]; XH0 = X_HUB if x_hub is None else x_hub
++            F.node("bb", (XH0+pb[0]*1e-3, pb[1]*1e-3, pb[2]*1e-3))
++            F.beam("bb", "s+0.000", E*A_b, E*I_b*bridge_f[0], E*I_b*bridge_f[1], G*2*I_b*bridge_f[2], RHO_CF*A_b, (0, 0, 1), "bridge", nseg=3)
++            F.lump("bb", 0.5*RHO_CF*A_b*pb[0]*1e-3); F.lump("hub", 0.5*RHO_CF*A_b*pb[0]*1e-3)     # the bridge length hub -> bb as lumps
+         A_v = math.pi/4*(vtube[0]**2-vtube[1]**2); I_v = math.pi/64*(vtube[0]**4-vtube[1]**4)
+         for sy in (1, -1):
+             F.beam("hub", f"s{sy*bridge_yv:+.3f}", E*A_v, E*I_v, E*I_v, G*2*I_v, RHO_CF*A_v, (0, 0, 1), "bridge", nseg=3)
+     else:   # V: two struts hub -> spar at y = +-bridge_yv
+         for sy in (1, -1):
+             F.beam("hub", f"s{sy*bridge_yv:+.3f}", E*A_b, E*I_b, E*I_b, G*2*I_b, RHO_CF*A_b, (0, 0, 1), "bridge", nseg=3)
+-    F.lump("hub", pack_g*1e-3+hub_extra_g*1e-3)              # pack + hub print 20 g
++    if pack_cfg is None:
++        F.lump("hub", pack_g*1e-3+hub_extra_g*1e-3)              # pack + hub print 20 g
++    else:                                                          # T-085: pack on the drawn tray (see add_pack); hub_extra_g stays on the hub node
++        F.lump("hub", hub_extra_g*1e-3); add_pack(F, XH_ if x_hub is not None else X_M, kind, pack_g, pack_cfg)
+     arm_mass_extra = 0
+     for sy in (1, -1):
+         for sz in (1, -1):
+             nm = f"m{sy:+d}{sz:+d}"; F.node(nm, (XH_ if x_hub is not None else X_M, sy*Y_M*arm_len_scale, sz*Z_M*arm_len_scale))
+-            F.beam("hub", nm, E*A_a, E*I_a, E*I_a, G*2*I_a, RHO_CF*A_a, (1, 0, 0), "arm", nseg=5)
++            if hub_se is None:
++                F.beam("hub", nm, E*A_a, E*I_a, E*I_a, G*2*I_a, RHO_CF*A_a, (1, 0, 0), "arm", nseg=5)
++            else:   # T-085: the arm starts at the stub end of the hub FEA (s = S_END along the tube); the stub (tube, sleeve, block) is in the superelement
++                st = {(1, 1): "UR", (-1, -1): "LL", (1, -1): "LR", (-1, 1): "UL"}[(sy, sz)]; pe = hub_se["pts_mm"][st]; XH0 = X_HUB if x_hub is None else x_hub
++                F.node("h_"+st, (XH0+pe[0]*1e-3, pe[1]*1e-3, pe[2]*1e-3))
++                F.beam("h_"+st, nm, E*A_a, E*I_a, E*I_a, G*2*I_a, RHO_CF*A_a, (1, 0, 0), "arm", nseg=5)
++                F.lump("h_"+st, RHO_CF*A_a*hub_se["s_end_mm"]*1e-3)                # the stub tube mass (hub centre -> stub end) as a lump
+             F.lump(nm, motor_g*1e-3)
+             if hasattr(F, "_pending_braces"):
+                 EAb, EIb, GJb, rAb = F._pending_braces
+                 F.beam(nm, f"s{sy*Y_M:+.3f}", EAb, EIb, EIb, GJb, rAb, (1, 0, 0), "bridge", nseg=3)
++    if hub_se is not None:
++        F.superelement(["h_UR", "h_LL", "h_LR", "h_UL", "hub", "bb"], hub_se["K"], "hubjoint")
+     # --- fins: rib (PETG box) from spar to fin root, fin beams along z, feet
+     Ar, Iyr, Izr, Jr = prop_box(rib_wh[0], rib_wh[1], rib_wall)   # w = y-dim 30, h = z-dim 14
+     # fin section properties (out-of-plane = y-bending, in-plane = x-bending)

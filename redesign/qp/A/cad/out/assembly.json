@@ -3,7 +3,67 @@
   {
    "id": "A1",
    "parts": [
-    "WNG-001"
+    "WNG-001",
+    "WNG-011",
+    "WNG-012",
+    "WNG-014-R",
+    "WNG-014-L",
+    "WNG-013-R",
+    "WNG-013-L",
+    "FIN-005-R",
+    "FIN-005-L",
+    "FIN-009-R",
+    "FIN-009-L"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "B1",
+   "parts": [
+    "CGE-001",
+    "CGE-004",
+    "CGE-006",
+    "CGE-002-A",
+    "CGE-002-B",
+    "CGE-003-UR",
+    "CGE-003-UL",
+    "CGE-003-LR",
+    "CGE-003-LL",
+    "CGE-009-UR",
+    "CGE-009-UL",
+    "CGE-009-LR",
+    "CGE-009-LL",
+    "CGE-010-UR",
+    "CGE-010-UL",
+    "CGE-010-LR",
+    "CGE-010-LL",
+    "CGE-010-C",
+    "CGE-005-R",
+    "CGE-005-L",
+    "CGE-007-R",
+    "CGE-007-L",
+    "PRP-006-UR",
+    "PRP-006-UL",
+    "PRP-006-LR",
+    "PRP-006-LL",
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL",
+    "PRP-004-UR",
+    "PRP-004-UL",
+    "PRP-004-LR",
+    "PRP-004-LL",
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL",
+    "PRP-005-UR",
+    "PRP-005-UL",
+    "PRP-005-LR",
+    "PRP-005-LL"
    ],
    "worst_mm": 0.0,
    "first_hit_t_mm": null,
@@ -42,62 +102,6 @@
    "parts": [
     "WNG-004-L",
     "WNG-005-L"
-   ],
-   "worst_mm": 0.0,
-   "first_hit_t_mm": null,
-   "pairs": []
-  },
-  {
-   "id": "B1",
-   "parts": [
-    "CGE-001",
-    "CGE-004",
-    "CGE-006",
-    "CGE-002-A",
-    "CGE-002-B",
-    "CGE-003-UR",
-    "CGE-003-UL",
-    "CGE-003-LR",
-    "CGE-003-LL",
-    "CGE-009-UR",
-    "CGE-009-UL",
-    "CGE-009-LR",
-    "CGE-009-LL",
-    "CGE-010-UR",
-    "CGE-010-UL",
-    "CGE-010-LR",
-    "CGE-010-LL",
-    "CGE-010-C",
-    "CGE-005-R",
-    "CGE-005-L",
-    "CGE-007-R",
-    "CGE-007-L",
-    "PRP-001-UR",
-    "PRP-001-UL",
-    "PRP-001-LR",
-    "PRP-001-LL",
-    "PRP-004-UR",
-    "PRP-004-UL",
-    "PRP-004-LR",
-    "PRP-004-LL",
-    "PRP-002-UR",
-    "PRP-002-UL",
-    "PRP-002-LR",
-    "PRP-002-LL",
-    "PRP-005-UR",
-    "PRP-005-UL",
-    "PRP-005-LR",
-    "PRP-005-LL"
-   ],
-   "worst_mm": 0.0,
-   "first_hit_t_mm": null,
-   "pairs": []
-  },
-  {
-   "id": "B2",
-   "parts": [
-    "FIN-005-R",
-    "FIN-005-L"
    ],
    "worst_mm": 0.0,
    "first_hit_t_mm": null,
@@ -185,6 +189,16 @@
    "parts": [
     "FIN-006-R",
     "FIN-006-L"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "C1b",
+   "parts": [
+    "FIN-010-R",
+    "FIN-010-L"
    ],
    "worst_mm": 0.0,
    "first_hit_t_mm": null,
@@ -313,16 +327,6 @@
    "pairs": []
   },
   {
-   "id": "D2a",
-   "parts": [
-    "HWC-002-R",
-    "HWC-002-L"
-   ],
-   "worst_mm": 0.0,
-   "first_hit_t_mm": null,
-   "pairs": []
-  },
-  {
    "id": "D3",
    "parts": [
     "MEC-004-R",
@@ -337,6 +341,18 @@
    "parts": [
     "MEC-003-R",
     "MEC-003-L"
+   ],
+   "worst_mm": 0.0,
+   "first_hit_t_mm": null,
+   "pairs": []
+  },
+  {
+   "id": "D2a",
+   "parts": [
+    "MEC-008-R",
+    "MEC-008-L",
+    "HWC-002-R",
+    "HWC-002-L"
    ],
    "worst_mm": 0.0,
    "first_hit_t_mm": null,
@@ -372,7 +388,7 @@
   {
    "id": "E2",
    "parts": [
-    "AVN-001",
+    "AVN-010",
     "HWC-003"
    ],
    "worst_mm": 0.0,
@@ -459,5 +475,5 @@
   }
  ],
  "tol_mm": 0.05,
- "flipped": 1652
+ "flipped": 1782
 }

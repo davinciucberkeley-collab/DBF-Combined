@@ -1,0 +1,21 @@
+film: 7 scenes, 24.2 s, 1452 frames at 1920x1080 @ 60 fps, every 1
+    CAMCHECK selftest {'WNG-006-R': {'centre_inside': True, 'point_0p2_above_inside': False}, 'WNG-007-R': {'centre_inside': False, 'point_0p2_above_inside': False}, 'WNG-001': {'centre_inside': False, 'point_0p2_above_inside': False}}
+    CAMCHECK frames 1452 inside 0  1 s
+    CAMCHECK motion peak view_speed 40.65 deg/s at f171 (shot H1/H1.1)
+    CAMCHECK motion peak view_accel 391.7 deg/s^2 at f179 (shot H1/H1.1)
+    CAMCHECK motion peak zoom_rate 0.1068 1/s at f862 (shot H5/H5.1)
+    CAMCHECK motion peak zoom_accel 1.162 1/s^2 at f854 (shot H5/H5.1)
+    CAMCHECK motion peak pan_speed 0.01767 dist/s at f1222 (shot H7/H7.1)
+    CAMCHECK motion peak pan_accel 0.1992 dist/s^2 at f1214 (shot H7/H7.1)
+    CAMCHECK H1/H1.1 frames 180 inside 0 ({}) min_clear None m @fNone (None) blocked 0 {}
+    CAMCHECK H2/H2.1 frames 252 inside 0 ({}) min_clear 0.2614 m @f227 (WNG-006-L) blocked 0 {}
+    CAMCHECK H3/H3.1 frames 120 inside 0 ({}) min_clear None m @fNone (None) blocked 0 {}
+    CAMCHECK H4/H4.1 frames 300 inside 0 ({}) min_clear None m @fNone (None) blocked 0 {}
+    CAMCHECK H5/H5.1 frames 180 inside 0 ({}) min_clear None m @fNone (None) blocked 0 {}
+    CAMCHECK H6/H6.1 frames 180 inside 0 ({}) min_clear None m @fNone (None) blocked 0 {}
+    CAMCHECK H7/H7.1 frames 240 inside 0 ({}) min_clear None m @fNone (None) blocked 0 {}
+CAMCHECK written C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\showcase\concept-a\film\cam-clearance.json 365 s
+
+real	6m5.972s
+user	0m0.015s
+sys	0m0.062s

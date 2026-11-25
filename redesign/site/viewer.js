@@ -252,6 +252,7 @@ const LOOK = {
   wire:    ['#B8261E', 0.42, 0, 0.2],    // power wiring and harness bundles
   signal:  ['#33363B', 0.5, 0, 0.1],
   epoxy:   ['#D8D3C7', 0.8, 0, 0],
+  glass:   ['#E4E6E2', 0.3, 0, 0.6],    // AM-066: wet-laid glass cloth + epoxy skin over the foam (WNG-011 / WNG-014): near the foam colour, glossy
   label:   ['#F2F3F5', 0.4, 0, 0.2],
   nylon:   ['#E6E5E0', 0.6, 0, 0],
   coro:    ['#E6E9ED', 0.66, 0, 0],
@@ -277,6 +278,7 @@ function lookOf(p) {
   if (has(/tpu/)) return 'tpu';
   if (has(/neoprene|webbing|hook-and-loop|pouch|strap handle/)) return 'rubber';
   if (has(/coroplast/)) return 'coro';
+  if (has(/glass cloth/)) return 'glass';
   if (has(/epoxy/)) return 'epoxy';
   if (has(/vinyl/)) return 'label';
   if (has(/^nylon/)) return 'nylon';
@@ -788,7 +790,7 @@ export async function start() {
   const loadGlbScript = async () => {
     window.VIEWER_GLB_B64_PARTS = [];
     progress(0.5, 'loading model (embedded copy)');
-    await addScript('data/assembly.opt.glb.part1.js?v=20261118f');
+    await addScript('data/assembly.opt.glb.part1.js?v=20261124');
     const bin = atob(window.VIEWER_GLB_B64_PARTS.join('')), buf = new Uint8Array(bin.length);
     window.VIEWER_GLB_B64_PARTS = null;
     for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
@@ -796,7 +798,7 @@ export async function start() {
   };
   let gltf;
   try {
-    gltf = await new Promise((res, rej) => mkLoader().load('assets/concept-a.opt.glb?v=20261118f', res,
+    gltf = await new Promise((res, rej) => mkLoader().load('assets/concept-a.opt.glb?v=20261124', res,
       ev => { const got = ev.loaded || 0; progress(Math.min(got / total, 1), kB(got) + ' of ' + kB(total)); }, rej));
   } catch (e) {
     try { gltf = await loadGlbScript(); }

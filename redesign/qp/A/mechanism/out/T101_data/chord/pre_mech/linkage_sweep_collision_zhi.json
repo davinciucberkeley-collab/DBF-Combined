@@ -1,0 +1,4383 @@
+{
+ "git_head": "73d9596689ee35afa630383f6454860f592efbd7",
+ "arm_joint_state": "hi",
+ "arm_joint_z_mm": 9.600000000000001,
+ "engine": "analytic convex solids + separating-axis test (numpy, scipy.spatial.ConvexHull); NOT mesh-based",
+ "versions": {
+  "python": "3.14.2",
+  "numpy": "2.5.4",
+  "scipy": "1.18.1"
+ },
+ "tol_mm": 0.05,
+ "step_deg": 0.5,
+ "trimesh_manifold3d": "not installed; Blender not available here",
+ "pairs": [
+  {
+   "side": "L",
+   "a": "arm",
+   "b": "clevis cheek +1",
+   "min_sep_mm": 33.68245602081467,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 36.989599466242865,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 33.68245602081467,
+    "-20": 33.810351559736,
+    "20": 37.71878766893202,
+    "21": 37.71626597293867
+   }
+  },
+  {
+   "side": "L",
+   "a": "arm",
+   "b": "clevis cheek -1",
+   "min_sep_mm": 33.12260618745416,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 36.34528893805314,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 33.12260618745416,
+    "-20": 33.27797554675417,
+    "20": 37.72539961800123,
+    "21": 37.71626597293867
+   }
+  },
+  {
+   "side": "L",
+   "a": "arm",
+   "b": "clevis pin",
+   "min_sep_mm": 36.01915348665929,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 39.25640623568723,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 36.01915348665929,
+    "-20": 36.18182810149413,
+    "20": 40.73837486399176,
+    "21": 40.73604205928844
+   }
+  },
+  {
+   "side": "L",
+   "a": "arm",
+   "b": "clevis sleeve",
+   "min_sep_mm": 31.25569185051681,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 34.47371270648389,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 31.25569185051681,
+    "-20": 31.396224570008123,
+    "20": 35.72055679100128,
+    "21": 35.71821703871367
+   }
+  },
+  {
+   "side": "L",
+   "a": "arm",
+   "b": "core aft block",
+   "min_sep_mm": 19.930731245424134,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 21.32497395071853,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 21.325824442450013,
+    "-20": 21.330664811732902,
+    "20": 20.203549490173305,
+    "21": 19.930731245424134
+   }
+  },
+  {
+   "side": "L",
+   "a": "arm",
+   "b": "elevon slab",
+   "min_sep_mm": 37.7316599559212,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 39.766892515328195,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 39.767528286862145,
+    "-20": 39.76965759322465,
+    "20": 38.001498506176816,
+    "21": 37.7316599559212
+   }
+  },
+  {
+   "side": "L",
+   "a": "arm",
+   "b": "horn blade",
+   "min_sep_mm": 34.58629119337856,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 37.801293793722074,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 34.58629119337856,
+    "-20": 34.72687662345887,
+    "20": 39.04165613890445,
+    "21": 39.04130420247534
+   }
+  },
+  {
+   "side": "L",
+   "a": "arm",
+   "b": "horn rib",
+   "min_sep_mm": 40.231659861020255,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 42.707503917813376,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 42.44717440594134,
+    "-20": 42.4696107692714,
+    "20": 40.501498430658565,
+    "21": 40.231659861020255
+   }
+  },
+  {
+   "side": "L",
+   "a": "arm",
+   "b": "pocket wall fore",
+   "min_sep_mm": 10.730724199381203,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 12.000000001872957,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 10.730724199381203,
+    "-20": 10.878852077147089,
+    "20": 12.000402439382995,
+    "21": 12.000051468817441
+   }
+  },
+  {
+   "side": "L",
+   "a": "arm",
+   "b": "pocket wall side inboard",
+   "min_sep_mm": 412.00000000491656,
+   "at_delta_deg": 0.0,
+   "neutral_sep_mm": 412.00000000491656,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 412.6538711547228,
+    "-20": 412.59416010482266,
+    "20": 412.6018747157312,
+    "21": 412.6636519067281
+   }
+  },
+  {
+   "side": "L",
+   "a": "arm",
+   "b": "pocket wall side outboard",
+   "min_sep_mm": 317.0000000049165,
+   "at_delta_deg": 0.0,
+   "neutral_sep_mm": 317.0000000049165,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 317.65387115472276,
+    "-20": 317.5941601048226,
+    "20": 317.6018747157311,
+    "21": 317.6636519067281
+   }
+  },
+  {
+   "side": "L",
+   "a": "arm",
+   "b": "rod",
+   "min_sep_mm": 0.2548110790458,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 0.29006638727219375,
+   "max_penetration_mm": 0.0,
+   "design_contact": true,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 0.2548110790458,
+    "-20": 0.25840435944255935,
+    "20": 0.26451079024496227,
+    "21": 0.26203700521190176
+   }
+  },
+  {
+   "side": "L",
+   "a": "arm",
+   "b": "servo boot",
+   "min_sep_mm": 2.9521738893008713,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 2.9854842847440164,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 2.9521738893008713,
+    "-20": 2.983772500478113,
+    "20": 2.986292698741899,
+    "21": 2.9855357516885004
+   }
+  },
+  {
+   "side": "L",
+   "a": "arm",
+   "b": "servo case",
+   "min_sep_mm": 0.0,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 0.0,
+   "max_penetration_mm": 0.0,
+   "design_contact": true,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 0.0,
+    "-20": 0.0,
+    "20": 0.0,
+    "21": 0.0
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis cheek +1",
+   "b": "core aft block",
+   "min_sep_mm": 5.9512250440809344,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 6.983341683181588,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 5.9512250440809344,
+    "-20": 6.024217801291458,
+    "20": 6.926192310967898,
+    "21": 6.896303936128886
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis cheek +1",
+   "b": "elevon slab",
+   "min_sep_mm": 7.003153065273861,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 7.554971526944501,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 7.155359169940416,
+    "-20": 7.172869715935046,
+    "20": 7.052613476873778,
+    "21": 7.003153065273861
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis cheek +1",
+   "b": "horn blade",
+   "min_sep_mm": 0.06638145233545112,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 0.09999999979704022,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 0.06693511795449747,
+    "-20": 0.06992456898249899,
+    "20": 0.06949664736105587,
+    "21": 0.06638145233545112
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis cheek +1",
+   "b": "horn rib",
+   "min_sep_mm": 7.793235780620369,
+   "at_delta_deg": -20.5,
+   "neutral_sep_mm": 8.15722675529337,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 7.858680338716159,
+    "-20": 7.868601316407043,
+    "20": 8.395341026018894,
+    "21": 8.380946072946143
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis cheek +1",
+   "b": "pocket wall fore",
+   "min_sep_mm": 52.413301783274136,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 55.74447191675838,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 52.413301783274136,
+    "-20": 52.567524924200136,
+    "20": 58.82959828638349,
+    "21": 58.97462119168892
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis cheek +1",
+   "b": "pocket wall side inboard",
+   "min_sep_mm": 412.1000000041901,
+   "at_delta_deg": 0.0,
+   "neutral_sep_mm": 412.1000000041901,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 412.2794716016051,
+    "-20": 412.26907793329235,
+    "20": 412.3588122084887,
+    "21": 412.38325798354856
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis cheek +1",
+   "b": "pocket wall side outboard",
+   "min_sep_mm": 317.1000000041901,
+   "at_delta_deg": 0.0,
+   "neutral_sep_mm": 317.1000000041901,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 317.2905801903652,
+    "-20": 317.278226014474,
+    "20": 317.3682019113328,
+    "21": 317.3947006741366
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis cheek +1",
+   "b": "servo boot",
+   "min_sep_mm": 44.36440613119162,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 47.64276843016768,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 44.36440613119162,
+    "-20": 44.516392116633,
+    "20": 50.65738047415988,
+    "21": 50.798722476389585
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis cheek +1",
+   "b": "servo case",
+   "min_sep_mm": 21.513301783274123,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 24.84447191675837,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 21.513301783274123,
+    "-20": 21.667524924200126,
+    "20": 27.929598286383474,
+    "21": 28.07462119168891
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis cheek -1",
+   "b": "core aft block",
+   "min_sep_mm": 5.9569700501176275,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 6.983341683181595,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 5.9569700501176275,
+    "-20": 6.029488660600265,
+    "20": 6.931532319256282,
+    "21": 6.902134687664551
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis cheek -1",
+   "b": "elevon slab",
+   "min_sep_mm": 7.003153065273861,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 7.554971526944501,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 7.141839833365582,
+    "-20": 7.161329924810417,
+    "20": 7.052613478579328,
+    "21": 7.003153065273861
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis cheek -1",
+   "b": "horn blade",
+   "min_sep_mm": 0.07685456539360813,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 0.09999999986193275,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 0.07719682346590817,
+    "-20": 0.07929922503846498,
+    "20": 0.07902626416519953,
+    "21": 0.07685456539360813
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis cheek -1",
+   "b": "horn rib",
+   "min_sep_mm": 7.787114290587052,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 8.157226755293372,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 7.787114290587052,
+    "-20": 7.846393980730337,
+    "20": 8.395341026018892,
+    "21": 8.380946072946143
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis cheek -1",
+   "b": "pocket wall fore",
+   "min_sep_mm": 52.458649733365085,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 55.74447191703444,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 52.458649733365085,
+    "-20": 52.60871362901204,
+    "20": 58.87132736336953,
+    "21": 59.02064599174389
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis cheek -1",
+   "b": "pocket wall side inboard",
+   "min_sep_mm": 415.1000000041901,
+   "at_delta_deg": 0.0,
+   "neutral_sep_mm": 415.1000000041901,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 415.27947144966373,
+    "-20": 415.2690778259603,
+    "20": 415.3588120983213,
+    "21": 415.38325782703663
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis cheek -1",
+   "b": "pocket wall side outboard",
+   "min_sep_mm": 320.1000000041901,
+   "at_delta_deg": 0.0,
+   "neutral_sep_mm": 320.1000000041901,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 320.2905800384238,
+    "-20": 320.27822590714186,
+    "20": 320.3682018011654,
+    "21": 320.3947005176246
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis cheek -1",
+   "b": "servo boot",
+   "min_sep_mm": 43.89385974523781,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 47.16065415667733,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 43.89385974523781,
+    "-20": 44.04616981475178,
+    "20": 50.26996870722523,
+    "21": 50.41922082445531
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis cheek -1",
+   "b": "servo case",
+   "min_sep_mm": 21.558649733365076,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 24.844471917034426,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 21.558649733365076,
+    "-20": 21.708713629012028,
+    "20": 27.971327363369518,
+    "21": 28.12064599174388
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis pin",
+   "b": "core aft block",
+   "min_sep_mm": 7.48437078472311,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 8.557815756919474,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 7.48437078472311,
+    "-20": 7.562061238859149,
+    "20": 8.65260720588587,
+    "21": 8.652607205885884
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis pin",
+   "b": "pocket wall fore",
+   "min_sep_mm": 55.466884808355545,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 58.747580713811836,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 55.466884808355545,
+    "-20": 55.61685543267586,
+    "20": 61.87926237861477,
+    "21": 62.02862095235051
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis pin",
+   "b": "pocket wall side inboard",
+   "min_sep_mm": 411.8,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 411.8,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 411.8,
+    "-20": 411.8,
+    "20": 411.8,
+    "21": 411.8
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis pin",
+   "b": "pocket wall side outboard",
+   "min_sep_mm": 316.79999999999995,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 316.79999999999995,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 316.79999999999995,
+    "-20": 316.79999999999995,
+    "20": 316.79999999999995,
+    "21": 316.79999999999995
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis pin",
+   "b": "servo boot",
+   "min_sep_mm": 46.8461947283416,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 50.11109467937071,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 46.8461947283416,
+    "-20": 46.99544319911465,
+    "20": 53.227694776886786,
+    "21": 53.3763341442824
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis pin",
+   "b": "servo case",
+   "min_sep_mm": 24.658264929017072,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 27.983034137063072,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 24.658264929017072,
+    "-20": 24.80111273214766,
+    "20": 31.044691425394788,
+    "21": 31.1736787908555
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis sleeve",
+   "b": "clevis pin",
+   "min_sep_mm": 2.97441548558236,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 2.997583765838363,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 2.97441548558236,
+    "-20": 2.9767584445450357,
+    "20": 2.9772123101244885,
+    "21": 2.97455104399158
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis sleeve",
+   "b": "core aft block",
+   "min_sep_mm": 5.793552099385608,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 6.793954680947411,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 5.793552099385608,
+    "-20": 5.863656584083238,
+    "20": 6.76567560603206,
+    "21": 6.738686287978805
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis sleeve",
+   "b": "elevon slab",
+   "min_sep_mm": 7.105197624622214,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 8.080106719375744,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 9.31206699910546,
+    "-20": 9.331309642446342,
+    "20": 7.163422618808285,
+    "21": 7.105197624622214
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis sleeve",
+   "b": "horn blade",
+   "min_sep_mm": 1.2862489785658293,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 1.3000132375108053,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 1.2905035053833447,
+    "-20": 1.2893521784518303,
+    "20": 1.2866846934784515,
+    "21": 1.2862489785658293
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis sleeve",
+   "b": "horn rib",
+   "min_sep_mm": 8.751278879305106,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 9.805523472601726,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 10.724037798614084,
+    "-20": 10.672386029616703,
+    "20": 8.789089237657837,
+    "21": 8.751278879305106
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis sleeve",
+   "b": "pocket wall fore",
+   "min_sep_mm": 50.43581201140468,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 53.74480559448222,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 50.43581201140468,
+    "-20": 50.58810346380224,
+    "20": 56.850332089410486,
+    "21": 56.99732653887818
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis sleeve",
+   "b": "pocket wall side inboard",
+   "min_sep_mm": 412.57692051655084,
+   "at_delta_deg": -11.0,
+   "neutral_sep_mm": 412.6603332647655,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 412.6751522780111,
+    "-20": 412.6613293178447,
+    "20": 412.8536991515167,
+    "21": 412.8110151077662
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis sleeve",
+   "b": "pocket wall side outboard",
+   "min_sep_mm": 317.64486012293975,
+   "at_delta_deg": -18.0,
+   "neutral_sep_mm": 317.74749030301473,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 317.71656877579807,
+    "-20": 317.670288261577,
+    "20": 317.95803722261155,
+    "21": 317.97114227726314
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis sleeve",
+   "b": "servo boot",
+   "min_sep_mm": 41.98193664819318,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 45.21575986511997,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 41.98193664819318,
+    "-20": 42.14762561908915,
+    "20": 48.34418467411214,
+    "21": 48.49371372524078
+   }
+  },
+  {
+   "side": "L",
+   "a": "clevis sleeve",
+   "b": "servo case",
+   "min_sep_mm": 19.55460470637449,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 22.84480559448221,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 19.55460470637449,
+    "-20": 19.707287772700145,
+    "20": 25.966946901265274,
+    "21": 26.112809745768654
+   }
+  },
+  {
+   "side": "L",
+   "a": "elevon slab",
+   "b": "pocket wall fore",
+   "min_sep_mm": 57.60999648070711,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 59.25,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 59.25,
+    "-20": 59.25,
+    "20": 57.867435860389044,
+    "21": 57.60999648070711
+   }
+  },
+  {
+   "side": "L",
+   "a": "elevon slab",
+   "b": "pocket wall side inboard",
+   "min_sep_mm": 399.0,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 399.0,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 399.0,
+    "-20": 399.0,
+    "20": 399.0,
+    "21": 399.0
+   }
+  },
+  {
+   "side": "L",
+   "a": "elevon slab",
+   "b": "pocket wall side outboard",
+   "min_sep_mm": 304.0,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 304.0,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 304.0,
+    "-20": 304.0,
+    "20": 304.0,
+    "21": 304.0
+   }
+  },
+  {
+   "side": "L",
+   "a": "elevon slab",
+   "b": "servo boot",
+   "min_sep_mm": 49.30721940714925,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 50.63876371789156,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 50.63876371789156,
+    "-20": 50.63876371789156,
+    "20": 49.45756642068774,
+    "21": 49.30721940714925
+   }
+  },
+  {
+   "side": "L",
+   "a": "elevon slab",
+   "b": "servo case",
+   "min_sep_mm": 25.25491497270024,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 28.349999999999987,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 28.349999999999987,
+    "-20": 28.349999999999987,
+    "20": 25.396104636351197,
+    "21": 25.25491497270024
+   }
+  },
+  {
+   "side": "L",
+   "a": "horn blade",
+   "b": "core aft block",
+   "min_sep_mm": 2.0526991717491896,
+   "at_delta_deg": -17.5,
+   "neutral_sep_mm": 2.052699273956793,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 2.052699171749231,
+    "-20": 2.052699171749231,
+    "20": 2.052699171749217,
+    "21": 2.0526991717492447
+   }
+  },
+  {
+   "side": "L",
+   "a": "horn blade",
+   "b": "pocket wall fore",
+   "min_sep_mm": 53.772146951542474,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 57.04999999999999,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 53.772146951542474,
+    "-20": 53.920136707588526,
+    "20": 60.18254365352746,
+    "21": 60.333883095537416
+   }
+  },
+  {
+   "side": "L",
+   "a": "horn blade",
+   "b": "pocket wall side inboard",
+   "min_sep_mm": 413.00000000000006,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 413.00000000000006,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 413.00000000000006,
+    "-20": 413.00000000000006,
+    "20": 413.00000000000006,
+    "21": 413.00000000000006
+   }
+  },
+  {
+   "side": "L",
+   "a": "horn blade",
+   "b": "pocket wall side outboard",
+   "min_sep_mm": 318.0,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 318.1195917568068,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 318.0,
+    "-20": 318.0,
+    "20": 318.2833459461909,
+    "21": 318.2861204920823
+   }
+  },
+  {
+   "side": "L",
+   "a": "horn blade",
+   "b": "servo boot",
+   "min_sep_mm": 45.33858002275044,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 48.5393088490874,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 45.33858002275044,
+    "-20": 45.48797239296139,
+    "20": 51.664988759657454,
+    "21": 51.807377478671214
+   }
+  },
+  {
+   "side": "L",
+   "a": "horn blade",
+   "b": "servo case",
+   "min_sep_mm": 22.872146951542465,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 26.258244885423416,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 22.872146951542465,
+    "-20": 23.080138975047987,
+    "20": 29.370605466135984,
+    "21": 29.516565614107538
+   }
+  },
+  {
+   "side": "L",
+   "a": "horn rib",
+   "b": "pocket wall fore",
+   "min_sep_mm": 60.131709752066676,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 61.75,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 61.783371671087494,
+    "-20": 61.7895551116959,
+    "20": 60.367435860388966,
+    "21": 60.131709752066676
+   }
+  },
+  {
+   "side": "L",
+   "a": "horn rib",
+   "b": "pocket wall side inboard",
+   "min_sep_mm": 413.00000000000006,
+   "at_delta_deg": 1.0,
+   "neutral_sep_mm": 413.29950996979494,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 413.1925880118854,
+    "-20": 413.2039366963679,
+    "20": 413.38103769883503,
+    "21": 413.37478283251227
+   }
+  },
+  {
+   "side": "L",
+   "a": "horn rib",
+   "b": "pocket wall side outboard",
+   "min_sep_mm": 318.0,
+   "at_delta_deg": 1.0,
+   "neutral_sep_mm": 318.6259692252218,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 318.5790874069189,
+    "-20": 318.5848150817088,
+    "20": 318.4642272062428,
+    "21": 318.4593679247118
+   }
+  },
+  {
+   "side": "L",
+   "a": "horn rib",
+   "b": "servo boot",
+   "min_sep_mm": 52.16379195772722,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 53.46154332952828,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 53.249886331883445,
+    "-20": 53.25603999737029,
+    "20": 52.36689518369698,
+    "21": 52.16379195772722
+   }
+  },
+  {
+   "side": "L",
+   "a": "horn rib",
+   "b": "servo case",
+   "min_sep_mm": 27.6993324356877,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 30.849999999999987,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 30.883371671087485,
+    "-20": 30.889555111695888,
+    "20": 27.850763397683163,
+    "21": 27.6993324356877
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper bridge",
+   "b": "clevis cheek +1",
+   "min_sep_mm": 35.74092606520644,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 38.152042110145004,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 35.74092606520644,
+    "-20": 35.97191653313308,
+    "20": 37.669748700841886,
+    "21": 37.65309364284158
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper bridge",
+   "b": "clevis cheek -1",
+   "min_sep_mm": 35.031501446936204,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 38.152124191064644,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 35.031501446936204,
+    "-20": 35.14626504533004,
+    "20": 37.676808397694025,
+    "21": 37.65309351449189
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper bridge",
+   "b": "clevis pin",
+   "min_sep_mm": 37.93827271565975,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 41.147614368100854,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 37.93827271565975,
+    "-20": 38.066942212541036,
+    "20": 40.67188328427143,
+    "21": 40.641149792145335
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper bridge",
+   "b": "clevis sleeve",
+   "min_sep_mm": 33.2057826123526,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 36.15204838148375,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 33.2057826123526,
+    "-20": 33.35301516350546,
+    "20": 35.66974880508458,
+    "21": 35.65309360259142
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper bridge",
+   "b": "core aft block",
+   "min_sep_mm": 19.612528839794834,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 23.403043484379104,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 22.753838399463184,
+    "-20": 22.777336413668664,
+    "20": 19.78090369142202,
+    "21": 19.612528839794834
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper bridge",
+   "b": "elevon slab",
+   "min_sep_mm": 38.89735804520483,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 41.664387707681186,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 41.00383839946317,
+    "-20": 41.02733641366865,
+    "20": 39.1250766312424,
+    "21": 38.89735804520483
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper bridge",
+   "b": "horn blade",
+   "min_sep_mm": 36.5791583076788,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 39.45003383612872,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 36.5791583076788,
+    "-20": 36.71106886019465,
+    "20": 38.96344734494947,
+    "21": 38.94641193533224
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper bridge",
+   "b": "horn rib",
+   "min_sep_mm": 41.397357950303885,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 44.154528338250955,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 43.546121912626724,
+    "-20": 43.74450683589112,
+    "20": 41.62507655572414,
+    "21": 41.397357950303885
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper bridge",
+   "b": "pocket wall fore",
+   "min_sep_mm": 10.73071412597304,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 14.500383409455434,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 10.73071412597304,
+    "-20": 10.895814272664007,
+    "20": 13.867097973580073,
+    "21": 13.842380000416183
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper bridge",
+   "b": "pocket wall side inboard",
+   "min_sep_mm": 412.27408898597827,
+   "at_delta_deg": -8.5,
+   "neutral_sep_mm": 412.39995410183707,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 412.5615536313346,
+    "-20": 412.51810914861255,
+    "20": 412.56061990688573,
+    "21": 412.6074961646141
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper bridge",
+   "b": "pocket wall side outboard",
+   "min_sep_mm": 317.2740889859783,
+   "at_delta_deg": -8.5,
+   "neutral_sep_mm": 317.399954101837,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 317.5615536313347,
+    "-20": 317.51810914861255,
+    "20": 317.5606199068858,
+    "21": 317.607496164614
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper bridge",
+   "b": "rod",
+   "min_sep_mm": -0.002899517414488642,
+   "at_delta_deg": 0.0,
+   "neutral_sep_mm": -0.002899517414488642,
+   "max_penetration_mm": 0.002899517414488642,
+   "design_contact": true,
+   "penetrating_deltas_deg": [
+    -21.0,
+    -20.5,
+    -20.0,
+    -19.5,
+    -19.0,
+    -18.5,
+    -18.0,
+    -17.5,
+    -17.0,
+    -16.5,
+    -16.0,
+    -15.5,
+    -15.0,
+    -14.5,
+    -14.0,
+    -13.5,
+    -13.0,
+    -12.5,
+    -12.0,
+    -11.5,
+    -11.0,
+    -10.5,
+    -10.0,
+    -9.5,
+    -9.0,
+    -8.5,
+    -8.0,
+    -7.5,
+    -7.0,
+    -6.5,
+    -6.0,
+    -5.5,
+    -5.0,
+    -4.5,
+    -4.0,
+    -3.5,
+    -3.0,
+    -2.5,
+    -2.0,
+    -1.5,
+    -1.0,
+    -0.5,
+    0.0,
+    0.5,
+    1.0,
+    1.5,
+    2.0,
+    2.5,
+    3.0,
+    3.5,
+    4.0,
+    4.5,
+    5.0,
+    5.5,
+    6.0,
+    6.5,
+    7.0,
+    7.5,
+    8.0,
+    8.5,
+    9.0,
+    9.5,
+    10.0,
+    10.5,
+    11.0,
+    11.5,
+    12.0,
+    12.5,
+    13.0,
+    13.5,
+    14.0,
+    14.5,
+    15.0,
+    15.5,
+    16.0,
+    16.5,
+    17.0,
+    17.5,
+    18.0,
+    18.5,
+    19.0,
+    19.5,
+    20.0,
+    20.5,
+    21.0
+   ],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": -0.0028105031204973124,
+    "-20": -0.0028236789254079686,
+    "20": -0.0028236785295874395,
+    "21": -0.0028105024835033826
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper bridge",
+   "b": "rod Z-bend pin",
+   "min_sep_mm": 0.5999999999999999,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 0.5999999999999999,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 0.5999999999999999,
+    "-20": 0.5999999999999999,
+    "20": 0.5999999999999999,
+    "21": 0.5999999999999999
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper bridge",
+   "b": "servo boot",
+   "min_sep_mm": 4.947830766246004,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 5.6866623004915295,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 4.947830766246004,
+    "-20": 5.015971960719019,
+    "20": 5.183226817565723,
+    "21": 5.154674667747495
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper bridge",
+   "b": "servo case",
+   "min_sep_mm": 3.5000000000000004,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 3.5000000000000004,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 3.5000000000000004,
+    "-20": 3.5000000000000004,
+    "20": 3.5000000000000004,
+    "21": 3.5000000000000004
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper spacer",
+   "b": "clevis cheek +1",
+   "min_sep_mm": 35.82223271523653,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 38.28359565580725,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 35.82223271523653,
+    "-20": 36.053394422473914,
+    "20": 39.11435974156918,
+    "21": 39.296252884848144
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper spacer",
+   "b": "clevis cheek -1",
+   "min_sep_mm": 34.85678753394694,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 38.24700054363189,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 34.85678753394694,
+    "-20": 35.00041752130503,
+    "20": 39.11435981770053,
+    "21": 39.16343736867473
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper spacer",
+   "b": "clevis pin",
+   "min_sep_mm": 37.658556994404734,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 41.24738180198131,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 37.658556994404734,
+    "-20": 37.69591616222506,
+    "20": 42.09131051447423,
+    "21": 42.13722584243796
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper spacer",
+   "b": "clevis sleeve",
+   "min_sep_mm": 33.30370849561238,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 36.252410252162356,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 33.30370849561238,
+    "-20": 33.45103568044622,
+    "20": 37.12868686764415,
+    "21": 37.17738594091094
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper spacer",
+   "b": "core aft block",
+   "min_sep_mm": 21.0992363741081,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 23.50079761434065,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 22.846145849443193,
+    "-20": 22.87034956539566,
+    "20": 21.204168643648853,
+    "21": 21.0992363741081
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper spacer",
+   "b": "elevon slab",
+   "min_sep_mm": 39.74776720977205,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 41.76209244869777,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 41.09614584944318,
+    "-20": 41.12034956539565,
+    "20": 39.94947802468929,
+    "21": 39.74776720977205
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper spacer",
+   "b": "horn blade",
+   "min_sep_mm": 36.67774275203047,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 39.54980108816947,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 36.67774275203047,
+    "-20": 36.81071922707589,
+    "20": 40.431911548867106,
+    "21": 40.47906828970035
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper spacer",
+   "b": "horn rib",
+   "min_sep_mm": 42.2477671148711,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 44.251354444028834,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 43.64612191262871,
+    "-20": 43.84450692702181,
+    "20": 42.44947794917103,
+    "21": 42.2477671148711
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper spacer",
+   "b": "pocket wall fore",
+   "min_sep_mm": 12.115350447515327,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 14.499938796846108,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 12.115350447515327,
+    "-20": 12.217829958322518,
+    "20": 13.867097973580073,
+    "21": 13.842380000416183
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper spacer",
+   "b": "pocket wall side inboard",
+   "min_sep_mm": 415.82916966662486,
+   "at_delta_deg": 12.0,
+   "neutral_sep_mm": 415.99995410015134,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 415.9230839506575,
+    "-20": 415.90330526871986,
+    "20": 415.90579348503366,
+    "21": 415.9264309622199
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper spacer",
+   "b": "pocket wall side outboard",
+   "min_sep_mm": 320.82916966662486,
+   "at_delta_deg": 12.0,
+   "neutral_sep_mm": 320.99995410015134,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 320.9230839506575,
+    "-20": 320.9033052687199,
+    "20": 320.90579348503366,
+    "21": 320.92643096221997
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper spacer",
+   "b": "rod",
+   "min_sep_mm": 0.6987366057616407,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 1.3970968546183349,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 0.6987366057616407,
+    "-20": 0.7356434418162028,
+    "20": 1.4429266728948065,
+    "21": 1.4478159967845627
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper spacer",
+   "b": "rod Z-bend pin",
+   "min_sep_mm": 1.3970968568565167,
+   "at_delta_deg": 0.0,
+   "neutral_sep_mm": 1.3970968568565167,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 1.3970981838723473,
+    "-20": 1.3971806605990733,
+    "20": 1.3971575145664827,
+    "21": 1.3971046142521593
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper spacer",
+   "b": "servo boot",
+   "min_sep_mm": 4.716235917361603,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 5.485484279600189,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 4.716235917361603,
+    "-20": 4.787218475696465,
+    "20": 4.95704185850851,
+    "21": 4.928393311474211
+   }
+  },
+  {
+   "side": "L",
+   "a": "keeper spacer",
+   "b": "servo case",
+   "min_sep_mm": 1.9999999999999991,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 1.9999999999999991,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 1.9999999999999991,
+    "-20": 1.9999999999999991,
+    "20": 1.9999999999999991,
+    "21": 1.9999999999999991
+   }
+  },
+  {
+   "side": "L",
+   "a": "rod",
+   "b": "clevis pin",
+   "min_sep_mm": 4.98785698891785,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 4.9975838016487195,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 4.98785698891785,
+    "-20": 4.988986081220837,
+    "20": 4.989597835287962,
+    "21": 4.988189674182076
+   }
+  },
+  {
+   "side": "L",
+   "a": "rod",
+   "b": "core aft block",
+   "min_sep_mm": 5.549177812178866,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 5.959007190425326,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 5.549177812178866,
+    "-20": 5.588312041537436,
+    "20": 5.689985700555002,
+    "21": 5.66420438147205
+   }
+  },
+  {
+   "side": "L",
+   "a": "rod",
+   "b": "elevon slab",
+   "min_sep_mm": 8.007592644381164,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 9.23743519825999,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 11.001486080033567,
+    "-20": 11.085394392123026,
+    "20": 8.057487384595847,
+    "21": 8.007592644381164
+   }
+  },
+  {
+   "side": "L",
+   "a": "rod",
+   "b": "horn blade",
+   "min_sep_mm": 3.291467418801153,
+   "at_delta_deg": 20.5,
+   "neutral_sep_mm": 3.300013273321162,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 3.295933140636975,
+    "-20": 3.2942283656598734,
+    "20": 3.291517080609929,
+    "21": 3.291547852763088
+   }
+  },
+  {
+   "side": "L",
+   "a": "rod",
+   "b": "horn rib",
+   "min_sep_mm": 9.427751346986181,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 11.362033847041147,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 12.87560118919523,
+    "-20": 12.832108831139195,
+    "20": 9.516592593536918,
+    "21": 9.427751346986181
+   }
+  },
+  {
+   "side": "L",
+   "a": "rod",
+   "b": "pocket wall fore",
+   "min_sep_mm": 12.723041700260938,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 15.998169122828143,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 12.723041700260938,
+    "-20": 12.87191186550464,
+    "20": 19.13251344627849,
+    "21": 19.283005175295436
+   }
+  },
+  {
+   "side": "L",
+   "a": "rod",
+   "b": "pocket wall side inboard",
+   "min_sep_mm": 413.3984201752536,
+   "at_delta_deg": 0.5,
+   "neutral_sep_mm": 413.3994542914007,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 413.5761097466615,
+    "-20": 413.56568401050424,
+    "20": 413.65450791584396,
+    "21": 413.67876305303076
+   }
+  },
+  {
+   "side": "L",
+   "a": "rod",
+   "b": "pocket wall side outboard",
+   "min_sep_mm": 318.3998459559381,
+   "at_delta_deg": 1.0,
+   "neutral_sep_mm": 318.40143480386064,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 318.5869704553616,
+    "-20": 318.57464295423654,
+    "20": 318.66370348545126,
+    "21": 318.68995040789116
+   }
+  },
+  {
+   "side": "L",
+   "a": "rod",
+   "b": "servo boot",
+   "min_sep_mm": 6.931040400204973,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 9.776526322031213,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 6.931040400204973,
+    "-20": 7.073953925549159,
+    "20": 12.064023355950477,
+    "21": 12.168950201438166
+   }
+  },
+  {
+   "side": "L",
+   "a": "rod",
+   "b": "servo case",
+   "min_sep_mm": 1.9781491869659915,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 2.245404016803806,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 1.9781491869659915,
+    "-20": 2.0041292333208856,
+    "20": 2.105803303166915,
+    "21": 2.0931763688696576
+   }
+  },
+  {
+   "side": "L",
+   "a": "rod Z-bend pin",
+   "b": "clevis pin",
+   "min_sep_mm": 42.133113181453936,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 42.14441745399689,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 42.133261868571275,
+    "-20": 42.135378213721545,
+    "20": 42.13527050087448,
+    "21": 42.133113181453936
+   }
+  },
+  {
+   "side": "L",
+   "a": "rod Z-bend pin",
+   "b": "core aft block",
+   "min_sep_mm": 21.276144338974262,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 24.564851027229135,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 27.830778721555234,
+    "-20": 27.68308781157999,
+    "20": 21.427492817094578,
+    "21": 21.276144338974262
+   }
+  },
+  {
+   "side": "L",
+   "a": "rod Z-bend pin",
+   "b": "elevon slab",
+   "min_sep_mm": 39.179287030393226,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 42.919525480638846,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 46.18545317496495,
+    "-20": 46.03776226498971,
+    "20": 39.450960445349764,
+    "21": 39.179287030393226
+   }
+  },
+  {
+   "side": "L",
+   "a": "rod Z-bend pin",
+   "b": "horn blade",
+   "min_sep_mm": 40.43837532464084,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 40.44683674018504,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 40.43852401175821,
+    "-20": 40.4386594886342,
+    "20": 40.438551775787175,
+    "21": 40.43837532464084
+   }
+  },
+  {
+   "side": "L",
+   "a": "rod Z-bend pin",
+   "b": "horn rib",
+   "min_sep_mm": 41.6792870303932,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 45.442915091442465,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 48.698335714943504,
+    "-20": 48.558901972705655,
+    "20": 41.950960445349736,
+    "21": 41.6792870303932
+   }
+  },
+  {
+   "side": "L",
+   "a": "rod Z-bend pin",
+   "b": "pocket wall fore",
+   "min_sep_mm": 12.127816652932694,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 15.397356972963378,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 12.127816652932694,
+    "-20": 12.275670932102745,
+    "20": 18.538185590888713,
+    "21": 18.689701484045003
+   }
+  },
+  {
+   "side": "L",
+   "a": "rod Z-bend pin",
+   "b": "pocket wall side inboard",
+   "min_sep_mm": 413.39709686055426,
+   "at_delta_deg": 0.0,
+   "neutral_sep_mm": 413.39709686055426,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 414.0509636082743,
+    "-20": 413.99097895977826,
+    "20": 413.9987703526139,
+    "21": 414.0607230288936
+   }
+  },
+  {
+   "side": "L",
+   "a": "rod Z-bend pin",
+   "b": "pocket wall side outboard",
+   "min_sep_mm": 318.39709686055426,
+   "at_delta_deg": 0.0,
+   "neutral_sep_mm": 318.39709686055426,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 319.0509636082743,
+    "-20": 318.99097895977826,
+    "20": 318.99877035261386,
+    "21": 319.0607230288936
+   }
+  },
+  {
+   "side": "L",
+   "a": "rod Z-bend pin",
+   "b": "servo boot",
+   "min_sep_mm": 6.735066756221007,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 9.522648948074004,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 6.735066756221007,
+    "-20": 6.875233283429045,
+    "20": 11.712651041300731,
+    "21": 11.817071847609343
+   }
+  },
+  {
+   "side": "L",
+   "a": "rod Z-bend pin",
+   "b": "servo case",
+   "min_sep_mm": 0.400000000000001,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 0.400000000000001,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 0.400000000000001,
+    "-20": 0.400000000000001,
+    "20": 0.400000000000001,
+    "21": 0.400000000000001
+   }
+  },
+  {
+   "side": "R",
+   "a": "arm",
+   "b": "clevis cheek +1",
+   "min_sep_mm": 33.12260618745416,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 36.34528893805314,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 33.12260618745416,
+    "-20": 33.27797554675417,
+    "20": 37.71878766893205,
+    "21": 37.71626597293867
+   }
+  },
+  {
+   "side": "R",
+   "a": "arm",
+   "b": "clevis cheek -1",
+   "min_sep_mm": 33.66952435030973,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 36.989599466242886,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 33.66952435030973,
+    "-20": 33.81316827700698,
+    "20": 37.71878766893202,
+    "21": 37.71626597293867
+   }
+  },
+  {
+   "side": "R",
+   "a": "arm",
+   "b": "clevis pin",
+   "min_sep_mm": 36.01915348665929,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 39.255737251482444,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 36.01915348665929,
+    "-20": 36.18182810149413,
+    "20": 40.73837486399176,
+    "21": 40.73604205928844
+   }
+  },
+  {
+   "side": "R",
+   "a": "arm",
+   "b": "clevis sleeve",
+   "min_sep_mm": 31.25569185051681,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 34.473734515181334,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 31.25569185051681,
+    "-20": 31.396224570008123,
+    "20": 35.72055679100125,
+    "21": 35.71821703871367
+   }
+  },
+  {
+   "side": "R",
+   "a": "arm",
+   "b": "core aft block",
+   "min_sep_mm": 20.05503789905688,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 21.324998916341542,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 21.325824442450013,
+    "-20": 21.330664811732902,
+    "20": 20.199936559884833,
+    "21": 20.05503789905688
+   }
+  },
+  {
+   "side": "R",
+   "a": "arm",
+   "b": "elevon slab",
+   "min_sep_mm": 37.7316599559212,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 39.76691195799514,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 39.767528286862145,
+    "-20": 39.76965759322465,
+    "20": 38.001498506176816,
+    "21": 37.7316599559212
+   }
+  },
+  {
+   "side": "R",
+   "a": "arm",
+   "b": "horn blade",
+   "min_sep_mm": 34.58629119337856,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 37.801340641941835,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 34.58629119337856,
+    "-20": 34.72687662345887,
+    "20": 39.04165613890445,
+    "21": 39.04130420247534
+   }
+  },
+  {
+   "side": "R",
+   "a": "arm",
+   "b": "horn rib",
+   "min_sep_mm": 40.231659861020255,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 42.704637256316374,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 42.870641482039964,
+    "-20": 42.89206251325412,
+    "20": 40.501498430658565,
+    "21": 40.231659861020255
+   }
+  },
+  {
+   "side": "R",
+   "a": "arm",
+   "b": "pocket wall fore",
+   "min_sep_mm": 10.730724199381203,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 12.000000001872957,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 10.730724199381203,
+    "-20": 10.878852077147089,
+    "20": 12.000402439382995,
+    "21": 12.000051468817441
+   }
+  },
+  {
+   "side": "R",
+   "a": "arm",
+   "b": "pocket wall side inboard",
+   "min_sep_mm": 12.000000004916494,
+   "at_delta_deg": 0.0,
+   "neutral_sep_mm": 12.000000004916494,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 12.653871154722774,
+    "-20": 12.594160104822588,
+    "20": 12.601874715731126,
+    "21": 12.663651906728079
+   }
+  },
+  {
+   "side": "R",
+   "a": "arm",
+   "b": "pocket wall side outboard",
+   "min_sep_mm": 18.500000001872934,
+   "at_delta_deg": 0.0,
+   "neutral_sep_mm": 18.500000001872934,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 18.500008806045464,
+    "-20": 18.500556003237133,
+    "20": 18.500402439382974,
+    "21": 18.500051468817418
+   }
+  },
+  {
+   "side": "R",
+   "a": "arm",
+   "b": "rod",
+   "min_sep_mm": 0.2548110790458,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 0.29006638727219375,
+   "max_penetration_mm": 0.0,
+   "design_contact": true,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 0.2548110790458,
+    "-20": 0.25840435944255935,
+    "20": 0.264510808765989,
+    "21": 0.26203700521190176
+   }
+  },
+  {
+   "side": "R",
+   "a": "arm",
+   "b": "servo boot",
+   "min_sep_mm": 2.9521738893008713,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 2.9854842847440164,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 2.9521738893008713,
+    "-20": 2.983772500478113,
+    "20": 2.9858867222540555,
+    "21": 2.9855357516885004
+   }
+  },
+  {
+   "side": "R",
+   "a": "arm",
+   "b": "servo case",
+   "min_sep_mm": 0.0,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 0.0,
+   "max_penetration_mm": 0.0,
+   "design_contact": true,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 0.0,
+    "-20": 0.0,
+    "20": 0.0,
+    "21": 0.0
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis cheek +1",
+   "b": "core aft block",
+   "min_sep_mm": 5.9569700501176275,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 6.983341683181595,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 5.9569700501176275,
+    "-20": 6.029488660600265,
+    "20": 6.931532319256282,
+    "21": 6.902134687664551
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis cheek +1",
+   "b": "elevon slab",
+   "min_sep_mm": 7.003153065273861,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 7.554971526944501,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 7.141839833365582,
+    "-20": 7.161329924810417,
+    "20": 7.052613478579328,
+    "21": 7.003153065273861
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis cheek +1",
+   "b": "horn blade",
+   "min_sep_mm": 0.07685456539360813,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 0.09999999986193275,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 0.07719682346590817,
+    "-20": 0.07929922503846498,
+    "20": 0.07902626416519953,
+    "21": 0.07685456539360813
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis cheek +1",
+   "b": "horn rib",
+   "min_sep_mm": 7.787114290587052,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 8.157226755290703,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 7.787114290587052,
+    "-20": 7.846393980730337,
+    "20": 8.395341026018892,
+    "21": 8.380946072946143
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis cheek +1",
+   "b": "pocket wall fore",
+   "min_sep_mm": 52.458649733365085,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 55.74447191703444,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 52.458649733365085,
+    "-20": 52.60871362901204,
+    "20": 58.87132736336953,
+    "21": 59.02064599174389
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis cheek +1",
+   "b": "pocket wall side inboard",
+   "min_sep_mm": 18.458804178817207,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 20.972834850319643,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 18.458804178817207,
+    "-20": 18.57197020499035,
+    "20": 23.41466404539161,
+    "21": 23.533016633128096
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis cheek +1",
+   "b": "pocket wall side outboard",
+   "min_sep_mm": 29.066927536569864,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 31.064018241055287,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 29.066927536569864,
+    "-20": 30.425780595914777,
+    "20": 32.24237252066888,
+    "21": 32.355476244494106
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis cheek +1",
+   "b": "servo boot",
+   "min_sep_mm": 43.88871969424,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 47.15185030185774,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 43.88871969424,
+    "-20": 44.037429269153144,
+    "20": 50.26996870722523,
+    "21": 50.41922082445531
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis cheek +1",
+   "b": "servo case",
+   "min_sep_mm": 21.558649733365076,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 24.844471917034426,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 21.558649733365076,
+    "-20": 21.708713629012028,
+    "20": 27.971327363369518,
+    "21": 28.12064599174388
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis cheek -1",
+   "b": "core aft block",
+   "min_sep_mm": 5.9512250440809344,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 6.983341683181588,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 5.9512250440809344,
+    "-20": 6.024217801291458,
+    "20": 6.926192310967898,
+    "21": 6.896303936128886
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis cheek -1",
+   "b": "elevon slab",
+   "min_sep_mm": 7.003153065273861,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 7.554971526944501,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 7.155359169940416,
+    "-20": 7.172869715935046,
+    "20": 7.052613476873778,
+    "21": 7.003153065273861
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis cheek -1",
+   "b": "horn blade",
+   "min_sep_mm": 0.06638145233545112,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 0.09999999979704022,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 0.06693511795449747,
+    "-20": 0.06992456898249899,
+    "20": 0.06949664736105587,
+    "21": 0.06638145233545112
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis cheek -1",
+   "b": "horn rib",
+   "min_sep_mm": 7.793235780620369,
+   "at_delta_deg": -20.5,
+   "neutral_sep_mm": 8.1572267552907,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 7.858680338716159,
+    "-20": 7.868601316407043,
+    "20": 8.395341026018894,
+    "21": 8.380946072946143
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis cheek -1",
+   "b": "pocket wall fore",
+   "min_sep_mm": 52.413301783274136,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 55.74447191675838,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 52.413301783274136,
+    "-20": 52.567524924200136,
+    "20": 58.82959828638349,
+    "21": 58.97462119168892
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis cheek -1",
+   "b": "pocket wall side inboard",
+   "min_sep_mm": 16.521883923043905,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 19.07060292630325,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 16.521883923043905,
+    "-20": 16.638204912455212,
+    "20": 21.48048556042037,
+    "21": 21.595579417464123
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis cheek -1",
+   "b": "pocket wall side outboard",
+   "min_sep_mm": 32.07095677330346,
+   "at_delta_deg": -20.0,
+   "neutral_sep_mm": 34.02633969209262,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 33.351880371873285,
+    "-20": 32.07095677330346,
+    "20": 34.28960576537132,
+    "21": 34.28683542421018
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis cheek -1",
+   "b": "servo boot",
+   "min_sep_mm": 44.364406131191636,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 47.64276843016768,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 44.364406131191636,
+    "-20": 44.516392116632986,
+    "20": 50.65738047415981,
+    "21": 50.7987224763896
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis cheek -1",
+   "b": "servo case",
+   "min_sep_mm": 21.513301783274123,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 24.84447191675837,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 21.513301783274123,
+    "-20": 21.667524924200126,
+    "20": 27.929598286383474,
+    "21": 28.07462119168891
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis pin",
+   "b": "core aft block",
+   "min_sep_mm": 7.48437078472311,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 8.557815756919474,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 7.48437078472311,
+    "-20": 7.562061238859149,
+    "20": 8.65260720588587,
+    "21": 8.652607205885884
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis pin",
+   "b": "pocket wall fore",
+   "min_sep_mm": 55.466884808355545,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 58.747580713811836,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 55.466884808355545,
+    "-20": 55.61685543267586,
+    "20": 61.87926237861477,
+    "21": 62.02862095235051
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis pin",
+   "b": "pocket wall side inboard",
+   "min_sep_mm": 18.78261271578155,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 21.36983563593703,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 18.78261271578155,
+    "-20": 18.908077621586195,
+    "20": 23.72349367484064,
+    "21": 23.837561982600036
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis pin",
+   "b": "pocket wall side outboard",
+   "min_sep_mm": 29.500382301284393,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 32.076083597073634,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 29.500382301284393,
+    "-20": 29.61488870168877,
+    "20": 34.451324671738575,
+    "21": 34.552775482728045
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis pin",
+   "b": "servo boot",
+   "min_sep_mm": 46.8461947283416,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 50.11109467937071,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 46.8461947283416,
+    "-20": 46.99544319911465,
+    "20": 53.227694776886786,
+    "21": 53.3763341442824
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis pin",
+   "b": "servo case",
+   "min_sep_mm": 24.658264929017072,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 27.983034137063072,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 24.658264929017072,
+    "-20": 24.80111273214766,
+    "20": 31.044691425394788,
+    "21": 31.1736787908555
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis sleeve",
+   "b": "clevis pin",
+   "min_sep_mm": 2.97441548558236,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 2.997583765838363,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 2.97441548558236,
+    "-20": 2.9767584445450357,
+    "20": 2.9772123101244885,
+    "21": 2.97455104399158
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis sleeve",
+   "b": "core aft block",
+   "min_sep_mm": 5.793552099385608,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 6.793954680947414,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 5.793552099385608,
+    "-20": 5.863656584083238,
+    "20": 6.76567560603206,
+    "21": 6.738686287978805
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis sleeve",
+   "b": "elevon slab",
+   "min_sep_mm": 7.105197624622214,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 8.080106719375744,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 9.31206699910546,
+    "-20": 9.331309642446328,
+    "20": 7.161654708449774,
+    "21": 7.105197624622214
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis sleeve",
+   "b": "horn blade",
+   "min_sep_mm": 1.2862489785658293,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 1.3000132375108053,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 1.2905035053833447,
+    "-20": 1.2893521784518303,
+    "20": 1.2866846934784515,
+    "21": 1.2862489785658293
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis sleeve",
+   "b": "horn rib",
+   "min_sep_mm": 8.751360018457184,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 9.805523472601712,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 10.730237599936535,
+    "-20": 10.646018905187473,
+    "20": 8.789006531283869,
+    "21": 8.751360018457184
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis sleeve",
+   "b": "pocket wall fore",
+   "min_sep_mm": 50.43581201140468,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 53.74480559448222,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 50.43581201140468,
+    "-20": 50.58810346380224,
+    "20": 56.850332089410486,
+    "21": 56.99732653887818
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis sleeve",
+   "b": "pocket wall side inboard",
+   "min_sep_mm": 15.416651720651792,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 17.967306277749312,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 15.416651720651792,
+    "-20": 15.534227299295738,
+    "20": 20.345087996124168,
+    "21": 20.458000119893878
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis sleeve",
+   "b": "pocket wall side outboard",
+   "min_sep_mm": 30.39737275056384,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 31.033764634269794,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 30.39737275056384,
+    "-20": 30.432015221251135,
+    "20": 31.25500849776694,
+    "21": 31.24924444182045
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis sleeve",
+   "b": "servo boot",
+   "min_sep_mm": 41.98193664819318,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 45.250717199211714,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 41.98193664819318,
+    "-20": 42.14762561908915,
+    "20": 48.342870584754756,
+    "21": 48.49139511344626
+   }
+  },
+  {
+   "side": "R",
+   "a": "clevis sleeve",
+   "b": "servo case",
+   "min_sep_mm": 19.55460470637449,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 22.84480559448221,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 19.55460470637449,
+    "-20": 19.707287772700173,
+    "20": 25.966946901265274,
+    "21": 26.112809745768683
+   }
+  },
+  {
+   "side": "R",
+   "a": "elevon slab",
+   "b": "pocket wall fore",
+   "min_sep_mm": 57.60999648070711,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 59.25,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 59.3143249286228,
+    "-20": 59.31875508654613,
+    "20": 57.867435860389044,
+    "21": 57.60999648070711
+   }
+  },
+  {
+   "side": "R",
+   "a": "elevon slab",
+   "b": "pocket wall side inboard",
+   "min_sep_mm": 18.24999999999999,
+   "at_delta_deg": 0.0,
+   "neutral_sep_mm": 18.24999999999999,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 18.320790306663724,
+    "-20": 18.355171903450625,
+    "20": 19.34003840816667,
+    "21": 19.333198994321815
+   }
+  },
+  {
+   "side": "R",
+   "a": "elevon slab",
+   "b": "pocket wall side outboard",
+   "min_sep_mm": 22.5773510967371,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 24.257410587872005,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 22.5773510967371,
+    "-20": 22.598422718843285,
+    "20": 25.091882861540633,
+    "21": 25.0846091152446
+   }
+  },
+  {
+   "side": "R",
+   "a": "elevon slab",
+   "b": "servo boot",
+   "min_sep_mm": 49.30721940714925,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 50.63876371789156,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 50.63876371789156,
+    "-20": 50.63876371789156,
+    "20": 49.45756642068774,
+    "21": 49.30721940714925
+   }
+  },
+  {
+   "side": "R",
+   "a": "elevon slab",
+   "b": "servo case",
+   "min_sep_mm": 25.25491497270024,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 28.349999999999987,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 28.349999999999987,
+    "-20": 28.349999999999987,
+    "20": 25.396104636351197,
+    "21": 25.25491497270024
+   }
+  },
+  {
+   "side": "R",
+   "a": "horn blade",
+   "b": "core aft block",
+   "min_sep_mm": 2.0526991717491896,
+   "at_delta_deg": -17.5,
+   "neutral_sep_mm": 2.052699273956793,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 2.052699171749231,
+    "-20": 2.052699171749231,
+    "20": 2.052699171749217,
+    "21": 2.0526991717492447
+   }
+  },
+  {
+   "side": "R",
+   "a": "horn blade",
+   "b": "pocket wall fore",
+   "min_sep_mm": 53.772146951542474,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 57.04999999999999,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 53.772146951542474,
+    "-20": 53.920136707588526,
+    "20": 60.18254365352746,
+    "21": 60.333883095537416
+   }
+  },
+  {
+   "side": "R",
+   "a": "horn blade",
+   "b": "pocket wall side inboard",
+   "min_sep_mm": 18.20814404575799,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 20.835105668842196,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 18.20814404575799,
+    "-20": 18.346490330899023,
+    "20": 23.187965633105545,
+    "21": 23.299917687496034
+   }
+  },
+  {
+   "side": "R",
+   "a": "horn blade",
+   "b": "pocket wall side outboard",
+   "min_sep_mm": 31.303883576540265,
+   "at_delta_deg": -7.0,
+   "neutral_sep_mm": 31.515354379156786,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 32.60555340618526,
+    "-20": 32.663601809629824,
+    "20": 33.91107384819138,
+    "21": 34.023174644694855
+   }
+  },
+  {
+   "side": "R",
+   "a": "horn blade",
+   "b": "servo boot",
+   "min_sep_mm": 45.34102206405652,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 48.59194269203277,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 45.34102206405652,
+    "-20": 45.49020799217382,
+    "20": 51.656766781476364,
+    "21": 51.83997262794296
+   }
+  },
+  {
+   "side": "R",
+   "a": "horn blade",
+   "b": "servo case",
+   "min_sep_mm": 22.872146951542465,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 26.258244885423416,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 22.872146951542465,
+    "-20": 23.080138975047987,
+    "20": 29.370605466135984,
+    "21": 29.516565614107538
+   }
+  },
+  {
+   "side": "R",
+   "a": "horn rib",
+   "b": "pocket wall fore",
+   "min_sep_mm": 60.10999648070725,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 61.75,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 61.783371671087494,
+    "-20": 61.7895551116959,
+    "20": 60.367435860388966,
+    "21": 60.10999648070725
+   }
+  },
+  {
+   "side": "R",
+   "a": "horn rib",
+   "b": "pocket wall side inboard",
+   "min_sep_mm": 24.309372806914947,
+   "at_delta_deg": -12.5,
+   "neutral_sep_mm": 25.09241408792029,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 25.032654219778934,
+    "-20": 25.02229987872684,
+    "20": 25.23467872121024,
+    "21": 25.238683426319685
+   }
+  },
+  {
+   "side": "R",
+   "a": "horn rib",
+   "b": "pocket wall side outboard",
+   "min_sep_mm": 35.53290160308045,
+   "at_delta_deg": 6.5,
+   "neutral_sep_mm": 36.1423252506256,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 36.12947847852092,
+    "-20": 36.11625758262806,
+    "20": 35.697079460392395,
+    "21": 35.66407085613118
+   }
+  },
+  {
+   "side": "R",
+   "a": "horn rib",
+   "b": "servo boot",
+   "min_sep_mm": 52.24923845972697,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 53.48995308494849,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 53.601439583557664,
+    "-20": 53.6172423727911,
+    "20": 52.42183967881144,
+    "21": 52.24923845972697
+   }
+  },
+  {
+   "side": "R",
+   "a": "horn rib",
+   "b": "servo case",
+   "min_sep_mm": 27.6993324356877,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 30.849999999999987,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 30.883371671087485,
+    "-20": 30.889555111695888,
+    "20": 27.850763397683163,
+    "21": 27.6993324356877
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper bridge",
+   "b": "clevis cheek +1",
+   "min_sep_mm": 35.031501446936204,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 38.152124191064644,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 35.031501446936204,
+    "-20": 35.14626504533004,
+    "20": 37.676808397694025,
+    "21": 37.65309351449189
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper bridge",
+   "b": "clevis cheek -1",
+   "min_sep_mm": 35.73750749751882,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 38.152042110145004,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 35.73750749751882,
+    "-20": 35.96937561519419,
+    "20": 37.669748700841886,
+    "21": 37.65309364284158
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper bridge",
+   "b": "clevis pin",
+   "min_sep_mm": 37.93827271565975,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 41.147614368100854,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 37.93827271565975,
+    "-20": 38.066942212541036,
+    "20": 40.67188328427143,
+    "21": 40.641149792145335
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper bridge",
+   "b": "clevis sleeve",
+   "min_sep_mm": 33.2057826123526,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 36.15204838148375,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 33.2057826123526,
+    "-20": 33.35301516350546,
+    "20": 35.66974880508458,
+    "21": 35.65309360259142
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper bridge",
+   "b": "core aft block",
+   "min_sep_mm": 19.612528839794834,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 23.403043484379104,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 22.753838399463184,
+    "-20": 22.777336413668664,
+    "20": 19.78090369142202,
+    "21": 19.612528839794834
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper bridge",
+   "b": "elevon slab",
+   "min_sep_mm": 38.89735804520483,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 41.65603431314213,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 41.00383839946317,
+    "-20": 41.02733641366865,
+    "20": 39.1250766312424,
+    "21": 38.89735804520483
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper bridge",
+   "b": "horn blade",
+   "min_sep_mm": 36.58146034437229,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 39.45003383612872,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 36.58146034437229,
+    "-20": 36.75904595148323,
+    "20": 38.96344734494947,
+    "21": 38.94641193533224
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper bridge",
+   "b": "horn rib",
+   "min_sep_mm": 41.397357950303885,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 44.154528338250955,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 44.95965298587527,
+    "-20": 44.64328618831657,
+    "20": 41.62507655572414,
+    "21": 41.397357950303885
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper bridge",
+   "b": "pocket wall fore",
+   "min_sep_mm": 10.73071412597304,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 14.500647643491252,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 10.73071412597304,
+    "-20": 10.895814272664007,
+    "20": 13.867097973580073,
+    "21": 13.842380000416183
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper bridge",
+   "b": "pocket wall side inboard",
+   "min_sep_mm": 12.274088985978288,
+   "at_delta_deg": -8.5,
+   "neutral_sep_mm": 12.399954101837002,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 12.561553631334599,
+    "-20": 12.51810914861251,
+    "20": 12.560619906885728,
+    "21": 12.60749616461404
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper bridge",
+   "b": "pocket wall side outboard",
+   "min_sep_mm": 20.036362934198277,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 20.501465360510647,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 20.076919199757405,
+    "-20": 20.08889709643538,
+    "20": 20.05030647260894,
+    "21": 20.036362934198277
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper bridge",
+   "b": "rod",
+   "min_sep_mm": -0.002899517414488642,
+   "at_delta_deg": 0.0,
+   "neutral_sep_mm": -0.002899517414488642,
+   "max_penetration_mm": 0.002899517414488642,
+   "design_contact": true,
+   "penetrating_deltas_deg": [
+    -21.0,
+    -20.5,
+    -20.0,
+    -19.5,
+    -19.0,
+    -18.5,
+    -18.0,
+    -17.5,
+    -17.0,
+    -16.5,
+    -16.0,
+    -15.5,
+    -15.0,
+    -14.5,
+    -14.0,
+    -13.5,
+    -13.0,
+    -12.5,
+    -12.0,
+    -11.5,
+    -11.0,
+    -10.5,
+    -10.0,
+    -9.5,
+    -9.0,
+    -8.5,
+    -8.0,
+    -7.5,
+    -7.0,
+    -6.5,
+    -6.0,
+    -5.5,
+    -5.0,
+    -4.5,
+    -4.0,
+    -3.5,
+    -3.0,
+    -2.5,
+    -2.0,
+    -1.5,
+    -1.0,
+    -0.5,
+    0.0,
+    0.5,
+    1.0,
+    1.5,
+    2.0,
+    2.5,
+    3.0,
+    3.5,
+    4.0,
+    4.5,
+    5.0,
+    5.5,
+    6.0,
+    6.5,
+    7.0,
+    7.5,
+    8.0,
+    8.5,
+    9.0,
+    9.5,
+    10.0,
+    10.5,
+    11.0,
+    11.5,
+    12.0,
+    12.5,
+    13.0,
+    13.5,
+    14.0,
+    14.5,
+    15.0,
+    15.5,
+    16.0,
+    16.5,
+    17.0,
+    17.5,
+    18.0,
+    18.5,
+    19.0,
+    19.5,
+    20.0,
+    20.5,
+    21.0
+   ],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": -0.0028105031204973124,
+    "-20": -0.0028236789254079686,
+    "20": -0.0028236785295874395,
+    "21": -0.0028105024835033826
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper bridge",
+   "b": "rod Z-bend pin",
+   "min_sep_mm": 0.5999999999999999,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 0.5999999999999999,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 0.5999999999999999,
+    "-20": 0.5999999999999999,
+    "20": 0.5999999999999999,
+    "21": 0.5999999999999999
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper bridge",
+   "b": "servo boot",
+   "min_sep_mm": 4.947842914111128,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 5.6866623004915295,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 4.947842914111128,
+    "-20": 5.015971960719019,
+    "20": 5.183382812515541,
+    "21": 5.154804811066671
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper bridge",
+   "b": "servo case",
+   "min_sep_mm": 3.5000000000000004,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 3.5000000000000004,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 3.5000000000000004,
+    "-20": 3.5000000000000004,
+    "20": 3.5000000000000004,
+    "21": 3.5000000000000004
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper spacer",
+   "b": "clevis cheek +1",
+   "min_sep_mm": 34.85678753394694,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 38.24700054363189,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 34.85678753394694,
+    "-20": 35.00041752130503,
+    "20": 39.11435981770053,
+    "21": 39.16343736867473
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper spacer",
+   "b": "clevis cheek -1",
+   "min_sep_mm": 35.82223271523653,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 38.28359565580725,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 35.82223271523653,
+    "-20": 36.04671219756182,
+    "20": 39.11435974156918,
+    "21": 39.296252884848144
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper spacer",
+   "b": "clevis pin",
+   "min_sep_mm": 37.658556994404734,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 41.24738180198131,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 37.658556994404734,
+    "-20": 37.69591616222506,
+    "20": 42.09131051447423,
+    "21": 42.13722584243796
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper spacer",
+   "b": "clevis sleeve",
+   "min_sep_mm": 33.30370849561238,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 36.252410252162356,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 33.30370849561238,
+    "-20": 33.45103568044622,
+    "20": 37.12868686764415,
+    "21": 37.17738594091094
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper spacer",
+   "b": "core aft block",
+   "min_sep_mm": 21.0992363741081,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 23.50079761434065,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 22.846145849443193,
+    "-20": 22.87034956539566,
+    "20": 21.204168643648853,
+    "21": 21.0992363741081
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper spacer",
+   "b": "elevon slab",
+   "min_sep_mm": 39.74776720977205,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 41.75139326312713,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 41.09614584944318,
+    "-20": 41.12034956539565,
+    "20": 39.94947802468929,
+    "21": 39.74776720977205
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper spacer",
+   "b": "horn blade",
+   "min_sep_mm": 36.68041948300431,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 39.54980108816947,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 36.68041948300431,
+    "-20": 36.85820928375827,
+    "20": 40.43565063982651,
+    "21": 40.48206614779162
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper spacer",
+   "b": "horn rib",
+   "min_sep_mm": 42.2477671148711,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 44.251354444028834,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 44.36253208409484,
+    "-20": 44.377673614862296,
+    "20": 42.44947794917103,
+    "21": 42.2477671148711
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper spacer",
+   "b": "pocket wall fore",
+   "min_sep_mm": 12.115350447515327,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 14.499938796846108,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 12.115350447515327,
+    "-20": 12.217829958322518,
+    "20": 13.867097973580073,
+    "21": 13.842380000416183
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper spacer",
+   "b": "pocket wall side inboard",
+   "min_sep_mm": 15.829169666624814,
+   "at_delta_deg": 12.0,
+   "neutral_sep_mm": 15.999954100151342,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 15.923083950657446,
+    "-20": 15.903305268719887,
+    "20": 15.905793485033653,
+    "21": 15.926430962219962
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper spacer",
+   "b": "pocket wall side outboard",
+   "min_sep_mm": 20.075099459227335,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 20.500507675968255,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 20.076919199757405,
+    "-20": 20.08889709643538,
+    "20": 20.087260457718525,
+    "21": 20.075099459227335
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper spacer",
+   "b": "rod",
+   "min_sep_mm": 0.6987366057616407,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 1.3970968546183349,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 0.6987366057616407,
+    "-20": 0.7356434418162028,
+    "20": 1.4429266728948065,
+    "21": 1.4478159967845905
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper spacer",
+   "b": "rod Z-bend pin",
+   "min_sep_mm": 1.3970968568565167,
+   "at_delta_deg": 0.0,
+   "neutral_sep_mm": 1.3970968568565167,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 1.3970981838723473,
+    "-20": 1.3971806605990733,
+    "20": 1.3971575145664827,
+    "21": 1.3971046142521732
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper spacer",
+   "b": "servo boot",
+   "min_sep_mm": 4.716235917361603,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 5.485484279600189,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 4.716235917361603,
+    "-20": 4.787218475696465,
+    "20": 4.95704185850851,
+    "21": 4.928393311474211
+   }
+  },
+  {
+   "side": "R",
+   "a": "keeper spacer",
+   "b": "servo case",
+   "min_sep_mm": 1.9999999999999991,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 1.9999999999999991,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 1.9999999999999991,
+    "-20": 1.9999999999999991,
+    "20": 1.9999999999999991,
+    "21": 1.9999999999999991
+   }
+  },
+  {
+   "side": "R",
+   "a": "rod",
+   "b": "clevis pin",
+   "min_sep_mm": 4.98785698891785,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 4.9975838016487195,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 4.98785698891785,
+    "-20": 4.988986081220837,
+    "20": 4.989597835287962,
+    "21": 4.988189674182076
+   }
+  },
+  {
+   "side": "R",
+   "a": "rod",
+   "b": "core aft block",
+   "min_sep_mm": 5.549177812178866,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 5.959007190425327,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 5.549177812178866,
+    "-20": 5.588312041537436,
+    "20": 5.689985700555002,
+    "21": 5.66420438147205
+   }
+  },
+  {
+   "side": "R",
+   "a": "rod",
+   "b": "elevon slab",
+   "min_sep_mm": 8.007592575590333,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 9.237435198260055,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 11.047994201344308,
+    "-20": 11.085394392123082,
+    "20": 8.057487450670767,
+    "21": 8.007592575590333
+   }
+  },
+  {
+   "side": "R",
+   "a": "rod",
+   "b": "horn blade",
+   "min_sep_mm": 3.291467418801153,
+   "at_delta_deg": 20.5,
+   "neutral_sep_mm": 3.300013273321162,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 3.295933140636975,
+    "-20": 3.2942283656598734,
+    "20": 3.291517080609929,
+    "21": 3.291547852763088
+   }
+  },
+  {
+   "side": "R",
+   "a": "rod",
+   "b": "horn rib",
+   "min_sep_mm": 9.74314688521466,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 11.36203384704116,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 12.916043830095647,
+    "-20": 12.833939897660601,
+    "20": 9.775211872885798,
+    "21": 9.74314688521466
+   }
+  },
+  {
+   "side": "R",
+   "a": "rod",
+   "b": "pocket wall fore",
+   "min_sep_mm": 12.723041700260938,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 15.998169122828115,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 12.723041700260938,
+    "-20": 12.87191186550464,
+    "20": 19.13251344627849,
+    "21": 19.283005175295422
+   }
+  },
+  {
+   "side": "R",
+   "a": "rod",
+   "b": "pocket wall side inboard",
+   "min_sep_mm": 13.499226376873091,
+   "at_delta_deg": -0.5,
+   "neutral_sep_mm": 13.499230474462637,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 13.79124594537498,
+    "-20": 13.776821255604421,
+    "20": 13.87614356752101,
+    "21": 13.9060077479555
+   }
+  },
+  {
+   "side": "R",
+   "a": "rod",
+   "b": "pocket wall side outboard",
+   "min_sep_mm": 29.751328414766466,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 30.444565977800487,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 29.751328414766466,
+    "-20": 29.811696225743837,
+    "20": 29.833343125422935,
+    "21": 29.77242095416749
+   }
+  },
+  {
+   "side": "R",
+   "a": "rod",
+   "b": "servo boot",
+   "min_sep_mm": 6.93104040020498,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 9.776526322031186,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 6.93104040020498,
+    "-20": 7.073953925549173,
+    "20": 12.064023355950477,
+    "21": 12.168950201438193
+   }
+  },
+  {
+   "side": "R",
+   "a": "rod",
+   "b": "servo case",
+   "min_sep_mm": 1.9781491869659915,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 2.245404016803807,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 1.9781491869659915,
+    "-20": 2.0041292333208856,
+    "20": 2.105803303166915,
+    "21": 2.0931763688696576
+   }
+  },
+  {
+   "side": "R",
+   "a": "rod Z-bend pin",
+   "b": "clevis pin",
+   "min_sep_mm": 42.133113181453936,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 42.144417453996915,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 42.133261868571275,
+    "-20": 42.135378213721545,
+    "20": 42.13527050087448,
+    "21": 42.133113181453936
+   }
+  },
+  {
+   "side": "R",
+   "a": "rod Z-bend pin",
+   "b": "core aft block",
+   "min_sep_mm": 21.276144338974262,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 24.56485102722916,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 27.830778721555234,
+    "-20": 27.68308781157999,
+    "20": 21.427492817094578,
+    "21": 21.276144338974262
+   }
+  },
+  {
+   "side": "R",
+   "a": "rod Z-bend pin",
+   "b": "elevon slab",
+   "min_sep_mm": 39.179287030393226,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 42.919525480638875,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 46.18545317496495,
+    "-20": 46.03776226498971,
+    "20": 39.450960445349764,
+    "21": 39.179287030393226
+   }
+  },
+  {
+   "side": "R",
+   "a": "rod Z-bend pin",
+   "b": "horn blade",
+   "min_sep_mm": 40.43837532464084,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 40.44683674018506,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 40.43852401175821,
+    "-20": 40.4386594886342,
+    "20": 40.438551775787175,
+    "21": 40.43837532464084
+   }
+  },
+  {
+   "side": "R",
+   "a": "rod Z-bend pin",
+   "b": "horn rib",
+   "min_sep_mm": 41.6792870303932,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 45.442915091442494,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 48.698335714943504,
+    "-20": 48.558901972705655,
+    "20": 41.950960445349736,
+    "21": 41.6792870303932
+   }
+  },
+  {
+   "side": "R",
+   "a": "rod Z-bend pin",
+   "b": "pocket wall fore",
+   "min_sep_mm": 12.127816652932694,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 15.39735697296335,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 12.127816652932694,
+    "-20": 12.275670932102745,
+    "20": 18.538185590888713,
+    "21": 18.689701484045003
+   }
+  },
+  {
+   "side": "R",
+   "a": "rod Z-bend pin",
+   "b": "pocket wall side inboard",
+   "min_sep_mm": 13.397096860554235,
+   "at_delta_deg": 0.0,
+   "neutral_sep_mm": 13.397096860554235,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 14.050963608274264,
+    "-20": 13.990978959778245,
+    "20": 13.998770352613848,
+    "21": 14.060723028893579
+   }
+  },
+  {
+   "side": "R",
+   "a": "rod Z-bend pin",
+   "b": "pocket wall side outboard",
+   "min_sep_mm": 29.733470684254833,
+   "at_delta_deg": 21.0,
+   "neutral_sep_mm": 30.397096852594174,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 29.743230104874147,
+    "-20": 29.803214753370167,
+    "20": 29.795423360534564,
+    "21": 29.733470684254833
+   }
+  },
+  {
+   "side": "R",
+   "a": "rod Z-bend pin",
+   "b": "servo boot",
+   "min_sep_mm": 6.735066756221007,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 9.522648948073975,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 6.735066756221007,
+    "-20": 6.875233283429045,
+    "20": 11.712651041300731,
+    "21": 11.817071847609343
+   }
+  },
+  {
+   "side": "R",
+   "a": "rod Z-bend pin",
+   "b": "servo case",
+   "min_sep_mm": 0.400000000000001,
+   "at_delta_deg": -21.0,
+   "neutral_sep_mm": 0.400000000000001,
+   "max_penetration_mm": 0.0,
+   "design_contact": false,
+   "penetrating_deltas_deg": [],
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": 0.400000000000001,
+    "-20": 0.400000000000001,
+    "20": 0.400000000000001,
+    "21": 0.400000000000001
+   }
+  }
+ ],
+ "n_pairs_evaluated": 228,
+ "n_poses_per_side": 85,
+ "penetrating_pairs": [
+  {
+   "side": "L",
+   "pair": "keeper bridge / rod",
+   "depth_mm": 0.002899517414488642,
+   "at_delta_deg": 0.0,
+   "range_deg": [
+    -21.0,
+    21.0
+   ],
+   "design_contact": true,
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": -0.0028105031204973124,
+    "-20": -0.0028236789254079686,
+    "20": -0.0028236785295874395,
+    "21": -0.0028105024835033826
+   }
+  },
+  {
+   "side": "R",
+   "pair": "keeper bridge / rod",
+   "depth_mm": 0.002899517414488642,
+   "at_delta_deg": 0.0,
+   "range_deg": [
+    -21.0,
+    21.0
+   ],
+   "design_contact": true,
+   "first_delta_deg_over_tol": null,
+   "sep_mm_at_pm20_pm21": {
+    "-21": -0.0028105031204973124,
+    "-20": -0.0028236789254079686,
+    "20": -0.0028236785295874395,
+    "21": -0.0028105024835033826
+   }
+  }
+ ],
+ "worst_penetration_mm": 0.002899517414488642,
+ "worst_pair": "keeper bridge / rod",
+ "min_positive_clearance_mm": 0.06638145233545112,
+ "min_clearance_pair": "clevis cheek +1 / horn blade",
+ "min_clearance_excl_design_contact_mm": 0.06638145233545112,
+ "excluded_pairs": {
+  "arm / rod Z-bend pin": "pin seated in the arm hole (ctx.seat / E-MEC rod Z-bend in the arm tip hole; hole not subtracted)",
+  "clevis pin / clevis cheek -1": "pin through the cheek holes (E-MEC-PIN-*3)",
+  "clevis pin / clevis cheek +1": "pin through the cheek holes (E-MEC-PIN-*3)",
+  "clevis pin / horn blade": "pin through the horn hole (E-MEC-PIN-*4)",
+  "horn blade / horn rib": "one part (MEC-004)",
+  "horn rib / elevon slab": "rib bonded in its slot through the elevon (E-MEC horn edge, D-212 rev 3; slot cut in the CAD elevon)",
+  "horn blade / elevon slab": "blade base on the elevon skin over the slot",
+  "clevis pin / horn rib": "pin and horn are one rigid group; pin sits about 9.5 mm above the skin",
+  "keeper spacer / keeper bridge": "one part (MEC-008)",
+  "keeper spacer / arm": "keeper clamped on the arm top by the arm screw (E-MEC keeper edge)",
+  "keeper bridge / arm": "keeper clamped on the arm top (same rigid group)",
+  "clevis pin / elevon slab": "pin is part of the elevon-side group (rigid with the slab)",
+  "rod / clevis sleeve": "one part (MEC-003)",
+  "rod / clevis cheek -1": "one part (MEC-003)",
+  "rod / clevis cheek +1": "one part (MEC-003)",
+  "clevis sleeve / clevis cheek -1": "one part (MEC-003)",
+  "clevis sleeve / clevis cheek +1": "one part (MEC-003)",
+  "clevis cheek -1 / clevis cheek +1": "one part (MEC-003)",
+  "rod / rod Z-bend pin": "one part (MEC-003)",
+  "rod Z-bend pin / clevis sleeve": "one part (MEC-003)",
+  "rod Z-bend pin / clevis cheek -1": "one part (MEC-003)",
+  "rod Z-bend pin / clevis cheek +1": "one part (MEC-003)",
+  "elevon slab / core aft block": "hull artifact: the convex hull of the elevon section fills the cove that the hull of the core aft block also fills; the elevon-core pair is checked on the non-convex 2-D sections instead",
+  "horn rib / core aft block": "hull artifact as for the elevon slab: the rib lies inside the elevon section; checked on the non-convex 2-D section (rib outline vs core) instead"
+ },
+ "design_contacts": {
+  "arm / servo case": "arm bottom sits on the case top (ARM_Z0 = SV_Z1, boss height \"-\")",
+  "rod / arm": "ELEVON_ZJ=lo: the rod rests on the arm top at the low end of the Z-bend freedom (rod bottom tangent, by design); mid and hi leave a gap",
+  "rod / keeper bridge": "ELEVON_ZJ=hi: the rod top bears on the keeper bridge at the high end of the Z-bend freedom (by design, D-212 rev 3); mid and lo leave a gap"
+ },
+ "y_gap_horn_to_cap_flange_mm": 37.49999999999998,
+ "horn_rib_vs_core_2d": {
+  "min_sep_mm": 2.5444715733587637,
+  "at_delta_deg": 21.0
+ },
+ "elevon_vs_core_2d": {
+  "min_sep_mm": 0.0,
+  "at_delta_deg": -21.0,
+  "neutral_mm": 0.0,
+  "nose_below_hinge_to_core_min_mm": 0.9027718075705331,
+  "nose_below_hinge_min_at_delta_deg": 21.0,
+  "note": "elevon nose touches the core corner at the hinge at neutral by construction (0 mm); sections only (no balance pocket, caps, tape)"
+ },
+ "pass_no_penetration_gt_tol": true,
+ "pairs_failing": []
+}

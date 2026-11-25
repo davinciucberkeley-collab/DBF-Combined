@@ -1,0 +1,237 @@
+diff --git a/redesign/qp/A/structures/structures_run.md b/redesign/qp/A/structures/structures_run.md
+index 1b912948..c531d346 100644
+--- a/redesign/qp/A/structures/structures_run.md
++++ b/redesign/qp/A/structures/structures_run.md
+@@ -26,11 +26,11 @@
+ Growth on these four lines: EST 20 % = 92 g in MASS-GATE; at CALC 10 % = 49 g. Net change to the 1,381 g prediction = +32 - (92 - 49) = **-11 g** (EST; weigh each part to confirm).
+ 
+ ## 2. C1 loads (limit unless marked; ult = 1.5 x limit)
+-Vs 12.07 m/s (CLmax 0.75 EST), VA = Vs sqrt(3.4) = 22.2, VC 17, VD 22 (1.25 VC rounded up; A.param AIRSPEED_MAX 18). a = 3.74/rad, mu_g 12.2, Kg 0.613.
++Vs 12.07 m/s (CLmax 0.75 EST), VA = Vs sqrt(3.4) = 22.2, VC 17, VD 24 (D-186: VH 18.8 m/s x 1.25 = 23.5, rounded up; A.param THR_MAX 68 + FWD_BAT, AIRSPEED_MAX 18; flutter / divergence at VD 24 open, G8). a = 3.74/rad, mu_g 12.2, Kg 0.613.
+ | Case | n | Note |
+ |---|---|---|
+ | Gust U 8 m/s at VC | 3.85 -> stall-limited 1.98 | wing cannot make the gust n at 17 m/s |
+-| Gust U 4 m/s at VD (half, ASM-C1-UDE-D-FRAC) | 2.85 (stall line 3.32) | |
++| Gust U 4 m/s at VD (half, ASM-C1-UDE-D-FRAC) | 3.01 (stall line 3.96) | |
+ | Manoeuvre limit | +3.4 / -1.5 | A-P13 floor governs; ult +5.1 / -2.25; VA = 22.2 ~ VD |
+ | Spar root bending, flight n 3.4 (elliptical lift, inertia relief) | 1.84 N m (4.78 unrelieved) | design uses unrelieved 4.78 limit |
+ | Hover 8 m/s gust broadside (plate Cd 2.0): wing force 17.2 N, spar root | 1.94 N m | below flight case |
+@@ -56,114 +56,115 @@ Fin elevon note: elevon span ends at |y| <= 0.34 (fin slot at 0.38 starts beyond
+ - hover (1.50 kg, prop_a.py): 6272 rpm: 1P 105 Hz, 2P 209 Hz
+ - hover light 1.381 kg: 6018 rpm: 1P 100 Hz, 2P 201 Hz
+ - hover 8 m/s lean 1.3 W: 7151 rpm: 1P 119 Hz, 2P 238 Hz
+-- cruise 17 m/s (EST): 9700 rpm: 1P 162 Hz, 2P 323 Hz
+-Cruise rpm is an estimate (APC static table only; J0 0.47 assumed, thrust 0.49 N per prop at L/D 7.6): 8,900-10,500 rpm band; bench M1 + audio FFT replace it.
++- cruise 17 m/s (SITL fu_level.py, 7,300-7,540 rpm; mid 7,450): 7450 rpm: 1P 124 Hz, 2P 248 Hz
++Cruise rpm 7,300-7,600 (QP-3 BOARD s1 item 2: sitl/fu_level.py with the APC V > 0 data, 17 m/s level at duty 0.60-0.70); the earlier 8,900-10,500 band was an estimate and is withdrawn; M8 audio FFT on the first cruise replaces it.
+ 
+ Modes with strong coupling to the motors (|phi| at motors in plane cy or thrust cx >= 0.5, mass-normalised), kd = E_CF 61 / PETG 1.6 GPa, nom 70 / 2.1, hi 90 / 2.4:
+-| Corner | f (Hz) | group | cx / cy | worst separation to 1P/2P at hover 6272 and cruise 9700 | worst incl. hover light | Result |
++| Corner | f (Hz) | group | cx / cy | worst separation to 1P/2P at hover 6272 and cruise 7450 | worst incl. hover light | Result |
+ |---|---|---|---|---|---|---|
+-| kd | 5 | bridge 97% | 0.0 / 2.5 | 96 % | 95 % | PASS |
+-| kd | 15 | bridge 84% | 2.7 / 0.0 | 85 % | 85 % | PASS |
+-| kd | 17 | spar 70% | 2.0 / 0.1 | 84 % | 83 % | PASS |
++| kd | 3 | bridge 99% | 0.0 / 2.4 | 97 % | 97 % | PASS |
++| kd | 11 | bridge 92% | 2.6 / 0.0 | 90 % | 89 % | PASS |
++| kd | 15 | spar 53% | 2.0 / 0.2 | 86 % | 85 % | PASS |
+ | kd | 31 | spar 93% | 1.1 / 0.0 | 70 % | 69 % | PASS |
+-| kd | 43 | arm 36% | 1.4 / 1.8 | 59 % | 57 % | PASS |
+-| kd | 47 | arm 100% | 0.1 / 3.4 | 55 % | 53 % | PASS |
+-| kd | 47 | arm 100% | 3.4 / 0.1 | 55 % | 53 % | PASS |
+-| kd | 49 | arm 94% | 0.4 / 3.2 | 53 % | 51 % | PASS |
+-| kd | 59 | arm 54% | 0.1 / 2.2 | 44 % | 41 % | PASS |
+-| kd | 59 | arm 91% | 2.7 / 0.0 | 44 % | 41 % | PASS |
+-| kd | 72 | arm 40% | 0.9 / 1.5 | 32 % | 29 % | PASS |
+-| kd | 79 | bridge 46% | 0.7 / 1.4 | 24 % | 21 % | PASS |
+-| kd | 86 | spar 56% | 0.4 / 0.7 | 18 % | 14 % | MARGINAL |
+-| kd | 589 | arm 100% | 0.0 / 0.7 | 82 % | 82 % | PASS |
+-| nom | 5 | bridge 97% | 0.0 / 2.5 | 96 % | 95 % | PASS |
+-| nom | 17 | bridge 84% | 2.7 / 0.0 | 84 % | 84 % | PASS |
+-| nom | 17 | spar 73% | 2.0 / 0.1 | 83 % | 83 % | PASS |
+-| nom | 34 | spar 93% | 1.1 / 0.0 | 68 % | 66 % | PASS |
+-| nom | 45 | arm 35% | 1.4 / 1.8 | 57 % | 55 % | PASS |
+-| nom | 51 | arm 100% | 3.4 / 0.4 | 52 % | 50 % | PASS |
+-| nom | 51 | arm 100% | 0.4 / 3.4 | 52 % | 50 % | PASS |
+-| nom | 52 | arm 94% | 0.4 / 3.2 | 50 % | 48 % | PASS |
+-| nom | 63 | arm 55% | 0.1 / 2.2 | 40 % | 37 % | PASS |
+-| nom | 63 | arm 91% | 2.7 / 0.0 | 40 % | 37 % | PASS |
+-| nom | 76 | arm 41% | 0.9 / 1.5 | 27 % | 24 % | PASS |
+-| nom | 85 | bridge 46% | 0.7 / 1.4 | 19 % | 15 % | MARGINAL |
+-| nom | 92 | spar 56% | 0.4 / 0.7 | 12 % | 8 % | FAIL |
+-| nom | 631 | arm 100% | 0.0 / 0.7 | 95 % | 95 % | PASS |
+-| nom | 691 | arm 89% | 0.6 / 0.1 | 114 % | 114 % | PASS |
+-| nom | 728 | arm 88% | 0.5 / 0.0 | 125 % | 125 % | PASS |
+-| hi | 6 | bridge 97% | 0.0 / 2.5 | 95 % | 94 % | PASS |
+-| hi | 19 | bridge 84% | 2.7 / 0.0 | 82 % | 81 % | PASS |
+-| hi | 21 | spar 70% | 2.0 / 0.1 | 80 % | 79 % | PASS |
+-| hi | 38 | spar 93% | 1.1 / 0.0 | 63 % | 62 % | PASS |
+-| hi | 52 | arm 36% | 1.4 / 1.8 | 50 % | 48 % | PASS |
+-| hi | 57 | arm 100% | 0.8 / 3.3 | 45 % | 43 % | PASS |
+-| hi | 57 | arm 100% | 3.3 / 0.8 | 45 % | 43 % | PASS |
+-| hi | 59 | arm 94% | 0.4 / 3.2 | 43 % | 41 % | PASS |
+-| hi | 72 | arm 54% | 0.1 / 2.2 | 32 % | 29 % | PASS |
+-| hi | 72 | arm 91% | 2.7 / 0.0 | 32 % | 29 % | PASS |
+-| hi | 87 | arm 40% | 0.9 / 1.5 | 17 % | 13 % | MARGINAL |
+-| hi | 96 | bridge 46% | 0.7 / 1.4 | 8 % | 4 % | FAIL |
+-| hi | 104 | spar 55% | 0.5 / 0.7 | 0 % | 0 % | FAIL |
+-| hi | 716 | arm 100% | 0.0 / 0.7 | 121 % | 121 % | PASS |
++| kd | 38 | bridge 31% | 1.2 / 1.6 | 64 % | 62 % | PASS |
++| kd | 45 | arm 100% | 1.3 / 3.0 | 57 % | 55 % | PASS |
++| kd | 45 | arm 100% | 3.0 / 1.3 | 57 % | 55 % | PASS |
++| kd | 46 | arm 80% | 0.5 / 2.9 | 56 % | 55 % | PASS |
++| kd | 58 | arm 91% | 2.5 / 0.0 | 45 % | 43 % | PASS |
++| kd | 58 | arm 56% | 0.0 / 2.1 | 45 % | 42 % | PASS |
++| kd | 63 | bridge 62% | 0.6 / 1.9 | 40 % | 37 % | PASS |
++| kd | 65 | spar 40% | 0.6 / 1.5 | 38 % | 35 % | PASS |
++| kd | 588 | arm 100% | 0.0 / 0.6 | 137 % | 137 % | PASS |
++| nom | 3 | bridge 99% | 0.0 / 2.4 | 97 % | 97 % | PASS |
++| nom | 12 | bridge 92% | 2.6 / 0.0 | 89 % | 88 % | PASS |
++| nom | 15 | spar 57% | 2.0 / 0.2 | 85 % | 85 % | PASS |
++| nom | 34 | spar 93% | 1.1 / 0.0 | 68 % | 67 % | PASS |
++| nom | 40 | bridge 34% | 1.3 / 1.6 | 62 % | 60 % | PASS |
++| nom | 49 | arm 100% | 3.2 / 0.7 | 54 % | 52 % | PASS |
++| nom | 49 | arm 100% | 0.7 / 3.2 | 54 % | 52 % | PASS |
++| nom | 49 | arm 80% | 0.5 / 2.9 | 53 % | 51 % | PASS |
++| nom | 62 | arm 91% | 2.5 / 0.0 | 41 % | 39 % | PASS |
++| nom | 62 | arm 55% | 0.0 / 2.1 | 41 % | 39 % | PASS |
++| nom | 67 | bridge 62% | 0.6 / 1.9 | 36 % | 33 % | PASS |
++| nom | 69 | spar 39% | 0.6 / 1.6 | 34 % | 31 % | PASS |
++| nom | 629 | arm 100% | 0.0 / 0.6 | 153 % | 153 % | PASS |
++| nom | 669 | arm 94% | 0.5 / 0.0 | 169 % | 169 % | PASS |
++| hi | 4 | bridge 99% | 0.0 / 2.4 | 96 % | 96 % | PASS |
++| hi | 13 | bridge 92% | 2.6 / 0.0 | 87 % | 87 % | PASS |
++| hi | 18 | spar 52% | 2.0 / 0.2 | 83 % | 82 % | PASS |
++| hi | 38 | spar 93% | 1.1 / 0.0 | 64 % | 62 % | PASS |
++| hi | 46 | bridge 31% | 1.2 / 1.6 | 56 % | 54 % | PASS |
++| hi | 55 | arm 100% | 0.6 / 3.2 | 47 % | 45 % | PASS |
++| hi | 55 | arm 100% | 3.2 / 0.6 | 47 % | 45 % | PASS |
++| hi | 55 | arm 80% | 0.5 / 2.9 | 47 % | 45 % | PASS |
++| hi | 70 | arm 90% | 2.5 / 0.0 | 33 % | 30 % | PASS |
++| hi | 70 | arm 56% | 0.0 / 2.1 | 33 % | 30 % | PASS |
++| hi | 76 | bridge 62% | 0.6 / 1.9 | 27 % | 24 % | PASS |
++| hi | 79 | spar 40% | 0.6 / 1.5 | 25 % | 21 % | PASS |
++| hi | 714 | arm 100% | 0.0 / 0.6 | 187 % | 187 % | PASS |
+ 
+ Fin out-of-plane modes (fin 75-95 % of strain energy) and weakly coupled spar / rib modes (cx, cy < 0.5):
+-| Corner | f (Hz) | group | worst separation (6272, light, 9700 rpm) | Result |
++| Corner | f (Hz) | group | worst separation (6272, light, 7450 rpm) | Result |
+ |---|---|---|---|---|
++| kd | 84 | spar 64%, rib 32% | 16 % | MARGINAL |
+ | kd | 97 | spar 53%, rib 40% | 3 % | FAIL |
+-| kd | 207 | spar 76%, rib 23% | 1 % | FAIL |
+-| kd | 257 | rib 90%, spar 8% | 20 % | PASS |
+-| kd | 273 | rib 76%, spar 22% | 15 % | MARGINAL |
+-| kd | 291 | spar 56%, rib 27% | 10 % | MARGINAL |
+-| kd | 346 | spar 93%, rib 6% | 7 % | FAIL |
+-| kd | 379 | spar 67%, rib 20% | 17 % | MARGINAL |
+-| kd | 479 | fin 91%, spar 5% | 48 % | PASS |
+-| kd | 486 | fin 84%, spar 9% | 50 % | PASS |
+-| kd | 578 | arm 89%, bridge 11% | 79 % | PASS |
+-| kd | 602 | arm 92%, bridge 7% | 86 % | PASS |
+-| kd | 628 | arm 100%, fin 0% | 94 % | PASS |
+-| kd | 628 | arm 100%, spar 0% | 94 % | PASS |
+-| kd | 659 | arm 93%, bridge 6% | 104 % | PASS |
+-| kd | 695 | arm 92%, bridge 8% | 115 % | PASS |
+-| kd | 700 | spar 99%, rib 1% | 117 % | PASS |
+-| kd | 782 | spar 74%, rib 20% | 142 % | PASS |
++| kd | 206 | spar 77%, rib 22% | 1 % | FAIL |
++| kd | 257 | rib 90%, spar 7% | 4 % | FAIL |
++| kd | 273 | rib 76%, spar 22% | 10 % | FAIL |
++| kd | 281 | spar 60%, rib 28% | 13 % | MARGINAL |
++| kd | 347 | spar 94%, rib 6% | 40 % | PASS |
++| kd | 380 | spar 67%, rib 19% | 53 % | PASS |
++| kd | 478 | fin 92%, spar 5% | 93 % | PASS |
++| kd | 486 | fin 84%, spar 9% | 96 % | PASS |
++| kd | 549 | arm 92%, bridge 8% | 121 % | PASS |
++| kd | 580 | arm 95%, bridge 5% | 133 % | PASS |
++| kd | 611 | arm 100%, spar 0% | 146 % | PASS |
++| kd | 611 | arm 100%, spar 0% | 146 % | PASS |
++| kd | 640 | arm 97%, bridge 3% | 158 % | PASS |
++| kd | 672 | arm 95%, bridge 4% | 171 % | PASS |
++| kd | 690 | spar 99%, rib 1% | 178 % | PASS |
++| kd | 764 | spar 76%, rib 21% | 208 % | PASS |
++| nom | 90 | spar 64%, rib 32% | 10 % | MARGINAL |
+ | nom | 104 | spar 53%, rib 40% | 0 % | FAIL |
+-| nom | 221 | spar 77%, rib 22% | 6 % | FAIL |
+-| nom | 275 | rib 90%, spar 7% | 15 % | MARGINAL |
+-| nom | 292 | rib 76%, spar 22% | 10 % | FAIL |
+-| nom | 311 | spar 56%, rib 27% | 4 % | FAIL |
+-| nom | 370 | spar 94%, rib 6% | 14 % | MARGINAL |
+-| nom | 406 | spar 67%, rib 20% | 26 % | PASS |
+-| nom | 514 | fin 91%, spar 5% | 59 % | PASS |
+-| nom | 521 | fin 84%, spar 9% | 61 % | PASS |
+-| nom | 592 | arm 92%, bridge 8% | 83 % | PASS |
+-| nom | 615 | arm 97%, bridge 3% | 90 % | PASS |
+-| nom | 628 | arm 100%, bridge 0% | 94 % | PASS |
+-| nom | 628 | arm 100%, fin 0% | 94 % | PASS |
+-| nom | 750 | spar 99%, rib 1% | 132 % | PASS |
+-| hi | 118 | spar 53%, rib 39% | 13 % | MARGINAL |
+-| hi | 251 | spar 76%, rib 23% | 20 % | MARGINAL |
+-| hi | 311 | rib 89%, spar 7% | 4 % | FAIL |
+-| hi | 330 | rib 74%, spar 23% | 2 % | FAIL |
+-| hi | 351 | spar 55%, rib 26% | 9 % | FAIL |
+-| hi | 420 | spar 93%, rib 6% | 30 % | PASS |
+-| hi | 454 | spar 62%, fin 22% | 40 % | PASS |
+-| hi | 543 | fin 89%, spar 6% | 68 % | PASS |
+-| hi | 555 | fin 74%, spar 14% | 72 % | PASS |
+-| hi | 706 | arm 88%, bridge 11% | 118 % | PASS |
+-| hi | 734 | arm 92%, bridge 8% | 127 % | PASS |
+-| hi | 770 | arm 100%, fin 0% | 138 % | PASS |
+-| hi | 770 | arm 100%, fin 0% | 138 % | PASS |
++| nom | 220 | spar 77%, rib 22% | 5 % | FAIL |
++| nom | 275 | rib 90%, spar 7% | 11 % | MARGINAL |
++| nom | 291 | rib 76%, spar 22% | 17 % | MARGINAL |
++| nom | 301 | spar 60%, rib 28% | 21 % | PASS |
++| nom | 371 | spar 94%, rib 6% | 50 % | PASS |
++| nom | 407 | spar 67%, rib 19% | 64 % | PASS |
++| nom | 513 | fin 92%, spar 5% | 107 % | PASS |
++| nom | 521 | fin 84%, spar 9% | 110 % | PASS |
++| nom | 566 | arm 94%, bridge 6% | 128 % | PASS |
++| nom | 594 | arm 98%, bridge 2% | 139 % | PASS |
++| nom | 611 | arm 100%, bridge 0% | 146 % | PASS |
++| nom | 611 | arm 100%, fin 0% | 146 % | PASS |
++| nom | 700 | arm 93%, bridge 6% | 182 % | PASS |
++| nom | 739 | spar 99%, rib 1% | 197 % | PASS |
++| hi | 102 | spar 63%, rib 31% | 2 % | FAIL |
++| hi | 118 | spar 53%, rib 40% | 5 % | FAIL |
++| hi | 250 | spar 76%, rib 23% | 1 % | FAIL |
++| hi | 310 | rib 89%, spar 7% | 25 % | PASS |
++| hi | 330 | rib 74%, spar 22% | 33 % | PASS |
++| hi | 340 | spar 60%, rib 27% | 37 % | PASS |
++| hi | 422 | spar 94%, rib 6% | 70 % | PASS |
++| hi | 455 | spar 61%, fin 22% | 83 % | PASS |
++| hi | 542 | fin 90%, spar 6% | 118 % | PASS |
++| hi | 555 | fin 74%, spar 15% | 124 % | PASS |
++| hi | 669 | arm 91%, bridge 8% | 170 % | PASS |
++| hi | 707 | arm 95%, bridge 5% | 185 % | PASS |
++| hi | 748 | arm 100%, fin 0% | 201 % | PASS |
++| hi | 748 | arm 100%, bridge 0% | 201 % | PASS |
++| hi | 780 | arm 97%, bridge 3% | 214 % | PASS |
+ 
+ Forced response (C2 method): worst-phase modal sum, 4 rotors, unbalance U = 1.0 g mm per rotor (EST; ISO G16 prop is 0.27 g mm), 2P axial ripple 5 % of thrust (EST), damping 1 % (EST). Acceleration at the FC (spar centre):
+ | Corner | Point | IMU accel, 1P | IMU accel, 2P | fin tip accel 1P / 2P (m/s2) | limit | MS |
+ |---|---|---|---|---|---|---|
+-| kd | hover 6272 | 14.9 | 2.9 | 28.5 / 6.0 | 30 m/s2 | +1.0 |
+-| kd | cruise 9700 EST | 24.4 | 0.4 | 47.8 / 0.7 | 30 m/s2 | +0.2 |
+-| nom | hover 6272 | 17.5 | 3.0 | 31.5 / 5.8 | 30 m/s2 | +0.7 |
+-| nom | cruise 9700 EST | 25.2 | 0.4 | 45.1 / 0.8 | 30 m/s2 | +0.2 |
+-| hi | hover 6272 | 63.9 | 3.0 | 129.8 / 6.3 | 30 m/s2 | -0.5 |
+-| hi | cruise 9700 EST | 27.1 | 0.4 | 53.3 / 0.8 | 30 m/s2 | +0.1 |
++| kd | hover 6272 | 13.0 | 2.6 | 20.4 / 5.4 | 30 m/s2 | +1.3 |
++| kd | cruise 7450 | 16.2 | 0.3 | 26.2 / 0.7 | 30 m/s2 | +0.8 |
++| nom | hover 6272 | 14.1 | 2.6 | 19.4 / 5.1 | 30 m/s2 | +1.1 |
++| nom | cruise 7450 | 17.1 | 0.3 | 24.0 / 0.6 | 30 m/s2 | +0.8 |
++| hi | hover 6272 | 18.3 | 2.6 | 31.2 / 5.6 | 30 m/s2 | +0.6 |
++| hi | cruise 7450 | 18.7 | 0.3 | 29.8 / 0.7 | 30 m/s2 | +0.6 |
+ 
+ Fin out-of-plane EI 59.5 N m2 (kd), mass/length 92 g/m (15 mm XPS core, 0.1 mm CFRP skins); foot 3 g; f1 cantilever ideal at kd: see table (fin rows).
+ 
+@@ -222,4 +223,4 @@ Rib torsional twist at that load: 5.9 deg (GJ 5.2 N m2, L 0.20 m): foot moves 19
+ | Fin skin wrinkling on XPS core (0.5 (Ef Ec Gc)^(1/3), Ec 30, Gc 8 MPa EST) | same | 33.32 MPa | 114.5 MPa | 3.44 | PASS |
+ | Foot shoe bond on fin corner (12 x 15 mm pad footprint, shoe wraps 25 x 30 mm both faces = 1,500 mm2), 49 N + 20 N side | 52 N | 0.07 MPa | 0.1 MPa | 1.34 | PASS |
+ (shoe-bond allowable 0.1 MPa = C6 paper/foam value, `CL-C6-FOOT-SHOE-RF` basis: bond to foam core, not CF.)
+-Pack tray to hub (PETG, 600 mm2 bond) at 12 g: 32 N x 2.16 / 600 mm2 = 0.115 MPa vs 2.0: RF 17 PASS; strap: 2 x 20 mm Velcro, 32 N each side, `-` not tested.
+\ No newline at end of file
++Pack tray to hub (PETG flange 27.2 x 8 = 218 mm2 bond, D-208: the outer flange tabs were never attached to the hub) at 12 g: 32 N x 2.16 / 218 mm2 = 0.32 MPa vs 2.0: RF 6.3 PASS; strap: 2 x 20 mm Velcro, 32 N each side, `-` not tested.
+\ No newline at end of file

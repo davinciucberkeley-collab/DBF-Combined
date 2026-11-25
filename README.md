@@ -6,20 +6,34 @@
 <p align="center">
   3-D aircraft, build guide and films, hub stress map, BOM and status. Nothing to download or install.<br>
   <a href="https://davinciucberkeley-collab.github.io/DBF-Combined/redesign/site/">davinciucberkeley-collab.github.io/DBF-Combined/redesign/site</a>
-  &middot; <a href="https://davinciucberkeley-collab.github.io/DBF-Combined/redesign/site/#structures">Hub stress map</a>
+  &middot; <a href="https://davinciucberkeley-collab.github.io/DBF-Combined/redesign/site/#structures">Hub stress map (earlier printed hub, record)</a>
   &middot; <a href="https://davinciucberkeley-collab.github.io/DBF-Combined/redesign/site/#build">Build guide</a>
 </p>
 
-> **Current design (2026-11-16): concept A, a scaled quad tailsitter (D-182).** K09-L, described below, could not be
-> built new within $2,000 (cheapest workable build about $2,577) and is kept as the record. Concept A: 0.90 m wing,
-> 4 x T-Motor MN2212 KV780 on 4S, about 1.456 kg predicted (`EST`), BOM $1,779 of $2,000 (+$100 margin if unverified prices run 30 % over). Design, reports and status:
-> [redesign/qp/README.md](redesign/qp/README.md). Decisions D-182 to D-200: [CHANGE-LOG.md](redesign/params/CHANGE-LOG.md). The Explorer's renders, flight and build films and general-arrangement sheet now show concept A (the K09-L ones are kept as the record).
+> **Current design (2026-11-24): concept A, a scaled quad tailsitter, re-sit as O4b (D-182, D-219, D-227, D-240).** K09-L, described
+> below, could not be built new within $2,000 (cheapest workable build about $2,577) and is kept as the record. Concept A O4b:
+> 0.90 m wing, 4 x SunnySky X2216 V3 880KV motors on 4 x APC 9x4.5MR props, 4S 2,800 mAh pack, Kakute H743-Wing flight controller
+> 75 mm left of centre, glass wing skin; **1.881 kg predicted (`EST`, CAD basic 1,641.0 g)**, which misses the 1.47 kg weigh-in gate
+> (-27.9 %), so the physics checks govern; **BOM $1,939.17 of $2,000** (spend $1,592.23 + crash reserve $346.94, margin $60.83;
+> $2,029.68 if unverified prices run 30 % over, information only). Design, reports and status:
+> [redesign/qp/README.md](redesign/qp/README.md). Decisions D-182 to D-260: [CHANGE-LOG.md](redesign/params/CHANGE-LOG.md).
+> **Status:** designed and checked on paper, in SITL and in the 3-D gates; nothing bought, built or flown. The strict proof build
+> (`python -I redesign/qp/A/proofs/run_all.py`, 2026-11-24) has 12 FAIL claims (mass gate and prediction, hover vibration in band,
+> gain margin, FC vibration, elevon horn / rib foam stress, linkage free play), to be decided by bench and tap tests. Since 2026-11-24 the elevon
+> pitch use passes at 0.59 against 0.60 (D-255: battery at the aft end of its slot, cruise 18 m/s, roll-rate cap 45 deg/s; roll / gust requirement
+> re-derived, D-254) and 1.3 Vs 17.74 m/s sits under the 18 m/s cruise: both thin, the first cruise flights decide (TP-11 / TP-19). Hover in wind
+> (A-P8) re-run for the X2216 motors passes (D-258); directional stability Cn_beta 0.21 /rad passes, the bare-airframe spiral diverges and is held
+> by the autopilot in every selectable mode (D-260). DaVinci: design data and all 129 parts in the team project "Concept A" (T-037 verified,
+> [docs/integration/DAVINCI.md](docs/integration/DAVINCI.md)). Requirements: 103 of 113 verified; tasks 93 of 105. Order 1 ($887.25 EST) awaits approval 1-4 Dec; go/no-go 2027-01-29 (AM-037, D-248).
+> The Explorer's renders, films and drawings show concept A (the K09-L ones are kept as the record).
+
+**Start here:** concept A lives in [`redesign/qp/`](redesign/qp/README.md) (entry page [`redesign/README.md`](redesign/README.md)); open the Explorer with `START-EXPLORER.bat`; the root map is [below](#the-repository-root-17-entries-at-the-root). Earlier designs (C0, K09-L) are records.
 
 **Hard constraints (team lead; full text in [CLAUDE.md](CLAUDE.md)):**
 1. $2,000 total, all bought new (tax, shipping, packs, charger, radio, test gear, spares); the Jacobs Hall Makers Pass is outside it.
 2. Built and flight-tested by 2027-04-30.
 3. The packed aircraft fits one car trunk (two at most); a team of 4 moves it; under 25 kg.
-4. Passes the 3-D physics checks: every build step and the assembled aircraft, no part interpenetration, no open wire ends, no exemptions; flight cases in the 3-D sims pass.
+4. Passes the 3-D gates: an interference check (static, at neutral and at the elevon stops) of every build step and the assembled aircraft, no part interpenetration, no open wire ends, no exemptions, plus a swept insertion check (straight-line build-step paths); flight cases in the 3-D sims pass. Gate tools for concept A: `redesign/qp/A/cad/collide_a.py` (CAD) and `redesign/qp/A/cad/collide_glb_a.py` (exported `concept-a.glb`), with the D-247 wire-entry rule (a lead end must seat in a pad or termination body: pad / termination proximity), which replaces the K09-L square-entry test of `collide.py --glb`; this is an engineering-team gate definition (CHANGE-LOG D-247) that the user may veto. These are interference checks, not physics simulations; mechanism physics is in docs/analysis-records.md (kinematics AR-001, rigid-body dynamics AR-002, swept interference AR-003).
 5. **The CAD looks exactly like the physical aircraft** (2026-11-15): every part at its real shape and size from the vendor drawing or data sheet, real prop blades, no stand-in disks or boxes; unknown dimensions flagged, never invented.
 6. **Limit exposed wiring** (2026-11-15): wires inside the arm tubes, wing-core channels, fairings or covers; any wire left outside the skin is listed with its length and reason, and kept to the minimum.
 
@@ -48,10 +62,10 @@ complete on paper, nothing bought, built or flown yet.*
 
 - **In any browser, nothing to download:** the link at the top of this page (GitHub Pages, published from the
   `redesign/v1` branch; it updates a minute or two after each push).
-- **Windows, with Python installed:** double-click `00 - OPEN THE K09-L EXPLORER (double-click me).bat` in the repo
+- **Windows, with Python installed:** double-click `START-EXPLORER.bat` in the repo
   folder. It serves `redesign/site/` on `http://localhost:8765/` and opens the Explorer in your browser, now showing concept A: a
   rotatable 3-D model with a vendor link or build clip for every part, the configuration decision and morph chart, the
-  concept A BOM and status, proof chains and every document (the Simulations tab is removed until concept A is final). Close the console window to stop it.
+  concept A BOM and status, proof chains and every document and the Simulations view (SITL and landing reruns on the current design, T-097 / T-098). Close the console window to stop it.
 - **On GitHub, no install:** read [redesign/SHOWCASE.md](redesign/SHOWCASE.md) for the renders, the flight animation,
   STL models that rotate in the browser, the morphological chart, the decision and the simulation figures.
 - **Building it:** [redesign/BUILD-GUIDE.md](redesign/BUILD-GUIDE.md) is the short, ordered build guide, with an animated clip per
@@ -59,34 +73,51 @@ complete on paper, nothing bought, built or flown yet.*
   [redesign/review/BUILDABILITY-REVIEW.md](redesign/review/BUILDABILITY-REVIEW.md) first: 6 blockers and 30 major
   build problems found by a buildability review, to fix before more CFD/FEA or any cutting.
 
-## Key numbers
+## Key numbers: K09-L record (superseded by concept A, see redesign/qp/)
 
-Frame revision A1-R5 (2026-11-10). "Modelled" means computed by analysis or simulation; no number is verified by test.
+These rows are K09-L (frame revision A1-R5, 2026-11-10), not concept A; concept A numbers are in the current-design paragraph above and in [redesign/qp/A/proofs/out/CHAIN.md](redesign/qp/A/proofs/out/CHAIN.md).  "Modelled" means computed by analysis or simulation; no number is verified by test.
 
 | Item | Value | State | Source |
 |---|---|---|---|
 | Span × chord | 1.15 × 0.32 m, one piece | proposed | [`redesign/params/params.json`](redesign/params/params.json) `wing` |
 | Take-off mass, basic / predicted | 2,341 g / 2,457 g against a 2,600 g gate (margin 143 g; 103 g with a 590 g pack, gate 100 g); landing 59.1 g vs 60 g allocated; predicted CG 50.1 mm in the 46.6–51.4 mm range | modelled | [`redesign/MASS-CG.md`](redesign/MASS-CG.md) (D-75…D-78), `CL-A3-*` in the proof graph |
-| Propulsion | 4 × SunnySky X3108S, APC 11×5.5MR props, 4 × 45 A ESCs, 4S 6500 mAh pack | proposed | [`redesign/README.md`](redesign/README.md) |
-| Hover T/W, fresh pack / worst pack | 2.49 / 2.12 | unverified (thrust stand owed) | [`redesign/README.md`](redesign/README.md) key numbers |
+| Propulsion | 4 × SunnySky X3108S, APC 11×5.5MR props, 4 × 45 A ESCs, 4S 6500 mAh pack | proposed | [`redesign/README-K09L.md`](redesign/README-K09L.md) |
+| Hover T/W, fresh pack / worst pack | 2.49 / 2.12 | unverified (thrust stand owed) | [`redesign/README-K09L.md`](redesign/README-K09L.md) key numbers |
 | Cruise speed / power | 16 m/s / 240 W (E1 disputes: 246 W) | unverified | [`redesign/STATUS.md`](redesign/STATUS.md) issue 5 |
-| Cruise after 2 min hover, base / pessimistic | 12.0 / 6.4 min | unverified | [`redesign/README.md`](redesign/README.md) key numbers |
+| Cruise after 2 min hover, base / pessimistic | 12.0 / 6.4 min | unverified | [`redesign/README-K09L.md`](redesign/README-K09L.md) key numbers |
 | Stall at forward CG | 11.99 m/s against a 12.0 m/s limit | unverified | [`redesign/team/B2/SIMULATION-REPORT.md`](redesign/team/B2/SIMULATION-REPORT.md) |
 | Budget | $2,000 hard | requirement | [`redesign/BRIEF.md`](redesign/BRIEF.md) |
 | BOM spend / reserve, baseline | $1,588.38 / $411.62 | prices unverified | [`redesign/team/I1/bom_summary.json`](redesign/team/I1/bom_summary.json) |
 | BOM spend / reserve, pessimistic | $1,673.59 / $326.41 (gate: reserve ≥ $309, one crash) | holds only with two Jacobs Hall tool loans | [`redesign/team/I1/ORDER-PLAN.md`](redesign/team/I1/ORDER-PLAN.md) |
 | Orders | early order ~2026-11-20 ($1,064.39); main order 2026-12-15 ($430.83) | planned | [`redesign/team/I1/ORDER-PLAN.md`](redesign/team/I1/ORDER-PLAN.md) |
 | Build and finish | build start 2027-01-19 (proposed), first hover by build week 4, complete by 2027-04-30 | planned | [`redesign/params/params.json`](redesign/params/params.json) `schedule` |
-| Transport | one-piece box 1.25 × 0.55 × 0.54 m; field set-up about 5 min, one person | proposed | [`redesign/README.md`](redesign/README.md) |
+| Transport | one-piece box 1.25 × 0.55 × 0.54 m; field set-up about 5 min, one person | proposed | [`redesign/README-K09L.md`](redesign/README-K09L.md) |
 | Requirements | 59 total: 0 verified, 1 checked, 1 proposed, 57 unverified; 11 show a fail (most are stale claims) | | [`redesign/STATUS.md`](redesign/STATUS.md) |
 | Proof graph | 4,244 nodes, 13,815 links; clean build (0 drift, 0 errors); 87 claims fail on margin (2026-11-11) | | [`redesign/PROOFS.md`](redesign/PROOFS.md) |
 | Collision (no parts phasing) | 1,007 bodies in 193 parts plus every routed wire, tape skin included: 0 penetrations > 0.05 mm, static and at both elevon limits; every wire end seated in a part; no wire crosses or folds through itself (D-86, D-87) | modelled | [`redesign/collision/README.md`](redesign/collision/README.md) |
+
+## The repository root (17 entries at the root)
+
+Concept A comes first. `ls` of the root shows 17 entries (23 counting hidden ones other than `.git`).
+
+| Entry | What it is |
+|---|---|
+| `redesign/` | The current program. `qp/` (concept A, O4b: design, CAD, proofs, BOM) comes first; `site/` is the Explorer web app. Entry page: [redesign/README.md](redesign/README.md) |
+| `START-EXPLORER.bat` | Windows launcher: serves `redesign/site/` and opens the Explorer |
+| `index.html` | GitHub Pages root page (redirects to the Explorer) |
+| `docs/` | Program state, audits, requirements, task ledger, reference |
+| `tools/` | `ledger_audit.py` and other program tools |
+| `archive/` | Earlier designs: `archive/c0/` holds the C0 and v0.3.1 material ([archive/README.md](archive/README.md); old path to new path in [docs/archive-path-map.md](docs/archive-path-map.md)) |
+| `VTOL-Review.html`, `build-manual.html`, `test-plan.html`, `flight-software.html`, `templates.html`, `Concept-Models.html` | Redirect stubs: old page addresses forward to the pages now in `archive/c0/` |
+| `CLAUDE.md` | Standing project instructions for Claude sessions |
+| `PROVENANCE.md` | Which source repo and commit each area came from |
+| `PRODUCT.md`, `DESIGN.md` | Design-tool context files for the review page |
 
 ## Where things are
 
 | Path | What it is |
 |---|---|
-| [`redesign/`](redesign/README.md) | Everything for the redesign. Concept A (current) is in [`redesign/qp/`](redesign/qp/README.md); the K09-L record is described in the [README](redesign/README.md) |
+| [`redesign/`](redesign/README.md) | Everything for the redesign. Concept A (current) is in [`redesign/qp/`](redesign/qp/README.md); the entry page is [redesign/README.md](redesign/README.md); the K09-L record page is [redesign/README-K09L.md](redesign/README-K09L.md) |
 | [`redesign/config-study/`](redesign/config-study/README.md) | How K09-L was chosen: requirements, morphological chart, 43 concepts, shortlist, judging, tie-break. Decision: [`CONFIGURATION.md`](redesign/CONFIGURATION.md) |
 | [`redesign/team/<role>/`](redesign/TEAM.md) | One folder per engineering role (A systems, B aero, C structures, D CAD, E propulsion, F electrical, H test, I programme, J support), each with `SUMMARY.md`, scripts, `claims.json` and change requests |
 | [`redesign/params/`](redesign/params/params.json) | `params.json` (every top-level number), [`CHANGE-LOG.md`](redesign/params/CHANGE-LOG.md) (decisions D-01 to D-200), `mass_budget.json` |
@@ -94,35 +125,28 @@ Frame revision A1-R5 (2026-11-10). "Modelled" means computed by analysis or simu
 | [`redesign/interfaces/`](redesign/interfaces/REPORT.md) | Interface graph (parts and joints) and its checker `merge_check.py` |
 | [`redesign/fusion/`](redesign/fusion/DATUMS.md) | Fusion framework: `BuildAll` script, backends, `check.py`, skeleton, datums |
 | [`redesign/proofs/`](redesign/PROOFS.md) | Proof chains from requirement to claim to calculation to source; `build_graph.py` rebuilds and flags drift |
-| `redesign/site/` | The Explorer web app opened by the `.bat` file (concept A; the `.bat` keeps its old K09-L name) |
+| `redesign/site/` | The Explorer web app opened by the `.bat` file (concept A) |
 | [`redesign/showcase/`](redesign/SHOWCASE.md) | Renders, flight and build animations, STL models, page snapshots |
 | [`redesign/design-system/`](redesign/design-system/README.md) | Visual standard for every output (tokens, components, Blender style) |
 | BOM | Concept A: [`redesign/qp/A/BOM-A.csv`](redesign/qp/A/BOM-A.csv), totals [`bom_a.py`](redesign/qp/A/bom_a.py), [`ORDER-1.csv`](redesign/qp/A/ORDER-1.csv). K09-L record: [`redesign/team/I1/K09L-BOM.xlsx`](redesign/team/I1/K09L-BOM.xlsx) (Excel with live formulas), [`BOM.csv`](redesign/team/I1/BOM.csv), [`ORDER-PLAN.md`](redesign/team/I1/ORDER-PLAN.md) |
-| Legacy (C0 era) | `analysis/`, `cad/` (SOLIDWORKS), `docs/`, `firmware/`, `review/`, the root `*.html` pages, `inventory/`, `fusion/` (C0 v0.3.1 scripts), `concepts/`, `sim/`, `explorations/tiltwing/`, `tools/`, [`DECISIONS.md`](DECISIONS.md). Imported on 2026-11-08 from DBF-VTOL, DillonVTOL, TiltWing and OpenCAEModel; superseded by K09-L. Source commits and what was left out: [`PROVENANCE.md`](PROVENANCE.md) |
+| Legacy (C0 era) | Everything C0 and v0.3.1 now lives under [`archive/c0/`](archive/README.md) (moved in T-104; old path to new path: [`docs/archive-path-map.md`](docs/archive-path-map.md)): `analysis/`, `cad/` (SOLIDWORKS), `firmware/`, `review/`, the C0 `*.html` pages, `inventory/`, `fusion/` (C0 v0.3.1 scripts), `concepts/`, `sim/`, `explorations/tiltwing/`, the C0 doc sets `docs/{build,test,validation,research,figures,purchasing}` and `docs/DESIGN-BASIS.md`, the menu launcher `archive/c0/VTOL.bat` with `archive/c0/tools/vtol.py`, and [`DECISIONS.md`](archive/c0/DECISIONS.md). Imported on 2026-11-08 from DBF-VTOL, DillonVTOL, TiltWing and OpenCAEModel; superseded by K09-L. Source commits and what was left out: [`PROVENANCE.md`](PROVENANCE.md) |
 
 ## Status and next steps
 
-As of 2026-11-10 ([`redesign/STATUS.md`](redesign/STATUS.md), [`redesign/HANDOFF.md`](redesign/HANDOFF.md)):
+As of 2026-11-24 (concept A, O4b; sources: `CLAUDE.md` status line, [`redesign/qp/A/bom_a.py`](redesign/qp/A/bom_a.py), `run_all.py`, [`docs/audits/2026-11-23-T099-final-design-audit.md`](docs/audits/2026-11-23-T099-final-design-audit.md)):
 
-- **Done on paper:** frame, analysis, detail analysis, CAD for ten subsystem modules, mass and CG roll-up, and a
-  simulation round (XFOIL, AVL, SU2 CFD and FEA, 6-DOF landing, thermal). The simulation round found four
-  requirements failing as designed; decisions D-61 to D-73 fix them, and several analyses still owe a re-run on the
-  fixes.
-- **Modelled only:** every mass, thrust, stall, structural and thermal number. The Fusion scripts have run only in a
-  stub backend, never in Fusion itself. The flight parameter file has never been loaded on a board or run in SITL.
-- **Open issues that matter most:** the fin-station collar fails on the latest torsion load (do not print collars
-  yet); the budget reserve holds only if Jacobs Hall lends the soldering gear (request due 13 Nov); concept A's wing core is now planned on the
-  Jacobs ShopBot CNC (D-203, assumed until the staff confirm foam is allowed; a hot wire stays the backup);
-  the mass reserve has 0 g free; stall and transition margins sit inside model uncertainty.
-- **Before the mid-December order:** build and fly a $40 foam-board twin on the real electronics, at least 10 h of
-  SITL, an anemometer check at Richmond Field Station, the early order (~20 Nov), and a carbon-tube bend test by
-  10 Dec. If the twin fails the 5 m/s hover or a transition, reverse to the K01 lean quadplane
-  ([CONFIGURATION.md](redesign/CONFIGURATION.md)).
-- **Then:** main order 2026-12-15, build January to early February 2027, flight testing through April, done by
-  2027-04-30.
+- **Design:** 1.881 kg EST (CAD 1,641.0 g), X2216 motors, 4S 2,800 mAh, CG 22.05 mm as drawn (flown at 23.49 mm with the pack at the aft end of its slot, D-255), static margin 7.61 % (7.02 % flown); cruise 18 m/s; BOM $1,939.17 of $2,000; Kakute H743-Wing kept (D-259); Lua spin cap dropped (D-256).
+  Mass gate 1.47 kg missed; the physics checks govern (AM-011).
+- **Checks:** run_all 12 STRICT FAIL claims (list in the current-design paragraph) plus the nominal elevon flutter claim UNVERIFIED;
+  3-D gates on the CAD: collide_a 0 pairs above 0.05 mm, 0 open wire ends, a_assembly 66 steps with 129 of 129 parts placed (T-099 gates record).
+  Everything is modelled; nothing is VERIFIED by hardware.
+- **Open:** elevon pitch use and stall pass only thinly on the model (D-255; TP-11 / TP-19 decide); the bare-airframe spiral mode diverges (2.8 s doubling EST, D-260; flown only in roll-stabilized modes);
+  landing stroke passes only inside the foam region Fp 37.5-39.0 N, zeta 0.02-0.05 (TP-3); the X2216 is on RMRC backorder (T-088);
+  the exported-model gate for `concept-a.glb` passes: 0 part pairs above 0.05 mm, 0 unseated wire ends, 0 bad wire entries (`collide_glb_a.py`, D-247; the published GLB is the gated export).
+- **Next:** Order 1 approval 1-4 Dec (T-093; order 1b with the config-independent lines and R15 by 11 Dec, D-248); no fabrication before Jacobs reopens (AM-037); bench stand, TP-1 / TP-2 19-28 Jan 2027, go/no-go Fri 29 Jan 2027 (F-6 answered by AM-037; schedule slack +2 d, SCHEDULE-A; Explorer Status), build January to February 2027,
+  flight test, done by 2027-04-30. Human decisions and dates: Explorer Status tab.
 
-The human decisions (keep or reverse K09-L, the loan request, the first Fusion run, order approval, pilot, cars) are
-listed with owners and dates in [`redesign/HANDOFF.md`](redesign/HANDOFF.md).
+The K09-L status of 2026-11-10 (`redesign/STATUS.md`, `redesign/HANDOFF.md`) is kept as the record.
 
 ### Resume the work
 
@@ -132,6 +156,12 @@ programme planning, media, design review) and lists the checks to run before any
 ## Legacy: C0 lift + cruise
 
 Before K09-L the team's baseline was C0, a 2.4 m twin-boom quadplane with four lift rotors and a pusher, designed in
-SOLIDWORKS. The configuration study superseded it on 2026-11-09. Its files remain at the repo root for reference;
+SOLIDWORKS. The configuration study superseded it on 2026-11-09. Its files remain in `archive/c0/` for reference (moved from the repo root in T-104);
 [`PROVENANCE.md`](PROVENANCE.md) records where each came from, and the design review is
-[`VTOL-Review.html`](VTOL-Review.html) (download and open locally).
+[`VTOL-Review.html`](archive/c0/VTOL-Review.html) (download and open locally).
+
+## CI
+
+The GitHub Actions workflow `.github/workflows/regenerate-check.yml` (green) covers the K09-L / legacy generators only (`archive/c0/analysis/verify.py`,
+`archive/c0/review/build.mjs`, `archive/c0/firmware/tools/check_params.py`); it runs none of the concept A generators and is not evidence that concept A is consistent.
+Concept A's check is `python -I redesign/qp/A/proofs/run_all.py` plus `python -I tools/ledger_audit.py`.

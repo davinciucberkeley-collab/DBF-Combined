@@ -2,22 +2,25 @@
    One file, two themes. Load it first; everything else reads these variables.
    Theme: <html data-theme="light|dark">; with no attribute the OS preference applies.
    Fonts (Google Fonts, both SIL Open Font License 1.1, free for any use incl. print):
-     IBM Plex Sans  400 500 600   prose, UI, labels, callout text
+     IBM Plex Sans  400 500 600   prose, UI, labels, callout text, nav, table heads
      IBM Plex Mono  400 500       numbers, units, ids, paths, code, equations
+     (Newsreader, loaded by explorer.css, is the display face for page titles; T-104 kept it over the survey faces)
    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+   IBM Plex stays in the stacks so pages that still load only Plex keep their look.
    Offline/print fallback is the system stack below; nothing breaks without the web fonts.
    Contrast: every text/wash pair here is >= 4.5:1 on its panel in its theme (checked 2026-11-09). */
 
 :root {
   /* ---------- type ---------- */
   --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-head: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; /* nav, table heads (page titles use --font-display in explorer.css) */
   --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, "SF Mono", monospace;
 
   --text-xs: 0.75rem;    /* 12px  meta, table headers, badges, axis labels */
   --text-sm: 0.875rem;   /* 14px  UI labels, table cells, captions */
-  --text-md: 0.9375rem;  /* 15px  body */
+  --text-md: 1rem;       /* 16px  body (REVIEW-STYLE.md) */
   --text-lg: 1.125rem;   /* 18px  section titles, step titles */
-  --text-xl: 1.5rem;     /* 24px  page titles */
+  --text-xl: 1.625rem;   /* 26px  page titles (condensed face) */
   --text-2xl: 2rem;      /* 32px  one display line per page at most */
   --text-value: 1.375rem;/* 22px  metric tile value (mono) */
 
@@ -49,10 +52,10 @@
   --inspector-w: 320px;
 
   /* ---------- shape ---------- */
-  --radius-xs: 3px;   /* badges, marks */
-  --radius-sm: 5px;   /* chips, inputs, buttons */
-  --radius-md: 8px;   /* cards, panels, tables */
-  --radius-lg: 12px;  /* popovers, dialogs */
+  --radius-xs: 2px;   /* badges, marks */
+  --radius-sm: 3px;   /* chips, inputs, buttons */
+  --radius-md: 4px;   /* panels, figures */
+  --radius-lg: 6px;   /* popovers, dialogs */
   --border-w: 1px;
 
   /* ---------- motion ---------- */
@@ -91,7 +94,7 @@
 :root, :root[data-theme="light"] {
   color-scheme: light;
 
-  --bg: #F6F7F9;          /* page */
+  --bg: #FAFAFB;          /* page: near-white paper */
   --panel: #FFFFFF;       /* cards, tables, panels */
   --panel-2: #EEF1F5;     /* hover, inline code, zebra, inputs */
   --panel-3: #E2E6EC;     /* pressed */

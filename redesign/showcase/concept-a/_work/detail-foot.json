@@ -7,8 +7,8 @@
  "scene": "studio",
  "engine": "CYCLES",
  "device": "GPU",
- "samples": 48,
- "render_s": 50.27,
+ "samples": 64,
+ "render_s": 18.42,
  "explode": 0.0,
  "camera": {
   "preset": "closeup",
@@ -19,7 +19,7 @@
   "location_m": [
    0.4009,
    0.4834,
-   -0.1224
+   -0.1361
   ],
   "fit": [
    "GER-001-LR",
@@ -38,8 +38,8 @@
  },
  "subject_px": [
   350,
-  -53461,
-  3828,
+  -153988,
+  8098,
   777
  ],
  "callouts": [
@@ -55,13 +55,13 @@
    "world_m": [
     0.3054,
     0.3905,
-    -0.1713
+    -0.185
    ]
   },
   {
    "item": "GER-002-LR",
    "x": 656.8,
-   "y": 549.7,
+   "y": 549.6,
    "title": "GER-002-LR",
    "text": "EVA/PE foot pad 12 x 15 x 30",
    "detail": null,
@@ -70,7 +70,7 @@
    "world_m": [
     0.3295,
     0.3875,
-    -0.1733
+    -0.187
    ]
   },
   {
@@ -85,7 +85,7 @@
    "world_m": [
     0.2993,
     0.3859,
-    -0.1591
+    -0.1728
    ]
   }
  ],
@@ -93,51 +93,51 @@
   {
    "id": "FIN-001-R",
    "role": "context",
-   "name": "Fin tube 16x14 x 0.36 m (R)",
+   "name": "Fin tube 16x14 x 0.3874 m (R; T-084: 2 x FIN_H, was 0.36 m)",
    "status": "MODELLED",
-   "mass_g": 27.1,
+   "mass_g": 29.2,
    "subsystem": "fins",
    "bbox_px": [
     925,
-    -53461,
-    3817,
+    -153988,
+    8098,
     517
    ]
   },
   {
    "id": "FIN-003-R",
    "role": "context",
-   "name": "Fin root block (R)",
+   "name": "Fin root fitting (R; T-083b, replaces the PETG root block): machined 6061-T6, ring OD 18.2 / bore 16.2 x 38 mm on the fin tube, plug OD 22.8 / ID 20.8 x 31 mm bonded inside the 25x23 rib end, end plate 2.0 mm x 24.6 mm diameter notched by the fin tube; mass = drawn volume (voxel 0.2 mm) x 2.70 g/cm3",
    "status": "MODELLED",
-   "mass_g": 3.2,
+   "mass_g": 12.04,
    "subsystem": "fins",
    "bbox_px": [
-    902,
-    -6895,
-    2115,
-    -2926
+    980,
+    -6897,
+    1850,
+    -3890
    ]
   },
   {
    "id": "FIN-004-R",
    "role": "ghost",
-   "name": "Fin fairing 3 mm XPS + tape (R)",
+   "name": "Fin fairing 3 mm XPS + tape (R; T-084: 2 x FIN_H tall, mass scaled from the listed 8.4 g at 0.36 m by height, EST)",
    "status": "MODELLED",
-   "mass_g": 8.4,
+   "mass_g": 9.04,
    "subsystem": "fins",
    "bbox_px": [
     1141,
-    -30590,
-    3828,
+    -51259,
+    4268,
     433
    ]
   },
   {
    "id": "GER-001-LR",
    "role": "context",
-   "name": "Foot shoe (LR)",
+   "name": "Foot shoe (LR; T-077 p8: Markforged X7 Onyx, the T-080 s3.5 / CG-closure s2 recovery, -1 g; mass from printed_mass.json at Onyx 1.20 g/cm3)",
    "status": "MODELLED",
-   "mass_g": 1.4,
+   "mass_g": 4.3,
    "subsystem": "landing",
    "bbox_px": [
     771,
@@ -162,7 +162,6 @@
   }
  ],
  "hidden": [
-  "AVN-001",
   "AVN-002",
   "AVN-003",
   "AVN-004",
@@ -170,11 +169,12 @@
   "AVN-006",
   "AVN-007",
   "AVN-008",
+  "AVN-009-S",
+  "AVN-009-T",
+  "AVN-010",
   "CGE-001",
-  "CGE-002-LL",
-  "CGE-002-LR",
-  "CGE-002-UL",
-  "CGE-002-UR",
+  "CGE-002-A",
+  "CGE-002-B",
   "CGE-003-LL",
   "CGE-003-LR",
   "CGE-003-UL",
@@ -186,6 +186,15 @@
   "CGE-007-L",
   "CGE-007-R",
   "CGE-008",
+  "CGE-009-LL",
+  "CGE-009-LR",
+  "CGE-009-UL",
+  "CGE-009-UR",
+  "CGE-010-C",
+  "CGE-010-LL",
+  "CGE-010-LR",
+  "CGE-010-UL",
+  "CGE-010-UR",
   "E-HRN-01",
   "E-HRN-02",
   "E-HRN-03",
@@ -209,6 +218,10 @@
   "FIN-005-R",
   "FIN-006-L",
   "FIN-006-R",
+  "FIN-009-L",
+  "FIN-009-R",
+  "FIN-010-L",
+  "FIN-010-R",
   "GER-001-LL",
   "GER-001-UL",
   "GER-001-UR",
@@ -238,6 +251,8 @@
   "MEC-004-R",
   "MEC-005-L",
   "MEC-005-R",
+  "MEC-008-L",
+  "MEC-008-R",
   "PRP-001-LL",
   "PRP-001-LR",
   "PRP-001-UL",
@@ -255,6 +270,10 @@
   "PRP-005-LR",
   "PRP-005-UL",
   "PRP-005-UR",
+  "PRP-006-LL",
+  "PRP-006-LR",
+  "PRP-006-UL",
+  "PRP-006-UR",
   "PWR-001",
   "PWR-002",
   "PWR-003",
@@ -276,7 +295,13 @@
   "WNG-009-L",
   "WNG-009-R",
   "WNG-010-L",
-  "WNG-010-R"
+  "WNG-010-R",
+  "WNG-011",
+  "WNG-012",
+  "WNG-013-L",
+  "WNG-013-R",
+  "WNG-014-L",
+  "WNG-014-R"
  ],
  "clipped": [],
  "legend": [

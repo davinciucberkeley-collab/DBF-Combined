@@ -103,9 +103,9 @@ def structure_mass(g):
 
 kit.claim("CL-A-MASS-PRED", "Predicted take-off mass (CAD basic x growth + overrun)", calc="CALC-A-MASS-PRED", output="m_kg", unit="kg",
           limit=("<=", "P:req.mass_target_kg"), verifies=["A-D3"], parts=["WNG-001", "WNG-002", "PWR-001", "CGE-001", "FIN-001-R", "FIN-001-L"],
-          how="Weigh-in (T-A-WEIGH): weigh foam, printed parts and epoxy first, then the aircraft with pack; 1,423.9 g predicted (MASS-GATE s7).")
+          how="Weigh-in (T-A-WEIGH): weigh foam, printed parts and epoxy first, then the aircraft with pack; predicted 1.881 kg EST at D-240 (CAD basic 1,641.0 g x growth + overrun, MASS-GATE.md; 1,423.9 g was the MASS-GATE s7 value at D-195).")
 kit.claim("CL-A-MASS-ITEM", "Predicted mass, itemised growth by maturity (cross-check)", calc="CALC-A-MASS-ITEM", output="m_kg", unit="kg",
-          limit=("<=", "P:req.mass_target_kg"), verifies=["A-D3"], how="python -I qp/A/mission_gate_a.py prints 1,449 g (D-195); both methods must stay <= 1.470 kg (D-208).")
+          limit=("<=", "P:req.mass_target_kg"), verifies=["A-D3"], how="python -I qp/A/mission_gate_a.py prints the itemised roll-up (1,449 g at D-195, superseded; MASS-GATE.md has the current tally); both methods must stay <= 1.470 kg (D-208).")
 kit.claim("CL-A-MASS-GATE-ROOM", "Predicted mass against the 1.47 kg gate", calc="CALC-A-MASS-PRED", output="m_kg", unit="kg",
           limit=("<=", "P:req.mass_gate_kg"), verifies=["A-P1"], how="As-built weigh-in <= 1.47 kg (D-190, MASS-GATE s8); the +-5 % window holds to 1.478 kg.")
 kit.claim("CL-A-MASS-USER", "Predicted mass against the 25 kg user cap", calc="CALC-A-MASS-PRED", output="m_kg", unit="kg",
@@ -262,9 +262,9 @@ def fence_bound(leg, r, runout):
 
 
 kit.claim("CL-A-CRUISE-NEED", "Cruise time the mission needs (300 m reference lap)", calc="CALC-A-CRUISE-NEED", output="need_s", unit="s",
-          limit=("<=", 210.0), verifies=["A-D2"], how="Flight card 4b: settle 15 s, 2 laps, 1 go-around, run-in <= 1/2 lap at 17 m/s; requirement 3.5 min = 210 s (A-D2).",
+          limit=("<=", 210.0), verifies=["A-D2"], how="Flight card 4b: settle 15 s, 2 laps, 1 go-around, run-in <= 1/2 lap at the cruise speed (18 m/s, D-255); requirement 3.5 min = 210 s (A-D2).",
           note="limit 210 s = the 3.5 min requirement of A-D2 / MISSION s2")
-kit.claim("CL-A-CRUISE-RADIUS", "Turn radius at 17 m/s, 30 deg bank", calc="CALC-A-CRUISE-NEED", output="radius_m", unit="m", how="R = V^2 / (g tan 30) = 51.0 m (MISSION s2).")
+kit.claim("CL-A-CRUISE-RADIUS", "Turn radius at the cruise speed (18 m/s, D-255), 30 deg bank", calc="CALC-A-CRUISE-NEED", output="radius_m", unit="m", how="R = V^2 / (g tan 30) = 57.2 m at 18 m/s (51.0 m at 17 m/s, MISSION s2).")
 kit.claim("CL-A-CRUISE-AVAIL", "Cruise time to BATT_LOW at the predicted mass", calc="CALC-A-ENDURANCE", output="cruise_s", unit="s",
           limit=(">=", "CL-A-CRUISE-NEED"), verifies=["A-D2"], parts=["PWR-001", "PRP-003"],
           how="Log a full-mission flight with power module (F06): BATT_LOW remaining >= 644 mAh of 2300 at the end; MISSION.md s4 energy table; power constants are EST (eta_p 0.26 x 0.76).")
@@ -284,6 +284,19 @@ def stall(m, g, rho, s, cl, k):
 kit.claim("CL-A-STALL", "1.3 x clean stall speed at the 1.47 kg gate", calc="CALC-A-STALL", output="k_vs_ms", unit="m/s",
           limit=("<=", "P:mission.cruise_ms"), verifies=["A-P6"], assumes=["ASM-A-CLMAX"], parts=["WNG-001"],
           how="Measured stall on the first cruise sorties (T-A-FIRST-CRUISE) replaces CLmax 0.75; 12.07 m/s stall, 15.69 m/s at 1.3 Vs at 1.47 kg (12.19 / 15.85 at 1.50 kg, MISSION s1).")
+
+
+@kit.calc("CALC-A-STALL-PRED", equation="1.3 Vs = 1.3 sqrt(2 m g / (rho S CLmax)) at the predicted mass; rho 1.20 (MISSION s1), g 9.807, S 0.22 m2, CLmax 0.75 EST (ISA rho 1.225 gives 17.56 m/s at 1.881 kg, T-084; the project basis is 1.20)", assumes=["ASM-A-CLMAX"],
+          inputs={"m": "CL-A-MASS-PRED", "g": "P:env.g_ms2", "rho": "P:env.rho_kgm3", "s": "P:mission.s_m2", "cl": "ASM-A-CLMAX", "k": "P:req.cruise_ratio"},
+          units={"m": "kg", "rho": "kg/m3", "s": "m2"})
+def stall_pred(m, g, rho, s, cl, k):
+    vs = math.sqrt(2 * m * g / (rho * s * cl))
+    return {"vs_ms": vs, "k_vs_ms": k * vs}
+
+
+kit.claim("CL-A-STALL-PRED", "1.3 x clean stall speed at the predicted take-off mass", calc="CALC-A-STALL-PRED", output="k_vs_ms", unit="m/s",
+          limit=("<=", "P:mission.cruise_ms"), verifies=["A-P6"], assumes=["ASM-A-CLMAX"], parts=["WNG-001"],
+          how="FAIL on the estimate (AM-011: physics checks apply at the predicted mass). Gated by TP-11 (TEST-PLAN-O4B): the measured stall (T-A-FIRST-CRUISE) must give CLmax >= 0.81 at this mass; D-255: cruise raised to 18 m/s for the elevon trim (T-101), so 17.74 m/s now passes with 0.26 m/s (1.4 %) on CLmax 0.75 EST; the measured stall (TP-11, CLmax >= 0.81 at this mass for a 17 m/s basis) still decides it (A-P6).")
 
 
 # ================================================================ hover yaw authority
@@ -307,15 +320,18 @@ stored("CL-A-YAW-Q", "Rotor reaction Q (model)", "P:yaw.q_model_nmm", "N mm", li
 # ================================================================ wind, SITL results read from the stored reports
 stored("CL-A-WIND-LEAN", "Belly-on hover lean at 5 m/s (SITL max)", "P:sim.lean_belly_5ms_deg", "deg", limit=("<=", "P:req.lean_max_deg"), verifies=["A-P8"], parts=["WNG-001"],
        how="Tethered hover with the wing edge into the wind (M9); the heading rule keeps the belly out of the wind above 3 m/s.",
-       equation="SITL case, QP-2 SITL.md s70 (ArduPlane 4.7.3-beta1 JSON backend); read, not re-run")
-stored("CL-A-WIND-OUTPUT", "Longest time any motor is at or above 0.85 output, 4 m/s turbulence hover (SITL, 1.47 kg gate, worst pack)", "P:sim.wind_ge85_s", "s",
+       equation="SITL case AP8_belly5 (D-258: 5 m/s belly-on, 1 m/s turbulence, 1.881 kg, X2216 hover model, ArduPlane 4.7.3-beta1 JSON backend; mechanism/out/T101_data/sitl_batch_AP8.txt); read, not re-run (was QP-2 SITL.md s70)")
+stored("CL-A-WIND-OUTPUT", "Longest time any motor is at or above 0.85 output, 4 m/s turbulence hover (SITL, 1.881 kg predicted, X2216, worst pack; D-258)", "P:sim.wind_ge85_s", "s",
        limit=("<=", "P:req.motor_ge85_s_max"), verifies=["A-P8"], parts=["PRP-001-UR", "PRP-001-UL", "PRP-001-LR", "PRP-001-LL"],
        how="Log motor outputs in the tethered turbulence hover (M9) at <= 4 m/s mean: no motor above 0.85 for more than 0.5 s, none at the 0.90 cap.",
-       note="D-192 (CLAIMS-FIX s3): the old claim read the 0.87 peak of the BASE airframe at 1.23 kg; at the 1.47 kg gate on the worst pack the 5 m/s peak is 0.89-0.90 (0.5-1.9 s above 0.85, cap touched), so the hover limit is 4 m/s (peak 0.83-0.873, <= 0.20 s above 0.85) and the line is stated as a duration. Peak 0.873 is reported, not a limit.",
-       equation="SITL turbulence cases N4_* (sitl/results.jsonl, run_case.py, A.param D-191, arm 1.2, cant 17); read, not re-run")
-stored("CL-A-WIND-CAP", "Time any motor is at the 0.90 spin cap, 4 m/s turbulence hover (SITL, 1.47 kg gate, worst pack)", "P:sim.wind_cap_s", "s",
+       note="D-258 (2026-11-24): re-run at 1.881 kg with the X2216 hover model: 0 s >= 0.85 in all seven, peak 0.738-0.761. History: D-192 (CLAIMS-FIX s3): the old claim read the 0.87 peak of the BASE airframe at 1.23 kg; at the 1.47 kg gate on the worst pack the 5 m/s peak is 0.89-0.90 (0.5-1.9 s above 0.85, cap touched), so the hover limit is 4 m/s (peak 0.83-0.873, <= 0.20 s above 0.85) and the line is stated as a duration. Peak 0.873 is reported, not a limit.",
+       equation="SITL turbulence cases AP8_h* (D-258: run_case.py x2216_hover=1, 1.881 kg, CG 23.49 mm, A.param, arm 1.2, cant 17; mechanism/out/T101_data/sitl_batch_AP8.txt); read, not re-run (was N4_* / R5_h*)")
+stored("CL-A-WIND-CAP", "Time any motor is at full output (the 0.90 cap line), 4 m/s turbulence hover (SITL, 1.881 kg, X2216, worst pack; D-258)", "P:sim.wind_cap_s", "s",
        limit=("<=", "P:req.motor_cap_s_max"), verifies=["A-P8"], parts=["PRP-001-UR", "PRP-001-UL", "PRP-001-LR", "PRP-001-LL"],
        how="Log motor outputs in the tethered turbulence hover (M9): no sample at the cap.", equation="same seven SITL runs; read, not re-run")
+stored("CL-A-CNBETA", "Directional stability Cn_beta in cruise (18 m/s, CG 23.49 mm; fins + wing + propeller estimate)", "P:sim.cn_beta", "1/rad", limit=(">=", "P:req.cn_beta_min"), verifies=["A-P15"], parts=["FIN-001-R", "FIN-001-L", "WNG-001"],
+       how="First cruise sorties: rudderless sideslip is not commanded on a flying wing; read the yaw response to the TP-19 roll doublets (Dutch roll period about 0.67 s, damping 0.15 EST) from the IMU log.",
+       equation="sitl/latdir_a.py (D-260): N_v from a_aero.airframe central differences, Cn_beta = N_v V / (q S b), plus -4 kp A_disc x_p / (S b) for the propellers; read, not re-run")
 stored("CL-A-TIPOVER", "Static tip-over angle on the fin tips", "P:sim.tipover_deg", "deg", limit=(">=", "P:req.tipover_min_deg"), verifies=["A-P9"],
        parts=["GER-001-UR", "GER-001-UL", "GER-001-LR", "GER-001-LL", "FIN-001-R", "FIN-001-L"], how="Tilt test of the built aircraft on its feet (CG 20-26 mm): tips over at >= 30 deg.",
        equation="SIZING-A s4 geometry (feet 0.36 m apart, CG 0.275 m above); read, not recomputed")
@@ -329,14 +345,10 @@ stored("CL-A-ROLL-GATE", "Peak roll rate in SITL at cruise speed, 1.47 kg (the g
        how="Measure the roll rate on the first cruise (T-A-FIRST-CRUISE).", equation="SITL case=roll, run R5_rt65g, D-195; read, not re-run")
 
 
-@kit.calc("CALC-A-PITCH-USE", equation="use = peak transition elevon / the 20 deg stop (BOARD QP-4 s3 basis)", inputs={"peak": "P:sim.elevon_peak_deg", "stop": "P:sim.elevon_stop_deg"},
-          units={"peak": "deg", "stop": "deg"}, output="use")
-def pitch_use(peak, stop):
-    return peak / stop
+stored("CL-A-PITCH-USE", "Elevon pitch use in transition (share of the 15 deg basis; the 0.60 line is 9 deg)", "P:sim.pitch_use_15_worst", "-", limit=("<=", "P:req.pitch_use_max"), verifies=["A-P11"], parts=["WNG-006-R", "WNG-006-L"],
+       how="D-245: the standing line is 0.60 of 15 deg (SITL-FLIGHT.md l.25), worst C3 case 0.651 (0.554 / 0.571 / 0.651 / 0.605, AR-017) against 0.60, so FAIL, open pending the reserve derivation (D-251); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls (AR-010 item 5). Fix path is the ladder from rung 1 (controls: lower the entry pitch-rate demand), then a SITL rerun; a 20 deg basis is not used (no A-specific roll / gust reserve derivation; review round 10 98-4). First transition flight logs the elevon commands.",
+       equation="SITL (ArduPlane, 6-DOF plant) transition runs T-097, pitch_use_15 in sum.json; read, not re-run")
 
-
-kit.claim("CL-A-PITCH-USE", "Elevon use in transition (share of the 20 deg stop)", calc="CALC-A-PITCH-USE", output="use", unit="-",
-          limit=("<=", "P:req.pitch_use_max"), verifies=["A-P11"], parts=["WNG-006-R", "WNG-006-L"], how="C3 pitch-over run and SITL transition logs (D-195: peak 11.5 deg at the CAD CG, 12.0 at the forward trim end; was 8.9-9.6 before the S5010 section, CG 21.5 and the corrected trim).")
 
 if __name__ == "__main__":
     kit.write()

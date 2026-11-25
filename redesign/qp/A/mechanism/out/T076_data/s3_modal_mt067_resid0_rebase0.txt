@@ -1,0 +1,70 @@
+FE lumped + beam mass, corner nom: 1387.9 g (target aircraft 1640 g; the FE has no wiring / fasteners / adhesive / growth unless T076_RESID=1)
+CFG used: {'foot_pad_m': 0.006, 'pack_g': 275.0, 'avionics_g': 109.88, 'motor_g': 90.67} MODE t067 RESID False REBASE False
+
+### T-076 t067 resid False rebase False; skin 1 ply; prop 9 in
+prop 9 in; hover rpm 6018/6272/7151, cruise 7300-7600; bands (Hz): hover 1P 100.3-119.2; hover 2P 200.6-238.4; cruise 1P 121.7-126.7; cruise 2P 243.3-253.3; exclusion (strongly coupled) 83.6-304.0 Hz; cap rpm 9349 (1P 156 Hz), uncapped 10142
+- corner kd (skin GJ 34.9 N m2 (EI_out 11.4, EI_in 509, +27.0 g)): 100 modes solved
+  | f (Hz) | dominant part | cx | cy | coupling | in exclusion? | within 20 % of a 1P band? | verdict |
+  |---|---|---|---|---|---|---|---|
+  | 9.4 | bridge 83% | 0.00 | 2.53 | 2.53 | no | no | outside: pass |
+  | 19.6 | spar 46% | 2.37 | 0.29 | 2.37 | no | no | outside: pass |
+  | 24.7 | rib 69% | 0.79 | 0.07 | 0.79 | no | no | outside: pass |
+  | 27.9 | arm 50% | 2.84 | 0.53 | 2.84 | no | no | outside: pass |
+  | 35.0 | arm 100% | 2.63 | 1.91 | 2.63 | no | no | outside: pass |
+  | 35.0 | arm 100% | 1.91 | 2.63 | 2.63 | no | no | outside: pass |
+  | 37.1 | arm 99% | 0.26 | 3.10 | 3.10 | no | no | outside: pass |
+  | 37.2 | arm 52% | 0.44 | 2.18 | 2.18 | no | no | outside: pass |
+  | 41.2 | arm 99% | 2.77 | 0.00 | 2.77 | no | no | outside: pass |
+  | 43.8 | arm 42% | 0.30 | 1.78 | 1.78 | no | no | outside: pass |
+  | 67.1 | rib 83% | 0.16 | 0.34 | 0.34 | no | no | outside: pass |
+  | 67.6 | arm 46% | 1.04 | 1.08 | 1.08 | no | no | outside: pass |
+  | 142.5 | rib 64% | 0.12 | 0.25 | 0.25 | yes | yes | weak in band (forced response) |
+  | 201.2 | bridge 44% | 0.08 | 0.00 | 0.08 | yes | no | weak in band (forced response) |
+  | 210.7 | spar 50% | 0.12 | 0.23 | 0.23 | yes | no | weak in band (forced response) |
+  highest strongly coupled mode below the exclusion zone 68 Hz (limit 83.6); lowest above 482 Hz (limit 304)
+  forced response zeta 1.0 %: worst sum-of-axes 22.8 m/s2 at 10500 rpm (sweep 6000-10500); all four <= cap 19.3 at 8550 rpm; cruise 7,300-7,600 9.2 at 7600; one motor at cap 18.0; limit 30 -> MS +0.55 (physical envelope)
+  forced response zeta 0.5 %: worst sum-of-axes 24.1 m/s2 at 8550 rpm (sweep 6000-10500); all four <= cap 24.1 at 8550 rpm; cruise 7,300-7,600 9.2 at 7600; one motor at cap 18.0; limit 30 -> MS +0.25 (physical envelope)
+- corner nom (skin GJ 49.9 N m2 (EI_out 16.3, EI_in 728, +27.0 g)): 100 modes solved
+  | f (Hz) | dominant part | cx | cy | coupling | in exclusion? | within 20 % of a 1P band? | verdict |
+  |---|---|---|---|---|---|---|---|
+  | 10.0 | bridge 85% | 0.00 | 2.54 | 2.54 | no | no | outside: pass |
+  | 21.5 | spar 43% | 2.29 | 0.32 | 2.29 | no | no | outside: pass |
+  | 25.5 | rib 71% | 1.06 | 0.03 | 1.06 | no | no | outside: pass |
+  | 29.9 | arm 50% | 2.84 | 0.53 | 2.84 | no | no | outside: pass |
+  | 37.5 | arm 100% | 2.99 | 1.29 | 2.99 | no | no | outside: pass |
+  | 37.5 | arm 100% | 1.29 | 2.99 | 2.99 | no | no | outside: pass |
+  | 39.8 | arm 99% | 0.26 | 3.10 | 3.10 | no | no | outside: pass |
+  | 40.3 | arm 56% | 0.36 | 2.27 | 2.27 | no | no | outside: pass |
+  | 44.2 | arm 99% | 2.77 | 0.00 | 2.77 | no | no | outside: pass |
+  | 47.3 | spar 46% | 0.31 | 1.68 | 1.68 | no | no | outside: pass |
+  | 72.8 | rib 85% | 0.16 | 0.34 | 0.34 | no | no | outside: pass |
+  | 74.1 | arm 44% | 1.00 | 1.07 | 1.07 | no | no | outside: pass |
+  | 154.2 | rib 64% | 0.12 | 0.25 | 0.25 | yes | no | weak in band (forced response) |
+  | 220.4 | bridge 43% | 0.08 | 0.00 | 0.08 | yes | no | weak in band (forced response) |
+  | 236.0 | spar 47% | 0.12 | 0.23 | 0.23 | yes | no | weak in band (forced response) |
+  highest strongly coupled mode below the exclusion zone 74 Hz (limit 83.6); lowest above 547 Hz (limit 304)
+  forced response zeta 1.0 %: worst sum-of-axes 22.6 m/s2 at 9250 rpm (sweep 6000-10500); all four <= cap 22.6 at 9250 rpm; cruise 7,300-7,600 9.3 at 7600; one motor at cap 21.3; limit 30 -> MS +0.33 (physical envelope)
+  forced response zeta 0.5 %: worst sum-of-axes 28.3 m/s2 at 9250 rpm (sweep 6000-10500); all four <= cap 28.3 at 9250 rpm; cruise 7,300-7,600 9.3 at 7600; one motor at cap 22.2; limit 30 -> MS +0.06 (physical envelope)
+- corner hi (skin GJ 64.8 N m2 (EI_out 21.2, EI_in 946, +27.0 g)): 100 modes solved
+  | f (Hz) | dominant part | cx | cy | coupling | in exclusion? | within 20 % of a 1P band? | verdict |
+  |---|---|---|---|---|---|---|---|
+  | 11.6 | bridge 84% | 0.00 | 2.54 | 2.54 | no | no | outside: pass |
+  | 24.6 | spar 43% | 2.37 | 0.33 | 2.37 | no | no | outside: pass |
+  | 30.6 | rib 70% | 0.86 | 0.03 | 0.86 | no | no | outside: pass |
+  | 33.9 | arm 50% | 2.84 | 0.53 | 2.84 | no | no | outside: pass |
+  | 42.5 | arm 100% | 2.02 | 2.55 | 2.55 | no | no | outside: pass |
+  | 42.5 | arm 100% | 2.55 | 2.02 | 2.55 | no | no | outside: pass |
+  | 45.1 | arm 99% | 0.26 | 3.10 | 3.10 | no | no | outside: pass |
+  | 46.0 | arm 61% | 0.38 | 2.34 | 2.34 | no | no | outside: pass |
+  | 50.1 | arm 99% | 2.77 | 0.00 | 2.77 | no | no | outside: pass |
+  | 54.1 | spar 47% | 0.28 | 1.58 | 1.58 | no | no | outside: pass |
+  | 82.6 | rib 86% | 0.16 | 0.34 | 0.34 | no | no | outside: pass |
+  | 84.3 | arm 44% | 1.00 | 1.06 | 1.06 | yes | yes | STRONG in band: FAIL |
+  | 175.2 | rib 65% | 0.12 | 0.25 | 0.25 | yes | no | weak in band (forced response) |
+  | 250.2 | bridge 43% | 0.08 | 0.00 | 0.08 | yes | no | weak in band (forced response) |
+  | 268.8 | spar 46% | 0.12 | 0.23 | 0.23 | yes | no | weak in band (forced response) |
+  highest strongly coupled mode below the exclusion zone 54 Hz (limit 83.6); lowest above 622 Hz (limit 304)
+  forced response zeta 1.0 %: worst sum-of-axes 29.1 m/s2 at 10500 rpm (sweep 6000-10500); all four <= cap 18.1 at 9325 rpm; cruise 7,300-7,600 10.1 at 7600; one motor at cap 18.2; limit 30 -> MS +0.65 (physical envelope)
+  forced response zeta 0.5 %: worst sum-of-axes 36.0 m/s2 at 10500 rpm (sweep 6000-10500); all four <= cap 18.3 at 8075 rpm; cruise 7,300-7,600 10.1 at 7525; one motor at cap 18.2; limit 30 -> MS +0.64 (physical envelope)
+
+STOP-RULE hits (strong coupling >= 0.5 in the exclusion zone): [('hi', np.float64(84.3450747783629), 1.0632558142460489, True)]

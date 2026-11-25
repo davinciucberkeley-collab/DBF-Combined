@@ -1,0 +1,2476 @@
+{
+ "schema": "proofs/1",
+ "generated_by": "redesign/qp/A/proofs/claims_a2_struct.py",
+ "params": [
+  "../params-A.json"
+ ],
+ "nodes": [
+  {
+   "id": "CALC-A-FLUTTER-LINE",
+   "type": "calculation",
+   "title": "flutter line",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "flutter_line",
+   "equation": "line = 1.2 x VD",
+   "inputs": {
+    "k": "P:req.flutter_factor",
+    "vd": "P:req.vd_ms"
+   },
+   "units": {
+    "vd": "m/s"
+   },
+   "outputs": {
+    "v_ms": 28.799999999999997
+   },
+   "input_values": {
+    "k": 1.2,
+    "vd": 24.0
+   }
+  },
+  {
+   "id": "CL-A-FLUTTER-LINE",
+   "type": "claim",
+   "title": "Flutter / divergence line, 1.2 x VD",
+   "calc": "CALC-A-FLUTTER-LINE",
+   "output": "v_ms",
+   "unit": "m/s",
+   "verifies": [
+    "A-P13"
+   ],
+   "how": "A-P13 / G8: every flutter, divergence and reversal speed is compared with this value (28.8 m/s at VD 24).",
+   "value": 28.799999999999997
+  },
+  {
+   "id": "CALC-A-FLUTTER-ELEVON-NOM",
+   "type": "calculation",
+   "title": "lowest",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "lowest",
+   "equation": "min over the three wing corners (kd / nom / hi) of the lowest onset over the K grid 0.01-20 N m/rad, read from structures/fixes2_cdamp.md (p-method, 600 K points, V <= 60 m/s); not re-run",
+   "inputs": {
+    "x": "P:sim.flutter_nom_ms"
+   },
+   "assumes": [
+    "ASM-A-RELIABLE"
+   ],
+   "outputs": {
+    "v_ms": 41.0
+   },
+   "input_values": {
+    "x": [
+     41.0,
+     44.0,
+     49.0
+    ]
+   }
+  },
+  {
+   "id": "CL-A-FLUTTER-ELEVON-NOM",
+   "type": "claim",
+   "title": "Elevon flutter onset with the hinge damper, nominal 25 C (lowest of kd / nom / hi)",
+   "calc": "CALC-A-FLUTTER-ELEVON-NOM",
+   "output": "v_ms",
+   "unit": "m/s",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-A-FLUTTER-LINE"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "WNG-006-R",
+    "WNG-006-L",
+    "WNG-007-R",
+    "WNG-007-L",
+    "WNG-009-R",
+    "WNG-009-L",
+    "WNG-010-R",
+    "WNG-010-L"
+   ],
+   "how": "E1 coupon (FIXES2 s8): ring-down damping c >= 7.1e-4 N m s/rad at 25 C, c(50 C) >= 4.0e-4; the model holds for every K from 0.01 to 20 N m/rad, so free play does not matter while the damper is filled and sealed (O-rings BOM R13, fill checked every preflight).",
+   "assumes": [
+    "ASM-A-RELIABLE"
+   ],
+   "value": 41.0
+  },
+  {
+   "id": "CALC-A-FLUTTER-ELEVON-HOT",
+   "type": "calculation",
+   "title": "lowest",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "lowest",
+   "equation": "min over the three wing corners (kd / nom / hi) of the lowest onset over the K grid 0.01-20 N m/rad, read from structures/fixes2_cdamp.md (p-method, 600 K points, V <= 60 m/s); not re-run",
+   "inputs": {
+    "x": "P:sim.flutter_hot_ms"
+   },
+   "assumes": [
+    "ASM-A-DAMPER-T",
+    "ASM-A-RELIABLE"
+   ],
+   "outputs": {
+    "v_ms": 37.5
+   },
+   "input_values": {
+    "x": [
+     37.5,
+     40.0,
+     44.0
+    ]
+   }
+  },
+  {
+   "id": "CL-A-FLUTTER-ELEVON-HOT",
+   "type": "claim",
+   "title": "Elevon flutter onset with the hinge damper, hot 50 C (lowest of kd / nom / hi)",
+   "calc": "CALC-A-FLUTTER-ELEVON-HOT",
+   "output": "v_ms",
+   "unit": "m/s",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-A-FLUTTER-LINE"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "WNG-006-R",
+    "WNG-006-L",
+    "WNG-007-R",
+    "WNG-007-L",
+    "WNG-009-R",
+    "WNG-009-L",
+    "WNG-010-R",
+    "WNG-010-L"
+   ],
+   "how": "E1 coupon (FIXES2 s8): ring-down damping c >= 7.1e-4 N m s/rad at 25 C, c(50 C) >= 4.0e-4; the model holds for every K from 0.01 to 20 N m/rad, so free play does not matter while the damper is filled and sealed (O-rings BOM R13, fill checked every preflight).",
+   "assumes": [
+    "ASM-A-DAMPER-T",
+    "ASM-A-RELIABLE"
+   ],
+   "value": 37.5
+  },
+  {
+   "id": "CALC-A-FLUTTER-ELEVON-COLD",
+   "type": "calculation",
+   "title": "lowest",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "lowest",
+   "equation": "min over the three wing corners (kd / nom / hi) of the lowest onset over the K grid 0.01-20 N m/rad, read from structures/fixes2_cdamp.md (p-method, 600 K points, V <= 60 m/s); not re-run",
+   "inputs": {
+    "x": "P:sim.flutter_cold_ms"
+   },
+   "assumes": [
+    "ASM-A-DAMPER-T",
+    "ASM-A-RELIABLE"
+   ],
+   "outputs": {
+    "v_ms": 44.0
+   },
+   "input_values": {
+    "x": [
+     44.0,
+     47.5,
+     53.5
+    ]
+   }
+  },
+  {
+   "id": "CL-A-FLUTTER-ELEVON-COLD",
+   "type": "claim",
+   "title": "Elevon flutter onset with the hinge damper, cold 0 C (lowest of kd / nom / hi)",
+   "calc": "CALC-A-FLUTTER-ELEVON-COLD",
+   "output": "v_ms",
+   "unit": "m/s",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-A-FLUTTER-LINE"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "WNG-006-R",
+    "WNG-006-L",
+    "WNG-007-R",
+    "WNG-007-L",
+    "WNG-009-R",
+    "WNG-009-L",
+    "WNG-010-R",
+    "WNG-010-L"
+   ],
+   "how": "E1 coupon (FIXES2 s8): ring-down damping c >= 7.1e-4 N m s/rad at 25 C, c(50 C) >= 4.0e-4; the model holds for every K from 0.01 to 20 N m/rad, so free play does not matter while the damper is filled and sealed (O-rings BOM R13, fill checked every preflight).",
+   "assumes": [
+    "ASM-A-DAMPER-T",
+    "ASM-A-RELIABLE"
+   ],
+   "value": 44.0
+  },
+  {
+   "id": "CALC-A-FLUTTER-HALF-READ",
+   "type": "calculation",
+   "title": "Stored result: Elevon flutter onset with a half-filled (leaking) damper, kd corner",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "min onset, half of the hot damper c, kd corner; read from structures/fixes2_cdamp.md, not re-run",
+   "inputs": {
+    "v": "P:sim.flutter_half_kd_ms"
+   },
+   "assumes": [
+    "ASM-A-RELIABLE"
+   ],
+   "outputs": {
+    "v": 31.5
+   },
+   "input_values": {
+    "v": 31.5
+   }
+  },
+  {
+   "id": "CL-A-FLUTTER-HALF",
+   "type": "claim",
+   "title": "Elevon flutter onset with a half-filled (leaking) damper, kd corner",
+   "calc": "CALC-A-FLUTTER-HALF-READ",
+   "output": "v",
+   "unit": "m/s",
+   "parts": [
+    "WNG-006-R",
+    "WNG-006-L",
+    "WNG-007-R",
+    "WNG-007-L",
+    "WNG-009-R",
+    "WNG-009-L",
+    "WNG-010-R",
+    "WNG-010-L"
+   ],
+   "how": "Fault case, no limit stated: seal with the two O-rings (BOM R13) and check the fill at every preflight (FIXES2 s1.3, s9).",
+   "assumes": [
+    "ASM-A-RELIABLE"
+   ],
+   "note": "Fault case, not a requirement. D-195: 33.0 m/s (kd; nom 35.0, hi 39.0), all above the 28.8 line; the lighter 6.7 g elevon removed the old 0.3 m/s shortfall. Recorded without a limit on purpose: the mitigation is the seal and the preflight check.",
+   "value": 31.5
+  },
+  {
+   "id": "CALC-A-FLUTTER-WING",
+   "type": "calculation",
+   "title": "wing flutter lowest",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "wing_flutter_lowest",
+   "equation": "min over kd / nom / hi of the base case and of the fins-off sensitivity (Ritz + strip Theodorsen, balance lumps on the wing); read from FIXES s1.3, not re-run",
+   "inputs": {
+    "base": "P:sim.wing_flutter_ms",
+    "nofin": "P:sim.wing_flutter_nofin_ms"
+   },
+   "outputs": {
+    "v_ms": 33.7
+   },
+   "input_values": {
+    "base": [
+     46.2,
+     49.5,
+     56.3
+    ],
+    "nofin": [
+     33.7,
+     39.9,
+     46.5
+    ]
+   }
+  },
+  {
+   "id": "CL-A-FLUTTER-WING",
+   "type": "claim",
+   "title": "Wing bending-torsion flutter speed, lowest case (fins off, kd corner)",
+   "calc": "CALC-A-FLUTTER-WING",
+   "output": "v_ms",
+   "unit": "m/s",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-A-FLUTTER-LINE"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "FIN-001-R",
+    "FIN-001-L"
+   ],
+   "how": "Tap / ground-vibration test with the fin on one tip (12 Hz and 44 Hz modes); FLUTTER.md open item 3.",
+   "value": 33.7
+  },
+  {
+   "id": "CALC-A-DIVERGENCE-READ",
+   "type": "calculation",
+   "title": "Stored result: Torsional divergence speed (kd corner, EA 0.10 c aft)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "Ritz / Bredt GJ model, FLUTTER.md verdict (lowest of 128-171 m/s at e/c 0.10); read, not re-run",
+   "inputs": {
+    "v": "P:sim.divergence_ms"
+   },
+   "outputs": {
+    "v": 128.0
+   },
+   "input_values": {
+    "v": 128.0
+   }
+  },
+  {
+   "id": "CL-A-DIVERGENCE",
+   "type": "claim",
+   "title": "Torsional divergence speed (kd corner, EA 0.10 c aft)",
+   "calc": "CALC-A-DIVERGENCE-READ",
+   "output": "v",
+   "unit": "m/s",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-A-FLUTTER-LINE"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-002"
+   ],
+   "how": "Torsion coupon (FLUTTER.md): measured GJ >= 2 N m2; divergence needs only > 0.2 N m2.",
+   "value": 128.0
+  },
+  {
+   "id": "CALC-A-REVERSAL",
+   "type": "calculation",
+   "title": "lowest",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "lowest",
+   "equation": "min over kd / nom (3-D lift basis, y 0.04-0.35, e/c 0.10); read from FIXES s1.3, not re-run",
+   "inputs": {
+    "x": "P:sim.reversal_3d_ms"
+   },
+   "outputs": {
+    "v_ms": 37.0
+   },
+   "input_values": {
+    "x": [
+     37.0,
+     42.0
+    ]
+   }
+  },
+  {
+   "id": "CL-A-REVERSAL",
+   "type": "claim",
+   "title": "Control reversal speed, 3-D lift basis (kd corner)",
+   "calc": "CALC-A-REVERSAL",
+   "output": "v_ms",
+   "unit": "m/s",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-A-FLUTTER-LINE"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "Measure elevon effectiveness vs airspeed on the first cruise sorties.",
+   "note": "The board ruled the 3-D basis (BOARD QP-4 s3). On the 2-D strip bound the same speeds are 28 / 32 m/s (kd / nom), 28 below the 28.8 line: 'marginal on the 2-D bound' (FLUTTER.md, FIXES s1.3).",
+   "value": 37.0
+  },
+  {
+   "id": "CALC-A-GUST-N-READ",
+   "type": "calculation",
+   "title": "Stored result: Gust load factor at VD 24 (U 4 m/s)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "structures_run.md s2 C1 table, T-084 rerun (ASM-C1-UDE-D-FRAC half rule); read, not recomputed",
+   "inputs": {
+    "v": "P:sim.gust_n_vd"
+   },
+   "outputs": {
+    "v": 2.71
+   },
+   "input_values": {
+    "v": 2.71
+   }
+  },
+  {
+   "id": "CL-A-GUST-N",
+   "type": "claim",
+   "title": "Gust load factor at VD 24 (U 4 m/s)",
+   "calc": "CALC-A-GUST-N-READ",
+   "output": "v",
+   "unit": "g",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.n_limit"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "WNG-002"
+   ],
+   "how": "Airspeed limit VD 24 m/s on the flight card; the wing stalls before n 5.03 (stall line 3.16, structures_run.md s2).",
+   "value": 2.71
+  },
+  {
+   "id": "CALC-A-MS-SPAR-READ",
+   "type": "calculation",
+   "title": "Stored result: Spar 12x10 root bending, MS at 1.5 x n 3.4",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
+   "inputs": {
+    "v": "P:struct.ms_spar"
+   },
+   "outputs": {
+    "v": 2.73
+   },
+   "input_values": {
+    "v": 2.73
+   }
+  },
+  {
+   "id": "CL-A-MS-SPAR",
+   "type": "claim",
+   "title": "Spar 12x10 root bending, MS at 1.5 x n 3.4",
+   "calc": "CALC-A-MS-SPAR-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "WNG-002"
+   ],
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "value": 2.73
+  },
+  {
+   "id": "CALC-A-MS-BOND-READ",
+   "type": "calculation",
+   "title": "Stored result: Rib saddle on the spar (thinnest bond), MS",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
+   "inputs": {
+    "v": "P:struct.ms_bond_thin"
+   },
+   "outputs": {
+    "v": 0.34
+   },
+   "input_values": {
+    "v": 0.34
+   }
+  },
+  {
+   "id": "CL-A-MS-BOND",
+   "type": "claim",
+   "title": "Rib saddle on the spar (thinnest bond), MS",
+   "calc": "CALC-A-MS-BOND-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "FIN-005-R",
+    "FIN-005-L",
+    "WNG-002"
+   ],
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "value": 0.34
+  },
+  {
+   "id": "CALC-A-MS-ARM-READ",
+   "type": "calculation",
+   "title": "Stored result: Motor arm 12x10 under a 30 N prop strike, MS",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
+   "inputs": {
+    "v": "P:struct.ms_arm_strike"
+   },
+   "outputs": {
+    "v": 1.41
+   },
+   "input_values": {
+    "v": 1.41
+   }
+  },
+  {
+   "id": "CL-A-MS-ARM",
+   "type": "claim",
+   "title": "Motor arm 12x10 under a 30 N prop strike, MS",
+   "calc": "CALC-A-MS-ARM-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "CGE-002-A",
+    "CGE-002-B"
+   ],
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "value": 1.41
+  },
+  {
+   "id": "CALC-A-MS-ARM-SOCKET-READ",
+   "type": "calculation",
+   "title": "Stored result: Motor arm in its socket, strike couple, MS",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
+   "inputs": {
+    "v": "P:struct.ms_arm_socket"
+   },
+   "assumes": [
+    "ASM-A-HUB-WALL"
+   ],
+   "outputs": {
+    "v": 0.48
+   },
+   "input_values": {
+    "v": 0.48
+   }
+  },
+  {
+   "id": "CL-A-MS-ARM-SOCKET",
+   "type": "claim",
+   "title": "Motor arm in its socket, strike couple, MS",
+   "calc": "CALC-A-MS-ARM-SOCKET-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "CGE-002-A",
+    "CGE-002-B",
+    "CGE-001"
+   ],
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "assumes": [
+    "ASM-A-HUB-WALL"
+   ],
+   "value": 0.48
+  },
+  {
+   "id": "CALC-A-MS-CUP-HEADPULL-READ",
+   "type": "calculation",
+   "title": "Stored result: Motor cup head pull-through (PETG) at the 0.90 cap thrust + 1P, MS",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
+   "inputs": {
+    "v": "P:struct.ms_cup_op_headpull"
+   },
+   "outputs": {
+    "v": 14.82
+   },
+   "input_values": {
+    "v": 14.82
+   }
+  },
+  {
+   "id": "CL-A-MS-CUP-HEADPULL",
+   "type": "claim",
+   "title": "Motor cup head pull-through (PETG) at the 0.90 cap thrust + 1P, MS",
+   "calc": "CALC-A-MS-CUP-HEADPULL-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "CGE-003-UR",
+    "CGE-003-UL",
+    "CGE-003-LR",
+    "CGE-003-LL"
+   ],
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "value": 14.82
+  },
+  {
+   "id": "CALC-A-MS-CUP-STRIKE-READ",
+   "type": "calculation",
+   "title": "Stored result: Motor cup head pull-through under the 30 N transverse prop strike, MS",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
+   "inputs": {
+    "v": "P:struct.ms_cup_headpull_strike"
+   },
+   "outputs": {
+    "v": 1.55
+   },
+   "input_values": {
+    "v": 1.55
+   }
+  },
+  {
+   "id": "CL-A-MS-CUP-STRIKE",
+   "type": "claim",
+   "title": "Motor cup head pull-through under the 30 N transverse prop strike, MS",
+   "calc": "CALC-A-MS-CUP-STRIKE-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "CGE-003-UR",
+    "CGE-003-UL",
+    "CGE-003-LR",
+    "CGE-003-LL"
+   ],
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "value": 1.55
+  },
+  {
+   "id": "CALC-A-MS-CUP-PLATE-READ",
+   "type": "calculation",
+   "title": "Stored result: Motor cup plate bending past the sleeve end under the strike, MS",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
+   "inputs": {
+    "v": "P:struct.ms_cup_plate_strike"
+   },
+   "outputs": {
+    "v": 0.49
+   },
+   "input_values": {
+    "v": 0.49
+   }
+  },
+  {
+   "id": "CL-A-MS-CUP-PLATE",
+   "type": "claim",
+   "title": "Motor cup plate bending past the sleeve end under the strike, MS",
+   "calc": "CALC-A-MS-CUP-PLATE-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "CGE-003-UR",
+    "CGE-003-UL",
+    "CGE-003-LR",
+    "CGE-003-LL"
+   ],
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "value": 0.49
+  },
+  {
+   "id": "CALC-A-MS-CUP-HOLE-READ",
+   "type": "calculation",
+   "title": "Stored result: Motor cup screw-hole bearing under a blade-stop torque, MS",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
+   "inputs": {
+    "v": "P:struct.ms_cup_screw_hole_s3"
+   },
+   "outputs": {
+    "v": 0.39
+   },
+   "input_values": {
+    "v": 0.39
+   }
+  },
+  {
+   "id": "CL-A-MS-CUP-HOLE",
+   "type": "claim",
+   "title": "Motor cup screw-hole bearing under a blade-stop torque, MS",
+   "calc": "CALC-A-MS-CUP-HOLE-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "CGE-003-UR",
+    "CGE-003-UL",
+    "CGE-003-LR",
+    "CGE-003-LL"
+   ],
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "value": 0.39
+  },
+  {
+   "id": "CALC-A-MS-CUP-BOND-READ",
+   "type": "calculation",
+   "title": "Stored result: Motor cup to arm bond under strike torsion + torque, MS",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
+   "inputs": {
+    "v": "P:struct.ms_cup_bond_strike"
+   },
+   "outputs": {
+    "v": 1.88
+   },
+   "input_values": {
+    "v": 1.88
+   }
+  },
+  {
+   "id": "CL-A-MS-CUP-BOND",
+   "type": "claim",
+   "title": "Motor cup to arm bond under strike torsion + torque, MS",
+   "calc": "CALC-A-MS-CUP-BOND-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "CGE-003-UR",
+    "CGE-003-UL",
+    "CGE-003-LR",
+    "CGE-003-LL",
+    "CGE-002-A",
+    "CGE-002-B"
+   ],
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "value": 1.88
+  },
+  {
+   "id": "CALC-A-MS-ARM-BLADE-READ",
+   "type": "calculation",
+   "title": "Stored result: Motor arm 12x10 root bending with the blade-offset strike lever, MS",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
+   "inputs": {
+    "v": "P:struct.ms_arm_strike_blade"
+   },
+   "outputs": {
+    "v": 0.82
+   },
+   "input_values": {
+    "v": 0.82
+   }
+  },
+  {
+   "id": "CL-A-MS-ARM-BLADE",
+   "type": "claim",
+   "title": "Motor arm 12x10 root bending with the blade-offset strike lever, MS",
+   "calc": "CALC-A-MS-ARM-BLADE-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "CGE-002-A",
+    "CGE-002-B"
+   ],
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "value": 0.82
+  },
+  {
+   "id": "CALC-A-MS-FATIGUE-HUBWALL-READ",
+   "type": "calculation",
+   "title": "Stored result: Hub arm-socket wall, 2000 cycles to the cap thrust, MS",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
+   "inputs": {
+    "v": "P:struct.ms_fatigue_hub_wall"
+   },
+   "outputs": {
+    "v": 1.17
+   },
+   "input_values": {
+    "v": 1.17
+   }
+  },
+  {
+   "id": "CL-A-MS-FATIGUE-HUBWALL",
+   "type": "claim",
+   "title": "Hub arm-socket wall, 2000 cycles to the cap thrust, MS",
+   "calc": "CALC-A-MS-FATIGUE-HUBWALL-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "CGE-001"
+   ],
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "value": 1.17
+  },
+  {
+   "id": "CALC-A-MS-FATIGUE-ARM-READ",
+   "type": "calculation",
+   "title": "Stored result: Arm tube bending amplitude at 4e6 cycles of 1P, MS",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
+   "inputs": {
+    "v": "P:struct.ms_fatigue_arm"
+   },
+   "outputs": {
+    "v": 15.32
+   },
+   "input_values": {
+    "v": 15.32
+   }
+  },
+  {
+   "id": "CL-A-MS-FATIGUE-ARM",
+   "type": "claim",
+   "title": "Arm tube bending amplitude at 4e6 cycles of 1P, MS",
+   "calc": "CALC-A-MS-FATIGUE-ARM-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "CGE-002-A",
+    "CGE-002-B"
+   ],
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "value": 15.32
+  },
+  {
+   "id": "CALC-A-MS-RIB-READ",
+   "type": "calculation",
+   "title": "Stored result: Fin rib 14x12 torsion under one foot load, MS",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
+   "inputs": {
+    "v": "P:struct.ms_rib_torsion"
+   },
+   "outputs": {
+    "v": 0.6
+   },
+   "input_values": {
+    "v": 0.6
+   }
+  },
+  {
+   "id": "CL-A-MS-RIB",
+   "type": "claim",
+   "title": "Fin rib 14x12 torsion under one foot load, MS",
+   "calc": "CALC-A-MS-RIB-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "FIN-002-R",
+    "FIN-002-L"
+   ],
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "value": 0.6
+  },
+  {
+   "id": "CALC-A-MS-FIN-READ",
+   "type": "calculation",
+   "title": "Stored result: Fin tube 16x14 in-plane bending at the foot load, MS",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
+   "inputs": {
+    "v": "P:struct.ms_fin_inplane"
+   },
+   "outputs": {
+    "v": 3.44
+   },
+   "input_values": {
+    "v": 3.44
+   }
+  },
+  {
+   "id": "CL-A-MS-FIN",
+   "type": "claim",
+   "title": "Fin tube 16x14 in-plane bending at the foot load, MS",
+   "calc": "CALC-A-MS-FIN-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "FIN-001-R",
+    "FIN-001-L"
+   ],
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "value": 3.44
+  },
+  {
+   "id": "CALC-A-MS-PACK-CRASH-READ",
+   "type": "calculation",
+   "title": "Stored result: Bridge under pack + hub at the 12 g crash, MS (pack retention)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "MS = allowable / design stress - 1 from structures/iter2_margins.md or arm_cup_checks.md (stress already carries the factors); read, not re-run",
+   "inputs": {
+    "v": "P:struct.ms_bridge_crash"
+   },
+   "outputs": {
+    "v": 2.87
+   },
+   "input_values": {
+    "v": 2.87
+   }
+  },
+  {
+   "id": "CL-A-MS-PACK-CRASH",
+   "type": "claim",
+   "title": "Bridge under pack + hub at the 12 g crash, MS (pack retention)",
+   "calc": "CALC-A-MS-PACK-CRASH-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min"
+   },
+   "verifies": [
+    "A-P5",
+    "A-P13"
+   ],
+   "parts": [
+    "CGE-004",
+    "CGE-008",
+    "PWR-001"
+   ],
+   "how": "Re-run qp/A/structures/iter2_run.py or arm_cup_checks.py (1.5 x limit, CF corner values kd / nom / hi); coupon test of the thinnest bond and of the motor cup before the wing is cut.",
+   "value": 2.87
+  },
+  {
+   "id": "CALC-A-BRIDGE-TAU-F2",
+   "type": "calculation",
+   "title": "bridge tau",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "bridge_tau",
+   "equation": "tau = k x M x (OD / 2) / J, J = pi / 32 (OD^4 - ID^4)",
+   "inputs": {
+    "od": "P:struct.bridge_od_mm",
+    "idd": "P:struct.bridge_id_mm",
+    "m": "P:struct.bridge_roll_f2_nm",
+    "k": "P:struct.k_cf"
+   },
+   "units": {
+    "od": "mm",
+    "idd": "mm",
+    "m": "N m"
+   },
+   "outputs": {
+    "tau_mpa": 22.650142768377208
+   },
+   "input_values": {
+    "od": 16.0,
+    "idd": 14.0,
+    "m": 4.37,
+    "k": 1.725
+   }
+  },
+  {
+   "id": "CALC-A-BRIDGE-TAU-S2",
+   "type": "calculation",
+   "title": "bridge tau",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "bridge_tau",
+   "equation": "tau = 1.0 x M x (OD / 2) / J (damage case, D-202)",
+   "inputs": {
+    "od": "P:struct.bridge_od_mm",
+    "idd": "P:struct.bridge_id_mm",
+    "m": "P:struct.bridge_roll_s2_nm",
+    "k": "P:struct.k_strike"
+   },
+   "units": {
+    "od": "mm",
+    "idd": "mm",
+    "m": "N m"
+   },
+   "outputs": {
+    "tau_mpa": 23.827232070206115
+   },
+   "input_values": {
+    "od": 16.0,
+    "idd": 14.0,
+    "m": 7.93,
+    "k": 1.0
+   }
+  },
+  {
+   "id": "CL-A-BRIDGE-TORSION-F2",
+   "type": "claim",
+   "title": "Bridge 16x14 torsion shear, F2 motor fault at the CFRP factor (bridge alone)",
+   "calc": "CALC-A-BRIDGE-TAU-F2",
+   "output": "tau_mpa",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:struct.cf_shear_mpa"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "CGE-004",
+    "CGE-001",
+    "CGE-006"
+   ],
+   "how": "python -I qp/A/structures/bridge_torsion_d206.py; hub FEA run d206 (fea_hub.py) shows the bridge field; a torsion coupon on the 16x14 offcut would replace the 30 MPa EST.",
+   "value": 22.650142768377208
+  },
+  {
+   "id": "CL-A-BRIDGE-TORSION-S2",
+   "type": "claim",
+   "title": "Bridge 16x14 torsion shear, 30 N prop strike in the disc plane (factor 1.0, bridge alone)",
+   "calc": "CALC-A-BRIDGE-TAU-S2",
+   "output": "tau_mpa",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:struct.cf_shear_mpa"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "CGE-004",
+    "CGE-001",
+    "CGE-006"
+   ],
+   "how": "As CL-A-BRIDGE-TORSION-F2.",
+   "value": 23.827232070206115
+  },
+  {
+   "id": "CALC-A-LANDING-STROKE-READ",
+   "type": "calculation",
+   "title": "Stored result: Landing crush stroke at 1.2 m/s on the fin-tip feet",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "landing_a.py 37.5 N record run at 1.881 kg EST, rib 25x23 (AR-016 / T098_results.json); read, not re-run",
+   "inputs": {
+    "v": "P:struct.landing_stroke_mm"
+   },
+   "outputs": {
+    "v": 17.2
+   },
+   "input_values": {
+    "v": 17.2
+   }
+  },
+  {
+   "id": "CL-A-LANDING-STROKE",
+   "type": "claim",
+   "title": "Landing crush stroke at 1.2 m/s on the fin-tip feet",
+   "calc": "CALC-A-LANDING-STROKE-READ",
+   "output": "v",
+   "unit": "mm",
+   "limit": {
+    "op": "<=",
+    "ref": "P:struct.landing_stroke_max_mm"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL"
+   ],
+   "how": "TP-3 drop test of the feet at 1.2 m/s on the built aircraft, with the foam plateau and damping measured; 20 mm available. PASS (17.2 mm) holds only inside the accepted foam region Fp 37.5-39.0 N and zeta 0.02-0.05 (AR-016, D-243); outside it the stroke bottoms (20.2-20.6 mm, FAIL).",
+   "value": 17.2
+  },
+  {
+   "id": "CALC-A-FOAM-SPAR-BOND-READ",
+   "type": "calculation",
+   "title": "Stored result: Foam shear around the spar, bond over |y| <= 0.20 m (FIXES2 rule), MS at 103 kPa basis",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "MS from structures/foam_103.md (compressive 103 kPa data sheet; tension 129 / shear 86 EST); read, not re-run",
+   "inputs": {
+    "v": "P:struct.foam_ms_spar_bond"
+   },
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "outputs": {
+    "v": 0.48
+   },
+   "input_values": {
+    "v": 0.48
+   }
+  },
+  {
+   "id": "CL-A-FOAM-SPAR-BOND",
+   "type": "claim",
+   "title": "Foam shear around the spar, bond over |y| <= 0.20 m (FIXES2 rule), MS at 103 kPa basis",
+   "calc": "CALC-A-FOAM-SPAR-BOND-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-002"
+   ],
+   "how": "Weigh and test a FOAMULAR 150 block (M11); pull coupon for the cap bond (E1 step 5): tape-skin peel has no allowable.",
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "value": 0.48
+  },
+  {
+   "id": "CALC-A-FOAM-FIN-SLOT-READ",
+   "type": "calculation",
+   "title": "Stored result: Foam bearing at the fin slot, MS at 103 kPa",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "MS from structures/foam_103.md (compressive 103 kPa data sheet; tension 129 / shear 86 EST); read, not re-run",
+   "inputs": {
+    "v": "P:struct.foam_ms_fin_slot"
+   },
+   "outputs": {
+    "v": 0.81
+   },
+   "input_values": {
+    "v": 0.81
+   }
+  },
+  {
+   "id": "CL-A-FOAM-FIN-SLOT",
+   "type": "claim",
+   "title": "Foam bearing at the fin slot, MS at 103 kPa",
+   "calc": "CALC-A-FOAM-FIN-SLOT-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "WNG-001",
+    "FIN-003-R",
+    "FIN-003-L"
+   ],
+   "how": "Weigh and test a FOAMULAR 150 block (M11); pull coupon for the cap bond (E1 step 5): tape-skin peel has no allowable.",
+   "value": 0.81
+  },
+  {
+   "id": "CALC-A-FOAM-TRAY-READ",
+   "type": "calculation",
+   "title": "Stored result: Pack tray on the LE slot floor, 12 g crash, quarter floor carrying, MS at 103 kPa",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "MS from structures/foam_103.md (compressive 103 kPa data sheet; tension 129 / shear 86 EST); read, not re-run",
+   "inputs": {
+    "v": "P:struct.foam_ms_tray_quarter"
+   },
+   "outputs": {
+    "v": 0.36
+   },
+   "input_values": {
+    "v": 0.36
+   }
+  },
+  {
+   "id": "CL-A-FOAM-TRAY",
+   "type": "claim",
+   "title": "Pack tray on the LE slot floor, 12 g crash, quarter floor carrying, MS at 103 kPa",
+   "calc": "CALC-A-FOAM-TRAY-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "WNG-001",
+    "CGE-008",
+    "PWR-001"
+   ],
+   "how": "Weigh and test a FOAMULAR 150 block (M11); pull coupon for the cap bond (E1 step 5): tape-skin peel has no allowable.",
+   "value": 0.36
+  },
+  {
+   "id": "CALC-A-FOAM-SERVO-READ",
+   "type": "calculation",
+   "title": "Stored result: Servo stalled into the stop, epoxy on four pocket walls, MS (shear)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "MS from structures/foam_103.md (compressive 103 kPa data sheet; tension 129 / shear 86 EST); read, not re-run",
+   "inputs": {
+    "v": "P:struct.foam_ms_servo_stall"
+   },
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "outputs": {
+    "v": 0.73
+   },
+   "input_values": {
+    "v": 0.73
+   }
+  },
+  {
+   "id": "CL-A-FOAM-SERVO",
+   "type": "claim",
+   "title": "Servo stalled into the stop, epoxy on four pocket walls, MS (shear)",
+   "calc": "CALC-A-FOAM-SERVO-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "WNG-001",
+    "MEC-001-R",
+    "MEC-001-L"
+   ],
+   "how": "Weigh and test a FOAMULAR 150 block (M11); pull coupon for the cap bond (E1 step 5): tape-skin peel has no allowable.",
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "value": 0.73
+  },
+  {
+   "id": "CALC-A-FOAM-CAP-PEEL-READ",
+   "type": "calculation",
+   "title": "Stored result: Stop reaction peeling a lens cap off the tape skin, MS on the foam (tension)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "MS from structures/foam_103.md (compressive 103 kPa data sheet; tension 129 / shear 86 EST); read, not re-run",
+   "inputs": {
+    "v": "P:struct.foam_ms_cap_peel"
+   },
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "outputs": {
+    "v": 0.37
+   },
+   "input_values": {
+    "v": 0.37
+   }
+  },
+  {
+   "id": "CL-A-FOAM-CAP-PEEL",
+   "type": "claim",
+   "title": "Stop reaction peeling a lens cap off the tape skin, MS on the foam (tension)",
+   "calc": "CALC-A-FOAM-CAP-PEEL-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.ms_min"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "WNG-008-RU",
+    "WNG-008-RL",
+    "WNG-008-LU",
+    "WNG-008-LL"
+   ],
+   "how": "Weigh and test a FOAMULAR 150 block (M11); pull coupon for the cap bond (E1 step 5): tape-skin peel has no allowable.",
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "value": 0.37
+  },
+  {
+   "id": "CALC-A-VIB-LOW-LIMIT",
+   "type": "calculation",
+   "title": "vib low limit",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "vib_low_limit",
+   "equation": "limit = hover 1P low edge / 1.2 = (6,789 rpm / 60) / 1.2",
+   "inputs": {
+    "rpm": "P:sim.hover_1p_rpm_lo",
+    "sep": "P:req.band_sep"
+   },
+   "outputs": {
+    "f_hz": 94.29166666666667
+   },
+   "input_values": {
+    "rpm": 6789.0,
+    "sep": 1.2
+   }
+  },
+  {
+   "id": "CALC-A-VIB-HIGH-LIMIT",
+   "type": "calculation",
+   "title": "vib high limit",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "vib_high_limit",
+   "equation": "limit = highest 2P edge x 1.2 = (8,028 rpm hover lean / 60 x 2 = 267.6 Hz) x 1.2",
+   "inputs": {
+    "f": "P:sim.hover_lean_2p_hz",
+    "sep": "P:req.band_sep"
+   },
+   "outputs": {
+    "f_hz": 321.12
+   },
+   "input_values": {
+    "f": 267.6,
+    "sep": 1.2
+   }
+  },
+  {
+   "id": "CL-A-VIB-LOW-LIMIT",
+   "type": "claim",
+   "title": "Upper edge allowed for strongly coupled modes below the rotor bands",
+   "calc": "CALC-A-VIB-LOW-LIMIT",
+   "output": "f_hz",
+   "unit": "Hz",
+   "verifies": [
+    "A-P10"
+   ],
+   "how": "Lowest hover 1P 113 Hz (6,789 rpm, X2216, 1.8796 kg; structures_run.md s4), 20 % separation rule (A-P10(a)); band 94-321 Hz.",
+   "value": 94.29166666666667
+  },
+  {
+   "id": "CL-A-VIB-HIGH-LIMIT",
+   "type": "claim",
+   "title": "Lower edge allowed for strongly coupled modes above the rotor bands",
+   "calc": "CALC-A-VIB-HIGH-LIMIT",
+   "output": "f_hz",
+   "unit": "Hz",
+   "verifies": [
+    "A-P10"
+   ],
+   "how": "Highest 2P 268 Hz (hover lean, 8,028 rpm; cruise 2P 248 Hz; structures_run.md s4), 20 % separation rule (A-P10(a)); band 94-321 Hz.",
+   "value": 321.12
+  },
+  {
+   "id": "CALC-A-VIB-LOW",
+   "type": "calculation",
+   "title": "highest",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "highest",
+   "equation": "highest strongly coupled (coupling >= 0.5) mode below the bands over kd / nom / hi; FE run read from structures/structures_run.md s4 (T-084 rerun, spar-only beam FE), not re-run; excludes the in-band strong mode (CL-A-VIB-IN-BAND)",
+   "inputs": {
+    "x": "P:sim.vib_below_hz"
+   },
+   "outputs": {
+    "f_hz": 81.0
+   },
+   "input_values": {
+    "x": [
+     66.0,
+     69.0,
+     81.0
+    ]
+   }
+  },
+  {
+   "id": "CALC-A-VIB-HIGH",
+   "type": "calculation",
+   "title": "lowest",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "lowest",
+   "equation": "lowest strongly coupled mode above the bands over kd / nom / hi; FE run read from structures/structures_run.md s4 (T-084 rerun, spar-only beam FE), not re-run",
+   "inputs": {
+    "x": "P:sim.vib_above_hz"
+   },
+   "outputs": {
+    "f_hz": 438.0
+   },
+   "input_values": {
+    "x": [
+     438.0,
+     474.0,
+     532.0
+    ]
+   }
+  },
+  {
+   "id": "CL-A-VIB-LOW",
+   "type": "claim",
+   "title": "Highest strongly coupled mode below the rotor bands (hi corner)",
+   "calc": "CALC-A-VIB-LOW",
+   "output": "f_hz",
+   "unit": "Hz",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-A-VIB-LOW-LIMIT"
+   },
+   "verifies": [
+    "A-P10"
+   ],
+   "parts": [
+    "CGE-002-A",
+    "CGE-002-B",
+    "CGE-004",
+    "WNG-002"
+   ],
+   "how": "Tap test of the built cage (T-A-TAP): modes within +-20 % of FE or re-tune. Margin is 17 % at the hi corner (81 vs 94 Hz), 43 % at kd (structures_run.md s4). This claim alone does NOT show D-185 (a) met: see CL-A-VIB-IN-BAND.",
+   "value": 81.0
+  },
+  {
+   "id": "CL-A-VIB-HIGH",
+   "type": "claim",
+   "title": "Lowest strongly coupled mode above the rotor bands (kd corner, fin f1)",
+   "calc": "CALC-A-VIB-HIGH",
+   "output": "f_hz",
+   "unit": "Hz",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-A-VIB-HIGH-LIMIT"
+   },
+   "verifies": [
+    "A-P10"
+   ],
+   "parts": [
+    "FIN-001-R",
+    "FIN-001-L"
+   ],
+   "how": "Fin tap test at build (T-A-TAP): lowest strong mode above the band 438-532 Hz in FE (structures_run.md s4).",
+   "value": 438.0
+  },
+  {
+   "id": "CALC-A-VIB-IN-BAND-READ",
+   "type": "calculation",
+   "title": "Stored result: strong modes in the band",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "count of corners with a strong mode in the band, read from structures_run.md s4 and T085_report.md s3.1 (not re-run)",
+   "inputs": {
+    "v": "P:sim.vib_inband_corners"
+   },
+   "outputs": {
+    "v": 3
+   },
+   "input_values": {
+    "v": 3
+   }
+  },
+  {
+   "id": "CL-A-VIB-IN-BAND",
+   "type": "claim",
+   "title": "Corners (kd / nom / hi) with a strongly coupled mode INSIDE the excluded rotor band (D-185 (a) needs none)",
+   "calc": "CALC-A-VIB-IN-BAND-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0
+   },
+   "verifies": [
+    "A-P10"
+   ],
+   "parts": [
+    "CGE-002-A",
+    "CGE-002-B",
+    "CGE-004",
+    "WNG-002"
+   ],
+   "how": "CARRIED FAIL (T-066 M-1, T-085, D-236): structures_run.md s4 spar-only model has a strong mode (cy 0.52) at 201 / 215 / 244 Hz inside the 94-321 Hz band; the upgraded model (T085_report.md s3.1) has the governing strong mode at 94.6-108.7 Hz (cx 0.74-0.85, cy 1.12-1.35) at kd / nom / hi, 23 of 24 pad / tray / hub / cell bound groups fail, the one passing group by 0.1 Hz. No limit relaxed, band and 0.5 coupling rule unchanged. TP-10b (T-A-TAP) on the built airframe decides; routes in T085_report.md s7.",
+   "value": 3
+  },
+  {
+   "id": "CALC-A-VIB-FC",
+   "type": "calculation",
+   "title": "highest",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "highest",
+   "equation": "worst FC acceleration (sum of axes) over 6,000-11,415 rpm, U 1.0 g mm per rotor, zeta 1 % and 0.5 %, kd / nom / hi; T-089: T-085 upgraded model (wing cell, tray, hub joint, 24 bound groups), mechanism/out/T089_data/t089_fvib.py; the spar-only values of structures_run.md s4 were 22.7-26.6",
+   "inputs": {
+    "x": "P:sim.vib_fc_ms2"
+   },
+   "outputs": {
+    "a_ms2": 187.2
+   },
+   "input_values": {
+    "x": [
+     82.7,
+     157.2,
+     87.6,
+     167.9,
+     97.9,
+     187.2
+    ]
+   }
+  },
+  {
+   "id": "CL-A-VIB-FC",
+   "type": "claim",
+   "title": "Flight-controller vibration, worst of the forced-response sweep",
+   "calc": "CALC-A-VIB-FC",
+   "output": "a_ms2",
+   "unit": "m/s2",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.vibe_max_ms2"
+   },
+   "verifies": [
+    "A-P10"
+   ],
+   "parts": [
+    "AVN-002",
+    "AVN-010",
+    "AVN-007"
+   ],
+   "how": "T-089 (D-237 proposed): FAILS on the upgraded model. The governing 94.6-108.7 Hz wing-flap / cage-bounce mode (T-085) is excited at its 1P resonance 5,676-6,521 rpm, below the lowest operating rpm 6,789, so the sweep (6,000-11,415 rpm) catches its flank: 82.7-97.9 m/s2 at zeta 1 %, 157-187 at 0.5 %; inside the operating window 6,789-8,028 rpm the same runs read 19.3-32.9 m/s2 (T089_report.md s3). Spar-only model (structures_run.md s4, no mode there): 22.7-26.6. IMU VIBE < 30 m/s2 in the first tethered hover (T-A-TETHER-VIBE) and the tap test (T-A-TAP) decide. Conservative method (modes summed in absolute value, sum of axes, four rotors in worst phase, zeta a guess); limit unchanged.",
+   "value": 187.2
+  },
+  {
+   "id": "CALC-A-VIB-GM",
+   "type": "calculation",
+   "title": "lowest",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "lowest",
+   "equation": "smallest gain margin over pitch / roll / yaw x kd / nom / hi at the nominal mode frequencies (fu_cage.py, T-089 rebuild: X2216 / APC 9x4.5MR plant, T-085 FE, 1.8796 kg inertia, 24 bound groups); the iter3_run.md MN2212 values (2.19 min) are superseded",
+   "inputs": {
+    "x": "P:sim.gm_nominal"
+   },
+   "outputs": {
+    "gm": 1.13
+   },
+   "input_values": {
+    "x": [
+     1.36,
+     1.26,
+     1.13,
+     2.68,
+     2.72,
+     2.81,
+     2.44,
+     2.48,
+     2.48
+    ]
+   }
+  },
+  {
+   "id": "CL-A-VIB-GM",
+   "type": "claim",
+   "title": "Rate-loop gain margin, minimum over axes and corners (nominal modes)",
+   "calc": "CALC-A-VIB-GM",
+   "output": "gm",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.gm_min"
+   },
+   "verifies": [
+    "A-P10"
+   ],
+   "parts": [
+    "AVN-002",
+    "CGE-004",
+    "CGE-002-A"
+   ],
+   "how": "T-092 (D-239 proposed): the design now has the FC hard-mounted 75 mm off the wing centre along the spar (-y side); the beam-FE model with the IMU there gives pitch GM 2.52-4.00 (modes x1.0 / 0.8 / 1.2, all 24 bound groups x kd / nom / hi, T091_report.md s0, s2), but this claim still evaluates the FC-at-centre model (P:sim.gm_nominal) and stays FAIL: the FC benefit is credited only after T-A-TAP / the tether hover confirm the 27-30 Hz mode shape (D-239). T-089 (D-237 proposed): FAILS on the rebuilt model (pitch 1.13-1.36, roll 2.68-2.81, yaw 2.44-2.48; limit 2.0, D-191 method unchanged). The pitch loop at P 0.12 / D 0.0012 / FLTD 60 has too little margin against the first symmetric wing-flap / cage mode (26.7-29.6 Hz at kd / nom / hi, pitch gain 0.23-0.25 of the rigid gain; the limiting closed-loop pole is at 27-33 Hz, T089_report.md s2) with the X2216 thrust (TFULL 14.17 N per motor) and the heavier 1.88 kg airframe; the 94-109 Hz mode is not the limit. Re-run with the built-cage tap-test frequencies (T-A-TAP) and, if the built mode is as modelled, re-tune the pitch rate gains or add a notch before flight (T089_report.md s2, illustrative sensitivities only); hard-mounted FC.",
+   "value": 1.13
+  },
+  {
+   "id": "CALC-A-VIB-GM-SHIFT",
+   "type": "calculation",
+   "title": "gm shifted",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "gm_shifted",
+   "equation": "smallest gain margin with all flexible modes shifted -20 % and +20 % (tap-test tolerance)",
+   "inputs": {
+    "lo": "P:sim.gm_shifted",
+    "hi": "P:sim.gm_shifted_up"
+   },
+   "outputs": {
+    "gm": 1.05
+   },
+   "input_values": {
+    "lo": [
+     2.37,
+     2.03,
+     1.61,
+     2.76,
+     2.68,
+     2.44,
+     2.13,
+     2.19,
+     2.33
+    ],
+    "hi": [
+     1.13,
+     1.08,
+     1.05,
+     3.38,
+     3.65,
+     4.12,
+     2.48,
+     2.48,
+     2.48
+    ]
+   }
+  },
+  {
+   "id": "CALC-A-HORN-RIB-FOAM-HOLD-READ",
+   "type": "calculation",
+   "title": "Stored result: Horn rib face shear in the elevon foam at 1.5 x VD hold (x 2.156), beam-on-foundation FE, worst foam case",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.rib_foam_hold_kpa"
+   },
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "outputs": {
+    "v": 431.8
+   },
+   "input_values": {
+    "v": 431.8
+   }
+  },
+  {
+   "id": "CL-A-HORN-RIB-FOAM-HOLD",
+   "type": "claim",
+   "title": "Horn rib face shear in the elevon foam at 1.5 x VD hold (x 2.156), beam-on-foundation FE, worst foam case",
+   "calc": "CALC-A-HORN-RIB-FOAM-HOLD-READ",
+   "output": "v",
+   "unit": "kPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.foam_shear_kpa"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).",
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "value": 431.8
+  },
+  {
+   "id": "CALC-A-HORN-RIB-FOAM-STALL-READ",
+   "type": "calculation",
+   "title": "Stored result: Horn rib face shear in the foam at the 51 N servo stall force (x 1.4375)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.rib_foam_stall_kpa"
+   },
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "outputs": {
+    "v": 860.9
+   },
+   "input_values": {
+    "v": 860.9
+   }
+  },
+  {
+   "id": "CL-A-HORN-RIB-FOAM-STALL",
+   "type": "claim",
+   "title": "Horn rib face shear in the foam at the 51 N servo stall force (x 1.4375)",
+   "calc": "CALC-A-HORN-RIB-FOAM-STALL-READ",
+   "output": "v",
+   "unit": "kPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.foam_shear_kpa"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).",
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "value": 860.9
+  },
+  {
+   "id": "CALC-A-ELEVON-TORSION-FOAM-READ",
+   "type": "calculation",
+   "title": "Stored result: Elevon torsion beside the horn, foam only (tape skin not credited), 1.5 x VD hold (x 2.156)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.elevon_torsion_hold_kpa"
+   },
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "outputs": {
+    "v": 504.3
+   },
+   "input_values": {
+    "v": 504.3
+   }
+  },
+  {
+   "id": "CL-A-ELEVON-TORSION-FOAM",
+   "type": "claim",
+   "title": "Elevon torsion beside the horn, foam only (tape skin not credited), 1.5 x VD hold (x 2.156)",
+   "calc": "CALC-A-ELEVON-TORSION-FOAM-READ",
+   "output": "v",
+   "unit": "kPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.foam_shear_kpa"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).",
+   "assumes": [
+    "ASM-A-FOAM-ALLOW"
+   ],
+   "value": 504.3
+  },
+  {
+   "id": "CALC-A-HORN-BLADE-HOLD-READ",
+   "type": "calculation",
+   "title": "Stored result: Printed horn blade bending at 1.5 x VD hold (x 2.156), printed lying flat (in-layer)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.blade_root_hold_mpa"
+   },
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "outputs": {
+    "v": 3.32
+   },
+   "input_values": {
+    "v": 3.32
+   }
+  },
+  {
+   "id": "CL-A-HORN-BLADE-HOLD",
+   "type": "claim",
+   "title": "Printed horn blade bending at 1.5 x VD hold (x 2.156), printed lying flat (in-layer)",
+   "calc": "CALC-A-HORN-BLADE-HOLD-READ",
+   "output": "v",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.petg_allow_mpa"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).",
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "value": 3.32
+  },
+  {
+   "id": "CALC-A-HORN-BLADE-STALL-READ",
+   "type": "calculation",
+   "title": "Stored result: Printed horn blade bending at the 51 N stall force (x 1.4375)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.blade_root_stall_mpa"
+   },
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "outputs": {
+    "v": 6.62
+   },
+   "input_values": {
+    "v": 6.62
+   }
+  },
+  {
+   "id": "CL-A-HORN-BLADE-STALL",
+   "type": "claim",
+   "title": "Printed horn blade bending at the 51 N stall force (x 1.4375)",
+   "calc": "CALC-A-HORN-BLADE-STALL-READ",
+   "output": "v",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.petg_allow_mpa"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).",
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "value": 6.62
+  },
+  {
+   "id": "CALC-A-HORN-BEARING-HOLD-READ",
+   "type": "calculation",
+   "title": "Stored result: Clevis pin bearing in the 2 mm horn at 1.5 x VD hold (x 2.156)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.bearing_hold_mpa"
+   },
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "outputs": {
+    "v": 18.39
+   },
+   "input_values": {
+    "v": 18.39
+   }
+  },
+  {
+   "id": "CL-A-HORN-BEARING-HOLD",
+   "type": "claim",
+   "title": "Clevis pin bearing in the 2 mm horn at 1.5 x VD hold (x 2.156)",
+   "calc": "CALC-A-HORN-BEARING-HOLD-READ",
+   "output": "v",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.petg_allow_mpa"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).",
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "value": 18.39
+  },
+  {
+   "id": "CALC-A-HORN-BEARING-STALL-READ",
+   "type": "calculation",
+   "title": "Stored result: Clevis pin bearing in the 2 mm horn at the 51 N stall force (x 1.4375)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.bearing_stall_mpa"
+   },
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "outputs": {
+    "v": 36.65
+   },
+   "input_values": {
+    "v": 36.65
+   }
+  },
+  {
+   "id": "CL-A-HORN-BEARING-STALL",
+   "type": "claim",
+   "title": "Clevis pin bearing in the 2 mm horn at the 51 N stall force (x 1.4375)",
+   "calc": "CALC-A-HORN-BEARING-STALL-READ",
+   "output": "v",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.petg_allow_mpa"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "NOT SHOWN BY ANALYSIS; superseded by the test claims CL-A-HORN-RIB-COUPON, CL-A-HORN-STALL-STEP, CL-A-ELEVON-TORSION-COUPON and CL-A-HORN-STALL-BENCH (test node T-A-HORN-RIB) once those tests have run and pass (route to A-P13, review r3 M-1). Gate: E1 horn-rib coupon, a 100 mm span of tape-skinned elevon with the printed horn bonded in its slot, both ends clamped 50 mm either side of the rib; pull the horn hole along the chord with 2.156 x 17.05 = 36.8 N for 30 s (pass: no crack, no slip, < 0.5 deg set; local result only: in flight the elevon continues ~160 mm outboard), then the 51 N stall step (pass: no crack, hole elongation <= 0.1 mm). Bench stall test on the aircraft (BUILD D5b): endpoints set to +-20 deg, then drive one servo into the stop for 5 s and inspect horn, rib, elevon and stop. Fallback if these fail: a spanwise CF torsion tube along the hinge line (trade table D-212 rev 3, row J).",
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "value": 36.65
+  },
+  {
+   "id": "CALC-A-ROD-LEG-STALL-READ",
+   "type": "calculation",
+   "title": "Stored result: Z-bend leg: yield needed at 1.5 x the 51 N stall force, rod lifted against the keeper (e 1.9 mm), vs the A228 music-wire allowable",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.rod_yield_req_mpa"
+   },
+   "assumes": [
+    "ASM-A-ROD-GRADE"
+   ],
+   "outputs": {
+    "v": 1392.0
+   },
+   "input_values": {
+    "v": 1392.0
+   }
+  },
+  {
+   "id": "CL-A-ROD-LEG-STALL",
+   "type": "claim",
+   "title": "Z-bend leg: yield needed at 1.5 x the 51 N stall force, rod lifted against the keeper (e 1.9 mm), vs the A228 music-wire allowable",
+   "calc": "CALC-A-ROD-LEG-STALL-READ",
+   "output": "v",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.a228_allow_mpa"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "Receipt test of a formed M02 rod at 91 N (1.5 x 51 N x e_hi / e_lo = 1.9 / 1.6, rod lifted against the keeper, review r3 m-3) along the rod, 10 s, no permanent set over 0.2 mm; else A228 1.2 mm wire.",
+   "assumes": [
+    "ASM-A-ROD-GRADE"
+   ],
+   "value": 1392.0
+  },
+  {
+   "id": "CALC-A-HORN-SHEAROUT-STALL-READ",
+   "type": "calculation",
+   "title": "Stored result: Horn hole shear-out (1.65 mm ligament) at the 51 N stall force (x 1.4375); allowable PETG 20 MPa / sqrt(3) EST",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.shearout_stall_mpa"
+   },
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "outputs": {
+    "v": 11.11
+   },
+   "input_values": {
+    "v": 11.11
+   }
+  },
+  {
+   "id": "CL-A-HORN-SHEAROUT-STALL",
+   "type": "claim",
+   "title": "Horn hole shear-out (1.65 mm ligament) at the 51 N stall force (x 1.4375); allowable PETG 20 MPa / sqrt(3) EST",
+   "calc": "CALC-A-HORN-SHEAROUT-STALL-READ",
+   "output": "v",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.shearout_allow_mpa"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "Passes by 4 % on an EST allowable (review r3 m-13), so it is no margin: the stall step of the horn-rib coupon (CL-A-HORN-STALL-STEP) and the bench stall test decide it.",
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "value": 11.11
+  },
+  {
+   "id": "CALC-A-KEEPER-BRIDGE-STALL-READ",
+   "type": "calculation",
+   "title": "Stored result: Keeper bridge (MEC-008) bending at the 51 N stall force (x 1.4375), rod lifted against the keeper; allowable PETG 20 MPa EST",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json (python -I redesign/qp/A/mechanism/linkage_loads_check.py); model, validity and allowable source in that script's header",
+   "inputs": {
+    "v": "P:linkage.keeper_bridge_stall_mpa"
+   },
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "outputs": {
+    "v": 19.48
+   },
+   "input_values": {
+    "v": 19.48
+   }
+  },
+  {
+   "id": "CL-A-KEEPER-BRIDGE-STALL",
+   "type": "claim",
+   "title": "Keeper bridge (MEC-008) bending at the 51 N stall force (x 1.4375), rod lifted against the keeper; allowable PETG 20 MPa EST",
+   "calc": "CALC-A-KEEPER-BRIDGE-STALL-READ",
+   "output": "v",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.petg_allow_mpa"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-008-R",
+    "MEC-008-L",
+    "MEC-004-R",
+    "MEC-004-L"
+   ],
+   "how": "Passes by 3 % on an EST allowable (19.5 vs 20 MPa; 9.8 MPa at hold), so it is no margin. Creep and preload loss are '-' (not analysed): retorque and inspect the keeper screw at BUILD D2a, D5b and every preflight; the bench stall test (CL-A-HORN-STALL-BENCH) loads it too, inspect the keeper for a crack afterwards (review r3 m-4).",
+   "assumes": [
+    "ASM-A-PETG-ALLOW"
+   ],
+   "value": 19.48
+  },
+  {
+   "id": "CALC-A-SERVO-SPEED-READ",
+   "type": "calculation",
+   "title": "Stored result: Elevon servo speed margin: loaded rate over the 152 deg/s of the +-11 deg, 2.2 Hz roll sinusoid (AR-005, 6.0 V pair)",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_loads_check.json servo_speed_torque_T056 (python -I redesign/qp/A/mechanism/linkage_loads_check.py)",
+   "inputs": {
+    "v": "P:linkage.servo_speed_margin_r2"
+   },
+   "outputs": {
+    "v": 1.521
+   },
+   "input_values": {
+    "v": 1.521
+   }
+  },
+  {
+   "id": "CL-A-SERVO-SPEED",
+   "type": "claim",
+   "title": "Elevon servo speed margin: loaded rate over the 152 deg/s of the +-11 deg, 2.2 Hz roll sinusoid (AR-005, 6.0 V pair)",
+   "calc": "CALC-A-SERVO-SPEED-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:linkage.servo_speed_margin_min"
+   },
+   "verifies": [
+    "A-P11"
+   ],
+   "parts": [
+    "MEC-001-R",
+    "MEC-001-L",
+    "MEC-002-R",
+    "MEC-002-L",
+    "MEC-004-R",
+    "MEC-004-L"
+   ],
+   "how": "Hand calculation (AR-005): linear torque-speed line, gearing 0.909-0.928 from the solved linkage, end-point load. Required rates are EST; 7.2 V speed is not published so the 6 V no-load speed is used. Bench ramp of the built rail at BUILD D5b closes it. The full-throw sinusoid R3 (0.84) is not a required case.",
+   "value": 1.521
+  },
+  {
+   "id": "CL-A-HORN-RIB-COUPON",
+   "type": "claim",
+   "title": "Horn-rib coupon: load held 30 s without damage, over the required 36.8 N (2.156 x the 17.05 N hold force)",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "E1 coupon: 100 mm tape-skinned elevon span, horn bonded in the slot, clamps 50 mm each side of the rib; 36.8 N along the chord for 30 s. Value = held load / 36.8 N, pass >= 1.0 with no crack, no slip, set < 0.5 deg. Local result only (clamps 50 mm from the rib, ~160 mm of elevon in flight). Supersedes CL-A-HORN-RIB-FOAM-HOLD once run and passed.",
+   "value": "-"
+  },
+  {
+   "id": "CL-A-HORN-STALL-STEP",
+   "type": "claim",
+   "title": "Horn-rib coupon, stall step: 51 N held 5 s, hole elongation and cracks",
+   "unit": "mm",
+   "limit": {
+    "op": "<=",
+    "value": 0.1
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "After the 36.8 N step, 51 N (the servo stall force, 0.397 N m / (8.5 mm x 0.916)) along the chord for 5 s. Value = hole elongation measured with a 1.2 mm pin gauge, pass <= 0.1 mm with no crack and set < 0.5 deg. Record what yields first. Supersedes CL-A-HORN-RIB-FOAM-STALL and CL-A-HORN-BEARING-STALL once run and passed; the 1.4375 scatter factor is not in the coupon (one coupon): run 3 coupons, lowest governs.",
+   "value": "-"
+  },
+  {
+   "id": "CL-A-ELEVON-TORSION-COUPON",
+   "type": "claim",
+   "title": "Elevon-section torsion coupon: torque held over the required 0.161 N m (2.156 x the 74.65 N mm outboard hinge moment at VD)",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "A tape-skinned elevon section about 160 mm long, root clamped, torque applied through the horn hole path (horn force x 9.155 mm) to 0.161 N m held 30 s. Value = held torque / 0.161 N m, pass >= 1.0 with no tape debond or crack and twist set < 0.5 deg at the trailing edge. Supersedes CL-A-ELEVON-TORSION-FOAM (foam only, tape skin not credited) once run and passed. If it fails: the spanwise CF tube (trade row J).",
+   "value": "-"
+  },
+  {
+   "id": "CL-A-HORN-STALL-BENCH",
+   "type": "claim",
+   "title": "Bench stall test on the built aircraft: 51 N for 5 s into the 21 deg stop, hole elongation",
+   "unit": "mm",
+   "limit": {
+    "op": "<=",
+    "value": 0.1
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-004-R",
+    "MEC-004-L",
+    "WNG-006-R",
+    "WNG-006-L",
+    "MEC-001-R",
+    "MEC-001-L"
+   ],
+   "how": "BUILD D5b: endpoints temporarily set past the stop, servo at 7.2 V driven into the +21 deg stop (smallest arm lever, 51 N) for 5 s, each elevon. Value = hole elongation (1.2 mm pin gauge), pass <= 0.1 mm with no crack in horn, rib, slot tape or stop, and trailing-edge set < 0.5 deg. Then the endpoints go back to +-20 deg.",
+   "value": "-"
+  },
+  {
+   "id": "CALC-A-LINKAGE-FREEPLAY-READ",
+   "type": "calculation",
+   "title": "Stored result: Elevon linkage free play from the hole clearances and the Z-bend freedom (clevis cheek holes '-')",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "read_value",
+   "equation": "read from mechanism/out/linkage_kinematics.json free_play_budget_deg (python -I redesign/qp/A/mechanism/elevon_linkage.py)",
+   "inputs": {
+    "v": "P:linkage.free_play_deg"
+   },
+   "outputs": {
+    "v": 1.28
+   },
+   "input_values": {
+    "v": 1.28
+   }
+  },
+  {
+   "id": "CL-A-LINKAGE-FREEPLAY",
+   "type": "claim",
+   "title": "Elevon linkage free play from the hole clearances and the Z-bend freedom (clevis cheek holes '-')",
+   "calc": "CALC-A-LINKAGE-FREEPLAY-READ",
+   "output": "v",
+   "unit": "deg",
+   "limit": {
+    "op": "<=",
+    "ref": "P:linkage.free_play_guide_deg"
+   },
+   "verifies": [
+    "A-P13"
+   ],
+   "parts": [
+    "MEC-002-R",
+    "MEC-002-L",
+    "MEC-003-R",
+    "MEC-003-L",
+    "MEC-004-R",
+    "MEC-004-L",
+    "MEC-008-R",
+    "MEC-008-L"
+   ],
+   "how": "BASIS = FLUTTER (review r3 m-7): the 1 deg limit is the SERVO.md s4 flutter guide, the only sourced number; a control-precision limit has none. BUILD D5b / E1: measure the BUILT trailing-edge free play with the servo powered at neutral (dial gauge, +-0.05 mm); the budget excludes servo gear backlash and the clevis cheek holes (both '-'). The hinge damper (FIXES2 s1) removes the linear flutter dependence on K, but a free-play limit cycle is nonlinear and not covered, so a measured value above 1 deg stays a FAIL; the +-20 deg endpoints (1 deg short of the 21 deg stop) prevent a servo-driven stall only.",
+   "value": 1.28
+  },
+  {
+   "id": "CL-A-VIB-GM-SHIFT",
+   "type": "claim",
+   "title": "Rate-loop gain margin with the cage modes shifted +-20 %",
+   "calc": "CALC-A-VIB-GM-SHIFT",
+   "output": "gm",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.gm_min"
+   },
+   "verifies": [
+    "A-P10"
+   ],
+   "parts": [
+    "AVN-002",
+    "CGE-004",
+    "CGE-002-A"
+   ],
+   "how": "T-092 (D-239 proposed): the design now has the FC hard-mounted 75 mm off the wing centre along the spar (-y side); the beam-FE model with the IMU there gives pitch GM 2.52-4.00 (modes x1.0 / 0.8 / 1.2, all 24 bound groups x kd / nom / hi, T091_report.md s0, s2), but this claim still evaluates the FC-at-centre model (P:sim.gm_nominal) and stays FAIL: the FC benefit is credited only after T-A-TAP / the tether hover confirm the 27-30 Hz mode shape (D-239). T-089 (D-237 proposed): FAILS on the rebuilt model with the modes shifted -20 % and +20 % (min 1.05, pitch +20 %); the 9-17 Hz / 21-43 Hz window of iter3_run.md belonged to the iteration-2 cage and is superseded. Tap test of the built cage (T-A-TAP) gives the real frequencies; re-tune the rate loop if the built mode is in the modelled range (T089_report.md s2).",
+   "note": "History: D-191 (CLAIMS-FIX s4, iteration-2 cage / MN2212, superseded by T-089 above): with the QP-3 gains (pitch P 0.15 / D 0.002 / FLTD 40) the minimum was 1.64 (1.56 at cant 17); pitch P 0.12 / D 0.0012 / FLTD 60 and yaw P 0.37 give 2.03 (roll, kd corner, modes -20 %; pitch 2.33).",
+   "value": 1.05
+  },
+  {
+   "id": "CALC-A-SERVO",
+   "type": "calculation",
+   "title": "servo factors",
+   "script": "redesign/qp/A/proofs/claims_a2_struct.py",
+   "function": "servo_factors",
+   "equation": "factor = servo torque / (1.5 x (hinge moment at VD + preload + damper at slew)); cold case with the real arm ratio 9.155 / 8.5 (D-212 rev 2; the gearing of the solved linkage is 0.906 to 0.929, 1 / 1.077 = 0.929); ratio = servo / hinge",
+   "inputs": {
+    "stall_72_nm": "P:servo.stall_72_nm",
+    "hinge_vd_nm": "P:servo.hinge_vd_nm",
+    "preload_nm": "P:servo.preload_nm",
+    "damper_slew_nm": "P:servo.damper_slew_nm",
+    "damper_slew_cold_nm": "P:servo.damper_slew_cold_nm",
+    "load_factor": "P:servo.load_factor",
+    "arm_mm": "P:servo.arm_mm",
+    "horn_mm": "P:servo.horn_mm"
+   },
+   "outputs": {
+    "factor_25c": 1.555947481873408,
+    "factor_0c_equal_arms": 1.4711876968686306,
+    "factor_0c_real_arms": 1.5845556899802722,
+    "ratio_to_hinge": 2.6291390728476824
+   },
+   "input_values": {
+    "stall_72_nm": 0.397,
+    "hinge_vd_nm": 0.151,
+    "preload_nm": 0.0093,
+    "damper_slew_nm": 0.0098,
+    "damper_slew_cold_nm": 0.0196,
+    "load_factor": 1.5,
+    "arm_mm": 8.5,
+    "horn_mm": 9.155
+   }
+  },
+  {
+   "id": "CL-A-SERVO-FACTOR",
+   "type": "claim",
+   "title": "Servo torque factor at 7.2 V, 25 C (ES3054HV)",
+   "calc": "CALC-A-SERVO",
+   "output": "factor_25c",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.servo_factor_min"
+   },
+   "verifies": [
+    "A-P11"
+   ],
+   "parts": [
+    "MEC-001-R",
+    "MEC-001-L",
+    "MEC-002-R",
+    "MEC-002-L",
+    "MEC-004-R",
+    "MEC-004-L"
+   ],
+   "how": "M12: measure the rail under two-servo load (7.2 V jumper set; at 6.0 V the factor is 1.30 and fails); E1 measures the hinge and damper torque.",
+   "value": 1.555947481873408
+  },
+  {
+   "id": "CL-A-SERVO-COLD",
+   "type": "claim",
+   "title": "Servo torque factor at 7.2 V, damper at 0 C, real arm ratio",
+   "calc": "CALC-A-SERVO",
+   "output": "factor_0c_real_arms",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.servo_factor_min"
+   },
+   "verifies": [
+    "A-P11"
+   ],
+   "parts": [
+    "MEC-001-R",
+    "MEC-001-L",
+    "MEC-002-R",
+    "MEC-002-L",
+    "MEC-004-R",
+    "MEC-004-L"
+   ],
+   "how": "E1 step 6: ring-down at 0 C; confirm the slew + VD hinge-moment bounding case on the bench.",
+   "assumes": [
+    "ASM-A-DAMPER-T"
+   ],
+   "note": "Equal arms (the SERVO.md convention) give 1.47, 2 % short; FIXES2 s2 reported 1.58 with a 12 mm arm and 12.9 mm horn; D-212 rev 2 (arm hole 8.5 mm, horn hole 9.155 mm over the hinge) gives 1.58 again, and the solved linkage gearing at +-20 deg (0.906 to 0.929) now matches the 8.5 / 9.155 ratio the claim assumes. Bounding case: VD hinge moment, full slew and 0 C together.",
+   "value": 1.5845556899802722
+  },
+  {
+   "id": "CL-A-SERVO-RATIO",
+   "type": "claim",
+   "title": "Servo stall torque over the hinge moment at VD (A-P11 wording)",
+   "calc": "CALC-A-SERVO",
+   "output": "ratio_to_hinge",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.servo_ratio_min"
+   },
+   "verifies": [
+    "A-P11"
+   ],
+   "parts": [
+    "MEC-001-R",
+    "MEC-001-L",
+    "MEC-002-R",
+    "MEC-002-L",
+    "MEC-004-R",
+    "MEC-004-L"
+   ],
+   "how": "Bench: stall torque of the flight servo at 7.2 V.",
+   "value": 2.6291390728476824
+  }
+ ]
+}

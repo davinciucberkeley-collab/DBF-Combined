@@ -1,0 +1,156 @@
+{
+ "T101C3_T074": {
+  "tag": "T101C3_T074",
+  "window_s": [
+   104.424,
+   107.424,
+   108.424
+  ],
+  "peak_left_deg": 9.76,
+  "peak_right_deg": 9.76,
+  "peak_left_events_deg": 9.62,
+  "peak_right_events_deg": 9.39,
+  "peak_left_signed": [
+   -9.76,
+   4.29
+  ],
+  "peak_right_signed": [
+   -9.76,
+   4.16
+  ],
+  "mean_elevon_peak_deg": 9.76,
+  "mean_elevon_peak_before_events_deg": 9.76,
+  "mean_elevon_peak_events_deg": 9.5,
+  "diff_elevon_peak_events_deg": 0.2,
+  "t_sat_20_s": 0.0,
+  "t_sat_19p04_s": 0.0,
+  "t_sat_20_left_s": 0.0,
+  "t_sat_20_right_s": 0.0,
+  "p_peak_degs": 1.1,
+  "p_peak_pos_degs": 0.7,
+  "p_peak_neg_degs": -1.1,
+  "roll_peak_deg": 0.6,
+  "pitch_peak_events_deg": 7.9,
+  "V_min_events": 16.82,
+  "alpha_max_events": 9.6,
+  "nz_max_events": 1.26,
+  "att_events": {
+   "n": 30,
+   "roll_err_peak_deg": 0.5,
+   "roll_err_rms_deg": 0.2,
+   "pitch_err_peak_deg": 7.0,
+   "pitch_err_rms_deg": 4.5,
+   "des_roll_range": [
+    -0.5,
+    -0.1
+   ],
+   "des_pitch_range": [
+    7.8,
+    10.6
+   ]
+  },
+  "att_events_plus_recovery": {
+   "n": 40,
+   "roll_err_peak_deg": 0.5,
+   "roll_err_rms_deg": 0.2,
+   "pitch_err_peak_deg": 7.0,
+   "pitch_err_rms_deg": 4.2,
+   "des_roll_range": [
+    -0.5,
+    0.1
+   ],
+   "des_pitch_range": [
+    7.8,
+    10.8
+   ]
+  },
+  "rcou_events_pwm": {
+   "c5": [
+    1263,
+    1361
+   ],
+   "c6": [
+    1642,
+    1727
+   ],
+   "t_c5_or_c6_at_pwm_limit_s": 0.0
+  }
+ },
+ "T101C3G_T074": {
+  "tag": "T101C3G_T074",
+  "window_s": [
+   104.324,
+   107.324,
+   108.324
+  ],
+  "peak_left_deg": 20.0,
+  "peak_right_deg": 20.0,
+  "peak_left_events_deg": 20.0,
+  "peak_right_events_deg": 20.0,
+  "peak_left_signed": [
+   -20.0,
+   7.47
+  ],
+  "peak_right_signed": [
+   -20.0,
+   5.56
+  ],
+  "mean_elevon_peak_deg": 12.98,
+  "mean_elevon_peak_before_events_deg": 9.29,
+  "mean_elevon_peak_events_deg": 12.98,
+  "diff_elevon_peak_events_deg": 12.95,
+  "t_sat_20_s": 0.8,
+  "t_sat_19p04_s": 1.25,
+  "t_sat_20_left_s": 0.5,
+  "t_sat_20_right_s": 0.3,
+  "p_peak_degs": 110.0,
+  "p_peak_pos_degs": 88.5,
+  "p_peak_neg_degs": -110.0,
+  "roll_peak_deg": 54.0,
+  "pitch_peak_events_deg": 12.3,
+  "V_min_events": 16.98,
+  "alpha_max_events": 12.2,
+  "nz_max_events": 1.72,
+  "att_events": {
+   "n": 30,
+   "roll_err_peak_deg": 83.7,
+   "roll_err_rms_deg": 36.6,
+   "pitch_err_peak_deg": 17.4,
+   "pitch_err_rms_deg": 9.3,
+   "des_roll_range": [
+    -40.8,
+    43.7
+   ],
+   "des_pitch_range": [
+    7.9,
+    15.0
+   ]
+  },
+  "att_events_plus_recovery": {
+   "n": 40,
+   "roll_err_peak_deg": 83.7,
+   "roll_err_rms_deg": 35.7,
+   "pitch_err_peak_deg": 17.4,
+   "pitch_err_rms_deg": 8.2,
+   "des_roll_range": [
+    -40.8,
+    43.7
+   ],
+   "des_pitch_range": [
+    7.9,
+    15.0
+   ]
+  },
+  "rcou_events_pwm": {
+   "c5": [
+    1000,
+    1693
+   ],
+   "c6": [
+    1353,
+    2000
+   ],
+   "t_c5_or_c6_at_pwm_limit_s": 1.2
+  }
+ }
+}

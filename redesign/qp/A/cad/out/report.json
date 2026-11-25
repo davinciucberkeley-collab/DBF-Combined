@@ -1,5 +1,5 @@
 {
- "bodies": 484,
+ "bodies": 585,
  "defects": [
   "WNG-008-LL body \"lens cap arch\": zero-width spike / repeated point in a loop (removed in the export)",
   "WNG-008-LL body \"lens cap end wall\": zero-width spike / repeated point in a loop (removed in the export)",
@@ -11,74 +11,90 @@
   "WNG-008-RU body \"lens cap end wall\": zero-width spike / repeated point in a loop (removed in the export)"
  ],
  "kinks": [],
- "parts": 113,
+ "parts": 129,
  "poses": [
   {
    "hits": [
     {
-     "a": "E-HRN-05#0",
+     "a": "E-HRN-02#0",
      "at_mm": [
-      -76.41,
-      -58.46,
-      -42.06
+      -4.44,
+      16.59,
+      2.4
      ],
-     "b": "E-HRN-05#2",
+     "b": "E-HRN-02#2",
      "bodies": [
-      "E-HRN-05 \"wire strand 2 (1.8 mm)\" x E-HRN-05 \"wire strand 0 (1.8 mm)\" 0.01 mm"
+      "E-HRN-02 \"wire strand 2 (1.8 mm)\" x E-HRN-02 \"wire strand 0 (1.8 mm)\" 0.01 mm"
      ],
      "depth_mm": 0.011
     },
     {
      "a": "E-HRN-02#0",
      "at_mm": [
-      -75.91,
-      73.26,
-      51.15
+      -84.02,
+      11.32,
+      14.99
      ],
      "b": "E-HRN-02#1",
      "bodies": [
-      "E-HRN-02 \"wire strand 1 (1.8 mm)\" x E-HRN-02 \"wire strand 0 (1.8 mm)\" 0.01 mm"
+      "E-HRN-02 \"wire strand 0 (1.8 mm)\" x E-HRN-02 \"wire strand 1 (1.8 mm)\" 0.01 mm"
      ],
      "depth_mm": 0.01
+    },
+    {
+     "a": "E-HRN-04#1",
+     "at_mm": [
+      -72.78,
+      226.42,
+      -154.12
+     ],
+     "b": "E-HRN-04#2",
+     "bodies": [
+      "E-HRN-04 \"wire strand 2 (1.8 mm)\" x E-HRN-04 \"wire strand 1 (1.8 mm)\" 0.01 mm"
+     ],
+     "depth_mm": 0.012
     },
     {
      "a": "E-HRN-04#0",
      "at_mm": [
-      -63.67,
-      201.67,
-      -136.99
+      9.95,
+      21.12,
+      2.19
      ],
-     "b": "E-HRN-04#1",
+     "b": "E-HRN-04#2",
      "bodies": [
-      "E-HRN-04 \"wire strand 0 (1.8 mm)\" x E-HRN-04 \"wire strand 1 (1.8 mm)\" 0.01 mm"
+      "E-HRN-04 \"wire strand 2 (1.8 mm)\" x E-HRN-04 \"wire strand 0 (1.8 mm)\" 0.01 mm"
      ],
-     "depth_mm": 0.01
+     "depth_mm": 0.012
     },
     {
-     "a": "E-HRN-03#0",
+     "a": "CGE-002-B",
      "at_mm": [
-      -71.44,
-      -234.07,
-      157.38
+      -71.9,
+      14.02,
+      -15.63
      ],
-     "b": "E-HRN-03#2",
+     "b": "E-HRN-04",
      "bodies": [
-      "E-HRN-03 \"wire strand 2 (1.8 mm)\" x E-HRN-03 \"wire strand 0 (1.8 mm)\" 0.01 mm"
+      "E-HRN-04 \"wire strand 2 (1.8 mm)\" x CGE-002-B \"arm tube (one continuous tube, motor cup to motor cup)\" 0.01 mm"
      ],
-     "depth_mm": 0.011
+     "depth_mm": 0.013
     },
     {
-     "a": "E-HRN-03#1",
+     "a": "HWC-001",
      "at_mm": [
-      -13.02,
-      -17.09,
-      2.18
+      59.76,
+      -61.53,
+      13.23
      ],
-     "b": "E-HRN-03#2",
+     "b": "HWC-003",
      "bodies": [
-      "E-HRN-03 \"wire strand 2 (1.8 mm)\" x E-HRN-03 \"wire strand 1 (1.8 mm)\" 0.01 mm"
+      "HWC-003 \"M2 thin nut\" x HWC-001 \"M2 pan screw shank\" 0.03 mm",
+      "HWC-003 \"M2 thin nut\" x HWC-001 \"M2 pan screw shank\" 0.03 mm",
+      "HWC-003 \"M2 thin nut\" x HWC-001 \"M2 pan screw shank\" 0.03 mm",
+      "HWC-003 \"M2 thin nut\" x HWC-001 \"M2 pan screw shank\" 0.03 mm"
      ],
-     "depth_mm": 0.01
+     "depth_mm": 0.034
     },
     {
      "a": "AVN-006",
@@ -105,22 +121,6 @@
       "AVN-006 \"total-pressure outlet barb on the block rear face (EST position and OD 2.0)\" x AVN-009-T \"silicone tubing 2 / 4 mm along the CAD route (D-208)\" 0.02 mm"
      ],
      "depth_mm": 0.017
-    },
-    {
-     "a": "HWC-001",
-     "at_mm": [
-      70.26,
-      9.03,
-      12.66
-     ],
-     "b": "HWC-003",
-     "bodies": [
-      "HWC-003 \"M2 thin nut\" x HWC-001 \"M2 pan screw shank\" 0.03 mm",
-      "HWC-003 \"M2 thin nut\" x HWC-001 \"M2 pan screw shank\" 0.03 mm",
-      "HWC-003 \"M2 thin nut\" x HWC-001 \"M2 pan screw shank\" 0.03 mm",
-      "HWC-003 \"M2 thin nut\" x HWC-001 \"M2 pan screw shank\" 0.03 mm"
-     ],
-     "depth_mm": 0.034
     },
     {
      "a": "AVN-005",
@@ -167,7 +167,7 @@
     "WNG-010-L",
     "WNG-010-R"
    ],
-   "name": "elevons at lower limit (E-WNG-10 -20, E-WNG-11 -20)",
+   "name": "elevons at lower limit (E-WNG-10 -21, E-WNG-11 -21)",
    "not_swept_against": [
     "MEC-003-L",
     "MEC-003-R",
@@ -189,7 +189,7 @@
     "WNG-010-L",
     "WNG-010-R"
    ],
-   "name": "elevons at upper limit (E-WNG-10 +20, E-WNG-11 +20)",
+   "name": "elevons at upper limit (E-WNG-10 +21, E-WNG-11 +21)",
    "not_swept_against": [
     "MEC-003-L",
     "MEC-003-R",
@@ -198,7 +198,7 @@
    ]
   }
  ],
- "seconds": 139.2,
+ "seconds": 907.3,
  "skipped": [
   [
    "HRD-001",

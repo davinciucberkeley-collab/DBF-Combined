@@ -1,0 +1,1902 @@
+{
+ "schema": "proofs/1",
+ "generated_by": "redesign/qp/A/proofs/claims_a1_flight.py",
+ "params": [
+  "../params-A.json"
+ ],
+ "nodes": [
+  {
+   "id": "CALC-A-MASS-PRED",
+   "type": "calculation",
+   "title": "mass pred",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "mass_pred",
+   "equation": "m = basic_CAD x growth_factor + overrun_frac x gate   (MASS-GATE s7)",
+   "inputs": {
+    "basic": "P:mass.basic_cad_kg",
+    "gf": "P:mass.growth_factor",
+    "over": "P:mass.overrun_frac",
+    "gate": "P:req.mass_gate_kg"
+   },
+   "units": {
+    "basic": "kg",
+    "gate": "kg"
+   },
+   "outputs": {
+    "m_kg": 1.880671052
+   },
+   "input_values": {
+    "basic": 1.64098,
+    "gf": 1.1174,
+    "over": 0.032,
+    "gate": 1.47
+   }
+  },
+  {
+   "id": "CALC-A-MASS-ITEM",
+   "type": "calculation",
+   "title": "mass itemised",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "mass_itemised",
+   "equation": "m = (sum of item g x (1 + maturity growth) + overrun) / 1000   (mission_gate_a.py items)",
+   "inputs": {
+    "items": "P:mass.itemised_g_growth",
+    "over": "P:mass.overrun_frac",
+    "gate": "P:req.mass_gate_kg"
+   },
+   "units": {
+    "gate": "kg"
+   },
+   "outputs": {
+    "m_kg": 1.4474069999999999
+   },
+   "input_values": {
+    "items": [
+     [
+      221.7,
+      0.2
+     ],
+     [
+      116.6,
+      0.2
+     ],
+     [
+      260,
+      0.05
+     ],
+     [
+      44.2,
+      0.05
+     ],
+     [
+      28.8,
+      0.1
+     ],
+     [
+      20.04,
+      0.2
+     ],
+     [
+      270,
+      0.0
+     ],
+     [
+      3.0,
+      0.2
+     ],
+     [
+      101.18,
+      0.2
+     ],
+     [
+      47.54,
+      0.05
+     ],
+     [
+      119.2,
+      0.2
+     ],
+     [
+      26.08,
+      0.2
+     ]
+    ],
+    "over": 0.032,
+    "gate": 1.47
+   }
+  },
+  {
+   "id": "CALC-A-CUTS",
+   "type": "calculation",
+   "title": "cuts required",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "cuts_required",
+   "equation": "X = cuts - (target - m_pred) / growth_factor   (grams of the EST cuts that must be real)",
+   "inputs": {
+    "cuts": "P:mass.est_cuts_g",
+    "target": "P:req.mass_target_kg",
+    "m": "CL-A-MASS-PRED",
+    "gf": "P:mass.growth_factor"
+   },
+   "units": {
+    "target": "kg",
+    "m": "kg"
+   },
+   "assumes": [
+    "ASM-A-CUTS"
+   ],
+   "outputs": {
+    "x_g": 409.1237623053518
+   },
+   "input_values": {
+    "cuts": 41.6,
+    "target": 1.47,
+    "m": 1.880671052,
+    "gf": 1.1174
+   }
+  },
+  {
+   "id": "CALC-A-STRUCT",
+   "type": "calculation",
+   "title": "structure mass",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "structure_mass",
+   "equation": "structure = wing + fins + feet + hardware + cage (CAD groups, with the EST cuts)",
+   "inputs": {
+    "g": "P:mass.structure_groups_g"
+   },
+   "outputs": {
+    "g": 483.6
+   },
+   "input_values": {
+    "g": [
+     221.7,
+     108.2,
+     8.4,
+     26.1,
+     119.2
+    ]
+   }
+  },
+  {
+   "id": "CL-A-MASS-PRED",
+   "type": "claim",
+   "title": "Predicted take-off mass (CAD basic x growth + overrun)",
+   "calc": "CALC-A-MASS-PRED",
+   "output": "m_kg",
+   "unit": "kg",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.mass_target_kg"
+   },
+   "verifies": [
+    "A-D3"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "PWR-001",
+    "CGE-001",
+    "FIN-001-R",
+    "FIN-001-L"
+   ],
+   "how": "Weigh-in (T-A-WEIGH): weigh foam, printed parts and epoxy first, then the aircraft with pack; predicted 1.881 kg EST at D-240 (CAD basic 1,641.0 g x growth + overrun, MASS-GATE.md; 1,423.9 g was the MASS-GATE s7 value at D-195).",
+   "value": 1.880671052
+  },
+  {
+   "id": "CL-A-MASS-ITEM",
+   "type": "claim",
+   "title": "Predicted mass, itemised growth by maturity (cross-check)",
+   "calc": "CALC-A-MASS-ITEM",
+   "output": "m_kg",
+   "unit": "kg",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.mass_target_kg"
+   },
+   "verifies": [
+    "A-D3"
+   ],
+   "how": "python -I qp/A/mission_gate_a.py prints the itemised roll-up (1,449 g at D-195, superseded; MASS-GATE.md has the current tally); both methods must stay <= 1.470 kg (D-208).",
+   "value": 1.4474069999999999
+  },
+  {
+   "id": "CL-A-MASS-GATE-ROOM",
+   "type": "claim",
+   "title": "Predicted mass against the 1.47 kg gate",
+   "calc": "CALC-A-MASS-PRED",
+   "output": "m_kg",
+   "unit": "kg",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.mass_gate_kg"
+   },
+   "verifies": [
+    "A-P1"
+   ],
+   "how": "As-built weigh-in <= 1.47 kg (D-190, MASS-GATE s8); the +-5 % window holds to 1.478 kg.",
+   "value": 1.880671052
+  },
+  {
+   "id": "CL-A-MASS-USER",
+   "type": "claim",
+   "title": "Predicted mass against the 25 kg user cap",
+   "calc": "CALC-A-MASS-PRED",
+   "output": "m_kg",
+   "unit": "kg",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.mass_user_max_kg"
+   },
+   "verifies": [
+    "A-U5"
+   ],
+   "how": "Weigh-in.",
+   "value": 1.880671052
+  },
+  {
+   "id": "CL-A-CUTS-REQUIRED",
+   "type": "claim",
+   "title": "EST cuts that must be real for <= 1.470 kg",
+   "calc": "CALC-A-CUTS",
+   "output": "x_g",
+   "unit": "g",
+   "limit": {
+    "op": "<=",
+    "ref": "P:mass.est_cuts_g"
+   },
+   "verifies": [
+    "A-D3"
+   ],
+   "how": "Weigh a FOAMULAR 150 block, a printed cup / hub, an epoxy joint (M11, BOARD QP-4 s1); >= 27.2 g of the 41.6 g must be real. Lead fallback 15.6 -> 12.8 g already applied (D-205).",
+   "assumes": [
+    "ASM-A-CUTS"
+   ],
+   "value": 409.1237623053518
+  },
+  {
+   "id": "CL-A-STRUCT-MASS",
+   "type": "claim",
+   "title": "Structure mass (CAD groups, with the EST cuts)",
+   "calc": "CALC-A-STRUCT",
+   "output": "g",
+   "unit": "g",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.structure_ceiling_g"
+   },
+   "verifies": [
+    "A-D3"
+   ],
+   "how": "Weigh the airframe groups (wing, fins, feet, hardware, cage); ceiling 494 g, about 521 g without the cuts (FIXES2 s4).",
+   "assumes": [
+    "ASM-A-CUTS"
+   ],
+   "value": 483.6
+  },
+  {
+   "id": "CALC-A-CG-TRIM",
+   "type": "calculation",
+   "title": "cg trim",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "cg_trim",
+   "equation": "ends = CG - m_pack x trim_fwd / m_basic, CG + m_pack x trim / m_basic",
+   "inputs": {
+    "cg": "P:mass.cg_x_mm",
+    "pack": "P:mass.pack_g",
+    "trim": "P:mass.pack_trim_mm",
+    "trim_fwd": "P:mass.pack_trim_fwd_mm",
+    "basic": "P:mass.basic_cad_kg"
+   },
+   "units": {
+    "cg": "mm",
+    "basic": "kg"
+   },
+   "outputs": {
+    "shift_mm": 1.6453582615266487,
+    "fwd_mm": 21.062146400321755,
+    "aft_mm": 23.694719618764392
+   },
+   "input_values": {
+    "cg": 22.049361357237743,
+    "pack": 270.0,
+    "trim": 10.0,
+    "trim_fwd": 6.0,
+    "basic": 1.64098
+   }
+  },
+  {
+   "id": "CALC-A-SM",
+   "type": "calculation",
+   "title": "static margin",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "static_margin",
+   "equation": "SM = (NP - CG) / chord x 100",
+   "inputs": {
+    "np": "ASM-A-NP",
+    "cg": "P:mass.cg_x_mm",
+    "c": "P:cg.chord_mm"
+   },
+   "units": {
+    "cg": "mm",
+    "c": "mm"
+   },
+   "assumes": [
+    "ASM-A-NP"
+   ],
+   "outputs": {
+    "sm_pct": 7.6125055684743925
+   },
+   "input_values": {
+    "np": 40.7,
+    "cg": 22.049361357237743,
+    "c": 245.0
+   }
+  },
+  {
+   "id": "CALC-A-CG-READ",
+   "type": "calculation",
+   "title": "Stored result: CG aft of the leading edge, CAD as drawn",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "read_value",
+   "equation": "CG from sitl/cad_mass.json (CAD centroids of every part); read, not recomputed",
+   "inputs": {
+    "v": "P:mass.cg_x_mm"
+   },
+   "outputs": {
+    "v": 22.049361357237743
+   },
+   "input_values": {
+    "v": 22.049361357237743
+   }
+  },
+  {
+   "id": "CL-A-CG",
+   "type": "claim",
+   "title": "CG aft of the leading edge, CAD as drawn",
+   "calc": "CALC-A-CG-READ",
+   "output": "v",
+   "unit": "mm",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.cg_lo_mm"
+   },
+   "verifies": [
+    "A-P4"
+   ],
+   "parts": [
+    "PWR-001",
+    "CGE-008",
+    "WNG-001",
+    "WNG-002"
+   ],
+   "how": "CG breadboard (M5): hang the built aircraft, weigh on two knife edges; trim the pack +-10 mm.",
+   "value": 22.049361357237743
+  },
+  {
+   "id": "CALC-A-CG-HI-READ",
+   "type": "calculation",
+   "title": "Stored result: CG aft limit of the design band",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "read_value",
+   "equation": "CG from sitl/cad_mass.json; read, not recomputed",
+   "inputs": {
+    "v": "P:mass.cg_x_mm"
+   },
+   "outputs": {
+    "v": 22.049361357237743
+   },
+   "input_values": {
+    "v": 22.049361357237743
+   }
+  },
+  {
+   "id": "CL-A-CG-HI",
+   "type": "claim",
+   "title": "CG aft limit of the design band",
+   "calc": "CALC-A-CG-HI-READ",
+   "output": "v",
+   "unit": "mm",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.cg_hi_mm"
+   },
+   "verifies": [
+    "A-P4"
+   ],
+   "parts": [
+    "PWR-001",
+    "CGE-008"
+   ],
+   "how": "CG breadboard (M5); band 19-26 mm (D-195), hard aft limit 28.5 mm.",
+   "value": 22.049361357237743
+  },
+  {
+   "id": "CL-A-CG-TRIM-AFT",
+   "type": "claim",
+   "title": "CG at the aft end of the pack trim travel",
+   "calc": "CALC-A-CG-TRIM",
+   "output": "aft_mm",
+   "unit": "mm",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.cg_hard_aft_mm"
+   },
+   "verifies": [
+    "A-P4"
+   ],
+   "parts": [
+    "PWR-001",
+    "CGE-008"
+   ],
+   "how": "Slide the pack to the aft slot stop and re-measure CG (M5).",
+   "value": 23.694719618764392
+  },
+  {
+   "id": "CL-A-CG-TRIM-FWD",
+   "type": "claim",
+   "title": "CG at the forward end of the pack trim travel",
+   "calc": "CALC-A-CG-TRIM",
+   "output": "fwd_mm",
+   "unit": "mm",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.cg_lo_mm"
+   },
+   "verifies": [
+    "A-P4"
+   ],
+   "parts": [
+    "PWR-001",
+    "CGE-008"
+   ],
+   "how": "Slide the pack to the forward slot stop and re-measure CG (M5).",
+   "value": 21.062146400321755
+  },
+  {
+   "id": "CL-A-SM",
+   "type": "claim",
+   "title": "Static margin at the CAD CG",
+   "calc": "CALC-A-SM",
+   "output": "sm_pct",
+   "unit": "% chord",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.sm_min_pct"
+   },
+   "verifies": [
+    "A-P4"
+   ],
+   "parts": [
+    "WNG-001"
+   ],
+   "how": "Measure NP on the built aircraft (M5, M6); SM >= 5 % chord.",
+   "assumes": [
+    "ASM-A-NP"
+   ],
+   "value": 7.6125055684743925
+  },
+  {
+   "id": "CALC-A-CG-LATERAL-READ",
+   "type": "calculation",
+   "title": "Stored result: Lateral CG offset (CAD)",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "read_value",
+   "equation": "cg_y from sitl/cad_mass.json; read, not recomputed",
+   "inputs": {
+    "v": "P:mass.cg_y_mm"
+   },
+   "outputs": {
+    "v": 3.3228905897695276
+   },
+   "input_values": {
+    "v": 3.3228905897695276
+   }
+  },
+  {
+   "id": "CL-A-CG-LATERAL",
+   "type": "claim",
+   "title": "Lateral CG offset (CAD)",
+   "calc": "CALC-A-CG-LATERAL-READ",
+   "output": "v",
+   "unit": "mm",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.cg_lateral_max_mm"
+   },
+   "verifies": [
+    "A-P4"
+   ],
+   "how": "Hang the built aircraft on its spar centre; lateral CG <= 5 mm.",
+   "value": 3.3228905897695276
+  },
+  {
+   "id": "CALC-A-TW-GATE",
+   "type": "calculation",
+   "title": "tw at",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "tw_at",
+   "equation": "T/W = 4 T(duty) cos(cant) x derate x hot / (m g), prop_a.py model; window = (0.80 TWsag - 1.33)/(0.80 TWsag + 1.33)",
+   "inputs": {
+    "apc_table": "P:prop.apc_table",
+    "kv": "P:prop.kv",
+    "rm_ohm": "P:prop.rm_ohm",
+    "i0_a": "P:prop.i0_a",
+    "rp_ohm": "P:prop.rp_ohm",
+    "derate": "P:prop.derate",
+    "cant_deg": "P:prop.cant_deg",
+    "download": "P:prop.download",
+    "hot_sag": "P:prop.hot_sag",
+    "spin_cap": "P:prop.spin_cap",
+    "v_fresh": "P:prop.v_fresh",
+    "v_sag_rest": "P:prop.v_sag_rest",
+    "g": "P:env.g_ms2",
+    "lo": "P:req.entry_low_w",
+    "hi_frac": "P:req.entry_high_frac",
+    "m": "P:req.mass_gate_kg"
+   },
+   "units": {
+    "m": "kg"
+   },
+   "outputs": {
+    "fresh_cap": 3.4707516142866486,
+    "sag_cap": 2.753416768359602,
+    "fresh_unc": 3.5066125907403425,
+    "sag_unc": 2.7825661573679796,
+    "window_cap_pct": 24.70419678595638,
+    "window_unc_pct": 25.19796371334989,
+    "sag_cap_gf": 4047.5226494886147
+   },
+   "input_values": {
+    "apc_table": [
+     [
+      5000,
+      2.674,
+      20.063
+     ],
+     [
+      6000,
+      3.859,
+      34.224
+     ],
+     [
+      7000,
+      5.264,
+      53.842
+     ],
+     [
+      8000,
+      6.892,
+      79.836
+     ],
+     [
+      9000,
+      8.746,
+      113.149
+     ],
+     [
+      10000,
+      10.83,
+      154.758
+     ],
+     [
+      11000,
+      13.149,
+      205.68
+     ],
+     [
+      12000,
+      15.706,
+      266.981
+     ]
+    ],
+    "kv": 880.0,
+    "rm_ohm": 0.089,
+    "i0_a": 0.5,
+    "rp_ohm": 0.03,
+    "derate": 0.93,
+    "cant_deg": 17.0,
+    "download": 0.97,
+    "hot_sag": 0.97,
+    "spin_cap": 0.993,
+    "v_fresh": 16.8,
+    "v_sag_rest": 14.92,
+    "g": 9.807,
+    "lo": 1.33,
+    "hi_frac": 0.8,
+    "m": 1.47
+   }
+  },
+  {
+   "id": "CALC-A-TW-PRED",
+   "type": "calculation",
+   "title": "tw at",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "tw_at",
+   "equation": "same, at the predicted mass",
+   "inputs": {
+    "apc_table": "P:prop.apc_table",
+    "kv": "P:prop.kv",
+    "rm_ohm": "P:prop.rm_ohm",
+    "i0_a": "P:prop.i0_a",
+    "rp_ohm": "P:prop.rp_ohm",
+    "derate": "P:prop.derate",
+    "cant_deg": "P:prop.cant_deg",
+    "download": "P:prop.download",
+    "hot_sag": "P:prop.hot_sag",
+    "spin_cap": "P:prop.spin_cap",
+    "v_fresh": "P:prop.v_fresh",
+    "v_sag_rest": "P:prop.v_sag_rest",
+    "g": "P:env.g_ms2",
+    "lo": "P:req.entry_low_w",
+    "hi_frac": "P:req.entry_high_frac",
+    "m": "CL-A-MASS-PRED"
+   },
+   "units": {
+    "m": "kg"
+   },
+   "outputs": {
+    "fresh_cap": 2.7128640426382087,
+    "sag_cap": 2.152169378682293,
+    "fresh_unc": 2.7408942690464206,
+    "sag_unc": 2.174953587434136,
+    "window_cap_pct": 12.836482800285044,
+    "window_unc_pct": 13.354000921657569,
+    "sag_cap_gf": 4047.5226494886147
+   },
+   "input_values": {
+    "apc_table": [
+     [
+      5000,
+      2.674,
+      20.063
+     ],
+     [
+      6000,
+      3.859,
+      34.224
+     ],
+     [
+      7000,
+      5.264,
+      53.842
+     ],
+     [
+      8000,
+      6.892,
+      79.836
+     ],
+     [
+      9000,
+      8.746,
+      113.149
+     ],
+     [
+      10000,
+      10.83,
+      154.758
+     ],
+     [
+      11000,
+      13.149,
+      205.68
+     ],
+     [
+      12000,
+      15.706,
+      266.981
+     ]
+    ],
+    "kv": 880.0,
+    "rm_ohm": 0.089,
+    "i0_a": 0.5,
+    "rp_ohm": 0.03,
+    "derate": 0.93,
+    "cant_deg": 17.0,
+    "download": 0.97,
+    "hot_sag": 0.97,
+    "spin_cap": 0.993,
+    "v_fresh": 16.8,
+    "v_sag_rest": 14.92,
+    "g": 9.807,
+    "lo": 1.33,
+    "hi_frac": 0.8,
+    "m": 1.880671052
+   }
+  },
+  {
+   "id": "CL-A-TW-FRESH-GATE",
+   "type": "claim",
+   "title": "Hover T/W fresh at the 1.47 kg gate (0.90 cap)",
+   "calc": "CALC-A-TW-GATE",
+   "output": "fresh_cap",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.tw_fresh_min"
+   },
+   "verifies": [
+    "A-P1",
+    "A-P2"
+   ],
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL",
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
+   "value": 3.4707516142866486
+  },
+  {
+   "id": "CL-A-TW-SAG-GATE",
+   "type": "claim",
+   "title": "Hover T/W sagged pack at the 1.47 kg gate (0.90 cap)",
+   "calc": "CALC-A-TW-GATE",
+   "output": "sag_cap",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.tw_sag_min"
+   },
+   "verifies": [
+    "A-P1",
+    "A-P2"
+   ],
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL",
+    "PWR-001"
+   ],
+   "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
+   "value": 2.753416768359602
+  },
+  {
+   "id": "CL-A-TW-FRESH-PRED",
+   "type": "claim",
+   "title": "Hover T/W fresh at the predicted mass (0.90 cap)",
+   "calc": "CALC-A-TW-PRED",
+   "output": "fresh_cap",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.tw_fresh_min"
+   },
+   "verifies": [
+    "A-P2"
+   ],
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
+   "value": 2.7128640426382087
+  },
+  {
+   "id": "CL-A-TW-SAG-PRED",
+   "type": "claim",
+   "title": "Hover T/W sagged pack at the predicted mass (0.90 cap)",
+   "calc": "CALC-A-TW-PRED",
+   "output": "sag_cap",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.tw_sag_min"
+   },
+   "verifies": [
+    "A-P2"
+   ],
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL",
+    "PWR-001"
+   ],
+   "how": "Bench thrust stand (M1): fresh >= 780 gf and sag >= 624 gf per motor with the 0.90 cap (bench_analysis.py); model uses APC static data x 0.93 derate (a guess until M1).",
+   "value": 2.152169378682293
+  },
+  {
+   "id": "CL-A-WINDOW-PRED",
+   "type": "claim",
+   "title": "Transition entry window at the predicted mass (0.90 cap)",
+   "calc": "CALC-A-TW-PRED",
+   "output": "window_cap_pct",
+   "unit": "%",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.window_min_pct"
+   },
+   "verifies": [
+    "A-P3"
+   ],
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "C3 time-domain pitch-over run at the as-weighed mass (T-A-C3-PITCHOVER); the window uses 1.33 W low and 0.80 x T/W sag high.",
+   "value": 12.836482800285044
+  },
+  {
+   "id": "CL-A-WINDOW-GATE",
+   "type": "claim",
+   "title": "Transition entry window at the 1.47 kg gate (0.90 cap)",
+   "calc": "CALC-A-TW-GATE",
+   "output": "window_cap_pct",
+   "unit": "%",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.window_min_pct"
+   },
+   "verifies": [
+    "A-P3"
+   ],
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "C3 run at the as-weighed mass; MASS-GATE s8: +-5 % holds to 1.478 kg at cant 17, gate 1.47 kg.",
+   "note": "D-190 (CLAIMS-FIX s1): the gate was 1.50 kg (window +-4.3 % at cant 17); lowered to 1.47 kg so the window floor holds at the gate. Heavier analyses at 1.50 kg stay conservative.",
+   "value": 24.70419678595638
+  },
+  {
+   "id": "CALC-A-WINDOW-MASS",
+   "type": "calculation",
+   "title": "window mass",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "window_mass",
+   "equation": "m_max = 0.93-derated sag thrust (0.90 cap) x 0.80 / (1.33 (1+w)/(1-w)), w = 5 %",
+   "inputs": {
+    "apc_table": "P:prop.apc_table",
+    "kv": "P:prop.kv",
+    "rm_ohm": "P:prop.rm_ohm",
+    "i0_a": "P:prop.i0_a",
+    "rp_ohm": "P:prop.rp_ohm",
+    "derate": "P:prop.derate",
+    "cant_deg": "P:prop.cant_deg",
+    "download": "P:prop.download",
+    "hot_sag": "P:prop.hot_sag",
+    "spin_cap": "P:prop.spin_cap",
+    "v_fresh": "P:prop.v_fresh",
+    "v_sag_rest": "P:prop.v_sag_rest",
+    "g": "P:env.g_ms2",
+    "lo": "P:req.entry_low_w",
+    "hi_frac": "P:req.entry_high_frac",
+    "w": "P:req.window_min_pct"
+   },
+   "outputs": {
+    "m_kg": 2.202733414687681
+   },
+   "input_values": {
+    "apc_table": [
+     [
+      5000,
+      2.674,
+      20.063
+     ],
+     [
+      6000,
+      3.859,
+      34.224
+     ],
+     [
+      7000,
+      5.264,
+      53.842
+     ],
+     [
+      8000,
+      6.892,
+      79.836
+     ],
+     [
+      9000,
+      8.746,
+      113.149
+     ],
+     [
+      10000,
+      10.83,
+      154.758
+     ],
+     [
+      11000,
+      13.149,
+      205.68
+     ],
+     [
+      12000,
+      15.706,
+      266.981
+     ]
+    ],
+    "kv": 880.0,
+    "rm_ohm": 0.089,
+    "i0_a": 0.5,
+    "rp_ohm": 0.03,
+    "derate": 0.93,
+    "cant_deg": 17.0,
+    "download": 0.97,
+    "hot_sag": 0.97,
+    "spin_cap": 0.993,
+    "v_fresh": 16.8,
+    "v_sag_rest": 14.92,
+    "g": 9.807,
+    "lo": 1.33,
+    "hi_frac": 0.8,
+    "w": 5.0
+   }
+  },
+  {
+   "id": "CL-A-WINDOW-MASS",
+   "type": "claim",
+   "title": "Largest mass with a +-5 % window (0.90 cap)",
+   "calc": "CALC-A-WINDOW-MASS",
+   "output": "m_kg",
+   "unit": "kg",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-A-MASS-PRED"
+   },
+   "verifies": [
+    "A-P3"
+   ],
+   "how": "MASS-GATE s8: 1.478 kg capped at cant 17; bench M1 thrust replaces the 0.93 derate.",
+   "value": 2.202733414687681
+  },
+  {
+   "id": "CALC-A-MOTOR-I",
+   "type": "calculation",
+   "title": "motor current capped",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "motor_current_capped",
+   "equation": "phase current of one motor at the duty cap with the other three at hover, 1.50 kg, fresh pack (prop_a.py one_motor)",
+   "inputs": {
+    "apc_table": "P:prop.apc_table",
+    "kv": "P:prop.kv",
+    "rm_ohm": "P:prop.rm_ohm",
+    "i0_a": "P:prop.i0_a",
+    "rp_ohm": "P:prop.rp_ohm",
+    "derate": "P:prop.derate",
+    "cant_deg": "P:prop.cant_deg",
+    "download": "P:prop.download",
+    "spin_cap": "P:prop.spin_cap",
+    "v_fresh": "P:prop.v_fresh",
+    "g": "P:env.g_ms2",
+    "m": "P:prop.hover_mass_ref_kg",
+    "duty": "P:prop.spin_cap"
+   },
+   "units": {
+    "m": "kg"
+   },
+   "outputs": {
+    "i_a": 20.07860666666667
+   },
+   "input_values": {
+    "apc_table": [
+     [
+      5000,
+      2.674,
+      20.063
+     ],
+     [
+      6000,
+      3.859,
+      34.224
+     ],
+     [
+      7000,
+      5.264,
+      53.842
+     ],
+     [
+      8000,
+      6.892,
+      79.836
+     ],
+     [
+      9000,
+      8.746,
+      113.149
+     ],
+     [
+      10000,
+      10.83,
+      154.758
+     ],
+     [
+      11000,
+      13.149,
+      205.68
+     ],
+     [
+      12000,
+      15.706,
+      266.981
+     ]
+    ],
+    "kv": 880.0,
+    "rm_ohm": 0.089,
+    "i0_a": 0.5,
+    "rp_ohm": 0.03,
+    "derate": 0.93,
+    "cant_deg": 17.0,
+    "download": 0.97,
+    "spin_cap": 0.993,
+    "v_fresh": 16.8,
+    "g": 9.807,
+    "m": 1.5,
+    "duty": 0.993
+   }
+  },
+  {
+   "id": "CALC-A-ESC-REQ",
+   "type": "calculation",
+   "title": "esc required",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "esc_required",
+   "equation": "I_req = 1.25 x peak one-motor current with no cap (full duty, three at hover, 1.50 kg, fresh)",
+   "inputs": {
+    "apc_table": "P:prop.apc_table",
+    "kv": "P:prop.kv",
+    "rm_ohm": "P:prop.rm_ohm",
+    "i0_a": "P:prop.i0_a",
+    "rp_ohm": "P:prop.rp_ohm",
+    "derate": "P:prop.derate",
+    "cant_deg": "P:prop.cant_deg",
+    "download": "P:prop.download",
+    "spin_cap": "P:prop.spin_cap",
+    "v_fresh": "P:prop.v_fresh",
+    "g": "P:env.g_ms2",
+    "m": "P:prop.hover_mass_ref_kg",
+    "factor": "P:req.connector_factor"
+   },
+   "units": {
+    "m": "kg"
+   },
+   "outputs": {
+    "i_a": 25.098258333333337
+   },
+   "input_values": {
+    "apc_table": [
+     [
+      5000,
+      2.674,
+      20.063
+     ],
+     [
+      6000,
+      3.859,
+      34.224
+     ],
+     [
+      7000,
+      5.264,
+      53.842
+     ],
+     [
+      8000,
+      6.892,
+      79.836
+     ],
+     [
+      9000,
+      8.746,
+      113.149
+     ],
+     [
+      10000,
+      10.83,
+      154.758
+     ],
+     [
+      11000,
+      13.149,
+      205.68
+     ],
+     [
+      12000,
+      15.706,
+      266.981
+     ]
+    ],
+    "kv": 880.0,
+    "rm_ohm": 0.089,
+    "i0_a": 0.5,
+    "rp_ohm": 0.03,
+    "derate": 0.93,
+    "cant_deg": 17.0,
+    "download": 0.97,
+    "spin_cap": 0.993,
+    "v_fresh": 16.8,
+    "g": 9.807,
+    "m": 1.5,
+    "factor": 1.25
+   }
+  },
+  {
+   "id": "CL-A-MOTOR-I",
+   "type": "claim",
+   "title": "One motor at the 0.90 spin cap, winding current",
+   "calc": "CALC-A-MOTOR-I",
+   "output": "i_a",
+   "unit": "A",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.motor_rating_a"
+   },
+   "verifies": [
+    "A-P16"
+   ],
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL",
+    "PRP-003"
+   ],
+   "how": "Bench M2: one motor at duty 0.90 for 180 s, phase A <= 13 A, can <= 80 C. Without Q_M_SPIN_MAX 0.90 the same case is 14.3 A (prop_a.py).",
+   "value": 20.07860666666667
+  },
+  {
+   "id": "CL-A-ESC-I",
+   "type": "claim",
+   "title": "ESC channel and connector current required (1.25 x uncapped peak)",
+   "calc": "CALC-A-ESC-REQ",
+   "output": "i_a",
+   "unit": "A",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.esc_rating_a"
+   },
+   "verifies": [
+    "A-P16"
+   ],
+   "parts": [
+    "PRP-003"
+   ],
+   "how": "Compare the SpeedyBee BLS 35A Mini V2 page (35 A continuous per channel) with 1.25 x 14.3 A.",
+   "value": 25.098258333333337
+  },
+  {
+   "id": "CALC-A-CRUISE-NEED",
+   "type": "calculation",
+   "title": "cruise need",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "cruise_need",
+   "equation": "R = V^2 / (g tan(bank)); lap = 2 L_ref + 2 pi R; need = settle + (laps + go-around + run-in) x lap / V",
+   "inputs": {
+    "v": "P:mission.cruise_ms",
+    "g": "P:env.g_ms2",
+    "bank": "P:mission.bank_deg",
+    "leg": "P:mission.leg_ref_m",
+    "settle": "P:mission.settle_s",
+    "laps": "P:mission.laps",
+    "ga": "P:mission.goaround_laps",
+    "runin": "P:mission.runin_laps"
+   },
+   "outputs": {
+    "need_s": 204.55636934924914,
+    "radius_m": 51.041366716366426,
+    "lap_s": 54.15896267121404
+   },
+   "input_values": {
+    "v": 17.0,
+    "g": 9.807,
+    "bank": 30.0,
+    "leg": 300.0,
+    "settle": 15.0,
+    "laps": 2.0,
+    "ga": 1.0,
+    "runin": 0.5
+   }
+  },
+  {
+   "id": "CALC-A-ENDURANCE",
+   "type": "calculation",
+   "title": "endurance",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "endurance",
+   "equation": "t = (E_usable - E_hover - E_trans - E_climb) / P_cruise; E_usable = Ah x V x 0.90 x 0.80; hover and cruise power from the prop model and the (m / 1.37) scalings",
+   "inputs": {
+    "apc_table": "P:prop.apc_table",
+    "kv": "P:prop.kv",
+    "rm_ohm": "P:prop.rm_ohm",
+    "i0_a": "P:prop.i0_a",
+    "derate": "P:prop.derate",
+    "cant_deg": "P:prop.cant_deg",
+    "download": "P:prop.download",
+    "esc_eff": "P:prop.esc_eff",
+    "ctrl_margin": "P:prop.ctrl_margin",
+    "g": "P:env.g_ms2",
+    "m": "CL-A-MASS-PRED",
+    "pack_ah": "P:mission.pack_ah",
+    "pack_v": "P:mission.pack_v",
+    "floor_frac": "P:mission.floor_frac",
+    "reserve_frac": "P:mission.reserve_frac",
+    "hover_s": "P:mission.hover_s",
+    "trans_wh_ref": "P:mission.trans_wh_ref",
+    "climb_wh_ref": "P:mission.climb_wh_ref",
+    "cruise_w_ref": "P:mission.cruise_w_ref",
+    "ref_mass_kg": "P:mission.ref_mass_kg",
+    "trans_exp": "P:mission.trans_exp",
+    "cruise_exp": "P:mission.cruise_exp"
+   },
+   "units": {
+    "m": "kg"
+   },
+   "outputs": {
+    "cruise_s": 233.78998459499445,
+    "usable_wh": 29.8368,
+    "hover_w": 287.2982195612765,
+    "cruise_w": 193.4770220236579
+   },
+   "input_values": {
+    "apc_table": [
+     [
+      5000,
+      2.674,
+      20.063
+     ],
+     [
+      6000,
+      3.859,
+      34.224
+     ],
+     [
+      7000,
+      5.264,
+      53.842
+     ],
+     [
+      8000,
+      6.892,
+      79.836
+     ],
+     [
+      9000,
+      8.746,
+      113.149
+     ],
+     [
+      10000,
+      10.83,
+      154.758
+     ],
+     [
+      11000,
+      13.149,
+      205.68
+     ],
+     [
+      12000,
+      15.706,
+      266.981
+     ]
+    ],
+    "kv": 880.0,
+    "rm_ohm": 0.089,
+    "i0_a": 0.5,
+    "derate": 0.93,
+    "cant_deg": 17.0,
+    "download": 0.97,
+    "esc_eff": 0.98,
+    "ctrl_margin": 1.1,
+    "g": 9.807,
+    "m": 1.880671052,
+    "pack_ah": 2.8,
+    "pack_v": 14.8,
+    "floor_frac": 0.9,
+    "reserve_frac": 0.8,
+    "hover_s": 180.0,
+    "trans_wh_ref": 1.56,
+    "climb_wh_ref": 0.29,
+    "cruise_w_ref": 161.0,
+    "ref_mass_kg": 1.37,
+    "trans_exp": 1.5,
+    "cruise_exp": 0.58
+   }
+  },
+  {
+   "id": "CALC-A-FENCE",
+   "type": "calculation",
+   "title": "fence bound",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "fence_bound",
+   "equation": "bound = L/2 + R + run-out (any direction after cruise BATT_LOW)",
+   "inputs": {
+    "leg": "P:mission.leg_m",
+    "r": "CL-A-CRUISE-RADIUS",
+    "runout": "P:mission.runout_m"
+   },
+   "units": {
+    "r": "m"
+   },
+   "outputs": {
+    "bound_m": 220.04136671636644
+   },
+   "input_values": {
+    "leg": 150.0,
+    "r": 51.041366716366426,
+    "runout": 94.0
+   }
+  },
+  {
+   "id": "CL-A-CRUISE-NEED",
+   "type": "claim",
+   "title": "Cruise time the mission needs (300 m reference lap)",
+   "calc": "CALC-A-CRUISE-NEED",
+   "output": "need_s",
+   "unit": "s",
+   "limit": {
+    "op": "<=",
+    "value": 210.0
+   },
+   "verifies": [
+    "A-D2"
+   ],
+   "how": "Flight card 4b: settle 15 s, 2 laps, 1 go-around, run-in <= 1/2 lap at 17 m/s; requirement 3.5 min = 210 s (A-D2).",
+   "note": "limit 210 s = the 3.5 min requirement of A-D2 / MISSION s2",
+   "value": 204.55636934924914
+  },
+  {
+   "id": "CL-A-CRUISE-RADIUS",
+   "type": "claim",
+   "title": "Turn radius at 17 m/s, 30 deg bank",
+   "calc": "CALC-A-CRUISE-NEED",
+   "output": "radius_m",
+   "unit": "m",
+   "how": "R = V^2 / (g tan 30) = 51.0 m (MISSION s2).",
+   "value": 51.041366716366426
+  },
+  {
+   "id": "CL-A-CRUISE-AVAIL",
+   "type": "claim",
+   "title": "Cruise time to BATT_LOW at the predicted mass",
+   "calc": "CALC-A-ENDURANCE",
+   "output": "cruise_s",
+   "unit": "s",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-A-CRUISE-NEED"
+   },
+   "verifies": [
+    "A-D2"
+   ],
+   "parts": [
+    "PWR-001",
+    "PRP-003"
+   ],
+   "how": "Log a full-mission flight with power module (F06): BATT_LOW remaining >= 644 mAh of 2300 at the end; MISSION.md s4 energy table; power constants are EST (eta_p 0.26 x 0.76).",
+   "value": 233.78998459499445
+  },
+  {
+   "id": "CL-A-FENCE",
+   "type": "claim",
+   "title": "Any-direction bound after a cruise BATT_LOW",
+   "calc": "CALC-A-FENCE",
+   "output": "bound_m",
+   "unit": "m",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.fence_bound_m"
+   },
+   "verifies": [
+    "A-P24"
+   ],
+   "how": "Flight card: racetrack leg 150 m, fence 250 m with FENCE_MARGIN 10 m; run-out 94 m is EST (MISSION s2).",
+   "value": 220.04136671636644
+  },
+  {
+   "id": "CALC-A-STALL",
+   "type": "calculation",
+   "title": "stall",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "stall",
+   "equation": "1.3 Vs = 1.3 sqrt(2 m g / (rho S CLmax)) at the gate mass",
+   "inputs": {
+    "m": "P:req.mass_gate_kg",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "s": "P:mission.s_m2",
+    "cl": "ASM-A-CLMAX",
+    "k": "P:req.cruise_ratio"
+   },
+   "units": {
+    "m": "kg",
+    "rho": "kg/m3",
+    "s": "m2"
+   },
+   "assumes": [
+    "ASM-A-CLMAX"
+   ],
+   "outputs": {
+    "vs_ms": 12.067273549111702,
+    "k_vs_ms": 15.687455613845213
+   },
+   "input_values": {
+    "m": 1.47,
+    "g": 9.807,
+    "rho": 1.2,
+    "s": 0.22,
+    "cl": 0.75,
+    "k": 1.3
+   }
+  },
+  {
+   "id": "CL-A-STALL",
+   "type": "claim",
+   "title": "1.3 x clean stall speed at the 1.47 kg gate",
+   "calc": "CALC-A-STALL",
+   "output": "k_vs_ms",
+   "unit": "m/s",
+   "limit": {
+    "op": "<=",
+    "ref": "P:mission.cruise_ms"
+   },
+   "verifies": [
+    "A-P6"
+   ],
+   "parts": [
+    "WNG-001"
+   ],
+   "how": "Measured stall on the first cruise sorties (T-A-FIRST-CRUISE) replaces CLmax 0.75; 12.07 m/s stall, 15.69 m/s at 1.3 Vs at 1.47 kg (12.19 / 15.85 at 1.50 kg, MISSION s1).",
+   "assumes": [
+    "ASM-A-CLMAX"
+   ],
+   "value": 15.687455613845213
+  },
+  {
+   "id": "CALC-A-STALL-PRED",
+   "type": "calculation",
+   "title": "stall pred",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "stall_pred",
+   "equation": "1.3 Vs = 1.3 sqrt(2 m g / (rho S CLmax)) at the predicted mass; rho 1.20 (MISSION s1), g 9.807, S 0.22 m2, CLmax 0.75 EST (ISA rho 1.225 gives 17.56 m/s at 1.881 kg, T-084; the project basis is 1.20)",
+   "inputs": {
+    "m": "CL-A-MASS-PRED",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "s": "P:mission.s_m2",
+    "cl": "ASM-A-CLMAX",
+    "k": "P:req.cruise_ratio"
+   },
+   "units": {
+    "m": "kg",
+    "rho": "kg/m3",
+    "s": "m2"
+   },
+   "assumes": [
+    "ASM-A-CLMAX"
+   ],
+   "outputs": {
+    "vs_ms": 13.6491909727924,
+    "k_vs_ms": 17.74394826463012
+   },
+   "input_values": {
+    "m": 1.880671052,
+    "g": 9.807,
+    "rho": 1.2,
+    "s": 0.22,
+    "cl": 0.75,
+    "k": 1.3
+   }
+  },
+  {
+   "id": "CL-A-STALL-PRED",
+   "type": "claim",
+   "title": "1.3 x clean stall speed at the predicted take-off mass",
+   "calc": "CALC-A-STALL-PRED",
+   "output": "k_vs_ms",
+   "unit": "m/s",
+   "limit": {
+    "op": "<=",
+    "ref": "P:mission.cruise_ms"
+   },
+   "verifies": [
+    "A-P6"
+   ],
+   "parts": [
+    "WNG-001"
+   ],
+   "how": "FAIL on the estimate (AM-011: physics checks apply at the predicted mass). Gated by TP-11 (TEST-PLAN-O4B): the measured stall (T-A-FIRST-CRUISE) must give CLmax >= 0.81 at this mass; a cruise-speed re-derivation alone has zero margin (A-P6).",
+   "assumes": [
+    "ASM-A-CLMAX"
+   ],
+   "value": 17.74394826463012
+  },
+  {
+   "id": "CALC-A-YAW",
+   "type": "calculation",
+   "title": "yaw authority",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "yaw_authority",
+   "equation": "authority = 0.201 x 1.2 x sin(17)/sin(14) + 1.2 Q   (cant term + 1.2 x rotor reaction), D184.md / bench_analysis.py",
+   "inputs": {
+    "cant_term_ref_nm": "P:yaw.cant_term_ref_nm",
+    "arm_factor": "P:yaw.arm_factor",
+    "cant_deg": "P:yaw.cant_deg",
+    "cant_ref_deg": "P:yaw.cant_ref_deg",
+    "q_model_nmm": "P:yaw.q_model_nmm",
+    "q_gain": "P:yaw.q_gain"
+   },
+   "units": {
+    "q_model_nmm": "N mm"
+   },
+   "outputs": {
+    "n_m": 0.363139266754344
+   },
+   "input_values": {
+    "cant_term_ref_nm": 0.201,
+    "arm_factor": 1.2,
+    "cant_deg": 17.0,
+    "cant_ref_deg": 14.0,
+    "q_model_nmm": 59.7,
+    "q_gain": 1.2
+   }
+  },
+  {
+   "id": "CL-A-YAW-MODEL",
+   "type": "claim",
+   "title": "Hover yaw authority (model) at +-0.10 throttle",
+   "calc": "CALC-A-YAW",
+   "output": "n_m",
+   "unit": "N m",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.yaw_pass_nm"
+   },
+   "verifies": [
+    "A-P7"
+   ],
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL",
+    "CGE-002-A",
+    "CGE-002-B"
+   ],
+   "how": "Hanging yaw test (M3) on the bench: >= 0.35 N m go; 0.30-0.35 go with the 4 m/s card; < 0.30 R2.",
+   "note": "D-189 (CLAIMS-FIX s2): at cant 16 the model gave 0.3465 (marginally under 0.35); cant 17 gives 0.363. The bench (M3) is still the test.",
+   "value": 0.363139266754344
+  },
+  {
+   "id": "CL-A-YAW-R2",
+   "type": "claim",
+   "title": "Hover yaw authority (model) against the R2 floor",
+   "calc": "CALC-A-YAW",
+   "output": "n_m",
+   "unit": "N m",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.yaw_r2_nm"
+   },
+   "verifies": [
+    "A-P7"
+   ],
+   "how": "Hanging yaw test (M3); below 0.30 N m the 5 m/s card is reopened (R2).",
+   "value": 0.363139266754344
+  },
+  {
+   "id": "CALC-A-YAW-Q-READ",
+   "type": "calculation",
+   "title": "Stored result: Rotor reaction Q (model)",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "read_value",
+   "equation": "Q from D184.md (model); read, not recomputed",
+   "inputs": {
+    "v": "P:yaw.q_model_nmm"
+   },
+   "outputs": {
+    "v": 59.7
+   },
+   "input_values": {
+    "v": 59.7
+   }
+  },
+  {
+   "id": "CL-A-YAW-Q",
+   "type": "claim",
+   "title": "Rotor reaction Q (model)",
+   "calc": "CALC-A-YAW-Q-READ",
+   "output": "v",
+   "unit": "N mm",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.yaw_q_min_nmm"
+   },
+   "verifies": [
+    "A-P7"
+   ],
+   "how": "Measure Q on the bench thrust stand with torque (M1): >= 55 N mm.",
+   "value": 59.7
+  },
+  {
+   "id": "CALC-A-WIND-LEAN-READ",
+   "type": "calculation",
+   "title": "Stored result: Belly-on hover lean at 5 m/s (SITL max)",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "read_value",
+   "equation": "SITL case, QP-2 SITL.md s70 (ArduPlane 4.7.3-beta1 JSON backend); read, not re-run",
+   "inputs": {
+    "v": "P:sim.lean_belly_5ms_deg"
+   },
+   "outputs": {
+    "v": 31.5
+   },
+   "input_values": {
+    "v": 31.5
+   }
+  },
+  {
+   "id": "CL-A-WIND-LEAN",
+   "type": "claim",
+   "title": "Belly-on hover lean at 5 m/s (SITL max)",
+   "calc": "CALC-A-WIND-LEAN-READ",
+   "output": "v",
+   "unit": "deg",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.lean_max_deg"
+   },
+   "verifies": [
+    "A-P8"
+   ],
+   "parts": [
+    "WNG-001"
+   ],
+   "how": "Tethered hover with the wing edge into the wind (M9); the heading rule keeps the belly out of the wind above 3 m/s.",
+   "value": 31.5
+  },
+  {
+   "id": "CALC-A-WIND-OUTPUT-READ",
+   "type": "calculation",
+   "title": "Stored result: Longest time any motor is at or above 0.85 output, 4 m/s turbulence hover (SITL, 1.47 kg gate, worst pack)",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "read_value",
+   "equation": "SITL turbulence cases N4_* (sitl/results.jsonl, run_case.py, A.param D-191, arm 1.2, cant 17); read, not re-run",
+   "inputs": {
+    "v": "P:sim.wind_ge85_s"
+   },
+   "outputs": {
+    "v": 0.2
+   },
+   "input_values": {
+    "v": 0.2
+   }
+  },
+  {
+   "id": "CL-A-WIND-OUTPUT",
+   "type": "claim",
+   "title": "Longest time any motor is at or above 0.85 output, 4 m/s turbulence hover (SITL, 1.47 kg gate, worst pack)",
+   "calc": "CALC-A-WIND-OUTPUT-READ",
+   "output": "v",
+   "unit": "s",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.motor_ge85_s_max"
+   },
+   "verifies": [
+    "A-P8"
+   ],
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "Log motor outputs in the tethered turbulence hover (M9) at <= 4 m/s mean: no motor above 0.85 for more than 0.5 s, none at the 0.90 cap.",
+   "note": "D-192 (CLAIMS-FIX s3): the old claim read the 0.87 peak of the BASE airframe at 1.23 kg; at the 1.47 kg gate on the worst pack the 5 m/s peak is 0.89-0.90 (0.5-1.9 s above 0.85, cap touched), so the hover limit is 4 m/s (peak 0.83-0.873, <= 0.20 s above 0.85) and the line is stated as a duration. Peak 0.873 is reported, not a limit.",
+   "value": 0.2
+  },
+  {
+   "id": "CALC-A-WIND-CAP-READ",
+   "type": "calculation",
+   "title": "Stored result: Time any motor is at the 0.90 spin cap, 4 m/s turbulence hover (SITL, 1.47 kg gate, worst pack)",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "read_value",
+   "equation": "same seven SITL runs; read, not re-run",
+   "inputs": {
+    "v": "P:sim.wind_cap_s"
+   },
+   "outputs": {
+    "v": 0.0
+   },
+   "input_values": {
+    "v": 0.0
+   }
+  },
+  {
+   "id": "CL-A-WIND-CAP",
+   "type": "claim",
+   "title": "Time any motor is at the 0.90 spin cap, 4 m/s turbulence hover (SITL, 1.47 kg gate, worst pack)",
+   "calc": "CALC-A-WIND-CAP-READ",
+   "output": "v",
+   "unit": "s",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.motor_cap_s_max"
+   },
+   "verifies": [
+    "A-P8"
+   ],
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "Log motor outputs in the tethered turbulence hover (M9): no sample at the cap.",
+   "value": 0.0
+  },
+  {
+   "id": "CALC-A-TIPOVER-READ",
+   "type": "calculation",
+   "title": "Stored result: Static tip-over angle on the fin tips",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "read_value",
+   "equation": "SIZING-A s4 geometry (feet 0.36 m apart, CG 0.275 m above); read, not recomputed",
+   "inputs": {
+    "v": "P:sim.tipover_deg"
+   },
+   "outputs": {
+    "v": 31.0
+   },
+   "input_values": {
+    "v": 31.0
+   }
+  },
+  {
+   "id": "CL-A-TIPOVER",
+   "type": "claim",
+   "title": "Static tip-over angle on the fin tips",
+   "calc": "CALC-A-TIPOVER-READ",
+   "output": "v",
+   "unit": "deg",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.tipover_min_deg"
+   },
+   "verifies": [
+    "A-P9"
+   ],
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "FIN-001-R",
+    "FIN-001-L"
+   ],
+   "how": "Tilt test of the built aircraft on its feet (CG 20-26 mm): tips over at >= 30 deg.",
+   "value": 31.0
+  },
+  {
+   "id": "CALC-A-ROLL-141-READ",
+   "type": "calculation",
+   "title": "Stored result: Peak roll rate in SITL at cruise speed, 1.455 kg (D-195 target mass)",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "read_value",
+   "equation": "SITL case=roll, run R5_rt65 (6,126 / 57.3), D-195; read, not re-run",
+   "inputs": {
+    "v": "P:sim.roll_141_degs"
+   },
+   "outputs": {
+    "v": 106.9
+   },
+   "input_values": {
+    "v": 106.9
+   }
+  },
+  {
+   "id": "CL-A-ROLL-141",
+   "type": "claim",
+   "title": "Peak roll rate in SITL at cruise speed, 1.455 kg (D-195 target mass)",
+   "calc": "CALC-A-ROLL-141-READ",
+   "output": "v",
+   "unit": "deg/s",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.roll_min_degs"
+   },
+   "verifies": [
+    "A-P11"
+   ],
+   "parts": [
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "Measure the roll rate on the first cruise (M8 extended); the surface is at its 20 deg stop at the peak, +3-5 % is smaller than the EST aero error.",
+   "value": 106.9
+  },
+  {
+   "id": "CALC-A-ROLL-GATE-READ",
+   "type": "calculation",
+   "title": "Stored result: Peak roll rate in SITL at cruise speed, 1.47 kg (the gate)",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "read_value",
+   "equation": "SITL case=roll, run R5_rt65g, D-195; read, not re-run",
+   "inputs": {
+    "v": "P:sim.roll_150_degs"
+   },
+   "outputs": {
+    "v": 106.4
+   },
+   "input_values": {
+    "v": 106.4
+   }
+  },
+  {
+   "id": "CL-A-ROLL-GATE",
+   "type": "claim",
+   "title": "Peak roll rate in SITL at cruise speed, 1.47 kg (the gate)",
+   "calc": "CALC-A-ROLL-GATE-READ",
+   "output": "v",
+   "unit": "deg/s",
+   "limit": {
+    "op": ">=",
+    "ref": "P:req.roll_min_degs"
+   },
+   "verifies": [
+    "A-P11"
+   ],
+   "parts": [
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "Measure the roll rate on the first cruise (T-A-FIRST-CRUISE).",
+   "value": 106.4
+  },
+  {
+   "id": "CALC-A-PITCH-USE-READ",
+   "type": "calculation",
+   "title": "Stored result: Elevon pitch use in transition (share of the 15 deg basis; the 0.60 line is 9 deg)",
+   "script": "redesign/qp/A/proofs/claims_a1_flight.py",
+   "function": "read_value",
+   "equation": "SITL (ArduPlane, 6-DOF plant) transition runs T-097, pitch_use_15 in sum.json; read, not re-run",
+   "inputs": {
+    "v": "P:sim.pitch_use_15_worst"
+   },
+   "outputs": {
+    "v": 0.79
+   },
+   "input_values": {
+    "v": 0.79
+   }
+  },
+  {
+   "id": "CL-A-PITCH-USE",
+   "type": "claim",
+   "title": "Elevon pitch use in transition (share of the 15 deg basis; the 0.60 line is 9 deg)",
+   "calc": "CALC-A-PITCH-USE-READ",
+   "output": "v",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "P:req.pitch_use_max"
+   },
+   "verifies": [
+    "A-P11"
+   ],
+   "parts": [
+    "WNG-006-R",
+    "WNG-006-L"
+   ],
+   "how": "D-245: the standing line is 0.60 of 15 deg (SITL-FLIGHT.md l.25), 0.69 (Z5) to 0.79 (T-074) in AR-015, so FAIL, open (AR-010 item 5). Fix path is the ladder from rung 1 (controls: lower the entry pitch-rate demand), then a SITL rerun; a 20 deg basis is not used (no A-specific roll / gust reserve derivation; review round 10 98-4). First transition flight logs the elevon commands.",
+   "value": 0.79
+  }
+ ]
+}

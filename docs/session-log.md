@@ -1,0 +1,39 @@
+# Session lifecycle log (written by .claude/hooks/recovery.py)
+
+- 2026-11-18T15:43:12-08:00 SessionStart source=startup session=unit-tes
+- 2026-11-18T15:43:12-08:00 PreCompact trigger=manual session=unit-tes missing=['repository-audit.md']
+- 2026-11-18T15:46:54-08:00 SessionStart source=startup session=9449ec4f
+- 2026-11-18T18:47:08-08:00 PreCompact trigger=auto session=7cb35b0a missing=none
+- 2026-11-18T18:57:23-08:00 SessionStart source=compact session=7cb35b0a
+- 2026-11-18T18:57:24-08:00 PostCompact trigger=auto session=7cb35b0a
+- 2026-11-19T00:51:20-08:00 PreCompact trigger=manual session=7cb35b0a missing=none
+- 2026-11-19T00:52:08-08:00 SessionStart source=compact session=7cb35b0a
+- 2026-11-19T00:52:08-08:00 PostCompact trigger=manual session=7cb35b0a
+- 2026-11-19T01:46:32-08:00 SessionStart source=startup session=?
+- 2026-11-19T03:22:58-08:00 PreCompact trigger=manual session=7cb35b0a missing=none
+- 2026-11-19T03:24:25-08:00 SessionStart source=compact session=7cb35b0a
+- 2026-11-19T03:24:25-08:00 PostCompact trigger=manual session=7cb35b0a
+- 2026-11-21T00:18:01-08:00 PreCompact trigger=auto session=7cb35b0a missing=none
+- 2026-11-21T00:26:11-08:00 SessionStart source=compact session=7cb35b0a
+- 2026-11-21T00:26:12-08:00 PostCompact trigger=auto session=7cb35b0a
+- 2026-11-21T22:13:18-08:00 PreCompact trigger=auto session=7cb35b0a missing=none
+- 2026-11-21T23:56:07-08:00 SessionStart source=compact session=7cb35b0a
+- 2026-11-21T23:56:08-08:00 PostCompact trigger=auto session=7cb35b0a
+- 2026-11-22T03:27:52-08:00 PreCompact trigger=auto session=7cb35b0a missing=none
+- 2026-11-22T03:38:42-08:00 SessionStart source=compact session=7cb35b0a
+- 2026-11-22T03:38:42-08:00 PostCompact trigger=auto session=7cb35b0a
+- 2026-11-22T13:22:46-08:00 SessionStart source=resume session=7cb35b0a
+- 2026-11-23T02:19:57-07:00 PreCompact trigger=auto session=7cb35b0a missing=none
+- 2026-11-23T03:26:28-07:00 SessionStart source=compact session=7cb35b0a
+- 2026-11-23T03:26:28-07:00 PostCompact trigger=auto session=7cb35b0a
+- 2026-11-23T12:08:43-07:00 PreCompact trigger=auto session=7cb35b0a missing=none
+- 2026-11-23T12:48:25-07:00 SessionStart source=compact session=7cb35b0a
+- 2026-11-23T12:48:25-07:00 PostCompact trigger=auto session=7cb35b0a
+- 2026-11-23T19:57:04-07:00 PreCompact trigger=auto session=7cb35b0a missing=none
+- 2026-11-23T20:24:18-07:00 SessionStart source=compact session=7cb35b0a
+- 2026-11-23T20:24:18-07:00 PostCompact trigger=auto session=7cb35b0a
+- 2026-11-23T22:42:26-07:00 SessionStart source=startup session=t
+- 2026-11-23T22:59:56-07:00 SessionStart source=startup session=?
+- 2026-11-23T23:01:46-07:00 SessionStart source=startup session=?
+- 2026-11-24T02:39:49-07:00 SessionStart source=startup session=?
+- 2026-11-24T03:02:36-07:00 SessionStart source=startup session=?

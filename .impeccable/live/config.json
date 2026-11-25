@@ -1,5 +1,5 @@
 {
-  "files": ["VTOL-Review.html"],
+  "files": ["archive/c0/VTOL-Review.html"],
   "insertBefore": "</body>",
   "commentSyntax": "html",
   "cspChecked": true

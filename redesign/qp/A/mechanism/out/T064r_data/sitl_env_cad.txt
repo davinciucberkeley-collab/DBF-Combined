@@ -1,0 +1,24 @@
+Z5_b0 (belly-on 5 m/s, 1.41 kg)    lean 29.1 narrow sign +1 sink 0.34 lat 0.16: stroke  22.1 mm n 154.09 side 439.1 N tilt_end  178.1 drift   757 mm rib RF 0.10
+Z5_b0 (belly-on 5 m/s, 1.41 kg)    lean 29.1 narrow sign -1 sink 0.34 lat 0.16: stroke  22.2 mm n 158.46 side 451.8 N tilt_end  179.0 drift   830 mm rib RF 0.09
+Z5_b0 (belly-on 5 m/s, 1.41 kg)    lean 29.1 wide   sign +1 sink 0.34 lat 0.16: stroke  10.8 mm n   8.00 side  17.6 N tilt_end    0.6 drift   186 mm rib RF 1.00
+Z5_b0 (belly-on 5 m/s, 1.41 kg)    lean 29.1 wide   sign -1 sink 0.34 lat 0.16: stroke  10.9 mm n   7.62 side  17.7 N tilt_end    0.6 drift   181 mm rib RF 1.03
+Z5_b45                             lean 17.2 narrow sign +1 sink 0.32 lat 0.21: stroke   5.3 mm n   5.33 side  14.3 N tilt_end    0.5 drift   129 mm rib RF 2.14
+Z5_b45                             lean 17.2 narrow sign -1 sink 0.32 lat 0.21: stroke   6.4 mm n   5.12 side  14.5 N tilt_end    0.7 drift   112 mm rib RF 2.25
+Z5_b45                             lean 17.2 wide   sign +1 sink 0.32 lat 0.21: stroke   6.2 mm n   5.14 side  16.3 N tilt_end    0.3 drift    97 mm rib RF 0.99
+Z5_b45                             lean 17.2 wide   sign -1 sink 0.32 lat 0.21: stroke   6.3 mm n   5.14 side  16.3 N tilt_end    0.3 drift    96 mm rib RF 1.00
+Ta_h5 (1.381 kg)                   lean 18.8 narrow sign +1 sink 0.3 lat 0.11: stroke   5.0 mm n   6.00 side  13.6 N tilt_end    0.5 drift   135 mm rib RF 2.21
+Ta_h5 (1.381 kg)                   lean 18.8 narrow sign -1 sink 0.3 lat 0.11: stroke   5.2 mm n   6.54 side  13.1 N tilt_end    0.5 drift   123 mm rib RF 2.35
+Ta_h5 (1.381 kg)                   lean 18.8 wide   sign +1 sink 0.3 lat 0.11: stroke   6.3 mm n   5.02 side  16.2 N tilt_end    0.3 drift    88 mm rib RF 1.26
+Ta_h5 (1.381 kg)                   lean 18.8 wide   sign -1 sink 0.3 lat 0.11: stroke   6.4 mm n   5.03 side  16.3 N tilt_end    0.3 drift    86 mm rib RF 1.24
+Tb_h5                              lean 16.5 narrow sign +1 sink 0.31 lat 0.09: stroke   4.2 mm n   6.32 side  13.6 N tilt_end    0.3 drift    99 mm rib RF 2.42
+Tb_h5                              lean 16.5 narrow sign -1 sink 0.31 lat 0.09: stroke   3.8 mm n   4.60 side  13.8 N tilt_end    0.3 drift    86 mm rib RF 1.67
+Tb_h5                              lean 16.5 wide   sign +1 sink 0.31 lat 0.09: stroke   5.9 mm n   5.05 side  16.3 N tilt_end    0.3 drift    71 mm rib RF 0.89
+Tb_h5                              lean 16.5 wide   sign -1 sink 0.31 lat 0.09: stroke   5.9 mm n   5.06 side  16.3 N tilt_end    0.3 drift    69 mm rib RF 0.88
+Lb_5e                              lean 12.1 narrow sign +1 sink 0.32 lat 0.45: stroke   6.9 mm n   6.56 side  14.6 N tilt_end    0.7 drift   100 mm rib RF 1.99
+Lb_5e                              lean 12.1 narrow sign -1 sink 0.32 lat 0.45: stroke   6.7 mm n   5.35 side  14.4 N tilt_end    0.7 drift    95 mm rib RF 2.09
+Lb_5e                              lean 12.1 wide   sign +1 sink 0.32 lat 0.45: stroke   8.0 mm n   7.74 side  15.8 N tilt_end    0.5 drift    84 mm rib RF 2.92
+Lb_5e                              lean 12.1 wide   sign -1 sink 0.32 lat 0.45: stroke   8.1 mm n   7.65 side  15.8 N tilt_end    0.5 drift    84 mm rib RF 2.91
+Z5_gb45                            lean 11.0 narrow sign +1 sink 0.32 lat 0.5: stroke   6.5 mm n   5.74 side  14.2 N tilt_end    0.7 drift    94 mm rib RF 1.96
+Z5_gb45                            lean 11.0 narrow sign -1 sink 0.32 lat 0.5: stroke   7.3 mm n   5.90 side  13.9 N tilt_end    0.8 drift    85 mm rib RF 2.31
+Z5_gb45                            lean 11.0 wide   sign +1 sink 0.32 lat 0.5: stroke   5.3 mm n   5.25 side  15.7 N tilt_end    0.2 drift   107 mm rib RF 2.35
+Z5_gb45                            lean 11.0 wide   sign -1 sink 0.32 lat 0.5: stroke   5.4 mm n   5.26 side  15.7 N tilt_end    0.3 drift   108 mm rib RF 2.31

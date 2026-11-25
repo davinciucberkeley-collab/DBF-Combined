@@ -1,0 +1,18 @@
+{
+ "h_mm": 0.5,
+ "rho": 1.27,
+ "rows": [
+  {
+   "id": "CGE-001",
+   "listed_g": 18.0,
+   "vol_cm3": 13.871625000000002,
+   "solid_g": 17.616963750000004,
+   "cls": "S",
+   "build_axis": "x",
+   "core_frac": 0.2571976967370441,
+   "computed_g": 14.218681875000001,
+   "name": "Hub (printed PETG, D-202: 1.5 mm sleeves over s +-24 mm of both arm tu",
+   "material": "PETG (printed)"
+  }
+ ]
+}

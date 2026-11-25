@@ -1,0 +1,9 @@
+AP8_h70 exit 0 wall 114 s
+AP8_h60s2 exit 0 wall 114 s
+AP8_h60 exit 0 wall 114 s
+AP8_h60s3 exit 0 wall 114 s
+AP8_h70s2 exit 0 wall 115 s
+AP8_h90 exit 0 wall 116 s
+AP8_belly5 exit 0 wall 116 s
+AP8_h80 exit 0 wall 116 s
+ALLDONE

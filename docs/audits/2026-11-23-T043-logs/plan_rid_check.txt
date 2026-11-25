@@ -1,0 +1,6 @@
+109 R-ids, 0 missing from execution-plan.md
+
+real	0m0.195s
+user	0m0.015s
+sys	0m0.031s
+rc=0

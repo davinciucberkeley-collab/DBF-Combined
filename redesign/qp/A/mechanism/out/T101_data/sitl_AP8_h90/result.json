@@ -1,0 +1,97 @@
+{
+ "tag": "AP8_h90",
+ "cfg": {
+  "out": "C:\\Users\\dillo\\Downloads\\Berkeley\\Fall\\Capstone\\DBF-Combined\\redesign\\qp\\A\\sitl\\runs\\AP8_h90\\case",
+  "wind": 4.0,
+  "wind_from_deg": 90.0,
+  "mass": 1.881,
+  "gust": 0.0,
+  "gust_at": 20.0,
+  "turb": 1.0,
+  "hold_s": 45.0,
+  "thrust_scale": 0.767,
+  "cant_deg": 17.0,
+  "seed": 1,
+  "arm": 1.2,
+  "wing_s": 1.0,
+  "fin_s": 1.0,
+  "inst": 0,
+  "x2216_hover": 1,
+  "vrest": 14.92,
+  "cg_aft": 0.02349
+ },
+ "overrides": {},
+ "events": [
+  [
+   30.3,
+   "Throttle armed"
+  ],
+  [
+   55.4,
+   "EKF3 IMU1 is using GPS"
+  ],
+  [
+   55.6,
+   "EKF3 IMU0 is using GPS"
+  ],
+  [
+   55.6,
+   "AHRS: EKF3 active"
+  ]
+ ],
+ "readback": {
+  "Q_ANGLE_MAX": null,
+  "Q_A_ANGLE_MAX": 45.0,
+  "Q_LOIT_ANG_MAX": 15.0,
+  "Q_M_SPIN_MAX": 1.0,
+  "Q_M_THST_EXPO": 0.550000011920929,
+  "Q_A_RAT_RLL_P": 0.20000000298023224,
+  "Q_A_RAT_YAW_P": 0.3700000047683716,
+  "Q_FRAME_CLASS": 1.0,
+  "Q_TAILSIT_ENABLE": 1.0,
+  "Q_WVANE_ENABLE": 0.0,
+  "Q_A_ANGLE_BOOST": 0.0,
+  "Q_TAILSIT_DSKLD": 6.699999809265137,
+  "Q_P_NE_VEL_I": 0.3499999940395355,
+  "Q_P_NE_VEL_IMAX": 10.0,
+  "Q_P_NE_VEL_D": 0.17000000178813934,
+  "Q_P_ACC_XY_P": null,
+  "Q_P_ACC_XY_I": null,
+  "Q_PILOT_ACCEL": null,
+  "Q_PILOT_SPD_UP": 2.5,
+  "Q_P_NE_POS_P": 0.5,
+  "Q_P_NE_VEL_P": 0.699999988079071,
+  "Q_TAILSIT_MOTMX": 15.0
+ },
+ "armed": true,
+ "mode_after_arm": 18,
+ "reached_alt": true,
+ "mode_hold": 19,
+ "summary": {
+  "n": 807,
+  "t_window": [
+   8.027,
+   48.999
+  ],
+  "wind_ms": 6.98,
+  "lean_max": 11.9,
+  "lean_mean": 4.9,
+  "lean_pre": 0.7,
+  "u_max": 0.741,
+  "u_mean_max": 0.676,
+  "t_cap_s": 0.0,
+  "t_cap_run_s": 0.0,
+  "t_ge85_s": 0.0,
+  "u_min": 0.484,
+  "t_floor_s": 0.0,
+  "t_floor_run_s": 0.0,
+  "yaw_err_max": 6.0,
+  "yaw_err_rms": 3.2,
+  "pos_err_max": 1.18,
+  "pos_err_rms": 0.57,
+  "pos_err_last20_mean": 0.4,
+  "alt_dev_max": 0.09,
+  "diag_spread_max": 0.245,
+  "diag_spread_mean": 0.035
+ }
+}

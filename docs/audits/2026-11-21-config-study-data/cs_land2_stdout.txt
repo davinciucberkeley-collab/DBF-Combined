@@ -1,0 +1,9 @@
+v 1.20 Fp 20.0 s 24 zeta 0.02 mu 0.40: {'stroke': 24.76, 'n': 48.01, 'tilt': 3.08, 'Ffoot': 402.13} hubMyS 96.59 halfMyS 49.98 | legs halfMyS 36.20
+v 1.20 Fp 20.0 s 24 zeta 0.02 mu 0.30: {'stroke': 24.43, 'n': 27.25, 'tilt': 3.37, 'Ffoot': 235.81} hubMyS 23.14 halfMyS 29.02 | legs halfMyS 9.79
+v 1.20 Fp 20.0 s 24 zeta 0.10 mu 0.40: {'stroke': 22.17, 'n': 9.11, 'tilt': 2.99, 'Ffoot': 44.57} hubMyS 8.45 halfMyS 6.82 | legs halfMyS 4.12
+v 1.20 Fp 20.0 s 24 zeta 0.10 mu 0.30: {'stroke': 18.5, 'n': 9.11, 'tilt': 2.48, 'Ffoot': 46.81} hubMyS 9.17 halfMyS 6.17 | legs halfMyS 3.57
+v 1.00 Fp 20.0 s 24 zeta 0.02 mu 0.40: {'stroke': 23.72, 'n': 5.67, 'tilt': 3.18, 'Ffoot': 24.65} hubMyS 5.74 halfMyS 4.62 | legs halfMyS 2.72
+v 1.00 Fp 20.0 s 24 zeta 0.02 mu 0.30: {'stroke': 19.27, 'n': 5.67, 'tilt': 2.55, 'Ffoot': 25.08} hubMyS 7.21 halfMyS 4.57 | legs halfMyS 2.66
+v 1.00 Fp 20.0 s 24 zeta 0.10 mu 0.40: {'stroke': 16.94, 'n': 8.32, 'tilt': 2.09, 'Ffoot': 41.96} hubMyS 6.12 halfMyS 6.33 | legs halfMyS 3.28
+v 1.00 Fp 20.0 s 24 zeta 0.10 mu 0.30: {'stroke': 13.9, 'n': 8.32, 'tilt': 1.78, 'Ffoot': 44.96} hubMyS 9.17 halfMyS 5.83 | legs halfMyS 3.57
+done 327 s

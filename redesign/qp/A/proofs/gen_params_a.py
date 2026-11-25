@@ -10,12 +10,22 @@ Stdlib only.
 """
 import csv
 import json
+import math
 import sys
 from pathlib import Path
 
 sys.dont_write_bytecode = True
 HERE = Path(__file__).resolve().parent
 A = HERE.parent                                   # redesign/qp/A
+
+
+def _bom_ship():
+    """SHIP table of bom_a.py (parsed, not executed; single source, D-230)."""
+    import ast
+    src = (A / "bom_a.py").read_text(encoding="utf-8")
+    m = next(n for n in ast.parse(src).body if isinstance(n, ast.Assign) and any(getattr(t, "id", "") == "SHIP" for t in n.targets))
+    return [list(kv) for kv in sorted(ast.literal_eval(m.value).items())]
+
 OUT = A / "params-A.json"
 
 V = lambda value, unit, source, note=None, est=False: {k: v for k, v in (
@@ -27,15 +37,17 @@ def build():
     bom = list(csv.DictReader(open(A / "BOM-A.csv", encoding="utf-8")))
     cm = json.loads((A / "sitl" / "cad_mass.json").read_text(encoding="utf-8"))
     out = A / "cad" / "out"
-    reps = {k: json.loads((out / f"report{k}.json").read_text(encoding="utf-8")) for k in ("", "_pose20", "_pose21")}
+    reps = {k: json.loads((out / f"report{k}.json").read_text(encoding="utf-8")) for k in ("", "_d212r3_pose20", "_d212r3_pose21")}
     asm = json.loads((out / "assembly.json").read_text(encoding="utf-8"))
     tol = asm["tol_mm"]
     # D-202: the cage frame is swept in its own bench run (assembly_bench.json, nothing else placed); its steps count as steps, its parts are placed again by B1 in the main run (not counted twice)
     bench_f = out / "assembly_bench.json"
     asm_bench = json.loads(bench_f.read_text(encoding="utf-8"))["steps"] if bench_f.exists() else []
-    # reachable poses: neutral and +-20 deg (report_pose20), +-21 deg (report_pose21 = report.json); +-22 is past the stop
+    # reachable poses: neutral and +-21 deg from report_d212r3_pose21.json (D-212 rev 3 geometry, same poses and depths as report.json; review r3 m-9: the
+    # old report_pose21.json, 0.042 mm, predates D-212); +-20 deg (the commanded endpoints, BUILD D5b) from report_d212r3_pose20.json (D-212 rev 3, rerun 2026-11-19, T-020);
+    # +-22 is past the stop
     depths, n_over = [], 0
-    for key in ("_pose20", "_pose21"):
+    for key in ("_d212r3_pose20", "_d212r3_pose21"):
         for p in reps[key]["poses"]:
             for h in p["hits"]:
                 depths.append(h["depth_mm"])
@@ -62,10 +74,10 @@ def build():
         "cg_hi_mm": V(26.0, "mm", R, "A-P4"), "cg_hard_aft_mm": V(28.5, "mm", R, "A-P4 hard aft limit"),
         "cg_lateral_max_mm": V(5.0, "mm", R, "A-P4"),
         "cruise_ratio": V(1.3, "-", R, "A-P6: 1.3 Vs < cruise"), "cruise_need_max_min": V(3.5, "min", R, "A-D2: requirement 3.5 min (MISSION s2)"),
-        "motor_rating_a": V(13.0, "A", R, "A-P16: motor 13 A / 180 s (maker)"),
+        "motor_rating_a": V(26.8, "A", R, "T-083: SunnySky X2216 V3 880KV 450 W max continuous / 16.8 V = 26.8 A (32 A / 30 s); sunnyskyusa.com read 2026-11-21. The page gives power, not a continuous current: EST", est=True),
         "esc_rating_a": V(35.0, "A", "SRC-A-BOM", "BOM-A.csv P04: 35 A continuous per channel"),
         "connector_factor": V(1.25, "-", R, "A-P16: connector >= 1.25 x peak"),
-        "roll_min_degs": V(90.0, "deg/s", R, "A-P11 (G5)"), "pitch_use_max": V(0.60, "-", "SRC-A-BOARD4", "BOARD QP-4 s3: <= 0.60 of the 20 deg stop (G5 basis)"),
+        "roll_min_degs": V(44.8, "deg/s", "SRC-A-AR015", "D-254 / D-255: derived cruise roll requirement, MIL-F-8785C Class I Level 1 Category B (60 deg in 1.7 s; steady 44.8 deg/s, docs/audits/2026-11-24-T101-reserve.md table); replaces the underived 90 deg/s of A-P11 (G5); the D-195 SITL 106.9 / 106.4 deg/s stay as records"), "pitch_use_max": V(0.60, "-", "SRC-A-AR015", "D-245 (2026-11-23): <= 0.60 of the 15 deg basis (SITL-FLIGHT.md l.25); D-245 supersedes BOARD QP-4 s3 G5 (20 deg stop basis), which has no A-specific roll / gust reserve derivation (ASDRAWN s3 asks the board to state the basis; review round 10 98-4)"),
         "servo_factor_min": V(1.5, "-", "SRC-A-FIXES2", "FIXES2 s2: factor >= 1.5 on the required torque (1.5 x load)"),
         "servo_ratio_min": V(1.5, "-", R, "A-P11: servo stall torque >= 1.5 x hinge moment"),
         "yaw_pass_nm": V(0.35, "N m", R, "A-P7"), "yaw_r2_nm": V(0.30, "N m", R, "A-P7: below 0.30 the 5 m/s card is reopened (R2)"),
@@ -74,6 +86,7 @@ def build():
         "motor_out_line": V(0.85, "-", R, "A-P8 / A-P20: the 85 % output line (SITL-FLIGHT.md pass line: no motor at or above it for more than the time below)"),
         "motor_ge85_s_max": V(0.5, "s", R, "A-P8 (D-192): time above the 0.85 line <= 0.5 s per run (QP-3 SITL-FLIGHT.md used 1 s); basis in review/QP-4/CLAIMS-FIX.md s3"),
         "motor_cap_s_max": V(0.0, "s", R, "A-P8 (D-192): no time at the 0.90 spin cap (the saturation line)"),
+        "cn_beta_min": V(0.03, "1/rad", R, "A-P15: directional stability Cn_beta >= 0.03 per rad"),
         "tipover_min_deg": V(30.0, "deg", R, "A-P9"),
         "vd_ms": V(24.0, "m/s", R, "A-P13: VD 24 m/s (D-186)"), "flutter_factor": V(1.2, "-", R, "A-P13 / G8: flutter and divergence >= 1.2 VD"),
         "n_limit": V(3.4, "g", R, "A-P13: limit +3.4 g floor"), "ms_min": V(0.0, "-", R, "A-P13: MS >= 0 at 1.5 x limit"),
@@ -98,7 +111,7 @@ def build():
                                "mission_gate_a.py `items` (D-195, cage +3.6 g D-196 hub walls; D-198: bay cover, bottom-up harness, cup collars; D-199: raceways, hub conduits, shorter phase extensions, 20 mm strap, drawn pad; CAD 2026-11-15): [basic g, growth fraction by maturity]: wing, fins + feet, motors, props, adapters + spinner nuts (CALC 10 %), ESC, pack, strap, avionics + harness, servos, cage, hardware", est=True),
         "structure_groups_g": V([221.7, 108.2, 8.4, 26.1, 119.2], "g", "SRC-A-CADMASS",
                                 "D-195: CAD part table 2026-11-15: wing 221.7 + fins 108.2 (D-200) + feet 8.4 + hardware HRD-001 26.08 + cage 119.2 (D-196: hub 17.7 g, was 13.1; D-198: cup collars +1.2 g) = 484.9 g with the EST cuts", est=True),
-        "pack_g": V(270.0, "g", "SRC-A-BOM", "BOM-A.csv W01: Tattu 2300 4S, listing 270 g"),
+        "pack_g": V(270.0, "g", "SRC-A-BOM", "BOM-A.csv W01: RDQ 2800 mAh 4S 100C, listing 270 g (D-230)"),
         "pack_trim_mm": V(10.0, "mm", "SRC-A-FIXES2", "FIXES2 s7 / MASS-GATE s7: pack trim 10 mm aft in the tray slots"),
         "pack_trim_fwd_mm": V(cm.get("trim_fwd_m", 0.010) * 1000, "mm", "SRC-A-CADMASS", "D-205: forward pack travel 6 mm (D-202: 1 mm; D-199: 6 mm; D-196: 8 mm) (tray front lip 2 mm aft); cad_mass.json trim_fwd_m"),
         "cg_x_mm": V(cm["cg_x_m"] * 1000, "mm", "SRC-A-CADMASS", "cad_mass.json cg_x_m, aft of the wing leading edge"),
@@ -112,14 +125,14 @@ def build():
         "apc_table": V([[5000, 2.674, 20.063], [6000, 3.859, 34.224], [7000, 5.264, 53.842], [8000, 6.892, 79.836], [9000, 8.746, 113.149],
                         [10000, 10.830, 154.758], [11000, 13.149, 205.680], [12000, 15.706, 266.981]], "rpm, N, W", "SRC-A-PROPA",
                        "prop_a.py T: APC 9x4.5MR static rows (apcprop.com PER3_9x45MR.dat, read 2026-11-14 per prop_a.py), rho 1.225, V = 0"),
-        "kv": V(780.0, "rpm/V", "SRC-A-PROPA", "prop_a.py KV: T-Motor MN2212 V2.0 KV780 page"),
-        "rm_ohm": V(0.173, "ohm", "SRC-A-PROPA", "prop_a.py RM: T-Motor page via SIZING-A s3"),
-        "i0_a": V(0.5, "A", "SRC-A-PROPA", "prop_a.py I0: no page value, ESTIMATE; bench step M1 measures it", est=True),
+        "kv": V(880.0, "rpm/V", "SRC-A-PROPA", "prop_a.py KV (T-083): SunnySky X2216 V3 880KV page (sunnyskyusa.com, read 2026-11-21)"),
+        "rm_ohm": V(0.089, "ohm", "SRC-A-PROPA", "prop_a.py RM (T-083): SunnySky X2216 V3 880KV page, 89 mohm (read 2026-11-21)"),
+        "i0_a": V(0.5, "A", "SRC-A-PROPA", "prop_a.py I0 (T-083): SunnySky page 0.5 A at 10 V (read 2026-11-21); used at all voltages (EST); bench step M1 measures it", est=True),
         "rp_ohm": V(0.030, "ohm", "SRC-A-PROPA", "prop_a.py rp: pack resistance 30 mohm EST (SIZING-A)", est=True),
         "derate": V(0.93, "-", "SRC-A-PROPA", "prop_a.py DER: BOARD R3 derate, real thrust = 0.93 x APC table; a guess until bench M1", est=True),
         "cant_deg": V(17.0, "deg", "SRC-A-PROPA", "prop_a.py CANT (D-189; was 16, D-184)"), "download": V(0.97, "-", "SRC-A-PROPA", "prop_a.py hover: x 0.97 download"),
         "hot_sag": V(0.97, "-", "SRC-A-MGATE", "mission_gate_a.py: hot x0.97 on the sag case", est=True),
-        "spin_cap": V(0.90, "-", "SRC-A-PROPA", "A.param Q_M_SPIN_MAX 0.90 (prop_a.py `duty`)"),
+        "spin_cap": V(0.993, "-", "SRC-A-PROPA", "T-083: fresh duty at which the four X2216 draw Q_M_BAT_CURR_MAX 72 A (T083_data/t083_packcap.py, 1.912 kg); the X2216 needs no motor-current cap (spin_cap.lua table = 1.0); was A.param Q_M_SPIN_MAX 0.90", est=True),
         "v_fresh": V(16.8, "V", "SRC-A-PROPA", "4S fresh, 4.2 V/cell"), "v_sag_rest": V(14.92, "V", "SRC-A-PROPA", "prop_a.py: 3.73 V/cell rest (20 % left) x 4"),
         "esc_eff": V(0.98, "-", "SRC-A-PROPA", "prop_a.py hover: input power = V I / 0.98", est=True),
         "ctrl_margin": V(1.10, "-", "SRC-A-PROPA", "prop_a.py hover: x 1.10 control margin (MISSION s4)", est=True),
@@ -129,17 +142,17 @@ def build():
     # ---------------------------------------------------------------- mission (mission_gate_a.py, MISSION.md)
     P["mission"] = {
         "s_m2": V(0.22, "m2", "SRC-A-MGATE", "mission_gate_a.py S (SIZING-A s2)"), "clmax": V(0.75, "-", "SRC-A-MGATE", "CLmax 0.75 EST; measured stall replaces it (MISSION s1)", est=True),
-        "cruise_ms": V(17.0, "m/s", "SRC-A-MISSION", "MISSION s1: cruise 17 m/s IAS"), "bank_deg": V(30.0, "deg", "SRC-A-MISSION", "MISSION s2: bank 30 deg"),
+        "cruise_ms": V(18.0, "m/s", "SRC-A-MISSION", "D-255 (T-101, AM-059): cruise 18 m/s IAS, A.param AIRSPEED_CRUISE 18 (was 17, MISSION s1)"), "bank_deg": V(30.0, "deg", "SRC-A-MISSION", "MISSION s2: bank 30 deg"),
         "leg_ref_m": V(300.0, "m", "SRC-A-MGATE", "mission_gate_a.py LEG_REF: requirement time defined on the 300 m reference lap"),
         "leg_m": V(150.0, "m", "SRC-A-MGATE", "mission_gate_a.py LEG: flown leg 150 m (BOARD QP-3 s3)"),
         "settle_s": V(15.0, "s", "SRC-A-MISSION", "MISSION s2: settle to 17 m/s (A2 EST)", est=True),
         "laps": V(2.0, "-", "SRC-A-MISSION", "MISSION s2: 2 laps"), "goaround_laps": V(1.0, "-", "SRC-A-MISSION", "MISSION s2: 1 go-around lap"),
         "runin_laps": V(0.5, "-", "SRC-A-MISSION", "MISSION s2: run-in <= 1/2 lap"),
-        "pack_ah": V(2.3, "Ah", "SRC-A-MGATE", "Tattu 2300"), "pack_v": V(14.8, "V", "SRC-A-MGATE", "4S nominal"),
+        "pack_ah": V(2.8, "Ah", "SRC-A-MGATE", "T-083: O4b pack RDQ 2800 mAh 4S 100C (racedayquads.com, read 2026-11-19, BOM W01); was Tattu 2300 (stale, config study CS-5)"), "pack_v": V(14.8, "V", "SRC-A-MGATE", "4S nominal"),
         "floor_frac": V(0.90, "-", "SRC-A-MGATE", "usable after the 0.90 floor"), "reserve_frac": V(0.80, "-", "SRC-A-MGATE", "20 % reserve"),
         "hover_s": V(180.0, "s", "SRC-A-MGATE", "3.0 min hover mode incl. 40 s go-around (A-D2)"),
         "trans_wh_ref": V(1.56, "Wh", "SRC-A-MGATE", "mission_gate_a.py Etr at 1.37 kg", est=True), "climb_wh_ref": V(0.29, "Wh", "SRC-A-MGATE", "Ecl at 1.37 kg", est=True),
-        "cruise_w_ref": V(161.0, "W", "SRC-A-MGATE", "cruise electric power at 1.37 kg, 17 m/s: eta_p 0.26 x 0.76 EST (MISSION s1)", est=True),
+        "cruise_w_ref": V(180.4, "W", "SRC-A-MGATE", "D-255: cruise electric power at 1.37 kg, 18 m/s = 161 W at 17 m/s (eta_p 0.26 x 0.76 EST, MISSION s1) x drag-polar power ratio 1.1207 (CD0 0.0356, e 0.8, AR 3.68, rho 1.20, S 0.22 m2: P(18) / P(17) at 1.37 kg)", est=True),
         "ref_mass_kg": V(1.37, "kg", "SRC-A-MGATE", "reference mass of the three lines above"),
         "trans_exp": V(1.5, "-", "SRC-A-MGATE", "Etr scales as (m / 1.37)^1.5", est=True), "cruise_exp": V(0.58, "-", "SRC-A-MGATE", "Pcruise scales as (m / 1.37)^0.58", est=True),
         "runout_m": V(94.0, "m", "SRC-A-MGATE", "any-direction run-out after cruise BATT_LOW: L/2 + 51 + 94 (mission_gate_a.py)", est=True),
@@ -156,15 +169,17 @@ def build():
     # ---------------------------------------------------------------- stored simulation / analysis results (read, not re-run)
     P["sim"] = {
         "roll_141_degs": V(106.9, "deg/s", "SRC-A-D195SITL", "D-195: SITL case=roll, 1.455 kg (target), cant 17, D-191 gains, CAD CG 21.47, S5010 aero, FBWA throttle held (rollthr 1650, 16.3-19 m/s), run R5_rt65: 6,126 / 57.3. Roll steps at the old 1500 stick decelerate to 14.4 m/s and give 86.7 deg/s (R5_roll, elevon at its stop): not a cruise state"),
-        "roll_150_degs": V(106.4, "deg/s", "SRC-A-D195SITL", "D-195: SITL case=roll, 1.47 kg (the gate), same conditions, run R5_rt65g (106.7 at the forward trim end CG 19.3, R5_rt65f)"),
+        "roll_150_degs": V(106.4, "deg/s", "SRC-A-D195SITL", "D-195: SITL case=roll, 1.47 kg (the gate), same conditions, run R5_rt65g (106.7 at the forward trim end CG 19.3, R5_rt65f); D-255: with RLL2SRV_RMAX 45 / TCONST 0.9 the commanded rate is capped: A1-trim SITL at 1.881 kg peaked at 62 deg/s and made the 60 deg change in 1.50 s (T101TU09_T074, Category B 1.7 s); these D-195 values (RMAX 150) are records"),
         "elevon_peak_deg": V(11.5, "deg", "SRC-A-D195SITL", "D-195: worst elevon peak in the transition runs at the CAD CG, 1.455 / 1.47 kg (R5_t0, R5_g0 11.5; wind 4 m/s 10.3; CG 19.3 forward trim end 12.0, R5_cgf)"),
+        "pitch_use_15_worst": V(0.59, "-", "SRC-A-AR017", "D-255 (T-101, AM-059): A1 configuration (C3 controls + pack at the aft slot end, CG 23.49 mm + cruise 18 m/s + RLL2SRV_RMAX 45 / TCONST 0.9): worst of Z5 0.53 / Z5_lua 0.54 / T074 0.59 / T074_lua 0.56 (mechanism/out/T101_data/sitl_batch_A1sum.txt; one sample each, repeat scatter 0.01-0.03); before: AR-017 worst C3 case 0.651 (T-074 without Lua) of 0.554 / 0.571 / 0.651 / 0.605 (T101_results.json); the old 0.69-0.79 was the T-097 baseline (AR-015) before C3 controls; open pending the reserve derivation (D-251)", est=True),
         "elevon_stop_deg": V(20.0, "deg", "SRC-A-FIXES2", "FIXES2 s3.1: control authority 20 deg (stop 21 deg)"),
-        "lean_belly_5ms_deg": V(31.5, "deg", "SRC-A-SITL2", "SITL.md s70: belly into wind at 5 m/s needs 29-31 deg (mean 29.3, max 31.5)"),
-        "wind_ge85_s": V(0.20, "s", "SRC-A-D195SITL", "D-195: 4 m/s mean, turbulence 1.0 m/s, 1.455 kg, worst pack (thrust scale 0.767), arm 1.2, cant 17, A.param D-191, CAD inertia / CG: longest time at or above 0.85 over the seven runs (0 / 0 / 0 / 0.20 / 0 / 0 / 0), runs R5_h60, h60s2, h60s3, h70, h70s2, h80, h90 (sitl/results.jsonl; same as CLAIMS-FIX N4 at 1.47 kg)"),
-        "wind_cap_s": V(0.0, "s", "SRC-A-D195SITL", "same seven R5_h* runs: time at the 0.90 cap, all 0"),
-        "wind_peak": V(0.884, "-", "SRC-A-D195SITL", "same seven R5_h* runs: highest instantaneous output (seed 3, from 60 deg; 0.873 at the CLAIMS-FIX 1.47 kg runs); reported, not a limit"),
-        "tipover_deg": V(33.2, "deg", "SRC-A-SIZING", "SIZING-A s4 line 15: static tip angle 33.2 deg at CG 25 mm (EST)", est=True),
-        "gust_n_vd": V(3.01, "g", "SRC-A-ITER3", "iter3_run.md C1: gust U 4 m/s at VD 24, n 3.01 (stall line 3.96)"),
+        "lean_belly_5ms_deg": V(28.3, "deg", "SRC-A-D195SITL", "D-258 (AM-062): belly into wind, 5 m/s mean + 1 m/s turbulence, 1.881 kg, CG 23.49 mm, arm 1.2, cant 17, X2216 hover thrust model on the worst pack (run AP8_belly5, mechanism/out/T101_data/sitl_batch_AP8.txt); was 31.5 (SITL.md s70, MN2212 era)"),
+        "wind_ge85_s": V(0.0, "s", "SRC-A-D195SITL", "D-258 (AM-062): seven D-195 cases re-run (4 m/s mean, turbulence 1.0 m/s, from 60-90 deg, seeds 1-3, arm 1.2, cant 17) at 1.881 kg, CG 23.49 mm, X2216 + APC 9x4.5MR hover thrust (a_plant x2216_hover, prop_a.full at 14.92 V rest x 0.93 derate x 0.97 hot; below duty 0.5 thrust ~ duty^2 EST): longest time >= 0.85 is 0 s in all seven, peak output 0.738-0.761 (runs AP8_h60/h60s2/h60s3/h70/h70s2/h80/h90); was 0.20 s at 1.455 kg with the MN2212 table (D-195)"),
+        "wind_cap_s": V(0.0, "s", "SRC-A-D195SITL", "D-258: same seven AP8_h* runs: no sample at full output (the 0.90 cap line of D-192; Q_M_SPIN_MAX is 1.0 since T-083)"),
+        "cn_beta": V(0.209, "1/rad", "SRC-A-LATDIR", "D-260 (AM-065): sitl/latdir_a.py at 18 m/s, CG 23.49 mm: fins from a_aero.airframe central differences 0.233 (the model has no wing Cn_beta), propeller estimate -0.024 (kp 0.3 per rad on disc area, 4 discs 0.10 m ahead of the CG; kp 0-0.6 gives 0.233-0.185); output mechanism/out/T101_data/latdir_a_18.json", est=True),
+        "wind_peak": V(0.761, "-", "SRC-A-D195SITL", "D-258: seven AP8_h* runs (1.881 kg, X2216 hover model): highest instantaneous output 0.761 (seed 3, from 60 deg); was 0.884 at the R5_h* runs (1.455 kg, MN2212, D-195); reported, not a limit"),
+        "tipover_deg": V(31.00, "deg", "SRC-A-T084", "T-084 tipover_t084.txt: minimum 31.00 deg (drawn CG, forward trim end 20.96 mm; pivot the outer pad edge z 196.7 mm on the CG z side, D-215); pad-centre value 31.07 (landing_a.static); was SIZING-A 33.2 EST, and the drawn pads gave 29.2 (T-066)"),
+        "gust_n_vd": V(2.71, "g", "SRC-A-STRUCT-RUN", "structures_run.md s2 (T-084 rerun, 1.8796 kg): gust U 4 m/s at VD 24, n 2.71 (stall line 3.16); was 3.01 / 3.96 in iter3_run.md (MN2212 era)"),
         "flutter_hot_ms": V([37.5, 40.0, 44.0], "m/s", "SRC-A-D195FL", "flutter_d205.md case B (D-205 lead 12.8 g, elevon 6.7 g): hot 50 C (EST x0.6) lowest onset, wing corners kd / nom / hi", est=True),
         "flutter_nom_ms": V([41.0, 44.0, 49.0], "m/s", "SRC-A-D195FL", "flutter_d205.md case C: nominal 25 C, kd / nom / hi"),
         "flutter_cold_ms": V([44.0, 47.5, 53.5], "m/s", "SRC-A-D195FL", "flutter_d205.md case D: cold 0 C (EST x2), kd / nom / hi", est=True),
@@ -174,15 +189,18 @@ def build():
         "divergence_ms": V(128.0, "m/s", "SRC-A-FLUTTER", "FLUTTER.md verdict: divergence 286-383 / 181-242 / 128-171 m/s; lowest, kd, e/c 0.10"),
         "reversal_3d_ms": V([37.0, 42.0], "m/s", "SRC-A-FIXES", "FIXES s1.3: control reversal y 0.04-0.35, 3-D lift, e/c 0.10, kd / nom (2-D strip bound 28 / 32 m/s)"),
         "reversal_2d_ms": V([28.0, 32.0], "m/s", "SRC-A-FIXES", "FIXES s1.3: the 2-D strip bound, kd / nom"),
-        "vib_below_hz": V([63.0, 67.0, 77.0], "Hz", "SRC-A-ITER3", "iter3_run.md: highest strongly coupled mode below the bands, kd / nom / hi"),
-        "vib_above_hz": V([432.0, 462.0, 524.0], "Hz", "SRC-A-ITER3", "iter3_run.md: lowest strongly coupled mode above the bands, kd / nom / hi"),
-        "hover_1p_rpm_lo": V(6018.0, "rpm", "SRC-A-REQ", "A-P10(a): hover 1P 100-119 Hz = 6,018-7,151 rpm"),
-        "cruise_2p_hz_hi": V(253.0, "Hz", "SRC-A-REQ", "A-P10(a): cruise 2P 243-253 Hz (7,300-7,600 rpm)"),
-        "vib_fc_ms2": V([25.8, 27.1, 23.9, 23.9, 23.7, 23.7], "m/s2", "SRC-A-ITER3",
-                        "iter3_run.md forced response 6,000-10,500 rpm, U 1.0 g mm: kd 1 % / kd 0.5 % / nom 1 % / nom 0.5 % / hi 1 % / hi 0.5 %"),
-        "gm_nominal": V([4.19, 4.25, 5.88, 2.37, 2.56, 3.32, 2.19, 2.23, 2.23], "-", "SRC-A-ITER3", "iter3_run.md control-band table (rerun D-195 with fe_a.py motor lump +7.2 g for the adapter and spinner nut, A.param D-191, cant 17), min GM at nominal mode frequencies: pit / rll / yaw x kd, nom, hi"),
-        "gm_shifted": V([2.81, 2.68, 4.06, 2.16, 2.16, 2.30, 2.16, 2.16, 2.19], "-", "SRC-A-ITER3", "iter3_run.md: min GM with all flexible modes shifted -20 %"),
-        "gm_shifted_up": V([6.06, 5.70, 2.89, 3.22, 3.88, 6.06, 2.23, 2.26, 2.26], "-", "SRC-A-ITER3", "iter3_run.md: min GM with modes shifted +20 %"),
+        "vib_below_hz": V([66.0, 69.0, 81.0], "Hz", "SRC-A-STRUCT-RUN", "structures_run.md s4 (T-084 rerun, X2216, spar-only beam FE): highest strongly coupled mode below the band, kd / nom / hi; was 63 / 67 / 77 (iter3_run.md). Does not include the in-band strong mode: see vib_inband_corners"),
+        "vib_above_hz": V([438.0, 474.0, 532.0], "Hz", "SRC-A-STRUCT-RUN", "structures_run.md s4 (T-084 rerun, X2216, spar-only beam FE): lowest strongly coupled mode above the band, kd / nom / hi; was 432 / 462 / 524 (iter3_run.md)"),
+        "vib_inband_corners": V(3, "-", "SRC-A-T085", "structures_run.md s4: spar-only model has a strong mode (cy 0.52) IN the 94-321 Hz band at kd 201 / nom 215 / hi 244 Hz (FAIL at all 3 corners); T085_report.md s3.1 and D-236: the upgraded model (pad / tray / hub bounds) has the governing strong mode at 94.6-108.7 Hz (cx 0.74-0.85, cy 1.12-1.35), D-185 (a) FAIL in 23 of 24 bound groups, the one passing group by 0.1 Hz. Count of corners (kd / nom / hi) with a strong mode in the band, credible bound (cell nominal, 6061 hub, nominal pad)", est=True),
+        "hover_1p_rpm_lo": V(6789.0, "rpm", "SRC-A-STRUCT-RUN", "structures_run.md s4: lowest of the five operating rpm, hover derate 1.0 at 1.8796 kg with the SunnySky X2216 prop schedule (prop_a.py), 1P 113 Hz; was 6,018 (A-P10(a), MN2212 era); gives the band edge 94.3 Hz (structures_run.md: 94 Hz)"),
+        "hover_lean_2p_hz": V(267.6, "Hz", "SRC-A-STRUCT-RUN", "structures_run.md s4: highest 2P of the five operating rpm = hover lean 1.3 W, 8,028 rpm / 60 x 2 (the cruise 2P is 248 Hz; renamed from cruise_2p_hz_hi in review round 3 m-E); gives the band edge 321 Hz (structures_run.md: 94-321 Hz); was 253 Hz (A-P10(a), MN2212 era)"),
+        "vib_fc_ms2": V([82.7, 157.2, 87.6, 167.9, 97.9, 187.2], "m/s2", "SRC-A-T089",
+                        "T-089 (D-237 proposed): forced response at the FC of the T-085 upgraded model (structures_a.py s4 forcing: 1P U 1.0 g mm per rotor, 2P 5 % of static thrust, four rotors worst phase, modes summed in absolute value, sum of the three axes, 6,000-11,415 rpm, 400 modes), "
+                        "worst over the 24 T-085 bound groups: kd 1 % / kd 0.5 % / nom 1 % / nom 0.5 % / hi 1 % / hi 0.5 %; the worst point is the 94.6-108.7 Hz wing-flap / cage-bounce mode at its 1P resonance (5,676-6,521 rpm, below the lowest operating rpm 6,789); "
+                        "inside the operating window 6,789-8,028 rpm the same runs read 19.3-32.9 m/s2 (T089_report.md s3). Was 26.5..22.7 (spar-only model, structures_run.md s4, which has no mode there). EST: zeta 1 / 0.5 % is a guess, steady-state response (the transient spool-up pass is not credited)", est=True),
+        "gm_nominal": V([1.36, 1.26, 1.13, 2.68, 2.72, 2.81, 2.44, 2.48, 2.48], "-", "SRC-A-T089", "T-089 (D-237 proposed): sitl/fu_cage.py configure('t089') (X2216 V3 880KV on APC 9x4.5MR, spin cap 1.0, TFULL 14.17 N, KQ 0.0145 m, D-191 gains, motor lag 40 ms and delay 4 ms EST), FE = structures/fe_a.py with the T-085 options at kd / nom / hi, minimum over the 24 T-085 bound groups (cell nominal / lower, hub 6061 / PETG, pad 30 / 50 / 70 A + rigid + K 0.25 GPa, tray 24 / 112), zeta 0.3 / 1 %, thrust scale 0.77 / 1.0 / 1.25, loop gain rescaled to the current 1.8796 kg inertia (cad_mass.json), FC at the spar centre; mechanism/out/T089_data/t089_gm.json, T089_report.md. Order: pit / rll / yaw x kd, nom, hi. Limits and D-191 method unchanged; flexible modes at the FE frequencies (x 1.0). With the FE own (lighter, 1.64 kg) inertia the pitch rows are 1.0 (unstable at some thrust scale); T089_report.md s2", est=True),
+        "gm_shifted": V([2.37, 2.03, 1.61, 2.76, 2.68, 2.44, 2.13, 2.19, 2.33], "-", "SRC-A-T089", "T-089 (D-237 proposed): sitl/fu_cage.py configure('t089') (X2216 V3 880KV on APC 9x4.5MR, spin cap 1.0, TFULL 14.17 N, KQ 0.0145 m, D-191 gains, motor lag 40 ms and delay 4 ms EST), FE = structures/fe_a.py with the T-085 options at kd / nom / hi, minimum over the 24 T-085 bound groups (cell nominal / lower, hub 6061 / PETG, pad 30 / 50 / 70 A + rigid + K 0.25 GPa, tray 24 / 112), zeta 0.3 / 1 %, thrust scale 0.77 / 1.0 / 1.25, loop gain rescaled to the current 1.8796 kg inertia (cad_mass.json), FC at the spar centre; mechanism/out/T089_data/t089_gm.json, T089_report.md. Order: pit / rll / yaw x kd, nom, hi. Limits and D-191 method unchanged; all flexible modes shifted -20 %", est=True),
+        "gm_shifted_up": V([1.13, 1.08, 1.05, 3.38, 3.65, 4.12, 2.48, 2.48, 2.48], "-", "SRC-A-T089", "T-089 (D-237 proposed): sitl/fu_cage.py configure('t089') (X2216 V3 880KV on APC 9x4.5MR, spin cap 1.0, TFULL 14.17 N, KQ 0.0145 m, D-191 gains, motor lag 40 ms and delay 4 ms EST), FE = structures/fe_a.py with the T-085 options at kd / nom / hi, minimum over the 24 T-085 bound groups (cell nominal / lower, hub 6061 / PETG, pad 30 / 50 / 70 A + rigid + K 0.25 GPa, tray 24 / 112), zeta 0.3 / 1 %, thrust scale 0.77 / 1.0 / 1.25, loop gain rescaled to the current 1.8796 kg inertia (cad_mass.json), FC at the spar centre; mechanism/out/T089_data/t089_gm.json, T089_report.md. Order: pit / rll / yaw x kd, nom, hi. Limits and D-191 method unchanged; all flexible modes shifted +20 %", est=True),
     }
 
     # ---------------------------------------------------------------- servo (FIXES2 s2, SERVO.md)
@@ -192,7 +210,7 @@ def build():
                   "damper_slew_nm": V(0.0098, "N m", "SRC-A-FIXES2", "FIXES2 s2: damper at servo slew, 25 C"),
                   "damper_slew_cold_nm": V(0.0196, "N m", "SRC-A-FIXES2", "FIXES2 s2: damper at 0 C (EST x 2)", est=True),
                   "load_factor": V(1.5, "-", "SRC-A-FIXES2", "required = 1.5 x load (SERVO.md s1)"),
-                  "arm_mm": V(12.0, "mm", "SRC-A-FIXES2", "FIXES2 s1.3: servo arm 12 mm (CAD ARM_X1)"), "horn_mm": V(12.9, "mm", "SRC-A-FIXES2", "FIXES2 s1.3: horn pushrod radius 12.9 mm")}
+                  "arm_mm": V(8.5, "mm", "SRC-A-FIXES2", "D-212 rev 2: servo arm hole 8.5 mm (CAD ARM_R; was 12 mm, FIXES2 s1.3); arm hole row of the ES3054HV arm not published", est=True), "horn_mm": V(9.155, "mm", "SRC-A-FIXES2", "D-212 rev 2: horn hole 9.155 mm directly above the hinge axis (CAD HORN_R = ROD_Z - HINGE_Z; was 12.9 mm on the 44 deg line, FIXES2 s1.3)", est=True)}
 
     # ---------------------------------------------------------------- structures and foam (stored MS, read from the tables)
     P["struct"] = {
@@ -218,7 +236,7 @@ def build():
         "ms_cup_op_headpull": V(14.82, "-", "SRC-A-ARMCUP", "arm_cup_checks.md: cup head pull-through at the 0.90 cap thrust + 1P, 1.26 vs 20 MPa", est=True),
         "ms_fatigue_hub_wall": V(1.17, "-", "SRC-A-ARMCUP", "arm_cup_checks.md: hub arm-socket wall, 2000 cycles 0 to cap, 6 mm patch, 4.6 vs 10 MPa (knock-down EST)", est=True),
         "ms_fatigue_arm": V(15.32, "-", "SRC-A-ARMCUP", "arm_cup_checks.md: arm tube bending amplitude 8.6 vs 140 MPa at 4e6 cycles (knock-down 0.40 EST)", est=True),
-        "landing_stroke_mm": V(15.2, "mm", "SRC-A-REQ", "A-P13 basis: landing stroke 15.2 of 20 mm (structures iteration 2)"),
+        "landing_stroke_mm": V(17.2, "mm", "SRC-A-AR015", "AR-016 record run, 1.881 kg EST, rib 25x23, Fp 37.5 N, zeta 0.05: worst stroke 17.2 mm of 20 (n 10.76 g, tilt 2.3 deg). Holds ONLY inside the accepted foam region Fp 37.5-39.0 N AND zeta 0.02-0.05 (D-243); outside it the stroke reaches 20.2-20.6 mm (FAIL, e.g. zeta 0.01) or 30 / 31.5 N bottom the stroke. Foam plateau and zeta unmeasured: TP-3"),
         "landing_stroke_max_mm": V(20.0, "mm", "SRC-A-REQ", "A-P13 basis: 20 mm available"),
         "foam_ms_spar_bond": V(0.48, "-", "SRC-A-FOAM103", "foam_103.md: spar bond zone, FIXES2 rule |y| <= 0.20 m, 58 kPa vs 86 (shear 86 kPa EST)", est=True),
         "foam_ms_fin_slot": V(0.81, "-", "SRC-A-FOAM103", "foam_103.md: bearing at the fin slot, 57 vs 103 kPa (compressive 103 kPa, data sheet)"),
@@ -227,15 +245,45 @@ def build():
         "foam_ms_cap_peel": V(0.37, "-", "SRC-A-FOAM103", "foam_103.md: stop reaction peeling a lens cap, 94 vs 129 kPa (tension EST; tape-skin peel has no allowable)", est=True),
     }
 
+    # ---------------------------------------------------------------- elevon linkage strength (D-212 rev 3), read from the machine-readable check outputs
+    ll = json.loads((A / "mechanism" / "out" / "linkage_loads_check.json").read_text(encoding="utf-8"))
+    kin = json.loads((A / "mechanism" / "out" / "linkage_kinematics.json").read_text(encoding="utf-8"))
+    rib, bl, el, leg = ll["horn_rib_foam"], ll["horn_blade"], ll["elevon_torsion_foam_only"], ll["z_bend_leg"]
+    kb, sp = ll["keeper_bridge_MEC008"], ll["servo_speed_torque_T056"]["cases"]["6.0V_pair_0.333"]
+    S = "SRC-A-LINKLOADS"
+    P["linkage"] = {
+        "f_hold_n": V(round(ll["inputs"]["F_hold_N"], 2), "N", S, "rod force at the VD hinge moment, max over +-20 deg (elevon_dynamics.py)", est=True),
+        "f_stall_n": V(round(ll["inputs"]["F_stall_N"], 2), "N", S, "servo stalled into the stop / jammed elevon: 0.397 N m / (8.5 mm x min arm lever 0.916, +21 deg)", est=True),
+        "rib_foam_hold_kpa": V(round(rib["hold"]["factored_kPa_max"], 1), "kPa", S, "horn rib face shear in the foam, beam-on-foundation FE, worst of E 5-10 MPa x l 2-8 mm, x 2.156 (range %.0f-%.0f kPa unfactored)" % tuple(rib["hold"]["peak_kPa_range"]), est=True),
+        "rib_foam_stall_kpa": V(round(rib["stall"]["factored_kPa_max"], 1), "kPa", S, "same at the 51 N stall force, x 1.4375", est=True),
+        "elevon_torsion_hold_kpa": V(round(el["hold"]["factored_kPa"], 1), "kPa", S, "elevon beside the horn, foam-only Saint-Venant torsion, outboard share %.2f of 0.146 N m, x 2.156 (tape skin not credited)" % el["outboard_span_fraction"], est=True),
+        "blade_root_hold_mpa": V(round(bl["hold"]["root_factored_MPa"], 2), "MPa", S, "horn blade governing section, in-layer, x 2.156", est=True),
+        "blade_root_stall_mpa": V(round(bl["stall"]["root_factored_MPa"], 2), "MPa", S, "horn blade governing section at 51 N, x 1.4375", est=True),
+        "bearing_hold_mpa": V(round(bl["hold"]["bearing_factored_MPa"], 2), "MPa", S, "1.0 mm clevis pin bearing in the 2 mm horn, x 2.156", est=True),
+        "bearing_stall_mpa": V(round(bl["stall"]["bearing_factored_MPa"], 2), "MPa", S, "same at 51 N, x 1.4375", est=True),
+        "shearout_stall_mpa": V(round(bl["stall"]["shearout_factored_MPa"], 2), "MPa", S, "horn hole shear-out F / (2 t e), ligament 1.65 mm, at 51 N, x 1.4375", est=True),
+        "shearout_allow_mpa": V(round(20.0 / math.sqrt(3), 2), "MPa", "SRC-A-ARMCUP", "PETG in-layer 20 MPa / sqrt(3) (the script's shear-out allowable, linkage_loads_check.py; EST)", est=True),
+        "rod_yield_req_mpa": V(round(leg["required_yield_MPa_governing"], 0), "MPa", S, "Z-bend leg yield needed at 1.5 x 51 N with the curved-wire factor 1.625, rod lifted against the keeper (e 1.9 mm, review r3 m-3; was 1.6 mm, 1172 MPa); stall basis: 0.397 N m at 7.2 V, valid with the Kakute rail jumper at 7.2 V (m-8; 8.4 V is not available from the FC, would give about 59 N)", est=True),
+        "a228_allow_mpa": V(round(leg["A228_bending_allow_MPa_recalled"], 0), "MPa", S, "A228 music wire bending allowable 0.78 S_ut at 1.2 mm (Shigley constants RECALLED, not re-read)", est=True),
+        "keeper_bridge_stall_mpa": V(round(kb["stall"]["factored_MPa"], 2), "MPa", S, "keeper bridge (MEC-008, 0.8 x 3.1 mm section, 2.0 mm cantilever) bending at the 51 N stall force, rod lifted (e 1.9 mm), V = F e / L (L 43.25 mm), x 1.4375; allowable is the printed PETG 20 MPa EST; creep and preload loss '-'", est=True),
+        "servo_speed_margin_r2": V(round(sp["speed_margin_R2"], 3), "-", S, "AR-005: loaded elevon rate (231 deg/s, 6.0 V pair, stall 0.333 N m, 0.13 s / 60 deg, linear torque-speed line, end-point load 0.146 N m + preload + damper) over the 152 deg/s needed for +-11 deg at the 2.2 Hz crossover (EST); the 7.2 V case (1.73) is not used (7.2 V speed unpublished)", est=True),
+        "servo_speed_margin_min": V(1.0, "-", S, "AR-005 acceptance criterion: speed margin >= 1.0 for the R2 sinusoid (set before the run)"),
+        "foam_shear_kpa": V(round(rib["allowable_kPa_EST"], 1), "kPa", "SRC-A-FOAM103", "foam shear 100 x 103/120 kPa (EST, foam_103.py)", est=True),
+        "petg_allow_mpa": V(20.0, "MPa", "SRC-A-ARMCUP", "printed PETG in-layer / bearing allowable (EST, arm_cup_checks.py PETG_BEAR, fea_arm.py ALLOW)", est=True),
+        "free_play_deg": V(round(kin["free_play_budget_deg"]["total_known_deg"], 3), "deg", "SRC-A-LINKKIN", "arm hole 0.1 + horn hole 0.1 mm over the 9.155 mm horn + Z-bend freedom; clevis cheek holes '-'", est=True),
+        "free_play_guide_deg": V(1.0, "deg", "SRC-A-SERVOMD", "SERVO.md s4: free play <= 1 deg (FLUTTER basis, review r3 m-7; FIXES2 s1: with the hinge damper the linear flutter result does not depend on K; free-play limit cycles not covered)"),
+    }
+
     # ---------------------------------------------------------------- cost (BOM-A.csv rows, bom_a.py basis)
     P["cost"] = {
         "bom_rows": V([[r["id"], r["subsystem"], r["ship_group"], float(r["qty"]), float(r["unit_usd"]), r["status"] == "unverified"] for r in bom],
-                      "id, subsystem, ship group, qty, USD each, unverified", "SRC-A-BOM", "all 38 rows of BOM-A.csv (status U / EST = unverified)"),
+                      "id, subsystem, ship group, qty, USD each, unverified", "SRC-A-BOM", "all rows of BOM-A.csv (status U / EST = unverified)"),
         "tax": V(0.1025, "-", "SRC-A-BOMPY", "bom_a.py TAX 10.25 % on goods"), "faa_usd": V(5.0, "USD", "SRC-A-BOMPY", "bom_a.py FAA"),
         "bump": V(0.30, "-", "SRC-A-BOMPY", "bom_a.py BUMP: +30 % on the unverified lines (gate G7)"),
-        "ship_usd": V([["RMRC", 15.0], ["TMotor", 10.71], ["Amazon", 10.71], ["Prusa", 10.71], ["SparkFun", 8.0], ["Local", 0.0]], "USD", "SRC-A-BOMPY",
-                      "bom_a.py SHIP per distinct ship group, EST (RMRC rates not readable, QP-1/COST.md)", est=True),
-        "reserve_tube_ids": V(["R02", "R08", "R09", "R10"], "-", "SRC-A-BOMPY", "bom_a.py reserve(): full carbon-tube set"),
+        "ship_usd": V(_bom_ship(), "USD", "SRC-A-BOMPY",
+                      "bom_a.py SHIP per distinct ship group, read from bom_a.py (single source, D-230), EST", est=True),
+        "reserve_ship_usd": V([10.71, 15.0, 10.71], "USD", "SRC-A-BOMPY", "bom_a.py reserve(): 3 shipments at the original EST (definition unchanged, AM-018)", est=True),
+        "reserve_tube_ids": V(["R02", "R08", "R09", "R10", "R15"], "-", "SRC-A-BOMPY", "bom_a.py reserve(): full carbon-tube set incl. R15 25x23 rib"),
     }
 
     # ---------------------------------------------------------------- schedule (schedule_a.py)
@@ -251,19 +299,19 @@ def build():
     }
 
     # ---------------------------------------------------------------- transport
-    P["box"] = {"packed_m": V([0.90, 0.50, 0.39], "m", "SRC-A-REQ", "A-U3: A is one piece, 0.90 x 0.50 x 0.39 m, props on; the trunk size is `—` (no car measured)")}
+    P["box"] = {"packed_m": V([0.90, 0.50, 0.394], "m", "SRC-A-REQ", "A-U3: A is one piece, 0.90 x 0.50 x 0.394 m, props on (T-084: fin pads reach z +-196.7 mm = FIN_H 0.1937 + 3 mm, 393.4 mm, was 0.39 m; t083_bbox.py on the T-084 CAD: x 490.9 mm); the trunk size is `—` (no car measured)")}
 
     # ---------------------------------------------------------------- 3-D gates (stored output of collide_a.py / a_assembly.py)
     P["cad3d"] = {
-        "n_over_tol": V(n_over, "-", "SRC-A-COLL", "cad/out/report_pose20.json + report_pose21.json (= report.json): overlaps deeper than the tolerance at neutral, +-20 and +-21 deg"),
-        "max_depth_mm": V(max(depths) if depths else 0.0, "mm", "SRC-A-COLL", "deepest overlap at any reachable pose (neutral, +-20, +-21 deg): 0.042 mm, balance tab on its stop boss at +21 deg (D-194)"),
-        "wire_ends_open": V(len(reps[""]["wire_ends"]), "-", "SRC-A-COLL", "report.json wire_ends: wire ends not seated in a part (41 strands)"),
+        "n_over_tol": V(n_over, "-", "SRC-A-COLL", "cad/out/report_d212r3_pose21.json (neutral and +-21 deg) + report_d212r3_pose20.json (+-20 deg), both D-212 rev 3: overlaps deeper than the tolerance"),
+        "max_depth_mm": V(max(depths) if depths else 0.0, "mm", "SRC-A-COLL", "deepest overlap at any reachable pose: 0.034 mm static at neutral and +-21 deg (report_d212r3_pose21.json, D-212 rev 3; was 0.042 mm in the pre-D-212 report_pose21.json); the +-20 deg poses (report_d212r3_pose20.json, rev 3) show 0 hits over tolerance, static identical"),
+        "wire_ends_open": V(len(reps[""]["wire_ends"]), "-", "SRC-A-COLL", "report.json wire_ends: wire ends not seated in a part (strand count: see wire_inventory.json, 44 strands in the T-099 GLB probe)"),
         "wire_kinks": V(len(reps[""]["kinks"]), "-", "SRC-A-COLL", "report.json kinks (wire folds)"),
         "parts": V(reps[""]["parts"], "-", "SRC-A-COLL", "report.json parts checked"),
         "assy_steps": V(len(asm["steps"]) + len(asm_bench), "-", "SRC-A-ASSY", "assembly.json steps + assembly_bench.json steps (D-202 bench run)"),
         "assy_steps_ok": V(sum(1 for s in asm["steps"] + asm_bench if not s["pairs"] and s["worst_mm"] <= tol), "-", "SRC-A-ASSY",
-                           "assembly.json steps with no blocking pair at or above the tolerance (35 of 35 in ASSEMBLY.md)"),
-        "assy_parts_placed": V(sum(len(s["parts"]) for s in asm["steps"]), "-", "SRC-A-ASSY", "assembly.json parts placed (96 of 96)"),
+                           "assembly.json steps with no blocking pair at or above the tolerance (count is computed; current a_assembly run per T-099 gates record: 66 steps, 59 with parts plus 7 marker steps, 0 blocked)"),
+        "assy_parts_placed": V(sum(len(s["parts"]) for s in asm["steps"]), "-", "SRC-A-ASSY", "assembly.json parts placed (computed; current a_assembly run per T-099 gates record: 129 of 129)"),
     }
     return P
 

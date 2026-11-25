@@ -1,0 +1,55 @@
+fillet: sleeve B, 10 junction edges at r 2.0 mm
+fillet: sleeve A, 13 junction edges at r 1.5 mm
+hub block volume 17174 mm3 = 21.81 g PETG
+hub aft-face nodes for the hub-group load: 3611
+chol flag 0, 93.3 s, nnz(R) 2024 M
+solved 233.0 s, residual 3.6e-10 
+relative residual per load case: 2.2e-10 3.5e-10 3.5e-10 2.3e-11 1.4e-11 1.6e-11 2.2e-10 2.9e-10 3.6e-10 2.3e-11 1.4e-11 1.6e-11 1.8e-10 2.5e-10 3.2e-10 2.2e-11 1.4e-11 1.6e-11 1.9e-10 3.1e-10 3.3e-10 2.2e-11 1.4e-11 1.6e-11 4.4e-12 3.8e-10 2.9e-10 2.8e-10 9.5e-11 1.2e-10
+equilibrium max error 2.2e-10
+mesh 379039 elements, 1758939 free dof, hub block 21.81 g, 378 s
+landing combos from cache 301
+LANDING A_all_through_arms {"whole hub": [10.19, 0.91, "hard 10 wide + drift .5 y@342"], "aft of block face (D-209 \"bridge boss\" definition)": [11.69, 0.794, "hard 10 wide + drift .5 y@342"], "last 12 mm before the bore mouth (collar in C6; block in base)": [4.43, 2.096, "hard 7/7 combo@345"], "collar extension only (x > 24)": [4.42, 2.098, "hard 7/7 combo@345"]}
+LANDING B_partition {"whole hub": [10.52, 0.882, "hard 10 wide + drift .5 y@342"], "aft of block face (D-209 \"bridge boss\" definition)": [12.15, 0.764, "hard 10 wide + drift .5 y@342"], "last 12 mm before the bore mouth (collar in C6; block in base)": [4.47, 2.076, "hard 7/7 combo@345"], "collar extension only (x > 24)": [4.46, 2.078, "hard 7/7 combo@345"]}
+--- hot-spot hard 10 wide + drift .5 y@342 (A): whole-hub p99 10.19 MPa, max 55.1, 13938 GP above allow 9.28 of 939276 (1% = 9392)
+  collar (x > 24)                                                n  235450  p99   3.65  p99.9   6.02  max    17.1  >allow    70
+  aft block / bore wall (x > floor+2, <= 24)                     n   71955  p99   9.36  p99.9  11.24  max    13.4  >allow   773
+  floor band (tube-B surface to floor+2 mm, r < bore+2)          n   58762  p99  21.05  p99.9  39.10  max    55.1  >allow  8341
+  sleeves outside the block box                                  n  283125  p99   6.49  p99.9  11.80  max    18.7  >allow   787
+  block forward of the floor band                                n  289984  p99   9.68  p99.9  14.02  max    22.0  >allow  3967
+  top cell x  14.91 y  -6.67 z  -0.04  p1   55.1  floor band (tube-B surface to floor+2 mm, r < bore+2)
+  top cell x  14.90 y  -6.31 z   0.96  p1   53.4  floor band (tube-B surface to floor+2 mm, r < bore+2)
+  top cell x  14.89 y  -5.80 z  -5.83  p1   50.7  floor band (tube-B surface to floor+2 mm, r < bore+2)
+  top cell x  14.88 y  -6.93 z  -2.24  p1   49.6  floor band (tube-B surface to floor+2 mm, r < bore+2)
+  top cell x  14.90 y  -6.88 z  -3.25  p1   49.4  floor band (tube-B surface to floor+2 mm, r < bore+2)
+  top cell x  14.88 y  -6.87 z  -0.73  p1   46.2  floor band (tube-B surface to floor+2 mm, r < bore+2)
+  top cell x  14.86 y  -6.51 z  -4.55  p1   42.8  floor band (tube-B surface to floor+2 mm, r < bore+2)
+  top cell x  14.90 y  -4.88 z  -6.93  p1   41.0  floor band (tube-B surface to floor+2 mm, r < bore+2)
+  top cell x  14.90 y  -6.80 z  -3.94  p1   39.8  floor band (tube-B surface to floor+2 mm, r < bore+2)
+  top cell x  14.94 y  -5.45 z  -6.76  p1   39.4  floor band (tube-B surface to floor+2 mm, r < bore+2)
+  top cell x  14.90 y  -6.70 z  -3.53  p1   37.6  floor band (tube-B surface to floor+2 mm, r < bore+2)
+  top cell x  14.88 y  -5.32 z   2.42  p1   37.3  floor band (tube-B surface to floor+2 mm, r < bore+2)
+  top cell x  14.88 y  -5.18 z  -6.67  p1   36.3  floor band (tube-B surface to floor+2 mm, r < bore+2)
+  top cell x  14.89 y  -4.41 z   3.39  p1   36.2  floor band (tube-B surface to floor+2 mm, r < bore+2)
+  whole-hub p99 with region removed: {'collar (x > 24)': 10.92, 'aft block / bore w': 10.3, 'floor band (tube-B': 8.68, 'sleeves outside th': 10.98, 'block forward of t': 10.59}
+--- hot-spot hard 10 wide + drift .5 y@342 (B): whole-hub p99 10.52 MPa, max 56.1, 15454 GP above allow 9.28 of 939276 (1% = 9392)
+  collar (x > 24)                                                n  235450  p99   3.70  p99.9   5.99  max    16.5  >allow    67
+  aft block / bore wall (x > floor+2, <= 24)                     n   71955  p99   9.79  p99.9  11.87  max    14.2  >allow  1062
+  floor band (tube-B surface to floor+2 mm, r < bore+2)          n   58762  p99  21.25  p99.9  39.40  max    56.1  >allow  8574
+  sleeves outside the block box                                  n  283125  p99   6.71  p99.9  12.77  max    19.5  >allow  1082
+  block forward of the floor band                                n  289984  p99   9.94  p99.9  14.95  max    22.1  >allow  4669
+  top cell x  14.91 y  -6.67 z  -0.04  p1   56.1  floor band (tube-B surface to floor+2 mm, r < bore+2)
+  top cell x  14.90 y  -6.31 z   0.96  p1   54.5  floor band (tube-B surface to floor+2 mm, r < bore+2)
+  top cell x  14.89 y  -5.80 z  -5.83  p1   50.7  floor band (tube-B surface to floor+2 mm, r < bore+2)
+  top cell x  14.88 y  -6.93 z  -2.24  p1   50.2  floor band (tube-B surface to floor+2 mm, r < bore+2)
+  top cell x  14.90 y  -6.88 z  -3.25  p1   49.7  floor band (tube-B surface to floor+2 mm, r < bore+2)
+  top cell x  14.88 y  -6.87 z  -0.73  p1   46.8  floor band (tube-B surface to floor+2 mm, r < bore+2)
+  top cell x  14.86 y  -6.51 z  -4.55  p1   43.0  floor band (tube-B surface to floor+2 mm, r < bore+2)
+  top cell x  14.90 y  -4.88 z  -6.93  p1   40.8  floor band (tube-B surface to floor+2 mm, r < bore+2)
+  top cell x  14.90 y  -6.80 z  -3.94  p1   40.0  floor band (tube-B surface to floor+2 mm, r < bore+2)
+  top cell x  14.94 y  -5.45 z  -6.76  p1   39.4  floor band (tube-B surface to floor+2 mm, r < bore+2)
+  top cell x  14.88 y  -5.32 z   2.42  p1   38.4  floor band (tube-B surface to floor+2 mm, r < bore+2)
+  top cell x  14.90 y  -6.70 z  -3.53  p1   37.8  floor band (tube-B surface to floor+2 mm, r < bore+2)
+  top cell x  14.89 y  -4.41 z   3.39  p1   37.2  floor band (tube-B surface to floor+2 mm, r < bore+2)
+  top cell x  14.88 y  -5.18 z  -6.67  p1   36.2  floor band (tube-B surface to floor+2 mm, r < bore+2)
+  whole-hub p99 with region removed: {'collar (x > 24)': 11.28, 'aft block / bore w': 10.62, 'floor band (tube-B': 8.91, 'sleeves outside th': 11.29, 'block forward of t': 10.88}
+done 805 s

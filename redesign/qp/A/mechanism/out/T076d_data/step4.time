@@ -1,0 +1,4 @@
+g0ms11 exit 0 wall 1530 s
+g1ms11 exit 0 wall 1683 s
+g1ms09 killed at 05:46 after about 30 min wall (MATLAB resident 52 GB of 64 GB RAM, about 1 core effective, paging; Cholesky fill estimated above 50 GB): not a solver failure, replaced by the coarse member MS 1.4 of the pair
+g1ms14 exit 0 wall 783 s

@@ -1,0 +1,78 @@
+# landing_path_a.py, geometry CAD: x_ground 0.3375 y 0.380 z pad centre 0.1770 m, CG [ 0.02136869 -0.00203448  0.00636946], mass 1.5 kg, plateau 30 N, mu 0.4
+# KF 1.725 KP 2.156; sections: fin tube 16x14 Z 166 mm3; rib 14x12 Z 124 mm3; spar 12x10 Z 88 mm3
+  case hard level                         side  12.4 N Fmax  39.8 N  rib RF (landing_a) 2.93  tilt_end 0.0  min path RF 0.02  [2 s]
+  case hard 10 narrow                     side  15.9 N Fmax  40.0 N  rib RF (landing_a) 2.24  tilt_end 2.0  min path RF 0.01  [4 s]
+  case hard 10 narrow neg                 side  15.8 N Fmax  40.0 N  rib RF (landing_a) 2.31  tilt_end 1.9  min path RF 0.01  [5 s]
+  case hard 10 wide                       side  17.9 N Fmax  44.7 N  rib RF (landing_a) 1.51  tilt_end 0.2  min path RF 0.01  [7 s]
+  case hard 7/7 combo                     side  17.0 N Fmax  42.4 N  rib RF (landing_a) 1.24  tilt_end 0.8  min path RF 0.01  [8 s]
+  case hard 10 narrow + drift .5          side  16.1 N Fmax  40.1 N  rib RF (landing_a) 2.85  tilt_end 2.5  min path RF 0.01  [10 s]
+  case hard 10 wide + drift .5 y          side  18.7 N Fmax  46.8 N  rib RF (landing_a) 1.56  tilt_end 0.4  min path RF 0.01  [11 s]
+  case normal level .5                    side  11.3 N Fmax  33.0 N  rib RF (landing_a) 1.34  tilt_end 0.0  min path RF 0.02  [13 s]
+  case normal 10 narrow .5                side  13.5 N Fmax  33.8 N  rib RF (landing_a) 2.27  tilt_end 0.3  min path RF 0.02  [14 s]
+  case normal 10 wide .5 + drift          side  15.9 N Fmax  39.8 N  rib RF (landing_a) 1.73  tilt_end 0.3  min path RF 0.02  [15 s]
+  case SITL Tb_h5 wide (y drift)          side  16.3 N Fmax  40.8 N  rib RF (landing_a) 0.86  tilt_end 0.3  min path RF 0.02  [17 s]
+  case SITL Tb_h5 narrow (z drift)        side  13.7 N Fmax  34.4 N  rib RF (landing_a) 2.43  tilt_end 0.2  min path RF 0.02  [18 s]
+  case SITL Ta_h5 wide (y drift)          side  16.2 N Fmax  40.6 N  rib RF (landing_a) 1.25  tilt_end 0.3  min path RF 0.02  [19 s]
+  case SITL Ta_h5 narrow (z drift)        side  13.8 N Fmax  35.4 N  rib RF (landing_a) 2.22  tilt_end 0.5  min path RF 0.02  [20 s]
+  case SITL Z5_b45 wide (y drift)         side  16.3 N Fmax  40.7 N  rib RF (landing_a) 1.00  tilt_end 0.3  min path RF 0.02  [22 s]
+  case SITL Z5_b45 narrow (z drift)       side  14.3 N Fmax  35.8 N  rib RF (landing_a) 2.15  tilt_end 0.5  min path RF 0.01  [23 s]
+  case SITL Lb_5e wide (y drift)          side  15.8 N Fmax  39.5 N  rib RF (landing_a) 2.91  tilt_end 0.5  min path RF 0.02  [25 s]
+  case SITL Lb_5e narrow (z drift)        side  14.6 N Fmax  36.4 N  rib RF (landing_a) 1.99  tilt_end 0.7  min path RF 0.01  [26 s]
+  case SITL Z5_gb45 wide (y drift)        side  15.7 N Fmax  39.3 N  rib RF (landing_a) 2.38  tilt_end 0.2  min path RF 0.02  [28 s]
+  case SITL Z5_gb45 narrow (z drift)      side  14.7 N Fmax  36.7 N  rib RF (landing_a) 1.97  tilt_end 0.6  min path RF 0.01  [29 s]
+  case hard 16 wide + drift .5 y          side  18.3 N Fmax  45.7 N  rib RF (landing_a) 1.09  tilt_end 0.3  min path RF 0.01  [30 s]
+
+## Wing section / share data (T-069): {'sh_spar': 0.511836, 'sh_foam': 0.488164, 'GJs': 3.162013, 'GJf': 3.015769, 'J_s': 0.0, 'J_f': 0.0, 'tau_unit': 56428.638697, 'xn': 0.061495, 'EIs': 42.293926, 'EIf': 428.886231, 'Jsolid': 0.0, 'Jbored': 0.0, 'foam': {'A': 0.0035072000000000002, 'xc': 0.095857299270073, 'Iz': 1.0154925880338688e-05, 'x0': 0.0, 'x1': 0.245, 'enclosed': 0.00361984}}
+
+## Minimum RF per check over all cases (criterion RF >= 1.0)
+| Check | Allowable | min RF | governing case | demand stress = allowable / RF |
+|---|---|---|---|---|
+| CUP EVA bearing at rim (15 x 2 mm contact) vs crush plateau | EST 0.17 MPa | 0.01 | hard 16 wide + drift .5 y | 14.8 MPa |
+| P10 saddle socket: rib epoxy bond / bearing (D14 x 20) - BOND INTEGRITY (coupon, outside RF minimum; T-069 F-3) | EST BOND 2.0 MPa | 0.07 | hard 16 wide + drift .5 y | 27.8 MPa |
+| P16 wing in-plane bending, spar + foam by EI share, skin-less, y 0.060 (outboard of tray slot end 0.057) | EST spar 350 MPa / foam 103 kPa | 0.11 | hard 10 wide + drift .5 y | 3313.2 MPa |
+| CUP EVA bearing at pin hole (3 x 12 mm) vs crush plateau | EST 0.17 MPa | 0.12 | hard 16 wide + drift .5 y | 1.4 MPa |
+| CUP wall bending (printed, in-layer 20 MPa EST; 4 mm cantilever, 15 x 1.5 mm) | EST 20 MPa | 0.13 | hard 16 wide + drift .5 y | 157.6 MPa |
+| P15 wing torsion, spar + foam by GJ share, skin-less, y 0.060 (outboard of tray slot end 0.057) | EST spar 30 MPa / foam 86 kPa | 0.15 | hard 7/7 combo | 199.6 MPa |
+| P15 wing torsion, spar + foam by GJ share, skin-less, y 0.228 (motor station) | EST spar 30 MPa / foam 86 kPa | 0.15 | hard 7/7 combo | 199.6 MPa |
+| P15 wing torsion, spar + foam by GJ share, skin-less, y 0.38 (fin station) | EST spar 30 MPa / foam 86 kPa | 0.15 | hard 7/7 combo | 199.6 MPa |
+| P16 wing in-plane bending, spar + foam by EI share, skin-less, y 0.228 (motor station) | EST spar 350 MPa / foam 103 kPa | 0.18 | hard 10 wide + drift .5 y | 1997.4 MPa |
+| PIN root block: bearing in PETG socket wall (3 mm x 2.5 mm) | EST PETG_BEAR 20 MPa | 0.19 | SITL Tb_h5 wide (y drift) | 102.6 MPa |
+| PIN saddle: bearing in PETG socket wall (3 mm x 2.5 mm) | EST PETG_BEAR 20 MPa | 0.19 | SITL Tb_h5 wide (y drift) | 102.6 MPa |
+| P7 root-block socket: rib epoxy bond / bearing (D14 x 31) - BOND INTEGRITY (coupon, outside RF minimum; T-069 F-3) | EST BOND 2.0 MPa | 0.26 | hard 7/7 combo | 7.6 MPa |
+| P12 saddle socket-to-ring junction, PETG (16.5 x 19 mm) | EST PETG_ILAY 9.5 MPa | 0.29 | hard 7/7 combo | 32.3 MPa |
+| P16 wing in-plane bending, spar + foam by EI share, skin-less, y 0.38 (fin station) | EST spar 350 MPa / foam 103 kPa | 0.31 | hard 16 wide + drift .5 y | 1142.4 MPa |
+| P14a spar 12x10 bending + torsion under the saddle (foot loads only) | EST 350 / 30 MPa | 0.32 | hard 7/7 combo | 94.9 MPa |
+| P11 saddle socket wall, PETG box 19x19 / bore 14, bending + torsion | EST PETG_ILAY 9.5 MPa | 0.34 | hard 16 wide + drift .5 y | 27.8 MPa |
+| P3 shoe ring epoxy bond on fin tube (D16 x 12) - BOND INTEGRITY (coupon, outside RF minimum; T-069 F-3) | EST BOND 2.0 MPa | 0.37 | hard 10 narrow + drift .5 | 5.4 MPa |
+| P13 saddle ring epoxy bond on spar (D12 x 60) - BOND INTEGRITY (coupon, outside RF minimum; T-069 F-3) | EST BOND 2.0 MPa | 0.48 | hard 16 wide + drift .5 y | 4.2 MPa |
+| P6 root-block ring-to-socket junction, PETG (16.5 x 19 mm) | EST PETG_ILAY 9.5 MPa | 0.50 | SITL Tb_h5 wide (y drift) | 18.9 MPa |
+| P8 root-block socket wall, PETG box 19x19 / bore 14, bending + torsion | EST PETG_ILAY 9.5 MPa | 0.51 | hard 7/7 combo | 18.8 MPa |
+| PIN root block: 1 x 3 mm CF cross-pin shear (double shear, rib torsion) | EST CF rod 30 MPa | 0.55 | SITL Tb_h5 wide (y drift) | 54.4 MPa |
+| PIN saddle: 1 x 3 mm CF cross-pin shear (double shear, rib torsion) | EST CF rod 30 MPa | 0.55 | SITL Tb_h5 wide (y drift) | 54.4 MPa |
+| P10 saddle socket: rib epoxy bond / bearing (D14 x 20) - bearing, compression side | EST PETG_BEAR 20 MPa | 0.72 | hard 16 wide + drift .5 y | 27.8 MPa |
+| P9b rib tube 14x12 at x 0.0705 (AR-012 section) | EST 350 / 30 MPa | 0.86 | SITL Tb_h5 wide (y drift) | 34.8 MPa |
+| P9a rib tube 14x12 at saddle mouth x 0.0905 | EST 350 / 30 MPa | 0.86 | SITL Tb_h5 wide (y drift) | 34.8 MPa |
+| P5 root-block ring epoxy bond on fin tube (D16 x 60) - BOND INTEGRITY (coupon, outside RF minimum; T-069 F-3) | EST BOND 2.0 MPa | 1.09 | hard 7/7 combo | 1.8 MPa |
+| P10 saddle socket: rib epoxy bond / bearing (D14 x 20) - shear (axial + torsion) | EST BOND 2.0 MPa | 1.14 | SITL Tb_h5 wide (y drift) | 1.8 MPa |
+| P13 saddle ring epoxy bond on spar (D12 x 60) - shear (axial + torsion) | EST BOND 2.0 MPa | 1.31 | hard 7/7 combo | 1.5 MPa |
+| P14b spar wall diametral crush under the saddle ring (hoop EST 40 MPa) | EST 40 MPa | 1.45 | hard 10 wide + drift .5 y | 27.6 MPa |
+| P2 shoe plate-to-ring junction, PETG (13.6 x 12 mm) | EST PETG_ILAY 9.5 MPa | 1.46 | hard 7/7 combo | 6.5 MPa |
+| P7 root-block socket: rib epoxy bond / bearing (D14 x 31) - shear (axial + torsion) | EST BOND 2.0 MPa | 1.76 | SITL Tb_h5 wide (y drift) | 1.1 MPa |
+| P7 root-block socket: rib epoxy bond / bearing (D14 x 31) - bearing, compression side | EST PETG_BEAR 20 MPa | 2.62 | hard 7/7 combo | 7.6 MPa |
+| P3 shoe ring epoxy bond on fin tube (D16 x 12) - bearing, compression side | EST PETG_BEAR 20 MPa | 3.73 | hard 10 narrow + drift .5 | 5.4 MPa |
+| P4 fin tube 16x14 at root-block edge | EST 350 / 30 MPa | 3.91 | hard 10 wide + drift .5 y | 7.7 MPa |
+| P3 shoe ring epoxy bond on fin tube (D16 x 12) - shear (axial + torsion) | EST BOND 2.0 MPa | 4.25 | hard 16 wide + drift .5 y | 0.5 MPa |
+| P13 saddle ring epoxy bond on spar (D12 x 60) - bearing, compression side | EST PETG_BEAR 20 MPa | 4.78 | hard 16 wide + drift .5 y | 4.2 MPa |
+| CUP pin shear (1 x 3 mm CF, double shear) | EST CF rod 30 MPa | 8.13 | hard 16 wide + drift .5 y | 3.7 MPa |
+| P5 root-block ring epoxy bond on fin tube (D16 x 60) - shear (axial + torsion) | EST BOND 2.0 MPa | 10.70 | hard 16 wide + drift .5 y | 0.2 MPa |
+| P5 root-block ring epoxy bond on fin tube (D16 x 60) - bearing, compression side | EST PETG_BEAR 20 MPa | 10.87 | hard 7/7 combo | 1.8 MPa |
+
+MINIMUM over all rows: CUP EVA bearing at rim (15 x 2 mm contact) vs crush plateau RF 0.01 (hard 16 wide + drift .5 y)
+MINIMUM excluding the peel rows and the PSA rows (allowable with no repo source): CUP EVA bearing at rim (15 x 2 mm contact) vs crush plateau RF 0.01 (hard 16 wide + drift .5 y)
+Rows below 1.0: CUP EVA bearing at rim (15 x 2 mm contact) vs crush plateau 0.01; P10 saddle socket: rib epoxy bond / bearing (D14 x 20) - BOND INTEGRITY (coupon, outside RF minimum; T-069 F-3) 0.07; P16 wing in-plane bending, spar + foam by EI share, skin-less, y 0.060 (outboard of tray slot end 0.057) 0.11; CUP EVA bearing at pin hole (3 x 12 mm) vs crush plateau 0.12; CUP wall bending (printed, in-layer 20 MPa EST; 4 mm cantilever, 15 x 1.5 mm) 0.13; P15 wing torsion, spar + foam by GJ share, skin-less, y 0.060 (outboard of tray slot end 0.057) 0.15; P15 wing torsion, spar + foam by GJ share, skin-less, y 0.228 (motor station) 0.15; P15 wing torsion, spar + foam by GJ share, skin-less, y 0.38 (fin station) 0.15; P16 wing in-plane bending, spar + foam by EI share, skin-less, y 0.228 (motor station) 0.18; PIN root block: bearing in PETG socket wall (3 mm x 2.5 mm) 0.19; PIN saddle: bearing in PETG socket wall (3 mm x 2.5 mm) 0.19; P7 root-block socket: rib epoxy bond / bearing (D14 x 31) - BOND INTEGRITY (coupon, outside RF minimum; T-069 F-3) 0.26; P12 saddle socket-to-ring junction, PETG (16.5 x 19 mm) 0.29; P16 wing in-plane bending, spar + foam by EI share, skin-less, y 0.38 (fin station) 0.31; P14a spar 12x10 bending + torsion under the saddle (foot loads only) 0.32; P11 saddle socket wall, PETG box 19x19 / bore 14, bending + torsion 0.34; P3 shoe ring epoxy bond on fin tube (D16 x 12) - BOND INTEGRITY (coupon, outside RF minimum; T-069 F-3) 0.37; P13 saddle ring epoxy bond on spar (D12 x 60) - BOND INTEGRITY (coupon, outside RF minimum; T-069 F-3) 0.48; P6 root-block ring-to-socket junction, PETG (16.5 x 19 mm) 0.50; P8 root-block socket wall, PETG box 19x19 / bore 14, bending + torsion 0.51; PIN root block: 1 x 3 mm CF cross-pin shear (double shear, rib torsion) 0.55; PIN saddle: 1 x 3 mm CF cross-pin shear (double shear, rib torsion) 0.55; P10 saddle socket: rib epoxy bond / bearing (D14 x 20) - bearing, compression side 0.72; P9b rib tube 14x12 at x 0.0705 (AR-012 section) 0.86; P9a rib tube 14x12 at saddle mouth x 0.0905 0.86
+
+## F10 volumes (voxel 0.25 mm of the stub-built CAD shapes, minus cuts; solid PETG at RHO_PETG 1.27 g/cm3)
+FIN-005-R: voxel volume 14.48 cm3 -> solid 18.39 g; listed 1.0 g; sum of shape volumes before cuts 22.66 cm3 -> 28.78 g; listed / solid 0.05
+FIN-003-R: voxel volume 18.54 cm3 -> solid 23.54 g; listed 3.2 g; sum of shape volumes before cuts 24.06 cm3 -> 30.55 g; listed / solid 0.14
+GER-001-UR: voxel volume 4.16 cm3 -> solid 5.28 g; listed 1.4 g; sum of shape volumes before cuts 4.52 cm3 -> 5.73 g; listed / solid 0.26
+GER-002-UR: voxel volume 5.40 cm3 -> solid 6.86 g; listed 0.7 g; sum of shape volumes before cuts 5.40 cm3 -> 6.86 g; listed / solid 0.10

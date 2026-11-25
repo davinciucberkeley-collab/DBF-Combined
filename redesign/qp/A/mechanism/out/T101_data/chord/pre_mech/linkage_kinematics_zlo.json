@@ -1,0 +1,149 @@
+{
+ "git_head": "73d9596689ee35afa630383f6454860f592efbd7",
+ "criteria": {
+  "freeplay_deg": 0.25,
+  "res_m": 1e-09,
+  "sym_rad": 1e-09,
+  "travel_deg": 45.0,
+  "sigma_min": 0.25,
+  "tilt_fraction": 0.5,
+  "gear_tol": 1e-09
+ },
+ "assumed_servo_travel_deg": [
+  45.0,
+  60.0
+ ],
+ "arm_joint": {
+  "state": "lo",
+  "z_mm": 9.299999999999999,
+  "keep_mm": 0.3
+ },
+ "geometry": {
+  "L_rod_m": 0.04324999999999998,
+  "ARM_R": 0.0085,
+  "HORN_R": 0.009155026492074041,
+  "XH": 0.18375,
+  "HINGE_Z": 0.00029497350792595826,
+  "HORN_XH": 0.18375,
+  "SV_XS": 0.1405,
+  "SERVO_Y": 0.2,
+  "ROD_Z": 0.00945,
+  "horn_hole_rel_hinge_mm": [
+   0.0,
+   9.155026492074041
+  ],
+  "horn_hole_radius_check_mm": 9.155026492074041,
+  "ELEV_LIM": 20.0,
+  "ELEV_STOP": 21.0,
+  "tilt_allow_Zbend_deg": 2.862405226111755,
+  "tilt_allow_clevis_deg": 2.862405226111749
+ },
+ "sweep": {
+  "step_deg": 0.05,
+  "n": 841,
+  "max_residual_m": 2.7755575615628914e-17,
+  "max_solver_disagreement": 4.440892098500626e-15,
+  "max_LR_asymmetry_rad": 1.3322676295501878e-15,
+  "max_gear_formula_diff": 1.2212453270876722e-15,
+  "min_sigma": 0.6051013427506957,
+  "min_horn_lever": 0.92962521214412,
+  "min_horn_gamma_deg": 68.39569055193589,
+  "max_zbend_misalign_deg": 0.6068471154063635,
+  "max_clevis_misalign_deg": 0.8768165551991421
+ },
+ "servo_angle_for_delta": {
+  "-21": {
+   "theta_R_deg": -22.65084331546916,
+   "theta_L_deg": 22.650843315469235,
+   "gear": 0.9273767299543475,
+   "gamma_horn_deg": 111.60430944806411,
+   "sigma_min": 0.6051013427506957,
+   "rod_pitch_deg": -0.6068471154063635
+  },
+  "-20": {
+   "theta_R_deg": -21.572286214018316,
+   "theta_L_deg": 21.572286214018394,
+   "gear": 0.9269689369478182,
+   "gamma_horn_deg": 110.53073061287351,
+   "sigma_min": 0.6066024153022651,
+   "rod_pitch_deg": -0.5327135680665304
+  },
+  "+20": {
+   "theta_R_deg": 21.659303491538484,
+   "theta_L_deg": -21.659303491538484,
+   "gear": 0.9101359664961768,
+   "gamma_horn_deg": 70.53471473826917,
+   "sigma_min": 0.6127146262034304,
+   "rod_pitch_deg": -0.5327135680665304
+  },
+  "+21": {
+   "theta_R_deg": 22.759614643162667,
+   "theta_L_deg": -22.759614643162667,
+   "gear": 0.9074914703335063,
+   "gamma_horn_deg": 69.60941228875576,
+   "sigma_min": 0.6123400757541366,
+   "rod_pitch_deg": -0.6068471154063634
+  }
+ },
+ "gearing": {
+  "neutral": 0.9284517093837812,
+  "min": 0.9074914703335063,
+  "max": 0.9284840888167432
+ },
+ "toggle": {
+  "plus": {
+   "first_delta_deg_lever_lt_1em3_or_unreachable": 56.448621553884706,
+   "margin_from_stop_deg": 35.448621553884706
+  },
+  "minus": null
+ },
+ "servo_travel": {
+  "45.0": {
+   "required_deg": 22.759614643162667,
+   "covers": true,
+   "margin_deg": 22.240385356837333
+  },
+  "60.0": {
+   "required_deg": 22.759614643162667,
+   "covers": true,
+   "margin_deg": 37.240385356837336
+  }
+ },
+ "free_play_zbend_deg": {
+  "arm_joint_state": "lo",
+  "z_lo_mm": 9.299999999999999,
+  "z_hi_mm": 9.600000000000001,
+  "max_deg": 0.0284758755020081,
+  "at_delta_deg": -21.0,
+  "note": "delta(theta) range between joint heights lo and hi, evaluated about the state selected by ELEVON_ZJ"
+ },
+ "free_play_budget_deg": {
+  "arm_hole_clearance_mm": 0.10000000000000026,
+  "horn_hole_clearance_mm": 0.10000000000000005,
+  "arm_hole_deg": 0.6258395818153696,
+  "horn_hole_deg": 0.6258395818153681,
+  "zbend_z_freedom_deg": 0.0284758755020081,
+  "clevis_cheek_holes_deg": "-",
+  "total_known_deg": 1.2801550391327456,
+  "model": "slop along the rod = sum of the diametral clearances, elevon free play = slop / horn radius (small angle, rod along the horn tangent at neutral); clevis cheek holes are vendor parts with no published size (\"-\"): measured at E1"
+ },
+ "pass": {
+  "K1": true,
+  "K2": true,
+  "K3": true,
+  "K4": true,
+  "K5": true,
+  "K6": true,
+  "K7": true
+ },
+ "pass_all": true,
+ "info_gamma_horn_vs_40deg_rule": {
+  "min_gamma_horn_deg": 68.39569055193589,
+  "meets": true
+ },
+ "versions": {
+  "python": "3.14.2",
+  "numpy": "2.5.4",
+  "scipy": "1.18.1"
+ }
+}

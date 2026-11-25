@@ -4,15 +4,15 @@
  "parts": [
   {
    "id": "CGE-001",
-   "name": "Hub (printed PETG, D-202: 1.5 mm sleeves over s +-24 mm of both arm tubes, 38 x 20 x 20 mm centre block on the bridge axis, running aft to the tray face (no separate boss), 3 mm edge radii, junction fillets 2.0 mm (sleeve B / block) and 1.5 mm (sleeve A / block) as in the FEA (D-207; outer body is the OpenCASCADE mesh of hub_body.py), 2 strut sockets, tray flange; mass = drawn volume x 1.27)",
+   "name": "Hub (machined 6061-T6, D-220 / D-221 / D-222: two OCTAGONAL sleeves 16 mm across flats, 1.0 mm wall at the flats, over s +-32 mm of both arm tubes, 38.5 x 20 x 20 mm centre block on the bridge axis to the tray face, 3 mm edge radii, internal radii 1.0 / 0.9 mm at the junctions (OCC mesh, hub_body.py), 0.5 mm sleeve-mouth and lead-exit chamfers, 2 strut sockets, tray flange; hub pockets T-077 p4: block aft of x +15.5 and the 30 mm bond collar (D-220) turned to a cylinder R 9.25 mm about the bridge axis (wall 1.25 mm round the 16 mm bore); mass = drawn volume x 2.70 g/cm3)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 18.0,
-   "material": "PETG (printed)",
+   "mass_g": 43.3,
+   "material": "Al 6061-T6 (machined)",
    "cg_xyz_m": [
-    -0.0655,
-    -0.0,
-    -0.0006
+    -0.071,
+    0.0,
+    -0.0007
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -25,7 +25,7 @@
    "mass_g": 30.6,
    "material": "CFRP tube",
    "cg_xyz_m": [
-    -0.0755,
+    -0.0845,
     -0.0,
     -0.0
    ],
@@ -40,7 +40,7 @@
    "mass_g": 30.6,
    "material": "CFRP tube",
    "cg_xyz_m": [
-    -0.0625,
+    -0.0715,
     -0.0,
     0.0
    ],
@@ -52,40 +52,40 @@
    "name": "Motor cup (UR; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 4.3,
+   "mass_g": 8.96,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0801,
-    0.2232,
-    0.1544
+    -0.0906,
+    0.2277,
+    0.1581
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "CGE-009-UR",
-   "name": "Doubler 14x12 x 14 mm (UR), carbon tube sleeve bonded over the arm tube at s 11..25 mm (D-202)",
+   "name": "Doubler 14x12 x 36 mm (UR), carbon tube sleeve bonded over the arm tube at s 11..47 mm 15 mm past the sleeve end, outer 5 mm tapered (D-202, D-222 P1); mass = revolved volume x 1.6 g/cm3 (STRUCTURES CF basis)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 0.9,
+   "mass_g": 2.01,
    "material": "CFRP tube",
    "cg_xyz_m": [
-    -0.0755,
-    0.0149,
-    0.0102
+    -0.0845,
+    0.0231,
+    0.0158
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "CGE-010-UR",
-   "name": "Pin 3 mm carbon rod x 16 mm (UR) through the arm tube and its sleeve at s +8 mm (D-202)",
+   "name": "Pin 3 mm carbon rod x 15 mm (UR) through the arm tube and its sleeve at s +8 mm (D-202)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 0.18,
+   "mass_g": 0.17,
    "material": "CFRP rod",
    "cg_xyz_m": [
-    -0.076,
+    -0.085,
     0.0066,
     0.0045
    ],
@@ -97,27 +97,27 @@
    "name": "Motor cup (UL; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 4.3,
+   "mass_g": 8.96,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0671,
-    -0.2248,
-    0.1521
+    -0.0776,
+    -0.2298,
+    0.155
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "CGE-009-UL",
-   "name": "Doubler 14x12 x 14 mm (UL), carbon tube sleeve bonded over the arm tube at s 11..25 mm (D-202)",
+   "name": "Doubler 14x12 x 36 mm (UL), carbon tube sleeve bonded over the arm tube at s 11..47 mm 15 mm past the sleeve end, outer 5 mm tapered (D-202, D-222 P1); mass = revolved volume x 1.6 g/cm3 (STRUCTURES CF basis)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 0.9,
+   "mass_g": 2.01,
    "material": "CFRP tube",
    "cg_xyz_m": [
-    -0.0625,
-    -0.0149,
-    0.0102
+    -0.0715,
+    -0.0231,
+    0.0158
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -127,10 +127,10 @@
    "name": "Pin 3 mm carbon rod x 15 mm (UL) through the arm tube and its sleeve at s -8 mm (D-202)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 0.17,
+   "mass_g": 0.16,
    "material": "CFRP rod",
    "cg_xyz_m": [
-    -0.0625,
+    -0.0718,
     -0.0066,
     0.0045
    ],
@@ -142,27 +142,27 @@
    "name": "Motor cup (LR; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 4.3,
+   "mass_g": 8.96,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0671,
-    0.2248,
-    -0.1521
+    -0.0776,
+    0.2298,
+    -0.155
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "CGE-009-LR",
-   "name": "Doubler 14x12 x 14 mm (LR), carbon tube sleeve bonded over the arm tube at s 11..25 mm (D-202)",
+   "name": "Doubler 14x12 x 36 mm (LR), carbon tube sleeve bonded over the arm tube at s 11..47 mm 15 mm past the sleeve end, outer 5 mm tapered (D-202, D-222 P1); mass = revolved volume x 1.6 g/cm3 (STRUCTURES CF basis)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 0.9,
+   "mass_g": 2.01,
    "material": "CFRP tube",
    "cg_xyz_m": [
-    -0.0625,
-    0.0149,
-    -0.0102
+    -0.0715,
+    0.0231,
+    -0.0158
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -172,10 +172,10 @@
    "name": "Pin 3 mm carbon rod x 15 mm (LR) through the arm tube and its sleeve at s +8 mm (D-202)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 0.17,
+   "mass_g": 0.16,
    "material": "CFRP rod",
    "cg_xyz_m": [
-    -0.0625,
+    -0.0718,
     0.0066,
     -0.0045
    ],
@@ -187,40 +187,40 @@
    "name": "Motor cup (LL; QP-4 FIXES 5 -> 4 g, EST, +0.3 g lead collar and hole D-198)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 4.3,
+   "mass_g": 8.96,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0801,
-    -0.2232,
-    -0.1544
+    -0.0906,
+    -0.2277,
+    -0.1581
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "CGE-009-LL",
-   "name": "Doubler 14x12 x 14 mm (LL), carbon tube sleeve bonded over the arm tube at s 11..25 mm (D-202)",
+   "name": "Doubler 14x12 x 36 mm (LL), carbon tube sleeve bonded over the arm tube at s 11..47 mm 15 mm past the sleeve end, outer 5 mm tapered (D-202, D-222 P1); mass = revolved volume x 1.6 g/cm3 (STRUCTURES CF basis)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 0.9,
+   "mass_g": 2.01,
    "material": "CFRP tube",
    "cg_xyz_m": [
-    -0.0755,
-    -0.0149,
-    -0.0102
+    -0.0845,
+    -0.0231,
+    -0.0158
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "CGE-010-LL",
-   "name": "Pin 3 mm carbon rod x 16 mm (LL) through the arm tube and its sleeve at s -8 mm (D-202)",
+   "name": "Pin 3 mm carbon rod x 15 mm (LL) through the arm tube and its sleeve at s -8 mm (D-202)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 0.18,
+   "mass_g": 0.17,
    "material": "CFRP rod",
    "cg_xyz_m": [
-    -0.076,
+    -0.085,
     -0.0066,
     -0.0045
    ],
@@ -235,7 +235,7 @@
    "mass_g": 0.44,
    "material": "CFRP rod",
    "cg_xyz_m": [
-    -0.0645,
+    -0.0733,
     0.0,
     0.0
    ],
@@ -247,10 +247,10 @@
    "name": "Bridge 16x14 (D-206, torsion; axis z -2 mm; D-202: starts 15 mm aft of the hub axis, bored into the boss)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 8.1,
+   "mass_g": 8.6,
    "material": "CFRP tube",
    "cg_xyz_m": [
-    0.0002,
+    -0.0056,
     0.0,
     -0.002
    ],
@@ -259,13 +259,13 @@
   },
   {
    "id": "CGE-005-R",
-   "name": "V strut 6x4.5 (R)",
+   "name": "V strut 8x6 (R), T-077 p7 (D-225 resize; was 6x4.0, D-219)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 6.5,
+   "mass_g": 10.2,
    "material": "CFRP tube",
    "cg_xyz_m": [
-    -0.0075,
+    -0.012,
     0.154,
     0.0
    ],
@@ -274,14 +274,14 @@
   },
   {
    "id": "CGE-007-R",
-   "name": "Strut clamp on spar (R)",
+   "name": "Strut clamp on spar (R), R4 resized T-077 p7: ring OD 21 x 21, socket OD 12.5 / bore 8 x 27, fillet R 4.0 (mass from printed_mass.json)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 1.5,
+   "mass_g": 6.34,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0488,
-    0.2904,
+    0.0548,
+    0.2913,
     0.0
    ],
    "make_or_buy": "make",
@@ -289,13 +289,13 @@
   },
   {
    "id": "CGE-005-L",
-   "name": "V strut 6x4.5 (L)",
+   "name": "V strut 8x6 (L), T-077 p7 (D-225 resize; was 6x4.0, D-219)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 6.5,
+   "mass_g": 10.2,
    "material": "CFRP tube",
    "cg_xyz_m": [
-    -0.0075,
+    -0.012,
     -0.154,
     0.0
    ],
@@ -304,14 +304,14 @@
   },
   {
    "id": "CGE-007-L",
-   "name": "Strut clamp on spar (L)",
+   "name": "Strut clamp on spar (L), R4 resized T-077 p7: ring OD 21 x 21, socket OD 12.5 / bore 8 x 27, fillet R 4.0 (mass from printed_mass.json)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 1.5,
+   "mass_g": 6.34,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0488,
-    -0.2904,
+    0.0548,
+    -0.2913,
     0.0
    ],
    "make_or_buy": "make",
@@ -319,30 +319,30 @@
   },
   {
    "id": "CGE-006",
-   "name": "Bridge saddle on spar",
+   "name": "Centre node (T-077 p8, D-226 s3; replaces the printed bridge saddle and the audit T-fitting + 6061 tube + flanges with ONE machined 6061-T6 part, Tormach): octagonal sleeve apothem 7.3 mm (wall 1.15 at the flats) over |y| <= 59.8 mm on the spar, bore 12.3 mm (0.15 mm slip fit, not bonded), end flanges 1.0 mm thick (x 20..120, |z| <= 8, inside the skin) bonded on the centre bulkheads, bridge socket boss OD 20.1, socket 16 mm from x 27.5 to 51.5 (bridge bonded); mass = drawn volume (voxel 0.2 mm) x 2.70 g/cm3",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 2.0,
-   "material": "PETG (printed)",
+   "mass_g": 36.3,
+   "material": "Al 6061-T6 (machined)",
    "cg_xyz_m": [
-    0.0491,
+    0.0561,
     0.0,
-    -0.0012
+    -0.0006
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "CGE-008",
-   "name": "Pack tray (66 x 109 mm plate, integral lips at the trim ends, lead notch; 4.0 g at 44 mm scaled by plate area + longer walls, EST)",
+   "name": "Pack tray R1 (T-077: 1.2 mm windowed plate on a 2.0 mm root pad + ribs, 2.0 mm end walls with windows, two 40 x 2.0 mm tabs per lip; mass = drawn solid volume x 1.27, T-067 basis M applied by printed_mass.json when present)",
    "subsystem": "cage",
    "status": "MODELLED",
-   "mass_g": 3.8,
+   "mass_g": 13.3,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0108,
-    0.0,
-    0.0106
+    -0.0287,
+    -0.0,
+    0.0117
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -563,18 +563,26 @@
    "part_b": "CGE-006",
    "via": "CT-EPOXY",
    "owner": "cage",
-   "notes": "bridge end in saddle boss"
+   "notes": "bridge bonded in the 24 mm socket of the centre node (T-077 p8, D-226)"
   },
   {
    "id": "E-CGE-28",
    "part_a": "CGE-006",
-   "part_b": "WNG-002",
+   "part_b": "WNG-013-R",
    "via": "CT-EPOXY",
    "owner": "cage",
-   "notes": "saddle wraps the spar (30 mm)"
+   "notes": "centre node end flange bonded on the inboard face of the centre bulkhead, 0.2 mm bond line, epoxy injected after docking (D-226; practice EST)"
   },
   {
    "id": "E-CGE-29",
+   "part_a": "CGE-006",
+   "part_b": "WNG-013-L",
+   "via": "CT-EPOXY",
+   "owner": "cage",
+   "notes": "centre node end flange bonded on the inboard face of the centre bulkhead, 0.2 mm bond line, epoxy injected after docking (D-226; practice EST)"
+  },
+  {
+   "id": "E-CGE-30",
    "part_a": "CGE-005-R",
    "part_b": "CGE-001",
    "via": "CT-EPOXY",
@@ -582,7 +590,7 @@
    "notes": "strut in hub"
   },
   {
-   "id": "E-CGE-30",
+   "id": "E-CGE-31",
    "part_a": "CGE-005-R",
    "part_b": "CGE-007-R",
    "via": "CT-EPOXY",
@@ -590,7 +598,7 @@
    "notes": "strut end in clamp boss"
   },
   {
-   "id": "E-CGE-31",
+   "id": "E-CGE-32",
    "part_a": "CGE-007-R",
    "part_b": "WNG-002",
    "via": "CT-EPOXY",
@@ -598,7 +606,7 @@
    "notes": "clamp wraps the spar"
   },
   {
-   "id": "E-CGE-32",
+   "id": "E-CGE-33",
    "part_a": "CGE-005-L",
    "part_b": "CGE-001",
    "via": "CT-EPOXY",
@@ -606,7 +614,7 @@
    "notes": "strut in hub"
   },
   {
-   "id": "E-CGE-33",
+   "id": "E-CGE-34",
    "part_a": "CGE-005-L",
    "part_b": "CGE-007-L",
    "via": "CT-EPOXY",
@@ -614,7 +622,7 @@
    "notes": "strut end in clamp boss"
   },
   {
-   "id": "E-CGE-34",
+   "id": "E-CGE-35",
    "part_a": "CGE-007-L",
    "part_b": "WNG-002",
    "via": "CT-EPOXY",
@@ -622,7 +630,7 @@
    "notes": "clamp wraps the spar"
   },
   {
-   "id": "E-CGE-35",
+   "id": "E-CGE-36",
    "part_a": "CGE-008",
    "part_b": "CGE-001",
    "via": "CT-EPOXY",
@@ -637,10 +645,10 @@
   "E-HRN-41",
   "E-HRN-42",
   "E-HRN-43",
-  "E-PRP-01",
-  "E-PRP-03",
+  "E-PRP-02",
   "E-PRP-05",
-  "E-PRP-07",
+  "E-PRP-08",
+  "E-PRP-11",
   "E-PWR-01",
   "E-PWR-02",
   "E-PWR-03"

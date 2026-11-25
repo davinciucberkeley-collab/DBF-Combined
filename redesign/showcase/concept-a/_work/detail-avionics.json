@@ -7,8 +7,8 @@
  "scene": "studio",
  "engine": "CYCLES",
  "device": "GPU",
- "samples": 48,
- "render_s": 64.42,
+ "samples": 64,
+ "render_s": 19.22,
  "explode": 0.0,
  "camera": {
   "preset": "closeup",
@@ -17,15 +17,14 @@
   "ortho": false,
   "lens_mm": 70,
   "location_m": [
-   -0.368,
-   -0.2306,
-   0.4212
+   -0.4164,
+   -0.2619,
+   0.4618
   ],
   "fit": [
    "CGE-008",
    "PRP-003",
    "PWR-001",
-   "AVN-001",
    "AVN-002"
   ],
   "frame": [
@@ -40,100 +39,100 @@
   "sub": "Everything on the upper wing surface behind the hub; pack strapped into the tray"
  },
  "subject_px": [
-  -1220,
-  -320,
-  3490,
-  1985
+  -704,
+  -288,
+  3124,
+  2155
  ],
  "callouts": [
   {
    "item": "AVN-002",
-   "x": 848.8,
-   "y": 351.7,
+   "x": 1166.4,
+   "y": 500.1,
    "title": "AVN-002",
    "text": "Flight controller",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.045,
-    -0.0032,
-    0.0358
+    0.049,
+    -0.0833,
+    0.0185
    ]
   },
   {
    "item": "AVN-003",
-   "x": 1205.1,
-   "y": 311.5,
+   "x": 1128.2,
+   "y": 318.9,
    "title": "AVN-003",
    "text": "ELRS receiver",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.1135,
-    -0.05,
-    0.0173
+    0.1015,
+    -0.0493,
+    0.0179
    ]
   },
   {
    "item": "AVN-004",
-   "x": 692.5,
-   "y": 329.7,
+   "x": 661.4,
+   "y": 334.3,
    "title": "AVN-004",
    "text": "GPS + compass",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.0505,
-    0.0363,
+    0.0397,
+    0.0374,
     0.0216
    ]
   },
   {
    "item": "AVN-005",
-   "x": 1053.3,
-   "y": 476.0,
+   "x": 2919.7,
+   "y": 1097.6,
    "title": "AVN-005",
    "text": "Airspeed sensor",
    "detail": null,
    "role": "context",
-   "occluded": false,
+   "occluded": true,
    "world_m": [
-    0.0495,
-    -0.0466,
-    0.0191
+    0.0718,
+    -0.42,
+    0.0078
    ]
   },
   {
    "item": "PRP-003",
-   "x": 995.8,
-   "y": 261.2,
+   "x": 920.0,
+   "y": 292.7,
    "title": "PRP-003",
    "text": "4-in-1 ESC",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.1044,
-    -0.0056,
+    0.0845,
+    -0.0045,
     0.0194
    ]
   },
   {
    "item": "PWR-001",
-   "x": 639.7,
-   "y": 607.1,
+   "x": 647.8,
+   "y": 505.1,
    "title": "PWR-001",
-   "text": "4S 2300 mAh pack",
+   "text": "4S 2800 mAh pack",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    -0.0275,
-    -0.0002,
-    0.0256
+    -0.0412,
+    -0.011,
+    0.055
    ]
   }
  ],
@@ -146,24 +145,24 @@
    "mass_g": 100.1,
    "subsystem": "wing",
    "bbox_px": [
-    -828,
-    -320,
-    3490,
-    1750
+    -704,
+    -288,
+    3124,
+    1529
    ]
   },
   {
    "id": "CGE-008",
    "role": "context",
-   "name": "Pack tray (66 x 109 mm plate, integral lips at the trim ends, lead notch; 4.0 g at 44 mm scaled by plate area + longer walls, EST)",
+   "name": "Pack tray R1 (T-077: 1.2 mm windowed plate on a 2.0 mm root pad + ribs, 2.0 mm end walls with windows, two 40 x 2.0 mm tabs per lip; mass = drawn solid volume x 1.27, T-067 basis M applied by printed_mass.json when present)",
    "status": "MODELLED",
-   "mass_g": 3.8,
+   "mass_g": 13.3,
    "subsystem": "cage",
    "bbox_px": [
     350,
-    395,
-    1022,
-    853
+    385,
+    944,
+    803
    ]
   },
   {
@@ -174,24 +173,24 @@
    "mass_g": 20.0,
    "subsystem": "propulsion",
    "bbox_px": [
-    848,
-    203,
-    1072,
-    358
+    799,
+    229,
+    1005,
+    371
    ]
   },
   {
    "id": "PWR-001",
    "role": "context",
-   "name": "Pack Tattu 2300 mAh 4S 75C",
+   "name": "Pack RDQ Series 2800 mAh 4S 100C XT60 (107 x 33 x 46 mm, 270 g, T-077)",
    "status": "MODELLED",
    "mass_g": 270.0,
    "subsystem": "power",
    "bbox_px": [
-    400,
-    168,
-    984,
-    768
+    367,
+    195,
+    909,
+    755
    ]
   },
   {
@@ -202,38 +201,38 @@
    "mass_g": 3.5,
    "subsystem": "power",
    "bbox_px": [
-    430,
-    482,
-    960,
-    764
+    406,
+    493,
+    888,
+    750
    ]
   },
   {
    "id": "PWR-002",
    "role": "context",
-   "name": "Pack strap 20 x 300 mm with buckle (STRIX, BOM W08; round pack and tray)",
+   "name": "Pack straps x2: 20 mm webbing with buckle, each about 244 mm (inner loop 214 mm + 30 mm overlap, EST), at y +-35 mm, each a closed loop round the tray plate (front and aft edges) and the pack; BOM W08 STRIX 20 x 300 mm covers each loop (second strap price \"-\"); mass scaled 5.5 g x length / 300 mm per strap, EST (11 g if both are used uncut)",
    "status": "MODELLED",
-   "mass_g": 5.5,
+   "mass_g": 8.9,
    "subsystem": "power",
    "bbox_px": [
-    382,
-    390,
-    964,
-    841
+    368,
+    282,
+    907,
+    792
    ]
   },
   {
-   "id": "AVN-001",
+   "id": "AVN-010",
    "role": "context",
-   "name": "Avionics plate",
+   "name": "R2 mounting bosses (T-073 R2, T-077 p5): 4 FC bosses 6 x 6 mm on the 25 x 25 pattern with M2 hex-nut pockets, 4 ESC bosses 6 x 6 on the 20 x 20 pattern, 4 GPS corner pads 6 x 6 and 2 RX strip pads 5 x 11 mm (T-073 s.R2 Phase 2: GPS / RX pads), each up to the pad plane ZP (heights from the skin), bonded to the skin, printed PETG 6 x 6 x h (T-070); mass = drawn volume x T-067 basis",
    "status": "MODELLED",
-   "mass_g": 8.0,
+   "mass_g": 1.63,
    "subsystem": "avionics",
    "bbox_px": [
     592,
-    144,
-    1252,
-    547
+    259,
+    1222,
+    591
    ]
   },
   {
@@ -244,52 +243,52 @@
    "mass_g": 1.0,
    "subsystem": "avionics",
    "bbox_px": [
-    783,
-    324,
-    957,
-    447
+    1028,
+    434,
+    1223,
+    576
    ]
   },
   {
    "id": "AVN-002",
    "role": "context",
-   "name": "Flight controller Kakute F405 Wing Mini",
+   "name": "Flight controller Holybro Kakute H743-Wing, 45 x 30 x 13.5 mm (V docs.holybro.com kakute-h743-wing, read 2026-11-20), M2 25 x 25 mm, 28 g with USB extender; drawn: PCB 45 x 30 x 1.6 mm (PCB thickness EST, vendor -), corner radius -, hole diameter - (2.2 mm drawn), connector and header outlines and heights - (not drawn; the 13.5 mm overall height is a wiring keep-out), orientation 45 mm along y is my choice; position (T-092, D-239): board centre x 47 mm, y -75 mm (75 mm off the wing centre, left side, hard-mounted); IMU chip position on the board \"-\" (not published)",
    "status": "MODELLED",
-   "mass_g": 17.0,
+   "mass_g": 28.0,
    "subsystem": "avionics",
    "bbox_px": [
-    782,
-    244,
-    960,
-    439
+    1003,
+    420,
+    1250,
+    574
    ]
   },
   {
    "id": "HWC-001",
    "role": "context",
-   "name": "FC mounting screws: 4 x M2 x 25 pan screw (stock)",
+   "name": "FC mounting screws: 4 x M2 pan screw (stock, length per hole 8-10 mm, T-077 p5)",
    "status": "MODELLED",
-   "mass_g": 2.97,
+   "mass_g": 1.18,
    "subsystem": "avionics",
    "bbox_px": [
-    793,
-    249,
-    949,
-    444
+    1039,
+    431,
+    1214,
+    578
    ]
   },
   {
    "id": "HWC-003",
    "role": "context",
-   "name": "FC mounting nuts: 4 x M2 thin nut (DIN 439 1.2 mm) in the plate hex pockets",
+   "name": "FC mounting nuts: 4 x M2 thin nut (DIN 439 1.2 mm) in the boss hex pockets",
    "status": "MODELLED",
    "mass_g": 0.41,
    "subsystem": "avionics",
    "bbox_px": [
-    793,
-    341,
-    946,
-    448
+    1037,
+    450,
+    1213,
+    582
    ]
   },
   {
@@ -300,10 +299,10 @@
    "mass_g": 4.6,
    "subsystem": "avionics",
    "bbox_px": [
-    1136,
-    161,
-    1320,
-    357
+    1032,
+    177,
+    1390,
+    371
    ]
   },
   {
@@ -314,10 +313,10 @@
    "mass_g": 13.5,
    "subsystem": "avionics",
    "bbox_px": [
-    614,
-    269,
-    776,
-    386
+    584,
+    290,
+    733,
+    398
    ]
   },
   {
@@ -328,38 +327,66 @@
    "mass_g": 3.0,
    "subsystem": "avionics",
    "bbox_px": [
-    1002,
-    437,
-    1101,
-    518
+    2862,
+    1038,
+    2963,
+    1139
    ]
   },
   {
    "id": "AVN-008",
    "role": "ghost",
-   "name": "Bay cover (D-198): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead runs from the foam ditch to the ESC pads; notches for the sensor leads and the battery tail",
+   "name": "Bay cover (D-198, T-022 Q4): 0.6 mm printed PETG hood over the FC (T-092: now at y -75 under the FC annex, x 22.5-72.2, y -99 to -26.5), ESC and the phase-lead runs from the foam ditch to the ESC pads, with a low annex (RX hood) over the receiver enclosing the RX UART lead; bottom-open slots for the GPS lead, the battery tail and the two antennas",
    "status": "MODELLED",
-   "mass_g": 9.6,
+   "mass_g": 14.61,
    "subsystem": "avionics",
    "bbox_px": [
-    660,
-    113,
-    1138,
-    566
+    662,
+    140,
+    1293,
+    638
    ]
   },
   {
    "id": "AVN-006",
    "role": "context",
-   "name": "Pitot probe",
+   "name": "Pitot-static probe (RMRC kit; size not published: EST 166 x 3 mm, measure)",
    "status": "MODELLED",
    "mass_g": 5.0,
    "subsystem": "avionics",
    "bbox_px": [
-    -1220,
-    -62,
-    -575,
-    325
+    2793,
+    1227,
+    2924,
+    2155
+   ]
+  },
+  {
+   "id": "AVN-009-T",
+   "role": "context",
+   "name": "Pitot line, total pressure: silicone tubing 2 / 4 mm (V RMRC), 36 mm (CAD route)",
+   "status": "MODELLED",
+   "mass_g": 0.4,
+   "subsystem": "avionics",
+   "bbox_px": [
+    2860,
+    1089,
+    2922,
+    1258
+   ]
+  },
+  {
+   "id": "AVN-009-S",
+   "role": "context",
+   "name": "Pitot line, static pressure: silicone tubing 2 / 4 mm (V RMRC), 36 mm (CAD route)",
+   "status": "MODELLED",
+   "mass_g": 0.4,
+   "subsystem": "avionics",
+   "bbox_px": [
+    2888,
+    1099,
+    2949,
+    1268
    ]
   },
   {
@@ -370,10 +397,10 @@
    "mass_g": 8.0,
    "subsystem": "harness",
    "bbox_px": [
-    667,
-    140,
-    757,
-    216
+    635,
+    170,
+    717,
+    240
    ]
   },
   {
@@ -384,10 +411,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    713,
-    145,
-    952,
-    235
+    677,
+    173,
+    895,
+    259
    ]
   },
   {
@@ -398,10 +425,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    432,
-    212,
-    689,
-    487
+    400,
+    236,
+    654,
+    518
    ]
   },
   {
@@ -412,10 +439,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    490,
-    352,
-    658,
-    421
+    446,
+    316,
+    605,
+    411
    ]
   },
   {
@@ -426,10 +453,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    -743,
-    -257,
-    880,
-    777
+    -677,
+    -240,
+    829,
+    755
    ]
   },
   {
@@ -440,10 +467,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    577,
-    305,
-    2081,
-    861
+    557,
+    309,
+    1946,
+    766
    ]
   },
   {
@@ -454,10 +481,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    -311,
-    225,
-    906,
-    972
+    -251,
+    238,
+    853,
+    901
    ]
   },
   {
@@ -468,10 +495,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    601,
-    277,
-    1599,
-    1985
+    531,
+    294,
+    1525,
+    1874
    ]
   },
   {
@@ -482,10 +509,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    832,
-    213,
-    1003,
-    408
+    865,
+    238,
+    1179,
+    459
    ]
   },
   {
@@ -496,10 +523,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    200,
-    -27,
-    895,
-    333
+    195,
+    -14,
+    1144,
+    454
    ]
   },
   {
@@ -510,10 +537,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    914,
-    326,
-    1942,
-    670
+    1170,
+    450,
+    1810,
+    668
    ]
   },
   {
@@ -524,10 +551,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    896,
-    241,
-    1181,
-    342
+    929,
+    303,
+    1154,
+    475
    ]
   },
   {
@@ -538,10 +565,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    735,
-    253,
-    827,
-    350
+    695,
+    274,
+    1149,
+    538
    ]
   },
   {
@@ -552,19 +579,17 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    857,
-    325,
-    1021,
-    463
+    890,
+    313,
+    2931,
+    1100
    ]
   }
  ],
  "hidden": [
   "CGE-001",
-  "CGE-002-LL",
-  "CGE-002-LR",
-  "CGE-002-UL",
-  "CGE-002-UR",
+  "CGE-002-A",
+  "CGE-002-B",
   "CGE-003-LL",
   "CGE-003-LR",
   "CGE-003-UL",
@@ -575,6 +600,15 @@
   "CGE-006",
   "CGE-007-L",
   "CGE-007-R",
+  "CGE-009-LL",
+  "CGE-009-LR",
+  "CGE-009-UL",
+  "CGE-009-UR",
+  "CGE-010-C",
+  "CGE-010-LL",
+  "CGE-010-LR",
+  "CGE-010-UL",
+  "CGE-010-UR",
   "E-HRN-01",
   "FIN-001-L",
   "FIN-001-R",
@@ -588,6 +622,10 @@
   "FIN-005-R",
   "FIN-006-L",
   "FIN-006-R",
+  "FIN-009-L",
+  "FIN-009-R",
+  "FIN-010-L",
+  "FIN-010-R",
   "GER-001-LL",
   "GER-001-LR",
   "GER-001-UL",
@@ -616,6 +654,8 @@
   "MEC-004-R",
   "MEC-005-L",
   "MEC-005-R",
+  "MEC-008-L",
+  "MEC-008-R",
   "PRP-001-LL",
   "PRP-001-LR",
   "PRP-001-UL",
@@ -632,6 +672,10 @@
   "PRP-005-LR",
   "PRP-005-UL",
   "PRP-005-UR",
+  "PRP-006-LL",
+  "PRP-006-LR",
+  "PRP-006-UL",
+  "PRP-006-UR",
   "WNG-002",
   "WNG-003-C",
   "WNG-004-L",
@@ -649,7 +693,13 @@
   "WNG-009-L",
   "WNG-009-R",
   "WNG-010-L",
-  "WNG-010-R"
+  "WNG-010-R",
+  "WNG-011",
+  "WNG-012",
+  "WNG-013-L",
+  "WNG-013-R",
+  "WNG-014-L",
+  "WNG-014-R"
  ],
  "clipped": [],
  "legend": [

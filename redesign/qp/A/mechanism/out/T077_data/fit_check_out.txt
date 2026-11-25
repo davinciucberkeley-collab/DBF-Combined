@@ -1,0 +1,16 @@
+pack PWR-001 bbox (mm): [-26.5, -53.5, 9.0] [97.0, 71.25, 62.2]
+whole-aircraft bbox (mm) lo [-141.93, -450.0, -230.65] hi [337.5, 450.0, 230.65] extent [479.43, 900.0, 461.31]
+  (before T-077, same script on HEAD: extent 479.4 x 900.0 x 461.3; pack does not set any extreme: x min PRP-005-LL, z extremes PRP-002)
+  x min set by PRP-005-LL max set by GER-002-UR
+  y min set by WNG-001 max set by WNG-001
+  z min set by PRP-002-LL max set by PRP-002-UR
+box proxy 0.90 x 0.50 x 0.39 vs aircraft sorted extent: [0.9, 0.479, 0.461] ratios [1.0, 0.959, 1.183]
+trim -6 (fwd) pack x -32.5 0.5 z top 55.0 bbox overlaps with other parts (excl. tray, strap, pad, wires, core): none
+trim 0 pack x -26.5 6.5 z top 55.0 bbox overlaps with other parts (excl. tray, strap, pad, wires, core): none
+trim +10 (aft) pack x -16.5 16.5 z top 55.0 bbox overlaps with other parts (excl. tray, strap, pad, wires, core): none
+cover AVN-008 bbox x0 (mm): 22.5  pack aft face at +trim: 16.5 gap 6.0 ; PWR-001 bbox incl. connector/plug z top 62.2
+tray inner wall |y| 54.0, pack half length 53.5: gap 0.50 mm
+pack top z 55.0; upper arm tube axis z at pack end |y|=53.5: 36.6 (+-6), arm x range -81.5..-56.5 vs pack x min -32.5
+strap loop perimeter (inner) 354 mm; BOM W08 strap length 300 mm
+ALT B (46 along x, 33 up): pack x span at trim -6..+10 = -39.0 .. 23.0 mm; cover starts 22.5 mm; core tray slot ends 22.5 mm
+   cover roof outer z at the pack aft edge x=23.0: 8.9 mm; pack top z = 42.0 mm (9 + 33) -> collides with the cover at full aft trim

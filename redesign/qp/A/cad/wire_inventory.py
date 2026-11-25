@@ -55,17 +55,22 @@ def classify(eid, pts):
                 if phase:
                     ph = math.radians(m.PHI[PH_ST[eid]])    # arm-frame distance along the arm of the point
                     ya = mid[1] * math.cos(ph) + mid[2] * math.sin(ph)
-                    if enc == 'ARM' or (ya > m.R_M - 0.030 and mid[0] < -0.05 and not enc):
-                        cls = 'ARM'                       # in the arm tube bore / its 4.8 mm exit hole (D-202), or in the cup collar (carbon tube and printed cup)
+                    st_ = PH_ST[eid]; s_ = m.station(st_); R_ = m.motor_R(st_)
+                    d_ = [mid[j] - s_[j] for j in range(3)]
+                    loc = [sum(R_[j][i] * d_[j] for j in range(3)) for i in range(3)]      # motor-local (cup frame): x along the shaft, plate front face at -0.012
+                    if loc[0] < -0.012 and math.hypot(loc[1], loc[2]) > m.CAN_D / 2 and ya > m.R_M - 0.030:
+                        cls = 'EXPOSED'                   # T-083: X2216 leads between the can (radial exit at the base end) and the cup plate lead hole
+                    elif enc == 'ARM' or (ya > m.R_M - 0.030 and mid[0] < -0.05 and not enc):
+                        cls = 'ARM'                       # in the arm tube bore / its 4.8 mm exit hole (D-202), or in the cup collar (carbon tube and printed cup); inside the can counts as enclosed
                     elif enc:
                         cls = 'RACE' if enc == 'RACE' else 'GROOVE'
-                    elif m.COV_X0 < mid[0] < m.COV_X1 and abs(mid[1]) < m.COV_Y and mid[2] < roof(mid[0]):
+                    elif m.cov_interior(mid):                # T-022 Q4: bay cover or RX hood (was the box test COV_X0 < x < COV_X1, |y| < COV_Y, z < roof)
                         cls = 'COVER'
                 elif eid in ('E-HRN-07', 'E-HRN-08') and mid[2] < m.zu(mid[0]) - 0.0003 and mid[0] > m.COV_X0 and mid[0] < 0.1250:
                     cls = 'GROOVE'
                 elif eid == 'E-HRN-11' and mid[2] < m.zu(mid[0]) - 0.0003:
                     cls = 'GROOVE'                        # D-208: airspeed I2C lead in its core groove and the board pocket
-                elif m.COV_X0 < mid[0] < m.COV_X1 and abs(mid[1]) < m.COV_Y and mid[2] < roof(mid[0]):
+                elif m.cov_interior(mid):                # T-022 Q4: bay cover or RX hood (was the box test COV_X0 < x < COV_X1, |y| < COV_Y, z < roof)
                     cls = 'COVER'
             out[cls] += L / n
     return out

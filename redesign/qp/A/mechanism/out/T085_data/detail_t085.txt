@@ -1,0 +1,101 @@
+## defaults check (no T-085 option), expected T-066 / T-084
+spar-only kd [(np.float64(201.0), 0.02, 0.52)] (T-084 s2.4: 201.0 / 215.3 / 244.2, cx 0.02, cy 0.52)
+spar-only nom [(np.float64(215.3), 0.02, 0.52)] (T-084 s2.4: 201.0 / 215.3 / 244.2, cx 0.02, cy 0.52)
+spar-only hi [(np.float64(244.2), 0.02, 0.52)] (T-084 s2.4: 201.0 / 215.3 / 244.2, cx 0.02, cy 0.52)
+cell nominal kd governing 84.6 in band [] (T-084: 84.6 / 88.0 / 96.2)
+cell nominal nom governing 88.0 in band [] (T-084: 84.6 / 88.0 / 96.2)
+cell nominal hi governing 96.2 in band [(np.float64(96.2), 0.81, 0.93)] (T-084: 84.6 / 88.0 / 96.2)
+
+### nominal cell / hub al6061 / pad soft (30A, E 1.142, Ec=E), tray 24 / kd: 3 strong mode(s)
+- 98.0 Hz IN BAND: cx 0.73 cy 1.18; symmetric in y (uz even); strain energy spar 33%, arm 26%, hubjoint 22%, bridge 7%; wing spar (x 0.08 y 0.02 z 0.66); hub (x 0.07 y 0.02 z 1.00); pack (x 0.21 y 0.02 z 0.68); motors (x 0.37 y 0.56 z 0.19); fin tips (x 0.62 y 0.51 z 0.43); tray (x 0.05 y 0.03 z 0.68)
+- 206.0 Hz IN BAND: cx 0.18 cy 1.53; symmetric in y (uz even); strain energy pad 76%, arm 7%, hubjoint 7%, rigid 2%; wing spar (x 0.13 y 0.01 z 0.18); hub (x 0.08 y 0.01 z 1.30); pack (x 0.39 y 0.06 z 1.25); motors (x 0.09 y 0.66 z 0.38); fin tips (x 0.49 y 0.13 z 0.03); tray (x 0.03 y 0.07 z 1.26)
+- 272.8 Hz IN BAND: cx 0.10 cy 0.63; antisymmetric in y (uz odd); strain energy pad 46%, tray 33%, hubjoint 9%, arm 4%; wing spar (x 0.04 y 0.41 z 0.05); hub (x 0.01 y 0.37 z 0.13); pack (x 0.03 y 1.31 z 0.05); motors (x 0.05 y 0.26 z 0.19); fin tips (x 0.54 y 0.33 z 0.01); tray (x 0.03 y 1.08 z 0.05)
+- below the 0.5 rule (0.3-0.5): 67 Hz (0.06 / 0.34); 321 Hz (0.03 / 0.35)
+
+### nominal cell / hub al6061 / pad soft (30A, E 1.142, Ec=E), tray 24 / nom: 3 strong mode(s)
+- 100.5 Hz IN BAND: cx 0.74 cy 1.17; symmetric in y (uz even); strain energy spar 33%, arm 25%, hubjoint 24%, bridge 7%; wing spar (x 0.08 y 0.02 z 0.66); hub (x 0.07 y 0.02 z 0.99); pack (x 0.22 y 0.02 z 0.70); motors (x 0.37 y 0.56 z 0.18); fin tips (x 0.60 y 0.48 z 0.43); tray (x 0.04 y 0.02 z 0.70)
+- 208.1 Hz IN BAND: cx 0.19 cy 1.55; symmetric in y (uz even); strain energy pad 77%, hubjoint 8%, arm 7%, rigid 2%; wing spar (x 0.12 y 0.01 z 0.16); hub (x 0.09 y 0.01 z 1.32); pack (x 0.38 y 0.05 z 1.25); motors (x 0.10 y 0.67 z 0.38); fin tips (x 0.41 y 0.12 z 0.01); tray (x 0.07 y 0.06 z 1.26)
+- 286.1 Hz IN BAND: cx 0.10 cy 0.64; antisymmetric in y (uz odd); strain energy pad 50%, tray 29%, hubjoint 10%, arm 4%; wing spar (x 0.05 y 0.41 z 0.05); hub (x 0.01 y 0.37 z 0.12); pack (x 0.02 y 1.31 z 0.04); motors (x 0.05 y 0.26 z 0.19); fin tips (x 0.47 y 0.32 z 0.00); tray (x 0.02 y 0.98 z 0.04)
+- below the 0.5 rule (0.3-0.5): 68 Hz (0.08 / 0.35); 344 Hz (0.03 / 0.35)
+
+### nominal cell / hub al6061 / pad soft (30A, E 1.142, Ec=E), tray 24 / hi: 3 strong mode(s)
+- 105.9 Hz IN BAND: cx 0.73 cy 1.12; symmetric in y (uz even); strain energy spar 33%, hubjoint 27%, arm 21%, rib 7%; wing spar (x 0.08 y 0.02 z 0.64); hub (x 0.07 y 0.02 z 0.94); pack (x 0.22 y 0.02 z 0.71); motors (x 0.37 y 0.53 z 0.17); fin tips (x 0.47 y 0.77 z 0.42); tray (x 0.04 y 0.02 z 0.71)
+- 211.0 Hz IN BAND: cx 0.21 cy 1.58; symmetric in y (uz even); strain energy pad 77%, hubjoint 8%, arm 7%, rigid 2%; wing spar (x 0.12 y 0.00 z 0.12); hub (x 0.09 y 0.01 z 1.36); pack (x 0.37 y 0.05 z 1.23); motors (x 0.10 y 0.69 z 0.39); fin tips (x 0.34 y 0.14 z 0.01); tray (x 0.09 y 0.05 z 1.24)
+- 294.3 Hz IN BAND: cx 0.11 cy 0.66; antisymmetric in y (uz odd); strain energy pad 52%, tray 27%, hubjoint 10%, rigid 4%; wing spar (x 0.06 y 0.41 z 0.04); hub (x 0.00 y 0.39 z 0.12); pack (x 0.02 y 1.32 z 0.04); motors (x 0.05 y 0.27 z 0.19); fin tips (x 0.31 y 0.33 z 0.02); tray (x 0.00 y 0.92 z 0.04)
+- below the 0.5 rule (0.3-0.5): 80 Hz (0.06 / 0.40); 389 Hz (0.03 / 0.34)
+
+### nominal cell / hub al6061 / pad nom (50A, E 2.456, zm 161), tray 24 / kd: 2 strong mode(s)
+- 100.1 Hz IN BAND: cx 0.74 cy 1.35; symmetric in y (uz even); strain energy spar 34%, arm 29%, hubjoint 23%, bridge 7%; wing spar (x 0.06 y 0.02 z 0.65); hub (x 0.06 y 0.02 z 1.14); pack (x 0.18 y 0.02 z 0.55); motors (x 0.37 y 0.63 z 0.22); fin tips (x 0.65 y 0.47 z 0.43); tray (x 0.06 y 0.03 z 0.55)
+- 324.7 Hz: cx 0.08 cy 0.64; antisymmetric in y (uz odd); strain energy fin 60%, tray 14%, pad 13%, hubjoint 6%; wing spar (x 0.47 y 0.13 z 0.06); hub (x 0.01 y 0.35 z 0.02); pack (x 0.02 y 0.78 z 0.07); motors (x 0.04 y 0.26 z 0.19); fin tips (x 3.70 y 0.23 z 0.02); tray (x 0.00 y 0.85 z 0.07)
+- below the 0.5 rule (0.3-0.5): 67 Hz (0.07 / 0.35); 313 Hz (0.07 / 0.35)
+
+### nominal cell / hub al6061 / pad nom (50A, E 2.456, zm 161), tray 24 / nom: 2 strong mode(s)
+- 102.9 Hz IN BAND: cx 0.75 cy 1.35; symmetric in y (uz even); strain energy spar 35%, arm 27%, hubjoint 25%, bridge 7%; wing spar (x 0.07 y 0.02 z 0.65); hub (x 0.06 y 0.02 z 1.14); pack (x 0.18 y 0.02 z 0.56); motors (x 0.37 y 0.64 z 0.22); fin tips (x 0.63 y 0.43 z 0.42); tray (x 0.06 y 0.03 z 0.56)
+- 346.4 Hz: cx 0.07 cy 0.59; antisymmetric in y (ux odd); strain energy fin 74%, pad 9%, tray 8%, hubjoint 4%; wing spar (x 0.50 y 0.07 z 0.04); hub (x 0.01 y 0.32 z 0.01); pack (x 0.02 y 0.62 z 0.08); motors (x 0.04 y 0.24 z 0.17); fin tips (x 4.10 y 0.30 z 0.01); tray (x 0.01 y 0.63 z 0.08)
+- below the 0.5 rule (0.3-0.5): 68 Hz (0.08 / 0.36); 333 Hz (0.09 / 0.45)
+
+### nominal cell / hub al6061 / pad nom (50A, E 2.456, zm 161), tray 24 / hi: 2 strong mode(s)
+- 108.7 Hz IN BAND: cx 0.75 cy 1.33; symmetric in y (uz even); strain energy spar 34%, hubjoint 29%, arm 24%, bridge 6%; wing spar (x 0.06 y 0.02 z 0.63); hub (x 0.06 y 0.02 z 1.12); pack (x 0.18 y 0.02 z 0.56); motors (x 0.37 y 0.63 z 0.21); fin tips (x 0.52 y 0.67 z 0.42); tray (x 0.05 y 0.03 z 0.56)
+- 347.7 Hz: cx 0.11 cy 0.62; symmetric in y (uz even); strain energy pad 35%, tray 32%, hubjoint 14%, arm 5%; wing spar (x 0.04 y 0.40 z 0.21); hub (x 0.04 y 0.34 z 0.05); pack (x 0.01 y 1.27 z 0.07); motors (x 0.06 y 0.25 z 0.18); fin tips (x 0.92 y 0.32 z 0.10); tray (x 0.04 y 1.27 z 0.07)
+- below the 0.5 rule (0.3-0.5): 80 Hz (0.04 / 0.42); 390 Hz (0.04 / 0.41)
+
+### nominal cell / hub al6061 / pad stiff (70A, E 5.52, zm 108), tray 112 / kd: 1 strong mode(s)
+- 100.1 Hz IN BAND: cx 0.74 cy 1.35; symmetric in y (uz even); strain energy spar 34%, arm 29%, hubjoint 23%, bridge 7%; wing spar (x 0.06 y 0.02 z 0.65); hub (x 0.06 y 0.02 z 1.14); pack (x 0.17 y 0.02 z 0.55); motors (x 0.37 y 0.64 z 0.22); fin tips (x 0.65 y 0.46 z 0.43); tray (x 0.05 y 0.03 z 0.55)
+- below the 0.5 rule (0.3-0.5): 67 Hz (0.07 / 0.35); 274 Hz (0.18 / 0.46)
+
+### nominal cell / hub al6061 / pad stiff (70A, E 5.52, zm 108), tray 112 / nom: 1 strong mode(s)
+- 102.9 Hz IN BAND: cx 0.75 cy 1.35; symmetric in y (uz even); strain energy spar 35%, arm 27%, hubjoint 25%, bridge 7%; wing spar (x 0.06 y 0.02 z 0.65); hub (x 0.06 y 0.02 z 1.14); pack (x 0.17 y 0.02 z 0.56); motors (x 0.37 y 0.64 z 0.22); fin tips (x 0.63 y 0.43 z 0.42); tray (x 0.05 y 0.03 z 0.56)
+- below the 0.5 rule (0.3-0.5): 68 Hz (0.08 / 0.36); 283 Hz (0.18 / 0.46)
+
+### nominal cell / hub al6061 / pad stiff (70A, E 5.52, zm 108), tray 112 / hi: 1 strong mode(s)
+- 108.7 Hz IN BAND: cx 0.75 cy 1.33; symmetric in y (uz even); strain energy spar 34%, hubjoint 29%, arm 24%, bridge 6%; wing spar (x 0.06 y 0.02 z 0.63); hub (x 0.06 y 0.02 z 1.12); pack (x 0.17 y 0.02 z 0.56); motors (x 0.37 y 0.63 z 0.21); fin tips (x 0.52 y 0.67 z 0.42); tray (x 0.05 y 0.03 z 0.56)
+- below the 0.5 rule (0.3-0.5): 80 Hz (0.04 / 0.42); 291 Hz (0.19 / 0.45)
+
+### lower cell / hub al6061 / pad nom (50A, E 2.456, zm 161), tray 24 / kd: 2 strong mode(s)
+- 94.6 Hz IN BAND: cx 0.82 cy 1.35; symmetric in y (uz even); strain energy arm 32%, spar 31%, hubjoint 26%, bridge 6%; wing spar (x 0.07 y 0.02 z 0.63); hub (x 0.05 y 0.02 z 1.13); pack (x 0.18 y 0.02 z 0.56); motors (x 0.41 y 0.64 z 0.20); fin tips (x 0.48 y 0.57 z 0.38); tray (x 0.07 y 0.03 z 0.56)
+- 324.3 Hz: cx 0.09 cy 0.67; antisymmetric in y (ux odd); strain energy fin 56%, tray 16%, pad 15%, hubjoint 6%; wing spar (x 0.45 y 0.15 z 0.04); hub (x 0.01 y 0.37 z 0.02); pack (x 0.02 y 0.83 z 0.08); motors (x 0.04 y 0.27 z 0.20); fin tips (x 3.56 y 0.11 z 0.01); tray (x 0.00 y 0.90 z 0.08)
+- below the 0.5 rule (0.3-0.5): 66 Hz (0.03 / 0.43)
+
+### lower cell / hub al6061 / pad nom (50A, E 2.456, zm 161), tray 24 / nom: 2 strong mode(s)
+- 97.3 Hz IN BAND: cx 0.83 cy 1.35; symmetric in y (uz even); strain energy spar 31%, arm 30%, hubjoint 28%, bridge 5%; wing spar (x 0.07 y 0.02 z 0.63); hub (x 0.05 y 0.02 z 1.14); pack (x 0.18 y 0.02 z 0.57); motors (x 0.41 y 0.65 z 0.20); fin tips (x 0.46 y 0.53 z 0.37); tray (x 0.06 y 0.02 z 0.57)
+- 345.6 Hz: cx 0.08 cy 0.65; antisymmetric in y (ux odd); strain energy fin 67%, pad 11%, tray 11%, hubjoint 5%; wing spar (x 0.48 y 0.10 z 0.04); hub (x 0.02 y 0.35 z 0.01); pack (x 0.02 y 0.70 z 0.08); motors (x 0.04 y 0.26 z 0.19); fin tips (x 3.91 y 0.11 z 0.01); tray (x 0.01 y 0.71 z 0.08)
+- below the 0.5 rule (0.3-0.5): 67 Hz (0.03 / 0.44); 329 Hz (0.09 / 0.35)
+
+### lower cell / hub al6061 / pad nom (50A, E 2.456, zm 161), tray 24 / hi: 3 strong mode(s)
+- 78.0 Hz: cx 0.12 cy 0.51; symmetric in y (uz even); strain energy rib 62%, spar 28%, bridge 4%, fin 3%; wing spar (x 0.03 y 0.00 z 0.86); hub (x 0.03 y 0.00 z 0.38); pack (x 0.08 y 0.00 z 0.31); motors (x 0.06 y 0.26 z 0.01); fin tips (x 1.18 y 3.65 z 0.08); tray (x 0.02 y 0.00 z 0.31)
+- 103.1 Hz IN BAND: cx 0.82 cy 1.32; symmetric in y (uz even); strain energy hubjoint 32%, spar 30%, arm 26%, rib 7%; wing spar (x 0.07 y 0.02 z 0.61); hub (x 0.05 y 0.02 z 1.11); pack (x 0.18 y 0.02 z 0.56); motors (x 0.41 y 0.63 z 0.19); fin tips (x 0.34 y 0.82 z 0.36); tray (x 0.06 y 0.02 z 0.56)
+- 344.8 Hz: cx 0.11 cy 0.56; antisymmetric in y (uz odd); strain energy pad 35%, tray 31%, hubjoint 14%, arm 5%; wing spar (x 0.11 y 0.41 z 0.10); hub (x 0.02 y 0.31 z 0.03); pack (x 0.02 y 1.27 z 0.08); motors (x 0.06 y 0.23 z 0.17); fin tips (x 1.06 y 0.09 z 0.05); tray (x 0.02 y 1.29 z 0.08)
+- below the 0.5 rule (0.3-0.5): 387 Hz (0.04 / 0.49)
+
+### nominal cell / hub petg / pad nom (50A, E 2.456, zm 161), tray 24 / kd: 3 strong mode(s)
+- 93.2 Hz: cx 0.61 cy 1.33; symmetric in y (uz even); strain energy spar 39%, hubjoint 25%, arm 18%, bridge 10%; wing spar (x 0.07 y 0.01 z 0.66); hub (x 0.06 y 0.02 z 1.12); pack (x 0.18 y 0.02 z 0.57); motors (x 0.30 y 0.63 z 0.21); fin tips (x 0.76 y 0.53 z 0.50); tray (x 0.05 y 0.03 z 0.57)
+- 300.1 Hz IN BAND: cx 0.14 cy 0.62; symmetric in y (uz even); strain energy tray 30%, pad 27%, hubjoint 18%, arm 8%; wing spar (x 0.05 y 0.40 z 0.24); hub (x 0.04 y 0.31 z 0.02); pack (x 0.03 y 1.22 z 0.13); motors (x 0.07 y 0.25 z 0.18); fin tips (x 1.27 y 0.39 z 0.08); tray (x 0.04 y 1.39 z 0.13)
+- 393.3 Hz: cx 0.21 cy 1.15; symmetric in y (uz even); strain energy hubjoint 39%, arm 20%, fin 11%, bridge 7%; wing spar (x 0.27 y 0.15 z 0.17); hub (x 0.12 y 0.11 z 0.88); pack (x 0.41 y 0.17 z 1.03); motors (x 0.11 y 0.49 z 0.31); fin tips (x 0.71 y 1.30 z 0.05); tray (x 0.12 y 0.16 z 1.03)
+- below the 0.5 rule (0.3-0.5): 67 Hz (0.05 / 0.32); 321 Hz (0.05 / 0.48)
+
+### nominal cell / hub petg / pad nom (50A, E 2.456, zm 161), tray 24 / nom: 3 strong mode(s)
+- 95.3 Hz IN BAND: cx 0.60 cy 1.33; symmetric in y (uz even); strain energy spar 40%, hubjoint 27%, arm 17%, bridge 9%; wing spar (x 0.07 y 0.01 z 0.66); hub (x 0.06 y 0.02 z 1.12); pack (x 0.18 y 0.02 z 0.58); motors (x 0.30 y 0.63 z 0.21); fin tips (x 0.75 y 0.49 z 0.50); tray (x 0.04 y 0.03 z 0.58)
+- 316.6 Hz IN BAND: cx 0.15 cy 0.66; symmetric in y (uz even); strain energy pad 28%, tray 28%, hubjoint 20%, arm 8%; wing spar (x 0.04 y 0.39 z 0.20); hub (x 0.05 y 0.31 z 0.00); pack (x 0.03 y 1.23 z 0.16); motors (x 0.07 y 0.27 z 0.19); fin tips (x 1.09 y 0.35 z 0.08); tray (x 0.07 y 1.34 z 0.16)
+- 398.7 Hz: cx 0.14 cy 0.75; symmetric in y (uz even); strain energy fin 55%, hubjoint 16%, arm 8%, spar 7%; wing spar (x 0.44 y 0.10 z 0.10); hub (x 0.03 y 0.08 z 0.59); pack (x 0.32 y 0.13 z 0.67); motors (x 0.07 y 0.32 z 0.20); fin tips (x 1.49 y 2.98 z 0.03); tray (x 0.17 y 0.11 z 0.67)
+- below the 0.5 rule (0.3-0.5): 68 Hz (0.06 / 0.31); 344 Hz (0.05 / 0.46)
+
+### nominal cell / hub petg / pad nom (50A, E 2.456, zm 161), tray 24 / hi: 2 strong mode(s)
+- 100.0 Hz IN BAND: cx 0.59 cy 1.30; symmetric in y (uz even); strain energy spar 40%, hubjoint 29%, arm 14%, bridge 8%; wing spar (x 0.07 y 0.01 z 0.63); hub (x 0.06 y 0.02 z 1.10); pack (x 0.18 y 0.02 z 0.57); motors (x 0.29 y 0.62 z 0.20); fin tips (x 0.62 y 0.84 z 0.49); tray (x 0.04 y 0.03 z 0.57)
+- 328.6 Hz: cx 0.14 cy 0.75; symmetric in y (uz even); strain energy pad 28%, tray 26%, hubjoint 20%, arm 7%; wing spar (x 0.12 y 0.36 z 0.12); hub (x 0.11 y 0.33 z 0.10); pack (x 0.14 y 1.20 z 0.25); motors (x 0.07 y 0.30 z 0.22); fin tips (x 1.30 y 0.37 z 0.07); tray (x 0.15 y 1.26 z 0.25)
+- below the 0.5 rule (0.3-0.5): 80 Hz (0.05 / 0.42); 389 Hz (0.04 / 0.45)
+
+### lower cell / hub petg / pad stiff (70A, E 5.52, zm 108), tray 112 / kd: 3 strong mode(s)
+- 87.4 Hz: cx 0.68 cy 1.34; symmetric in y (uz even); strain energy spar 37%, hubjoint 29%, arm 21%, bridge 7%; wing spar (x 0.07 y 0.01 z 0.63); hub (x 0.05 y 0.02 z 1.12); pack (x 0.18 y 0.02 z 0.58); motors (x 0.34 y 0.64 z 0.19); fin tips (x 0.58 y 0.67 z 0.45); tray (x 0.04 y 0.04 z 0.58)
+- 246.6 Hz IN BAND: cx 0.23 cy 0.50; symmetric in y (uz even); strain energy hubjoint 35%, rigid 15%, pad 14%, tray 13%; wing spar (x 0.06 y 0.25 z 0.16); hub (x 0.03 y 0.25 z 0.05); pack (x 0.04 y 0.79 z 0.11); motors (x 0.12 y 0.20 z 0.15); fin tips (x 0.45 y 0.20 z 0.07); tray (x 0.03 y 1.07 z 0.11)
+- 392.6 Hz: cx 0.16 cy 0.88; symmetric in y (uz even); strain energy fin 40%, hubjoint 24%, arm 12%, rib 8%; wing spar (x 0.41 y 0.08 z 0.12); hub (x 0.11 y 0.04 z 0.65); pack (x 0.21 y 0.02 z 0.76); motors (x 0.08 y 0.37 z 0.23); fin tips (x 1.11 y 2.55 z 0.03); tray (x 0.09 y 0.02 z 0.76)
+- below the 0.5 rule (0.3-0.5): 66 Hz (0.03 / 0.41); 318 Hz (0.01 / 0.31)
+
+### lower cell / hub petg / pad stiff (70A, E 5.52, zm 108), tray 112 / nom: 1 strong mode(s)
+- 89.2 Hz: cx 0.68 cy 1.34; symmetric in y (uz even); strain energy spar 37%, hubjoint 31%, arm 19%, bridge 7%; wing spar (x 0.07 y 0.01 z 0.63); hub (x 0.06 y 0.02 z 1.12); pack (x 0.18 y 0.02 z 0.59); motors (x 0.34 y 0.65 z 0.18); fin tips (x 0.56 y 0.63 z 0.44); tray (x 0.04 y 0.04 z 0.59)
+- below the 0.5 rule (0.3-0.5): 67 Hz (0.03 / 0.41); 254 Hz (0.21 / 0.48); 340 Hz (0.01 / 0.33)
+
+### lower cell / hub petg / pad stiff (70A, E 5.52, zm 108), tray 112 / hi: 3 strong mode(s)
+- 77.8 Hz: cx 0.15 cy 0.57; symmetric in y (uz even); strain energy rib 59%, spar 29%, bridge 5%, fin 3%; wing spar (x 0.03 y 0.00 z 0.87); hub (x 0.03 y 0.00 z 0.45); pack (x 0.09 y 0.01 z 0.34); motors (x 0.07 y 0.28 z 0.03); fin tips (x 1.23 y 3.58 z 0.12); tray (x 0.02 y 0.01 z 0.34)
+- 93.9 Hz: cx 0.65 cy 1.28; symmetric in y (uz even); strain energy spar 36%, hubjoint 32%, arm 16%, rib 10%; wing spar (x 0.07 y 0.01 z 0.60); hub (x 0.06 y 0.02 z 1.07); pack (x 0.17 y 0.02 z 0.56); motors (x 0.33 y 0.62 z 0.17); fin tips (x 0.39 y 1.14 z 0.43); tray (x 0.03 y 0.04 z 0.56)
+- 262.0 Hz IN BAND: cx 0.24 cy 0.50; symmetric in y (uz even); strain energy hubjoint 37%, rigid 17%, pad 16%, tray 10%; wing spar (x 0.06 y 0.26 z 0.06); hub (x 0.00 y 0.25 z 0.05); pack (x 0.03 y 0.81 z 0.12); motors (x 0.12 y 0.20 z 0.15); fin tips (x 0.07 y 0.18 z 0.01); tray (x 0.01 y 1.08 z 0.12)
+- below the 0.5 rule (0.3-0.5): 384 Hz (0.01 / 0.37)

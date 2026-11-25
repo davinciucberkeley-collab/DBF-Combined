@@ -157,3 +157,64 @@ Raceways HRN-003 (2 x 1.8 g) and hub conduits HRN-004 (4 x 0.8 g) are added (+6.
 | Predicted, flat rule `EST` | 1,455.6 g | 1,458.1 g | <= 1,460 (target), 1,470 (gate) | CL-A-MASS-PRED |
 
 The target has 1.9 g of room (flat rule). The strap mass is a vendor listing; the pad (size, thickness 1.0 mm, density 1.15 g/cm3) is `EST`: weigh both on arrival. The raceway and conduit walls are the drawn volume x 1.27 (0.6 mm walls, `EST` basis as the cover).
+
+## 13 Roll-up re-run after D-202 to D-212 rev 3 (2026-11-19, T-025 follow-up, review flag M2)
+
+Category: mass roll-up (arithmetic on the CAD part table; not a simulation). Sections 1-12 above stay as the record; the last one (section 12) stopped at D-199. Method: `sitl/cad_mass.py` logic run on `cad/a_model.py` PARTS (output to a scratch file, so `sitl/cad_mass.json` and the running SITL jobs were not touched), then `mission_gate_a.py` items and CAD constants updated to the CAD part table (they still carried D-202 values: CAD basic 1,277.97 g, CG 19.52 mm; its own printout said "headroom -2 g", which was stale, not real). Evidence and commands: `mechanism/out/T025_followup.md`.
+
+| Quantity | D-199 (section 12) | 2026-11-19 | Limit | Source |
+|---|---|---|---|---|
+| CAD basic mass | 1,262.6 g | **1,273.30 g** | — | CAD part table, 117 parts (D-208 value was 1,273.24 g in `cad_mass.json`) |
+| CG (CAD, pack centred) | 20.68 mm | 21.37 mm | band 19-26 | same |
+| CG at the pack trim ends (6 mm fwd, 10 mm aft) | 19.4 / 22.8 mm | 20.09 / 23.49 mm (SM 8.4 / 7.0 % at NP 40.7 EST) | >= 19 / <= 28.5 | CL-A-CG-TRIM-FWD / AFT rule: CG -+ 270 g x travel / basic |
+| Predicted, flat rule (basic x 1.1174 + 0.032 x 1,470 g) `EST` | 1,458.1 g | **1,469.8 g** | 1,470 (target = gate) | CL-A-MASS-PRED |
+| Predicted, itemised `EST` (growth by maturity 145.0 g + overrun 48 g) | 1,454 g | **1,466.3 g** | 1,470 | `mission_gate_a.py` |
+| Margin to the 1.470 kg gate and target, flat rule | 1.9 g to 1,460 | **+0.18 g** | >= 0 | arithmetic |
+| Margin, itemised | — | +3.7 g | >= 0 | arithmetic |
+| EST cuts that must be real | 36.8 g | 41.44 g | <= 41.6 g | CALC-A-CUTS: 41.6 - (1,470 - 1,469.83) / 1.1174 |
+| Structure (wing 216.1 + fins 108.2 + feet 8.4 + hardware 25.98 + cage CGE 131.04) | 485 g | 489.72 g | <= 494 g | CAD part table |
+
+**Margin is positive but 0.18 g (flat rule): not a critical issue, no recovery needed now, and it is no buffer.** At 1.470 kg (table in `mission_gate_a.py`): capped transition window +-5.3 % (limit 5 %), hover T/W fresh 2.34 / sag 1.85 capped (limits 2.0 / 1.6), cruise to BATT_LOW 4.21 min against 3.41 needed (1.3 spare laps). The prediction still holds 145 g of EST growth and 48 g of overrun: the real buffer.
+
+Added since the section 12 roll-up (CHANGE-LOG): D-202 hub +16.7 g; D-205 hub 6 mm aft, doublers s 11-25 -1.8 g, lead 15.6 -> 12.8 g per elevon -5.6 g; D-206 bridge 16x14 +2.1 g; D-207 fillets +1.3 g; D-208 pitot lines, I2C lead +3.3 g; D-210 cup fillets about +0.07 g per cup EST (inside the 4.3 g cup part mass; not separately in the table); D-211 core; D-212 rev 3 horn MEC-004 0.95 g and keeper MEC-008 0.08 g per side (CAD part table). From the D-208 value (1,273.24 g) to now (+0.06 g): horns -0.10 g (1.0 g vendor horn to 0.95 g printed, two sides), keepers +0.16 g (two sides), M2 x 8 arm screws +0.10 g (0.27 -> 0.32 g, two sides, D-212 rev 3 log), other D-211/D-212 changes -0.10 g by difference (not itemised).
+
+**Target series (review flag M1):** design target 1.44 kg (QP-4) -> 1.46 (D-195) -> 1.465 (D-205) -> 1.467 (D-207) -> 1.470 kg (D-208, user accepted), now equal to the 1.470 kg gate: the target no longer controls anything, the margin is held in the growth and overrun allowances above. Recorded as a series, not changed.
+
+Stale downstream values found (not edited, they feed the proof chain): `params-A.json` `mass.basic_cad_kg` 1.27324 (now 1.27330), `mass.itemised_g_growth` (D-199 era items), `mass.structure_groups_g` (cage 119.2 g: sum 484.9 g against 489.72 g from the CAD table, still <= 494 g), `sitl/cad_mass.json` 1.27324 kg (0.06 g low). Regenerate with `proofs/gen_params_a.py` and `sitl/cad_mass.py` after the SITL batch that reads them finishes.
+
+## 14 Printed-part audit (2026-11-19, T-067): s13 margin superseded
+T-067 (`redesign/qp/A/mechanism/out/T067_mass_audit.md`) found the listed masses of 42 printed PETG parts total 112.1 g while their CAD volume is 299.3 g solid (x 1.27 g/cm3, Prusament TDS) and 250.2 g on an EST shell-and-infill basis. With that basis the CAD basic mass is 1,412.4 g and the flat-rule prediction 1,625.2 g, **155.2 g over the 1,470 g gate (FAIL)**; itemised rule 1,633.0 g; a lighter basis still gives 1,581.9 g. The s13 "+0.18 g" is therefore not valid. Cause: solid blocks and plates drawn in the CAD (pack tray, avionics plate, motor cups, bridge saddle, strut clamps, fin saddle and root block), not infill alone. Basis, orientation and class are EST (no slicer run or weigh-in). Recovery and any gate decision: D-215 s11 / T-070.
+
+## 15 T-083 / T-083b basis update (2026-11-22, T-083c; D-227, D-228, D-229): supersedes the MN2212, Tattu and PETG-root-block lines above
+Category: geometry arithmetic and the repo EST thrust model (illustrative), copied from the reports; nothing re-computed here. Sources: `mechanism/out/T083_report.md` s2.1, s6, s10; `mechanism/out/T083b_report.md` s0, s2, s4.1, s9. Labels: EST estimate, "—" unknown. The 1,500 g `build_a` mass gate still fails (1,627.5 g drawn, T083b_report s6) and is not relaxed; limits A-P2 / A-P3 / A-P4 / A-P6 unchanged.
+
+**Basis changes (replace the lines named):**
+| Line | Was (sections above) | Now | Source |
+|---|---|---|---|
+| Motors | 4 x MN2212 65 g (s2) | PRP-001 4 x 67.5 g (SunnySky X2216 V3 short shaft page, read 2026-11-21) | T083_report s10, s2 |
+| Motor mounts | — | PRP-006 4 x 9.2 g (CALC / EST) | T083_report s10 |
+| Prop hardware | — | PRP-004 4 x 3.6 g, PRP-005 4 x 1.4 g | T083_report s10 |
+| Cup / lead hole | — | CGE-003 4 x 8.96 g (voxel) | T083_report s10 |
+| Phase leads | about 1.8 m of 20 AWG (400 mm stock leads) | HRN-001 phase extensions 38.4 g (5.40 m beyond the 100 mm X2216 stock leads) | T083_report s10, s6 |
+| Pack | Tattu 2300 4S, 270 g | 2,800 mAh 4S pack (`params-A.json` pack_ah 2.8); mass line 270 g per BOM-T083b.csv W01 listing | T083_report s2; BOM-T083b.csv |
+| Fin root block FIN-003 | PETG block 22.86 g (voxel, T-067 basis) + 6.1 g undrawn enlargement tally; the "+12.2 g enlarged root blocks at 283.1" tally line is dropped | machined 6061-T6 root fitting, **12.04 g each** (drawn volume x 2.70 g/cm3), CG x 282 mm, 2 fittings; stock the T11 offcut, $0 | T083b_report s2, s9; D-229 |
+
+**Roll-up (EST, `T083b_report.md` s4.1; predicted = basic x 1.1174 + 0.032 x 1.47):**
+| State | basic g | predicted kg | CG mm | SM % | trim ends mm | window % | T/W fresh / sag | cruise s | 1.3 Vs m/s |
+|---|---|---|---|---|---|---|---|---|---|
+| T-083 tallied (record) | 1,669.8 | 1.9129 | 24.41 | 6.65 | 23.44 / 26.03 | +11.02 | 2.586 / 2.074 | 223 | 17.71 |
+| T-083b as drawn (`cad_mass.json`) | 1,627.5 | 1.8656 | 21.08 | 8.01 | 20.08 / 22.74 | +12.25 | 2.652 / 2.127 | 239 | 17.49 |
+| T-083b tallied (previous basis; +7.0 g shoe cups at 298.1, EST) | 1,634.5 | 1.8734 | 22.26 | 7.52 | 21.27 / 23.92 | +12.05 | 2.641 / 2.118 | 236 | 17.53 |
+| T-084 as drawn (`cad_mass.json`; FIN_H 0.1937 m, D-233) | 1,633.0 | 1.8717 | 21.95 | 7.65 | 20.96 / 23.61 | +12.09 | 2.643 / 2.120 | 237 | 17.52 |
+| **T-084 tallied (current basis; +7.0 g shoe cups, EST)** | **1,640.0** (as drawn 1,633.0 + 7.0) | **1.8796** | **23.13** | **7.17** | 22.14 / 24.78 | **+11.88** | **2.632 / 2.111** | **234** | **17.56** |
+
+Change T-083 tally -> T-083b tally: -35.3 g (root fittings -33.8 g = 2 x (22.86 + 6.1 - 12.04); harness and tray -1.5 g). CG moved forward 5.2 mm with the lighter fittings; cage, pack and tray windows 6 mm aft of T-083 (T083_DX -3 -> +3 mm, ladder rung 3, no ballast, D-229). Limits checked in the report: A-P4 19.3..26.0 mm (trim aft 28.5), SM >= 5 %, A-P3 >= +5 %, A-P2 2.0 / 1.6, cruise >= 204.6 s: all PASS at the tallied state; A-P6 FAIL on CLmax 0.75 EST, gated by the stall test (D-228). The old "predicted 1.64 kg" (O4b, CLAUDE.md header) and 1.913 kg (T-083) figures are superseded by 1.873 kg EST (T-083b), and that by **1.8796 kg EST (T-084, below)**.
+
+**T-084 (D-233, `mechanism/out/T084_report.md` s0, s1.3, s3; added 2026-11-22 by the review round 3 fix M-D).** Change T-083b tally -> T-084 tally: basic +5.5 g as drawn (1,627.5 -> 1,633.0 g: fin tubes +2 x 2.1 g, fairings +2 x 0.64 g EST); tallied predicted +6.2 g (1.8734 -> 1.8796 kg); CG +0.87 mm aft (22.26 -> 23.13 mm tallied); SM 7.52 -> 7.17 %. Fin tubes lengthened 13.7 mm each end, FIN_H 0.180 -> **0.1937 m**, to close A-P9: static tip-over, edge toward the CG, **min 31.00 deg** (31.00-31.31 over drawn / tallied CG and both trim ends), +0.50 deg over the 30.5 deg target (geometry arithmetic, `t084_tipover.py`). Limits at the tallied state: A-P4 19.3..26.0 mm, SM >= 5 %, A-P3 >= +5 %, A-P2 2.0 / 1.6, cruise >= 204.6 s all PASS; A-P6 FAIL carried (1.3 Vs 17.56 m/s on CLmax 0.75 EST, TP-11); the 1.50 kg `build_a` mass gate FAIL carried (T084_report s3: +380 g; not relaxed). T-087 (R15 kept; T1 / T11 bars to Zoro, same dimensions) changed no mass. D-185 (a) is not a mass item; it stays a FAIL on the model and TP-10b decides it (D-236, T085_report s7).
+**Not re-derived here:** the s1 to s14 tables (MN2212, 1.396 to 1.47 kg era) stay as the record. The BOM total was $1,981.31 incl. reserve $346.94, margin +$18.69 (AM-019, T083b_report s5, `T083b_data/BOM-T083b.csv`; D-230). **It is replaced by $1,939.17 incl. the same $346.94 reserve, margin +$60.83 against $2,000** (T-086 cost trim D-234, then T-087 bars to Zoro D-235; `python -I bom_a.py` run 2026-11-22, `mechanism/out/T086_report.md`, `T087_report.md`). The 1,981.31 / +18.69 figures are the superseded record.
+
+> 2026-11-22 note (T-023 F-9): the elevon hinge-damper stators WNG-009-L/R (2.0 g each, PETG + silicone,
+> DRAWINGS-A.md) are not in `printed_mass.json` (T-067 voxel basis). Their mass enters the CAD part table as
+> `DMP_STATOR_G` (`cad/amodel/wing.py` l.571: drawn PETG volume x RHO_PETG). The silicone fluid and preload strips
+> are not in that number: their mass is "—" (not computed). AVN-010 "14: CHECK (a body is
+> not attached)" is a drawing-tool note, not a mass item.

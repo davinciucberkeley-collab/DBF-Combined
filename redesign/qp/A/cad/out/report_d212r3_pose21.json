@@ -1,0 +1,214 @@
+{
+ "bodies": 486,
+ "defects": [
+  "WNG-008-LL body \"lens cap arch\": zero-width spike / repeated point in a loop (removed in the export)",
+  "WNG-008-LL body \"lens cap end wall\": zero-width spike / repeated point in a loop (removed in the export)",
+  "WNG-008-LU body \"lens cap arch\": zero-width spike / repeated point in a loop (removed in the export)",
+  "WNG-008-LU body \"lens cap end wall\": zero-width spike / repeated point in a loop (removed in the export)",
+  "WNG-008-RL body \"lens cap arch\": zero-width spike / repeated point in a loop (removed in the export)",
+  "WNG-008-RL body \"lens cap end wall\": zero-width spike / repeated point in a loop (removed in the export)",
+  "WNG-008-RU body \"lens cap arch\": zero-width spike / repeated point in a loop (removed in the export)",
+  "WNG-008-RU body \"lens cap end wall\": zero-width spike / repeated point in a loop (removed in the export)"
+ ],
+ "kinks": [],
+ "parts": 115,
+ "poses": [
+  {
+   "hits": [
+    {
+     "a": "E-HRN-05#0",
+     "at_mm": [
+      -76.41,
+      -58.46,
+      -42.06
+     ],
+     "b": "E-HRN-05#2",
+     "bodies": [
+      "E-HRN-05 \"wire strand 2 (1.8 mm)\" x E-HRN-05 \"wire strand 0 (1.8 mm)\" 0.01 mm"
+     ],
+     "depth_mm": 0.011
+    },
+    {
+     "a": "E-HRN-02#0",
+     "at_mm": [
+      -75.91,
+      73.26,
+      51.15
+     ],
+     "b": "E-HRN-02#1",
+     "bodies": [
+      "E-HRN-02 \"wire strand 1 (1.8 mm)\" x E-HRN-02 \"wire strand 0 (1.8 mm)\" 0.01 mm"
+     ],
+     "depth_mm": 0.01
+    },
+    {
+     "a": "E-HRN-04#0",
+     "at_mm": [
+      -63.67,
+      201.67,
+      -136.99
+     ],
+     "b": "E-HRN-04#1",
+     "bodies": [
+      "E-HRN-04 \"wire strand 0 (1.8 mm)\" x E-HRN-04 \"wire strand 1 (1.8 mm)\" 0.01 mm"
+     ],
+     "depth_mm": 0.01
+    },
+    {
+     "a": "E-HRN-03#0",
+     "at_mm": [
+      -71.44,
+      -234.07,
+      157.38
+     ],
+     "b": "E-HRN-03#2",
+     "bodies": [
+      "E-HRN-03 \"wire strand 2 (1.8 mm)\" x E-HRN-03 \"wire strand 0 (1.8 mm)\" 0.01 mm"
+     ],
+     "depth_mm": 0.011
+    },
+    {
+     "a": "E-HRN-03#1",
+     "at_mm": [
+      -13.02,
+      -17.09,
+      2.18
+     ],
+     "b": "E-HRN-03#2",
+     "bodies": [
+      "E-HRN-03 \"wire strand 2 (1.8 mm)\" x E-HRN-03 \"wire strand 1 (1.8 mm)\" 0.01 mm"
+     ],
+     "depth_mm": 0.01
+    },
+    {
+     "a": "AVN-006",
+     "at_mm": [
+      42.38,
+      -421.33,
+      0.5
+     ],
+     "b": "AVN-009-S",
+     "bodies": [
+      "AVN-006 \"static outlet barb on the block rear face (EST position and OD 2.0)\" x AVN-009-S \"silicone tubing 2 / 4 mm along the CAD route (D-208)\" 0.02 mm"
+     ],
+     "depth_mm": 0.017
+    },
+    {
+     "a": "AVN-006",
+     "at_mm": [
+      42.38,
+      -418.67,
+      -0.5
+     ],
+     "b": "AVN-009-T",
+     "bodies": [
+      "AVN-006 \"total-pressure outlet barb on the block rear face (EST position and OD 2.0)\" x AVN-009-T \"silicone tubing 2 / 4 mm along the CAD route (D-208)\" 0.02 mm"
+     ],
+     "depth_mm": 0.017
+    },
+    {
+     "a": "HWC-001",
+     "at_mm": [
+      70.26,
+      9.03,
+      12.66
+     ],
+     "b": "HWC-003",
+     "bodies": [
+      "HWC-003 \"M2 thin nut\" x HWC-001 \"M2 pan screw shank\" 0.03 mm",
+      "HWC-003 \"M2 thin nut\" x HWC-001 \"M2 pan screw shank\" 0.03 mm",
+      "HWC-003 \"M2 thin nut\" x HWC-001 \"M2 pan screw shank\" 0.03 mm",
+      "HWC-003 \"M2 thin nut\" x HWC-001 \"M2 pan screw shank\" 0.03 mm"
+     ],
+     "depth_mm": 0.034
+    },
+    {
+     "a": "AVN-005",
+     "at_mm": [
+      67.12,
+      -418.67,
+      8.5
+     ],
+     "b": "AVN-009-T",
+     "bodies": [
+      "AVN-009-T \"silicone tubing 2 / 4 mm along the CAD route (D-208)\" x AVN-005 \"barbed port P1 (total), EST OD 2.0\" 0.02 mm"
+     ],
+     "depth_mm": 0.017
+    },
+    {
+     "a": "AVN-005",
+     "at_mm": [
+      66.5,
+      -421.33,
+      8.5
+     ],
+     "b": "AVN-009-S",
+     "bodies": [
+      "AVN-009-S \"silicone tubing 2 / 4 mm along the CAD route (D-208)\" x AVN-005 \"barbed port P2 (static), EST OD 2.0\" 0.02 mm"
+     ],
+     "depth_mm": 0.017
+    }
+   ],
+   "moved": null,
+   "name": "static",
+   "not_swept_against": null
+  },
+  {
+   "hits": [],
+   "moved": [
+    "MEC-004-L",
+    "MEC-004-R",
+    "MEC-005-L",
+    "MEC-005-R",
+    "WNG-006-L",
+    "WNG-006-R",
+    "WNG-007-L",
+    "WNG-007-R",
+    "WNG-010-L",
+    "WNG-010-R"
+   ],
+   "name": "elevons at lower limit (E-WNG-10 -21, E-WNG-11 -21)",
+   "not_swept_against": [
+    "MEC-003-L",
+    "MEC-003-R",
+    "WNG-009-L",
+    "WNG-009-R"
+   ]
+  },
+  {
+   "hits": [],
+   "moved": [
+    "MEC-004-L",
+    "MEC-004-R",
+    "MEC-005-L",
+    "MEC-005-R",
+    "WNG-006-L",
+    "WNG-006-R",
+    "WNG-007-L",
+    "WNG-007-R",
+    "WNG-010-L",
+    "WNG-010-R"
+   ],
+   "name": "elevons at upper limit (E-WNG-10 +21, E-WNG-11 +21)",
+   "not_swept_against": [
+    "MEC-003-L",
+    "MEC-003-R",
+    "WNG-009-L",
+    "WNG-009-R"
+   ]
+  }
+ ],
+ "seconds": 138.2,
+ "skipped": [
+  [
+   "HRD-001",
+   "mass proxy"
+  ],
+  [
+   "HRN-001",
+   "mass proxy"
+  ]
+ ],
+ "wire_ends": [],
+ "wire_strands": 44
+}

@@ -1,0 +1,2 @@
+redesign/site/index.html -> redesign/qp/A/sitl/SITL-FLIGHT.md
+redesign/site/app.html -> redesign/qp/A/sitl/SITL-FLIGHT.md

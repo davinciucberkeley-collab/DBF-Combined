@@ -1,0 +1,13 @@
+{'cg_x': np.float64(0.022049361357237743), 'cg_y': np.float64(-0.0033228905897695277), 'cg_z': np.float64(0.006559604017111725), 'h': np.float64(0.3154506386427623), 'geom': 'CAD', 'I': array([0.10265116, 0.03967039, 0.11546222]), 'tip_narrow': 31.154303874545715, 'tip_wide': 50.30280632599678, 'tip_narrow_ctr_toward_cg': 30.273715821556227, 'tip_narrow_ctr_away': 32.01882831797161, 'tip_narrow_edge_toward_cg': 31.079807628256805, 'tip_narrow_edge_away': 32.795577455522306, 'tip_wide_toward_cg': 50.547767309327384, 'tip_wide_away': 50.055295887900485, 'v_tip_parked': 7.5712317406873275, 'restore_ratio_5ms': 2.29294200284765}
+
+### plateau 37.5 N per foot, usable stroke 20 mm
+hard level                   stroke max   8.4 mm  n 10.76  Fmax  49.7 N  side  15.4 N  tilt_end   0.0  drift    12 mm  set 6.9  rib RF 7.62
+hard 10 narrow               stroke max  14.6 mm  n 5.42  Fmax  50.0 N  side  16.9 N  tilt_end   1.8  drift   123 mm  set 13.1  rib RF 12.55
+hard 10 narrow neg           stroke max  14.2 mm  n 5.43  Fmax  50.0 N  side  17.2 N  tilt_end   1.7  drift   110 mm  set 12.7  rib RF 10.57
+hard 10 wide                 stroke max   9.0 mm  n 5.62  Fmax  53.0 N  side  21.2 N  tilt_end   0.1  drift    59 mm  set 7.5  rib RF 3.48
+hard 7/7 combo               stroke max  12.4 mm  n 6.91  Fmax  55.9 N  side  22.4 N  tilt_end   1.2  drift    19 mm  set 10.9  rib RF 3.36
+hard 10 narrow + drift .5    stroke max  17.2 mm  n 7.05  Fmax  50.1 N  side  20.1 N  tilt_end   2.3  drift    48 mm  set 15.7  rib RF 5.38
+hard 10 wide + drift .5 y    stroke max  11.7 mm  n 5.94  Fmax  55.6 N  side  22.3 N  tilt_end   0.4  drift   130 mm  set 10.2  rib RF 4.84
+normal level .5              stroke max   2.3 mm  n 8.90  Fmax  41.2 N  side  14.6 N  tilt_end   0.0  drift     7 mm  set 0.8  rib RF 5.60
+normal 10 narrow .5          stroke max   3.4 mm  n 7.87  Fmax  42.0 N  side  15.8 N  tilt_end   0.1  drift    99 mm  set 1.9  rib RF 6.81
+normal 10 wide .5 + drift    stroke max   6.8 mm  n 5.29  Fmax  49.4 N  side  19.8 N  tilt_end   0.4  drift   113 mm  set 5.3  rib RF 4.39

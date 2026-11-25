@@ -1,0 +1,8 @@
+T101C4 Z5       peak mean elevon 7.210 deg  pitch_use 0.4807
+T101C4 Z5_lua   peak mean elevon 7.265 deg  pitch_use 0.4843
+T101C4 T074     peak mean elevon 7.540 deg  pitch_use 0.5027
+T101C4 T074_lua peak mean elevon 8.140 deg  pitch_use 0.5427
+T101C5 Z5       peak mean elevon 7.150 deg  pitch_use 0.4767
+T101C5 Z5_lua   peak mean elevon 7.640 deg  pitch_use 0.5093
+T101C5 T074     peak mean elevon 8.050 deg  pitch_use 0.5367
+T101C5 T074_lua peak mean elevon 8.100 deg  pitch_use 0.5400

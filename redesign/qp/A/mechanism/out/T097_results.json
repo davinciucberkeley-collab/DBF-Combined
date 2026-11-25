@@ -1,0 +1,2810 @@
+{
+ "task": "T-097",
+ "generated": "2026-11-23",
+ "rows": [
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30",
+   "metric": "static tip-over, edge toward CG (deg)",
+   "value": 31.08,
+   "limit": ">= 30.5",
+   "pass": true,
+   "note": "A-P9 target 30.5 deg (D-233); 30 deg floor of AR-008"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30",
+   "metric": "static tip-over, narrow axis (deg)",
+   "value": 31.15,
+   "limit": ">= 30.0",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard level",
+   "metric": "foam stroke (mm)",
+   "value": 10.3,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard level",
+   "metric": "peak load factor (g)",
+   "value": 8.88,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard level",
+   "metric": "end tilt (deg)",
+   "value": 0.1,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard level",
+   "metric": "rib-root RF (min over run)",
+   "value": 2.01,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard level",
+   "metric": "side load per foot (N)",
+   "value": 12.1,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 10 narrow",
+   "metric": "foam stroke (mm)",
+   "value": 17.9,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 10 narrow",
+   "metric": "peak load factor (g)",
+   "value": 4.47,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 10 narrow",
+   "metric": "end tilt (deg)",
+   "value": 2.2,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 10 narrow",
+   "metric": "rib-root RF (min over run)",
+   "value": 4.62,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 10 narrow",
+   "metric": "side load per foot (N)",
+   "value": 13.7,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 10 narrow neg",
+   "metric": "foam stroke (mm)",
+   "value": 17.5,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 10 narrow neg",
+   "metric": "peak load factor (g)",
+   "value": 5.64,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 10 narrow neg",
+   "metric": "end tilt (deg)",
+   "value": 2.0,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 10 narrow neg",
+   "metric": "rib-root RF (min over run)",
+   "value": 4.65,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 10 narrow neg",
+   "metric": "side load per foot (N)",
+   "value": 14.2,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 10 wide",
+   "metric": "foam stroke (mm)",
+   "value": 11.1,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 10 wide",
+   "metric": "peak load factor (g)",
+   "value": 4.7,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 10 wide",
+   "metric": "end tilt (deg)",
+   "value": 0.2,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 10 wide",
+   "metric": "rib-root RF (min over run)",
+   "value": 1.13,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 10 wide",
+   "metric": "side load per foot (N)",
+   "value": 17.6,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 7/7 combo",
+   "metric": "foam stroke (mm)",
+   "value": 15.2,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 7/7 combo",
+   "metric": "peak load factor (g)",
+   "value": 6.32,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 7/7 combo",
+   "metric": "end tilt (deg)",
+   "value": 1.5,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 7/7 combo",
+   "metric": "rib-root RF (min over run)",
+   "value": 1.17,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 7/7 combo",
+   "metric": "side load per foot (N)",
+   "value": 18.4,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 10 narrow + drift .5",
+   "metric": "foam stroke (mm)",
+   "value": 20.3,
+   "limit": "<= 20.0",
+   "pass": false,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 10 narrow + drift .5",
+   "metric": "peak load factor (g)",
+   "value": 17.45,
+   "limit": "<= 12.0",
+   "pass": false,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 10 narrow + drift .5",
+   "metric": "end tilt (deg)",
+   "value": 2.8,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 10 narrow + drift .5",
+   "metric": "rib-root RF (min over run)",
+   "value": 0.42,
+   "limit": ">= 1.0",
+   "pass": false,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 10 narrow + drift .5",
+   "metric": "side load per foot (N)",
+   "value": 73.6,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 10 wide + drift .5 y",
+   "metric": "foam stroke (mm)",
+   "value": 14.2,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 10 wide + drift .5 y",
+   "metric": "peak load factor (g)",
+   "value": 4.97,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 10 wide + drift .5 y",
+   "metric": "end tilt (deg)",
+   "value": 0.5,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 10 wide + drift .5 y",
+   "metric": "rib-root RF (min over run)",
+   "value": 1.63,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/hard 10 wide + drift .5 y",
+   "metric": "side load per foot (N)",
+   "value": 18.6,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/normal level .5",
+   "metric": "foam stroke (mm)",
+   "value": 2.6,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/normal level .5",
+   "metric": "peak load factor (g)",
+   "value": 7.27,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/normal level .5",
+   "metric": "end tilt (deg)",
+   "value": 0.0,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/normal level .5",
+   "metric": "rib-root RF (min over run)",
+   "value": 2.24,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/normal level .5",
+   "metric": "side load per foot (N)",
+   "value": 10.8,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/normal 10 narrow .5",
+   "metric": "foam stroke (mm)",
+   "value": 4.1,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/normal 10 narrow .5",
+   "metric": "peak load factor (g)",
+   "value": 4.87,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/normal 10 narrow .5",
+   "metric": "end tilt (deg)",
+   "value": 0.3,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/normal 10 narrow .5",
+   "metric": "rib-root RF (min over run)",
+   "value": 2.38,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/normal 10 narrow .5",
+   "metric": "side load per foot (N)",
+   "value": 13.0,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/normal 10 wide .5 + drift",
+   "metric": "foam stroke (mm)",
+   "value": 8.3,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/normal 10 wide .5 + drift",
+   "metric": "peak load factor (g)",
+   "value": 4.39,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/normal 10 wide .5 + drift",
+   "metric": "end tilt (deg)",
+   "value": 0.5,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/normal 10 wide .5 + drift",
+   "metric": "rib-root RF (min over run)",
+   "value": 1.5,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p30/normal 10 wide .5 + drift",
+   "metric": "side load per foot (N)",
+   "value": 16.3,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45",
+   "metric": "static tip-over, edge toward CG (deg)",
+   "value": 31.08,
+   "limit": ">= 30.5",
+   "pass": true,
+   "note": "A-P9 target 30.5 deg (D-233); 30 deg floor of AR-008"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45",
+   "metric": "static tip-over, narrow axis (deg)",
+   "value": 31.15,
+   "limit": ">= 30.0",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard level",
+   "metric": "foam stroke (mm)",
+   "value": 7.2,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard level",
+   "metric": "peak load factor (g)",
+   "value": 12.6,
+   "limit": "<= 12.0",
+   "pass": false,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard level",
+   "metric": "end tilt (deg)",
+   "value": 0.0,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard level",
+   "metric": "rib-root RF (min over run)",
+   "value": 1.56,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard level",
+   "metric": "side load per foot (N)",
+   "value": 18.1,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 10 narrow",
+   "metric": "foam stroke (mm)",
+   "value": 12.3,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 10 narrow",
+   "metric": "peak load factor (g)",
+   "value": 6.35,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 10 narrow",
+   "metric": "end tilt (deg)",
+   "value": 1.5,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 10 narrow",
+   "metric": "rib-root RF (min over run)",
+   "value": 2.8,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 10 narrow",
+   "metric": "side load per foot (N)",
+   "value": 20.0,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 10 narrow neg",
+   "metric": "foam stroke (mm)",
+   "value": 12.1,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 10 narrow neg",
+   "metric": "peak load factor (g)",
+   "value": 6.35,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 10 narrow neg",
+   "metric": "end tilt (deg)",
+   "value": 1.4,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 10 narrow neg",
+   "metric": "rib-root RF (min over run)",
+   "value": 3.64,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 10 narrow neg",
+   "metric": "side load per foot (N)",
+   "value": 20.2,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 10 wide",
+   "metric": "foam stroke (mm)",
+   "value": 7.6,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 10 wide",
+   "metric": "peak load factor (g)",
+   "value": 6.52,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 10 wide",
+   "metric": "end tilt (deg)",
+   "value": 0.1,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 10 wide",
+   "metric": "rib-root RF (min over run)",
+   "value": 0.9,
+   "limit": ">= 1.0",
+   "pass": false,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 10 wide",
+   "metric": "side load per foot (N)",
+   "value": 24.7,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 7/7 combo",
+   "metric": "foam stroke (mm)",
+   "value": 10.5,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 7/7 combo",
+   "metric": "peak load factor (g)",
+   "value": 6.74,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 7/7 combo",
+   "metric": "end tilt (deg)",
+   "value": 1.1,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 7/7 combo",
+   "metric": "rib-root RF (min over run)",
+   "value": 0.76,
+   "limit": ">= 1.0",
+   "pass": false,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 7/7 combo",
+   "metric": "side load per foot (N)",
+   "value": 26.3,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 10 narrow + drift .5",
+   "metric": "foam stroke (mm)",
+   "value": 14.5,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 10 narrow + drift .5",
+   "metric": "peak load factor (g)",
+   "value": 6.37,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 10 narrow + drift .5",
+   "metric": "end tilt (deg)",
+   "value": 1.8,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 10 narrow + drift .5",
+   "metric": "rib-root RF (min over run)",
+   "value": 1.88,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 10 narrow + drift .5",
+   "metric": "side load per foot (N)",
+   "value": 23.5,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 10 wide + drift .5 y",
+   "metric": "foam stroke (mm)",
+   "value": 9.9,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 10 wide + drift .5 y",
+   "metric": "peak load factor (g)",
+   "value": 6.88,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 10 wide + drift .5 y",
+   "metric": "end tilt (deg)",
+   "value": 0.3,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 10 wide + drift .5 y",
+   "metric": "rib-root RF (min over run)",
+   "value": 0.95,
+   "limit": ">= 1.0",
+   "pass": false,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/hard 10 wide + drift .5 y",
+   "metric": "side load per foot (N)",
+   "value": 25.8,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/normal level .5",
+   "metric": "foam stroke (mm)",
+   "value": 2.0,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/normal level .5",
+   "metric": "peak load factor (g)",
+   "value": 10.5,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/normal level .5",
+   "metric": "end tilt (deg)",
+   "value": 0.0,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/normal level .5",
+   "metric": "rib-root RF (min over run)",
+   "value": 1.71,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/normal level .5",
+   "metric": "side load per foot (N)",
+   "value": 18.3,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/normal 10 narrow .5",
+   "metric": "foam stroke (mm)",
+   "value": 3.0,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/normal 10 narrow .5",
+   "metric": "peak load factor (g)",
+   "value": 8.89,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/normal 10 narrow .5",
+   "metric": "end tilt (deg)",
+   "value": 0.1,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/normal 10 narrow .5",
+   "metric": "rib-root RF (min over run)",
+   "value": 1.7,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/normal 10 narrow .5",
+   "metric": "side load per foot (N)",
+   "value": 19.6,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/normal 10 wide .5 + drift",
+   "metric": "foam stroke (mm)",
+   "value": 5.8,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/normal 10 wide .5 + drift",
+   "metric": "peak load factor (g)",
+   "value": 6.21,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/normal 10 wide .5 + drift",
+   "metric": "end tilt (deg)",
+   "value": 0.3,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/normal 10 wide .5 + drift",
+   "metric": "rib-root RF (min over run)",
+   "value": 1.07,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014",
+   "category": "rigid-body dynamics",
+   "case": "cad_1881_p45/normal 10 wide .5 + drift",
+   "metric": "side load per foot (N)",
+   "value": 23.1,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30",
+   "metric": "static tip-over, edge toward CG (deg)",
+   "value": 31.08,
+   "limit": ">= 30.5",
+   "pass": true,
+   "note": "A-P9 target 30.5 deg (D-233); 30 deg floor of AR-008"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30",
+   "metric": "static tip-over, narrow axis (deg)",
+   "value": 31.15,
+   "limit": ">= 30.0",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard level",
+   "metric": "foam stroke (mm)",
+   "value": 10.3,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard level",
+   "metric": "peak load factor (g)",
+   "value": 8.88,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard level",
+   "metric": "end tilt (deg)",
+   "value": 0.1,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard level",
+   "metric": "rib-root RF (min over run)",
+   "value": 2.89,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard level",
+   "metric": "side load per foot (N)",
+   "value": 12.4,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 10 narrow",
+   "metric": "foam stroke (mm)",
+   "value": 17.9,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 10 narrow",
+   "metric": "peak load factor (g)",
+   "value": 4.47,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 10 narrow",
+   "metric": "end tilt (deg)",
+   "value": 2.2,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 10 narrow",
+   "metric": "rib-root RF (min over run)",
+   "value": 3.27,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 10 narrow",
+   "metric": "side load per foot (N)",
+   "value": 13.7,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 10 narrow neg",
+   "metric": "foam stroke (mm)",
+   "value": 17.4,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 10 narrow neg",
+   "metric": "peak load factor (g)",
+   "value": 4.47,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 10 narrow neg",
+   "metric": "end tilt (deg)",
+   "value": 2.1,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 10 narrow neg",
+   "metric": "rib-root RF (min over run)",
+   "value": 2.26,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 10 narrow neg",
+   "metric": "side load per foot (N)",
+   "value": 14.6,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 10 wide",
+   "metric": "foam stroke (mm)",
+   "value": 10.1,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 10 wide",
+   "metric": "peak load factor (g)",
+   "value": 4.93,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 10 wide",
+   "metric": "end tilt (deg)",
+   "value": 0.1,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 10 wide",
+   "metric": "rib-root RF (min over run)",
+   "value": 1.41,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 10 wide",
+   "metric": "side load per foot (N)",
+   "value": 18.7,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 7/7 combo",
+   "metric": "foam stroke (mm)",
+   "value": 12.2,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 7/7 combo",
+   "metric": "peak load factor (g)",
+   "value": 5.74,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 7/7 combo",
+   "metric": "end tilt (deg)",
+   "value": 0.5,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 7/7 combo",
+   "metric": "rib-root RF (min over run)",
+   "value": 1.15,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 7/7 combo",
+   "metric": "side load per foot (N)",
+   "value": 18.3,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 10 narrow + drift .5",
+   "metric": "foam stroke (mm)",
+   "value": 20.3,
+   "limit": "<= 20.0",
+   "pass": false,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 10 narrow + drift .5",
+   "metric": "peak load factor (g)",
+   "value": 17.9,
+   "limit": "<= 12.0",
+   "pass": false,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 10 narrow + drift .5",
+   "metric": "end tilt (deg)",
+   "value": 2.8,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 10 narrow + drift .5",
+   "metric": "rib-root RF (min over run)",
+   "value": 0.41,
+   "limit": ">= 1.0",
+   "pass": false,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 10 narrow + drift .5",
+   "metric": "side load per foot (N)",
+   "value": 71.7,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 10 wide + drift .5 y",
+   "metric": "foam stroke (mm)",
+   "value": 13.3,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 10 wide + drift .5 y",
+   "metric": "peak load factor (g)",
+   "value": 5.17,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 10 wide + drift .5 y",
+   "metric": "end tilt (deg)",
+   "value": 0.5,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 10 wide + drift .5 y",
+   "metric": "rib-root RF (min over run)",
+   "value": 1.48,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/hard 10 wide + drift .5 y",
+   "metric": "side load per foot (N)",
+   "value": 19.5,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/normal level .5",
+   "metric": "foam stroke (mm)",
+   "value": 2.6,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/normal level .5",
+   "metric": "peak load factor (g)",
+   "value": 7.27,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/normal level .5",
+   "metric": "end tilt (deg)",
+   "value": 0.0,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/normal level .5",
+   "metric": "rib-root RF (min over run)",
+   "value": 2.11,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/normal level .5",
+   "metric": "side load per foot (N)",
+   "value": 12.2,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/normal 10 narrow .5",
+   "metric": "foam stroke (mm)",
+   "value": 4.1,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/normal 10 narrow .5",
+   "metric": "peak load factor (g)",
+   "value": 3.7,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/normal 10 narrow .5",
+   "metric": "end tilt (deg)",
+   "value": 0.3,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/normal 10 narrow .5",
+   "metric": "rib-root RF (min over run)",
+   "value": 2.23,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/normal 10 narrow .5",
+   "metric": "side load per foot (N)",
+   "value": 12.9,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/normal 10 wide .5 + drift",
+   "metric": "foam stroke (mm)",
+   "value": 7.1,
+   "limit": "<= 20.0",
+   "pass": true,
+   "note": "usable stroke 20 mm (EST)"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/normal 10 wide .5 + drift",
+   "metric": "peak load factor (g)",
+   "value": 4.42,
+   "limit": "<= 12.0",
+   "pass": true,
+   "note": "A-P5 12 g"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/normal 10 wide .5 + drift",
+   "metric": "end tilt (deg)",
+   "value": 0.4,
+   "limit": "<= 3.0",
+   "pass": true,
+   "note": "no tip-over line"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/normal 10 wide .5 + drift",
+   "metric": "rib-root RF (min over run)",
+   "value": 1.7,
+   "limit": ">= 1.0",
+   "pass": true,
+   "note": "AR-012 capacity check, EST allowables; the 0.15-margin project rule would want 1.15; computed on the default 14x12 rib tube, not the drawn 25x23 (review round 10); see T098_results.json"
+  },
+  {
+   "analysis": "AR-014-sens",
+   "category": "rigid-body dynamics",
+   "case": "items_1881_p30/normal 10 wide .5 + drift",
+   "metric": "side load per foot (N)",
+   "value": 16.5,
+   "limit": "info None",
+   "pass": null,
+   "note": "14 N cap withdrawn (AR-012); reported, judged through rib RF"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_Z5",
+   "metric": "peak altitude (m) from 50 m start",
+   "value": 89.4,
+   "limit": "< 110.0",
+   "pass": true,
+   "note": "fence 110 m"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_Z5",
+   "metric": "max climb gain (m)",
+   "value": 38.4,
+   "limit": "< 60.0",
+   "pass": true,
+   "note": "CL-B3-TRANS-CLIMB 60 m"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_Z5",
+   "metric": "time to 1.3 Vs after mode change (s)",
+   "value": 7.8,
+   "limit": "<= 15.0",
+   "pass": true,
+   "note": "1.3 Vs = 17.75 m/s at this mass; None = never reached"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_Z5",
+   "metric": "time at 0.90 cap run (s)",
+   "value": 0.0,
+   "limit": "<= 1.0",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_Z5",
+   "metric": "time with a motor >= 0.85 (s)",
+   "value": 0,
+   "limit": "<= 1.0",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_Z5",
+   "metric": "elevon pitch use of 15 deg",
+   "value": 0.69,
+   "limit": "<= 0.6",
+   "pass": false,
+   "note": "pass line 0.60; governing basis (15/20/25 deg) undecided (AR-010 open item 5)"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_Z5",
+   "metric": "elevon pitch use of 20 deg",
+   "value": 0.52,
+   "limit": "<= 0.6",
+   "pass": true,
+   "note": "pass line 0.60; governing basis (15/20/25 deg) undecided (AR-010 open item 5)"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_Z5",
+   "metric": "elevon pitch use of 25 deg",
+   "value": 0.41,
+   "limit": "<= 0.6",
+   "pass": true,
+   "note": "pass line 0.60; governing basis (15/20/25 deg) undecided (AR-010 open item 5)"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_Z5",
+   "metric": "elevon saturated time (s)",
+   "value": 0,
+   "limit": "<= 1.0",
+   "pass": true,
+   "note": "info line, EST"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_Z5",
+   "metric": "touch in flight",
+   "value": 0,
+   "limit": "== 0",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_Z5",
+   "metric": "QLAND touchdown sink (m/s)",
+   "value": 0.3,
+   "limit": "<= 1.2",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_Z5",
+   "metric": "tipped over after QLAND",
+   "value": 0,
+   "limit": "== 0",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_Z5",
+   "metric": "back-transition lean max in descent (deg)",
+   "value": 3.7,
+   "limit": "info None",
+   "pass": null,
+   "note": "no pass line stated"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_Z5_lua",
+   "metric": "peak altitude (m) from 50 m start",
+   "value": 89.4,
+   "limit": "< 110.0",
+   "pass": true,
+   "note": "fence 110 m"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_Z5_lua",
+   "metric": "max climb gain (m)",
+   "value": 38.4,
+   "limit": "< 60.0",
+   "pass": true,
+   "note": "CL-B3-TRANS-CLIMB 60 m"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_Z5_lua",
+   "metric": "time to 1.3 Vs after mode change (s)",
+   "value": 7.7,
+   "limit": "<= 15.0",
+   "pass": true,
+   "note": "1.3 Vs = 17.75 m/s at this mass; None = never reached"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_Z5_lua",
+   "metric": "time at 0.90 cap run (s)",
+   "value": 0.1,
+   "limit": "<= 1.0",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_Z5_lua",
+   "metric": "time with a motor >= 0.85 (s)",
+   "value": 0.2,
+   "limit": "<= 1.0",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_Z5_lua",
+   "metric": "elevon pitch use of 15 deg",
+   "value": 0.69,
+   "limit": "<= 0.6",
+   "pass": false,
+   "note": "pass line 0.60; governing basis (15/20/25 deg) undecided (AR-010 open item 5)"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_Z5_lua",
+   "metric": "elevon pitch use of 20 deg",
+   "value": 0.52,
+   "limit": "<= 0.6",
+   "pass": true,
+   "note": "pass line 0.60; governing basis (15/20/25 deg) undecided (AR-010 open item 5)"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_Z5_lua",
+   "metric": "elevon pitch use of 25 deg",
+   "value": 0.41,
+   "limit": "<= 0.6",
+   "pass": true,
+   "note": "pass line 0.60; governing basis (15/20/25 deg) undecided (AR-010 open item 5)"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_Z5_lua",
+   "metric": "elevon saturated time (s)",
+   "value": 0,
+   "limit": "<= 1.0",
+   "pass": true,
+   "note": "info line, EST"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_Z5_lua",
+   "metric": "touch in flight",
+   "value": 0,
+   "limit": "== 0",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_Z5_lua",
+   "metric": "QLAND touchdown sink (m/s)",
+   "value": 0.3,
+   "limit": "<= 1.2",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_Z5_lua",
+   "metric": "tipped over after QLAND",
+   "value": 0,
+   "limit": "== 0",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_Z5_lua",
+   "metric": "back-transition lean max in descent (deg)",
+   "value": 3.7,
+   "limit": "info None",
+   "pass": null,
+   "note": "no pass line stated"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_T074",
+   "metric": "peak altitude (m) from 50 m start",
+   "value": 84.9,
+   "limit": "< 110.0",
+   "pass": true,
+   "note": "fence 110 m"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_T074",
+   "metric": "max climb gain (m)",
+   "value": 33.9,
+   "limit": "< 60.0",
+   "pass": true,
+   "note": "CL-B3-TRANS-CLIMB 60 m"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_T074",
+   "metric": "time to 1.3 Vs after mode change (s)",
+   "value": 8.3,
+   "limit": "<= 15.0",
+   "pass": true,
+   "note": "1.3 Vs = 17.75 m/s at this mass; None = never reached"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_T074",
+   "metric": "time at 0.90 cap run (s)",
+   "value": 0.0,
+   "limit": "<= 1.0",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_T074",
+   "metric": "time with a motor >= 0.85 (s)",
+   "value": 0,
+   "limit": "<= 1.0",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_T074",
+   "metric": "elevon pitch use of 15 deg",
+   "value": 0.79,
+   "limit": "<= 0.6",
+   "pass": false,
+   "note": "pass line 0.60; governing basis (15/20/25 deg) undecided (AR-010 open item 5)"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_T074",
+   "metric": "elevon pitch use of 20 deg",
+   "value": 0.59,
+   "limit": "<= 0.6",
+   "pass": true,
+   "note": "pass line 0.60; governing basis (15/20/25 deg) undecided (AR-010 open item 5)"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_T074",
+   "metric": "elevon pitch use of 25 deg",
+   "value": 0.47,
+   "limit": "<= 0.6",
+   "pass": true,
+   "note": "pass line 0.60; governing basis (15/20/25 deg) undecided (AR-010 open item 5)"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_T074",
+   "metric": "elevon saturated time (s)",
+   "value": 0,
+   "limit": "<= 1.0",
+   "pass": true,
+   "note": "info line, EST"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_T074",
+   "metric": "touch in flight",
+   "value": 0,
+   "limit": "== 0",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_T074_lua",
+   "metric": "peak altitude (m) from 50 m start",
+   "value": 84.9,
+   "limit": "< 110.0",
+   "pass": true,
+   "note": "fence 110 m"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_T074_lua",
+   "metric": "max climb gain (m)",
+   "value": 33.9,
+   "limit": "< 60.0",
+   "pass": true,
+   "note": "CL-B3-TRANS-CLIMB 60 m"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_T074_lua",
+   "metric": "time to 1.3 Vs after mode change (s)",
+   "value": 8.2,
+   "limit": "<= 15.0",
+   "pass": true,
+   "note": "1.3 Vs = 17.75 m/s at this mass; None = never reached"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_T074_lua",
+   "metric": "time at 0.90 cap run (s)",
+   "value": 0.0,
+   "limit": "<= 1.0",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_T074_lua",
+   "metric": "time with a motor >= 0.85 (s)",
+   "value": 0,
+   "limit": "<= 1.0",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_T074_lua",
+   "metric": "elevon pitch use of 15 deg",
+   "value": 0.77,
+   "limit": "<= 0.6",
+   "pass": false,
+   "note": "pass line 0.60; governing basis (15/20/25 deg) undecided (AR-010 open item 5)"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_T074_lua",
+   "metric": "elevon pitch use of 20 deg",
+   "value": 0.58,
+   "limit": "<= 0.6",
+   "pass": true,
+   "note": "pass line 0.60; governing basis (15/20/25 deg) undecided (AR-010 open item 5)"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_T074_lua",
+   "metric": "elevon pitch use of 25 deg",
+   "value": 0.46,
+   "limit": "<= 0.6",
+   "pass": true,
+   "note": "pass line 0.60; governing basis (15/20/25 deg) undecided (AR-010 open item 5)"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_T074_lua",
+   "metric": "elevon saturated time (s)",
+   "value": 0,
+   "limit": "<= 1.0",
+   "pass": true,
+   "note": "info line, EST"
+  },
+  {
+   "analysis": "AR-015",
+   "category": "flight dynamics",
+   "case": "T097_T074_lua",
+   "metric": "touch in flight",
+   "value": 0,
+   "limit": "== 0",
+   "pass": true,
+   "note": ""
+  }
+ ],
+ "landing_raw": {
+  "cad_1881_p30": {
+   "label": "AR-014 current: 1.881 kg CAD mass model, plateau 30 N",
+   "static": {
+    "tip_narrow": 31.154303874545715,
+    "tip_narrow_edge_toward_cg": 31.079807628256805,
+    "v_tip_parked": 7.5712317406873275,
+    "restore_ratio_5ms": 2.29294200284765
+   },
+   "cases": {
+    "hard level": {
+     "stroke_mm": 10.3,
+     "n_g": 8.88,
+     "Fmax_N": 41.0,
+     "side_N": 12.1,
+     "tilt_deg": 0.1,
+     "drift_mm": 9,
+     "set_mm": 8.8,
+     "rib_rf": 2.01
+    },
+    "hard 10 narrow": {
+     "stroke_mm": 17.9,
+     "n_g": 4.47,
+     "Fmax_N": 41.2,
+     "side_N": 13.7,
+     "tilt_deg": 2.2,
+     "drift_mm": 115,
+     "set_mm": 16.4,
+     "rib_rf": 4.62
+    },
+    "hard 10 narrow neg": {
+     "stroke_mm": 17.5,
+     "n_g": 5.64,
+     "Fmax_N": 41.2,
+     "side_N": 14.2,
+     "tilt_deg": 2.0,
+     "drift_mm": 110,
+     "set_mm": 16.0,
+     "rib_rf": 4.65
+    },
+    "hard 10 wide": {
+     "stroke_mm": 11.1,
+     "n_g": 4.7,
+     "Fmax_N": 44.0,
+     "side_N": 17.6,
+     "tilt_deg": 0.2,
+     "drift_mm": 55,
+     "set_mm": 9.6,
+     "rib_rf": 1.13
+    },
+    "hard 7/7 combo": {
+     "stroke_mm": 15.2,
+     "n_g": 6.32,
+     "Fmax_N": 46.0,
+     "side_N": 18.4,
+     "tilt_deg": 1.5,
+     "drift_mm": 14,
+     "set_mm": 13.7,
+     "rib_rf": 1.17
+    },
+    "hard 10 narrow + drift .5": {
+     "stroke_mm": 20.3,
+     "n_g": 17.45,
+     "Fmax_N": 183.9,
+     "side_N": 73.6,
+     "tilt_deg": 2.8,
+     "drift_mm": 32,
+     "set_mm": 18.8,
+     "rib_rf": 0.42
+    },
+    "hard 10 wide + drift .5 y": {
+     "stroke_mm": 14.2,
+     "n_g": 4.97,
+     "Fmax_N": 46.5,
+     "side_N": 18.6,
+     "tilt_deg": 0.5,
+     "drift_mm": 124,
+     "set_mm": 12.7,
+     "rib_rf": 1.63
+    },
+    "normal level .5": {
+     "stroke_mm": 2.6,
+     "n_g": 7.27,
+     "Fmax_N": 33.7,
+     "side_N": 10.8,
+     "tilt_deg": 0.0,
+     "drift_mm": 5,
+     "set_mm": 1.1,
+     "rib_rf": 2.24
+    },
+    "normal 10 narrow .5": {
+     "stroke_mm": 4.1,
+     "n_g": 4.87,
+     "Fmax_N": 34.2,
+     "side_N": 13.0,
+     "tilt_deg": 0.3,
+     "drift_mm": 110,
+     "set_mm": 2.6,
+     "rib_rf": 2.38
+    },
+    "normal 10 wide .5 + drift": {
+     "stroke_mm": 8.3,
+     "n_g": 4.39,
+     "Fmax_N": 40.9,
+     "side_N": 16.3,
+     "tilt_deg": 0.5,
+     "drift_mm": 108,
+     "set_mm": 6.8,
+     "rib_rf": 1.5
+    }
+   }
+  },
+  "cad_1881_p45": {
+   "label": "AR-014 current: 1.881 kg CAD mass model, plateau 45 N",
+   "static": {
+    "tip_narrow": 31.154303874545715,
+    "tip_narrow_edge_toward_cg": 31.079807628256805,
+    "v_tip_parked": 7.5712317406873275,
+    "restore_ratio_5ms": 2.29294200284765
+   },
+   "cases": {
+    "hard level": {
+     "stroke_mm": 7.2,
+     "n_g": 12.6,
+     "Fmax_N": 58.2,
+     "side_N": 18.1,
+     "tilt_deg": 0.0,
+     "drift_mm": 14,
+     "set_mm": 5.7,
+     "rib_rf": 1.56
+    },
+    "hard 10 narrow": {
+     "stroke_mm": 12.3,
+     "n_g": 6.35,
+     "Fmax_N": 58.6,
+     "side_N": 20.0,
+     "tilt_deg": 1.5,
+     "drift_mm": 134,
+     "set_mm": 10.8,
+     "rib_rf": 2.8
+    },
+    "hard 10 narrow neg": {
+     "stroke_mm": 12.1,
+     "n_g": 6.35,
+     "Fmax_N": 58.6,
+     "side_N": 20.2,
+     "tilt_deg": 1.4,
+     "drift_mm": 106,
+     "set_mm": 10.6,
+     "rib_rf": 3.64
+    },
+    "hard 10 wide": {
+     "stroke_mm": 7.6,
+     "n_g": 6.52,
+     "Fmax_N": 61.6,
+     "side_N": 24.7,
+     "tilt_deg": 0.1,
+     "drift_mm": 59,
+     "set_mm": 6.1,
+     "rib_rf": 0.9
+    },
+    "hard 7/7 combo": {
+     "stroke_mm": 10.5,
+     "n_g": 6.74,
+     "Fmax_N": 65.9,
+     "side_N": 26.3,
+     "tilt_deg": 1.1,
+     "drift_mm": 28,
+     "set_mm": 9.0,
+     "rib_rf": 0.76
+    },
+    "hard 10 narrow + drift .5": {
+     "stroke_mm": 14.5,
+     "n_g": 6.37,
+     "Fmax_N": 58.8,
+     "side_N": 23.5,
+     "tilt_deg": 1.8,
+     "drift_mm": 43,
+     "set_mm": 13.0,
+     "rib_rf": 1.88
+    },
+    "hard 10 wide + drift .5 y": {
+     "stroke_mm": 9.9,
+     "n_g": 6.88,
+     "Fmax_N": 64.6,
+     "side_N": 25.8,
+     "tilt_deg": 0.3,
+     "drift_mm": 138,
+     "set_mm": 8.4,
+     "rib_rf": 0.95
+    },
+    "normal level .5": {
+     "stroke_mm": 2.0,
+     "n_g": 10.5,
+     "Fmax_N": 48.5,
+     "side_N": 18.3,
+     "tilt_deg": 0.0,
+     "drift_mm": 14,
+     "set_mm": 0.5,
+     "rib_rf": 1.71
+    },
+    "normal 10 narrow .5": {
+     "stroke_mm": 3.0,
+     "n_g": 8.89,
+     "Fmax_N": 49.7,
+     "side_N": 19.6,
+     "tilt_deg": 0.1,
+     "drift_mm": 103,
+     "set_mm": 1.5,
+     "rib_rf": 1.7
+    },
+    "normal 10 wide .5 + drift": {
+     "stroke_mm": 5.8,
+     "n_g": 6.21,
+     "Fmax_N": 57.8,
+     "side_N": 23.1,
+     "tilt_deg": 0.3,
+     "drift_mm": 114,
+     "set_mm": 4.3,
+     "rib_rf": 1.07
+    }
+   }
+  },
+  "items_1881_p30": {
+   "label": "sensitivity: ITEMS roll-up scaled to 1.881 kg, plateau 30 N",
+   "static": {
+    "tip_narrow": 31.154303874545715,
+    "tip_narrow_edge_toward_cg": 31.079807628256805,
+    "v_tip_parked": 7.5712317406873275,
+    "restore_ratio_5ms": 2.29294200284765
+   },
+   "cases": {
+    "hard level": {
+     "stroke_mm": 10.3,
+     "n_g": 8.88,
+     "Fmax_N": 41.0,
+     "side_N": 12.4,
+     "tilt_deg": 0.1,
+     "drift_mm": 4,
+     "set_mm": 8.8,
+     "rib_rf": 2.89
+    },
+    "hard 10 narrow": {
+     "stroke_mm": 17.9,
+     "n_g": 4.47,
+     "Fmax_N": 41.2,
+     "side_N": 13.7,
+     "tilt_deg": 2.2,
+     "drift_mm": 115,
+     "set_mm": 16.4,
+     "rib_rf": 3.27
+    },
+    "hard 10 narrow neg": {
+     "stroke_mm": 17.4,
+     "n_g": 4.47,
+     "Fmax_N": 41.2,
+     "side_N": 14.6,
+     "tilt_deg": 2.1,
+     "drift_mm": 120,
+     "set_mm": 15.9,
+     "rib_rf": 2.26
+    },
+    "hard 10 wide": {
+     "stroke_mm": 10.1,
+     "n_g": 4.93,
+     "Fmax_N": 46.8,
+     "side_N": 18.7,
+     "tilt_deg": 0.1,
+     "drift_mm": 40,
+     "set_mm": 8.6,
+     "rib_rf": 1.41
+    },
+    "hard 7/7 combo": {
+     "stroke_mm": 12.2,
+     "n_g": 5.74,
+     "Fmax_N": 45.7,
+     "side_N": 18.3,
+     "tilt_deg": 0.5,
+     "drift_mm": 12,
+     "set_mm": 10.7,
+     "rib_rf": 1.15
+    },
+    "hard 10 narrow + drift .5": {
+     "stroke_mm": 20.3,
+     "n_g": 17.9,
+     "Fmax_N": 179.3,
+     "side_N": 71.7,
+     "tilt_deg": 2.8,
+     "drift_mm": 28,
+     "set_mm": 18.8,
+     "rib_rf": 0.41
+    },
+    "hard 10 wide + drift .5 y": {
+     "stroke_mm": 13.3,
+     "n_g": 5.17,
+     "Fmax_N": 48.7,
+     "side_N": 19.5,
+     "tilt_deg": 0.5,
+     "drift_mm": 114,
+     "set_mm": 11.8,
+     "rib_rf": 1.48
+    },
+    "normal level .5": {
+     "stroke_mm": 2.6,
+     "n_g": 7.27,
+     "Fmax_N": 33.7,
+     "side_N": 12.2,
+     "tilt_deg": 0.0,
+     "drift_mm": 4,
+     "set_mm": 1.1,
+     "rib_rf": 2.11
+    },
+    "normal 10 narrow .5": {
+     "stroke_mm": 4.1,
+     "n_g": 3.7,
+     "Fmax_N": 34.2,
+     "side_N": 12.9,
+     "tilt_deg": 0.3,
+     "drift_mm": 94,
+     "set_mm": 2.6,
+     "rib_rf": 2.23
+    },
+    "normal 10 wide .5 + drift": {
+     "stroke_mm": 7.1,
+     "n_g": 4.42,
+     "Fmax_N": 41.3,
+     "side_N": 16.5,
+     "tilt_deg": 0.4,
+     "drift_mm": 112,
+     "set_mm": 5.6,
+     "rib_rf": 1.7
+    }
+   }
+  },
+  "items_150_p30_cadgeom": {
+   "label": "old mass list 1.50 kg on the current CAD geometry, plateau 30 N",
+   "static": {
+    "tip_narrow": 31.154303874545715,
+    "tip_narrow_edge_toward_cg": 31.079807628256805,
+    "v_tip_parked": 6.761106408376056,
+    "restore_ratio_5ms": 1.8285023946153507
+   },
+   "cases": {
+    "hard level": {
+     "stroke_mm": 8.4,
+     "n_g": 10.79,
+     "Fmax_N": 39.7,
+     "side_N": 12.3,
+     "tilt_deg": 0.0,
+     "drift_mm": 4,
+     "set_mm": 6.9,
+     "rib_rf": 2.38
+    },
+    "hard 10 narrow": {
+     "stroke_mm": 14.5,
+     "n_g": 5.43,
+     "Fmax_N": 40.0,
+     "side_N": 13.4,
+     "tilt_deg": 1.8,
+     "drift_mm": 116,
+     "set_mm": 13.0,
+     "rib_rf": 2.96
+    },
+    "hard 10 narrow neg": {
+     "stroke_mm": 14.1,
+     "n_g": 5.43,
+     "Fmax_N": 40.0,
+     "side_N": 14.1,
+     "tilt_deg": 1.7,
+     "drift_mm": 130,
+     "set_mm": 12.6,
+     "rib_rf": 2.12
+    },
+    "hard 10 wide": {
+     "stroke_mm": 8.1,
+     "n_g": 5.88,
+     "Fmax_N": 44.6,
+     "side_N": 17.8,
+     "tilt_deg": 0.1,
+     "drift_mm": 46,
+     "set_mm": 6.6,
+     "rib_rf": 1.43
+    },
+    "hard 7/7 combo": {
+     "stroke_mm": 10.0,
+     "n_g": 5.55,
+     "Fmax_N": 43.8,
+     "side_N": 17.5,
+     "tilt_deg": 0.6,
+     "drift_mm": 22,
+     "set_mm": 8.5,
+     "rib_rf": 1.18
+    },
+    "hard 10 narrow + drift .5": {
+     "stroke_mm": 17.2,
+     "n_g": 5.45,
+     "Fmax_N": 40.1,
+     "side_N": 16.0,
+     "tilt_deg": 2.3,
+     "drift_mm": 38,
+     "set_mm": 15.7,
+     "rib_rf": 2.4
+    },
+    "hard 10 wide + drift .5 y": {
+     "stroke_mm": 10.8,
+     "n_g": 6.17,
+     "Fmax_N": 46.6,
+     "side_N": 18.6,
+     "tilt_deg": 0.4,
+     "drift_mm": 124,
+     "set_mm": 9.3,
+     "rib_rf": 1.28
+    },
+    "normal level .5": {
+     "stroke_mm": 2.3,
+     "n_g": 8.93,
+     "Fmax_N": 33.0,
+     "side_N": 12.3,
+     "tilt_deg": 0.0,
+     "drift_mm": 4,
+     "set_mm": 0.8,
+     "rib_rf": 1.33
+    },
+    "normal 10 narrow .5": {
+     "stroke_mm": 3.4,
+     "n_g": 4.56,
+     "Fmax_N": 33.6,
+     "side_N": 12.7,
+     "tilt_deg": 0.2,
+     "drift_mm": 99,
+     "set_mm": 1.9,
+     "rib_rf": 2.08
+    },
+    "normal 10 wide .5 + drift": {
+     "stroke_mm": 5.9,
+     "n_g": 5.34,
+     "Fmax_N": 39.9,
+     "side_N": 16.0,
+     "tilt_deg": 0.3,
+     "drift_mm": 114,
+     "set_mm": 4.4,
+     "rib_rf": 1.68
+    }
+   }
+  },
+  "legacy_150_p30": {
+   "label": "AR-008 reproduction (GEOM_LEGACY, 1.50 kg), plateau 30 N",
+   "static": {
+    "tip_narrow": 33.005675848562646,
+    "tip_narrow_edge_toward_cg": 33.005675848562646,
+    "v_tip_parked": 7.441111673368119,
+    "restore_ratio_5ms": 2.2148057174214113
+   },
+   "cases": {
+    "hard level": {
+     "stroke_mm": 8.3,
+     "n_g": 10.79,
+     "Fmax_N": 39.7,
+     "side_N": 0.0,
+     "tilt_deg": 0.0,
+     "drift_mm": 0,
+     "set_mm": 6.8,
+     "rib_rf": 104.39
+    },
+    "hard 10 narrow": {
+     "stroke_mm": 13.9,
+     "n_g": 5.43,
+     "Fmax_N": 39.9,
+     "side_N": 14.3,
+     "tilt_deg": 1.8,
+     "drift_mm": 142,
+     "set_mm": 12.4,
+     "rib_rf": 4.72
+    },
+    "hard 10 narrow neg": {
+     "stroke_mm": 13.9,
+     "n_g": 5.43,
+     "Fmax_N": 39.9,
+     "side_N": 14.3,
+     "tilt_deg": 1.8,
+     "drift_mm": 142,
+     "set_mm": 12.4,
+     "rib_rf": 4.72
+    },
+    "hard 10 wide": {
+     "stroke_mm": 8.2,
+     "n_g": 6.13,
+     "Fmax_N": 45.1,
+     "side_N": 18.0,
+     "tilt_deg": 0.1,
+     "drift_mm": 36,
+     "set_mm": 6.7,
+     "rib_rf": 2.4
+    },
+    "hard 7/7 combo": {
+     "stroke_mm": 9.2,
+     "n_g": 5.67,
+     "Fmax_N": 45.2,
+     "side_N": 18.1,
+     "tilt_deg": 0.4,
+     "drift_mm": 21,
+     "set_mm": 7.7,
+     "rib_rf": 1.26
+    },
+    "hard 10 narrow + drift .5": {
+     "stroke_mm": 15.4,
+     "n_g": 6.68,
+     "Fmax_N": 40.0,
+     "side_N": 16.0,
+     "tilt_deg": 2.2,
+     "drift_mm": 23,
+     "set_mm": 13.9,
+     "rib_rf": 6.6
+    },
+    "hard 10 wide + drift .5 y": {
+     "stroke_mm": 11.0,
+     "n_g": 6.34,
+     "Fmax_N": 46.7,
+     "side_N": 18.7,
+     "tilt_deg": 0.4,
+     "drift_mm": 104,
+     "set_mm": 9.5,
+     "rib_rf": 2.68
+    },
+    "normal level .5": {
+     "stroke_mm": 2.3,
+     "n_g": 8.93,
+     "Fmax_N": 32.8,
+     "side_N": 0.0,
+     "tilt_deg": 0.0,
+     "drift_mm": 0,
+     "set_mm": 0.8,
+     "rib_rf": 126.14
+    },
+    "normal 10 narrow .5": {
+     "stroke_mm": 3.3,
+     "n_g": 6.92,
+     "Fmax_N": 33.5,
+     "side_N": 12.7,
+     "tilt_deg": 0.1,
+     "drift_mm": 97,
+     "set_mm": 1.8,
+     "rib_rf": 5.85
+    },
+    "normal 10 wide .5 + drift": {
+     "stroke_mm": 5.8,
+     "n_g": 5.45,
+     "Fmax_N": 40.1,
+     "side_N": 16.0,
+     "tilt_deg": 0.3,
+     "drift_mm": 101,
+     "set_mm": 4.3,
+     "rib_rf": 3.08
+    }
+   }
+  }
+ },
+ "sitl_raw": {
+  "T097_Z5": {
+   "case": "trans",
+   "mass": 1.881,
+   "wind": 0.0,
+   "wfrom": 0.0,
+   "r": 1.3925164191830017,
+   "alt0": 51.0,
+   "alt_gain_at_handover": 35.7,
+   "alt_max_gain": 38.4,
+   "alt_min_loss": 0.0,
+   "alt_peak_abs": 89.4,
+   "v13": 17.75,
+   "t_to_1.3Vs_s": 7.8,
+   "V_at_handover": 14.9,
+   "pitch_use_15": 0.69,
+   "pitch_use_25": 0.41,
+   "pitch_use_20": 0.52,
+   "elevon_max_deg": 10.6,
+   "t_elevon_sat_s": 0,
+   "u_max": 0.77,
+   "t_cap_run_s": 0.0,
+   "t_ge85_s": 0,
+   "I_pack_peak_A": 32.1,
+   "I_motor_peak_A": 8.0,
+   "hinge_peak_Nm": 0.0259,
+   "pitch_max": 89.6,
+   "roll_max_abs_after_fwdone": 1.2,
+   "alpha_max": 9.6,
+   "nz_max": 1.45,
+   "V_end": 17.0,
+   "alt_end": 85.3,
+   "roll_end_abs": 0.2,
+   "touch_in_flight": false,
+   "crossed_fence_110": false,
+   "t_fwdone_s": 6.4,
+   "Wh_to_cruise": 1.7,
+   "P_cruise_end_W": 151.0,
+   "landing": {
+    "case": "chain-landing",
+    "mass": 1.881,
+    "wind": 0.0,
+    "wfrom": 0.0,
+    "t_touch": 249.032,
+    "sink_ms": 0.13,
+    "sink_peak_last1s_ms": 0.3,
+    "lean_deg_at_touch": 0.0,
+    "lateral_speed_ms": 0.01,
+    "drift_m_from_qland_start": 0.1,
+    "lean_max_next5s": 0.0,
+    "lean_final": 0.0,
+    "tipped_over": false,
+    "u_max_descent": 0.624
+   },
+   "back": {
+    "modes": [
+     [
+      125.72,
+      "QLOITER"
+     ],
+     [
+      153.52,
+      "QLAND"
+     ]
+    ],
+    "alt_max_after_switch": 92.1,
+    "alt_min_after_switch": 85.3,
+    "alt_at_switch": 85.3,
+    "lean_max_in_descent": 3.7,
+    "u_max": 0.813,
+    "hdg_belly_at_qland": 5.0
+   },
+   "tag": "T097_Z5"
+  },
+  "T097_Z5_lua": {
+   "case": "trans",
+   "mass": 1.881,
+   "wind": 0.0,
+   "wfrom": 0.0,
+   "r": 1.3925164191830017,
+   "alt0": 51.1,
+   "alt_gain_at_handover": 35.9,
+   "alt_max_gain": 38.4,
+   "alt_min_loss": -0.0,
+   "alt_peak_abs": 89.4,
+   "v13": 17.75,
+   "t_to_1.3Vs_s": 7.7,
+   "V_at_handover": 15.0,
+   "pitch_use_15": 0.69,
+   "pitch_use_25": 0.41,
+   "pitch_use_20": 0.52,
+   "elevon_max_deg": 10.6,
+   "t_elevon_sat_s": 0,
+   "u_max": 0.9,
+   "t_cap_run_s": 0.1,
+   "t_ge85_s": 0.2,
+   "I_pack_peak_A": 35.4,
+   "I_motor_peak_A": 8.8,
+   "hinge_peak_Nm": 0.0285,
+   "pitch_max": 89.6,
+   "roll_max_abs_after_fwdone": 1.4,
+   "alpha_max": 9.4,
+   "nz_max": 1.59,
+   "V_end": 17.2,
+   "alt_end": 84.7,
+   "roll_end_abs": 0.2,
+   "touch_in_flight": false,
+   "crossed_fence_110": false,
+   "t_fwdone_s": 6.4,
+   "Wh_to_cruise": 1.75,
+   "P_cruise_end_W": 152.0,
+   "landing": {
+    "case": "chain-landing",
+    "mass": 1.881,
+    "wind": 0.0,
+    "wfrom": 0.0,
+    "t_touch": 248.677,
+    "sink_ms": 0.03,
+    "sink_peak_last1s_ms": 0.3,
+    "lean_deg_at_touch": 0.0,
+    "lateral_speed_ms": 0.01,
+    "drift_m_from_qland_start": 0.1,
+    "lean_max_next5s": 0.1,
+    "lean_final": 0.0,
+    "tipped_over": false,
+    "u_max_descent": 0.623
+   },
+   "back": {
+    "modes": [
+     [
+      125.72,
+      "QLOITER"
+     ],
+     [
+      153.42,
+      "QLAND"
+     ]
+    ],
+    "alt_max_after_switch": 91.9,
+    "alt_min_after_switch": 84.7,
+    "alt_at_switch": 84.7,
+    "lean_max_in_descent": 3.7,
+    "u_max": 0.808,
+    "hdg_belly_at_qland": 5.0
+   },
+   "tag": "T097_Z5_lua"
+  },
+  "T097_T074": {
+   "case": "trans",
+   "mass": 1.881,
+   "wind": 0.0,
+   "wfrom": 0.0,
+   "r": 1.33,
+   "alt0": 51.0,
+   "alt_gain_at_handover": 31.7,
+   "alt_max_gain": 33.9,
+   "alt_min_loss": 0.0,
+   "alt_peak_abs": 84.9,
+   "v13": 17.75,
+   "t_to_1.3Vs_s": 8.3,
+   "V_at_handover": 14.4,
+   "pitch_use_15": 0.79,
+   "pitch_use_25": 0.47,
+   "pitch_use_20": 0.59,
+   "elevon_max_deg": 12.0,
+   "t_elevon_sat_s": 0,
+   "u_max": 0.75,
+   "t_cap_run_s": 0.0,
+   "t_ge85_s": 0,
+   "I_pack_peak_A": 30.1,
+   "I_motor_peak_A": 7.5,
+   "hinge_peak_Nm": 0.0271,
+   "pitch_max": 89.7,
+   "roll_max_abs_after_fwdone": 1.2,
+   "alpha_max": 10.8,
+   "nz_max": 1.45,
+   "V_end": 17.2,
+   "alt_end": 79.1,
+   "roll_end_abs": 0.2,
+   "touch_in_flight": false,
+   "crossed_fence_110": false,
+   "t_fwdone_s": 6.5,
+   "Wh_to_cruise": 1.34,
+   "P_cruise_end_W": 144.0,
+   "tag": "T097_T074"
+  },
+  "T097_T074_lua": {
+   "case": "trans",
+   "mass": 1.881,
+   "wind": 0.0,
+   "wfrom": 0.0,
+   "r": 1.33,
+   "alt0": 51.0,
+   "alt_gain_at_handover": 31.7,
+   "alt_max_gain": 33.9,
+   "alt_min_loss": -0.0,
+   "alt_peak_abs": 84.9,
+   "v13": 17.75,
+   "t_to_1.3Vs_s": 8.2,
+   "V_at_handover": 14.4,
+   "pitch_use_15": 0.77,
+   "pitch_use_25": 0.46,
+   "pitch_use_20": 0.58,
+   "elevon_max_deg": 11.7,
+   "t_elevon_sat_s": 0,
+   "u_max": 0.771,
+   "t_cap_run_s": 0.0,
+   "t_ge85_s": 0,
+   "I_pack_peak_A": 30.1,
+   "I_motor_peak_A": 7.5,
+   "hinge_peak_Nm": 0.0285,
+   "pitch_max": 89.7,
+   "roll_max_abs_after_fwdone": 1.3,
+   "alpha_max": 10.9,
+   "nz_max": 1.54,
+   "V_end": 17.5,
+   "alt_end": 78.9,
+   "roll_end_abs": 0.2,
+   "touch_in_flight": false,
+   "crossed_fence_110": false,
+   "t_fwdone_s": 6.5,
+   "Wh_to_cruise": 1.37,
+   "P_cruise_end_W": 155.0,
+   "tag": "T097_T074_lua"
+  }
+ },
+ "correction": "Correction (review round 10, 2026-11-23): every rib-root RF in this record was computed on landing_a.py's default 14x12 mm rib tube, not the drawn 25x23 mm tube (wing.py RIB_OD/RIB_ID since D-226); the rib tube is not read from the CAD. Stroke, load factor, tilt and tip-over verdicts are unaffected. Rib RF on the drawn tube: AR-016 (T-098)."
+}

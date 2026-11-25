@@ -6,7 +6,7 @@ Order: params-A.json -> the four claims scripts -> build_graph.py --strict into 
 Requirements in REQUIREMENTS-A.md with no numeric or pass / fail basis are NOT nodes (a requirement with no claim fails the
 strict build): A-D1 (configuration), A-D4 (pack mass at the weigh-in), A-D5 / A-D6 (reserve rule, one-BOM rule), A-D7 (test
 order), A-D9 (>= 10 h SITL), A-D10 (transport drop, box mass: no box mass in the A files), A-D12 (wind measured), A-P8a (heading
-rule, a procedure), A-P12, A-P14 (airspeed error `-`), A-P15 (Cn_beta `-`, not computed), A-P17 / A-P18 / A-P19 (notch, thermal and
+rule, a procedure), A-P12, A-P14 (airspeed error `-`), A-P17 / A-P18 / A-P19 (notch, thermal and
 BEC limits, arm and kill: no value yet; BEC against servo stall current `-`), A-P20 (declared not survivable), A-P21 / A-P22 /
 A-P23, A-P25 (settings). A-P8's 8 m/s survive-and-land gust and A-D11's graph gate (this build's own result) are not claims either.
 """

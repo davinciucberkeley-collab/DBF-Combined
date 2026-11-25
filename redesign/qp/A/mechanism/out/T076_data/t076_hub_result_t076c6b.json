@@ -1,0 +1,302 @@
+{
+ "geo": {
+  "COL_E": 12.0,
+  "COL_Y": 12.0,
+  "COL_ZLO": -16.0,
+  "COL_ZHI": 8.0,
+  "XA": -6.5,
+  "XB": 6.5,
+  "S_END": 60.0,
+  "L_SLV": 24.0,
+  "SLV_W": 1.5,
+  "CB": 10.0,
+  "R_BR": 9.5,
+  "BR_RO": 8.0,
+  "BR_RI": 7.0,
+  "BR_Z": -2.0,
+  "BLK_Z": -2.0,
+  "BLK_AFT": 10.000000000000007,
+  "X_BR0": 13.5,
+  "X_HUB1": 36.0,
+  "S_HOLE": 18.0,
+  "HOLE_R": 2.4,
+  "TUBE_RO": 6.0,
+  "TUBE_RI": 5.0,
+  "DBL": 1.0,
+  "DBL_T": 1.0,
+  "DBL_S0": 11.0,
+  "DBL_S1": 25.0,
+  "BR_L": 40.0,
+  "R_CB": 3.0,
+  "PIN_R": 1.5,
+  "PIN_C": 1.0,
+  "PIN_S": 8.0,
+  "E_PIN": 70000.0,
+  "FIL": 2.0,
+  "FIL_A": 1.5,
+  "FMS": 0.0,
+  "BORE_FR": 0.0,
+  "BR_GAP": 0.0,
+  "BR_CH": 0.8,
+  "MS": 1.1
+ },
+ "hub_g": 21.43535655040393,
+ "equilibrium": 2.3847591640254e-10,
+ "elements": 375848,
+ "dof": 1747887,
+ "solve_wall_s": 1032.9643223285675,
+ "landing_meta_first": [
+  [
+   "hard level@0",
+   [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  ],
+  [
+   "hard level@7",
+   [
+    -92.82252939383159,
+    -0.4474487984680288,
+    1.9321882250384794,
+    -0.12035686764114431,
+    -687.3931829512017,
+    -126.7744975530077
+   ],
+   [
+    -52.808452005898076,
+    -0.28171227816810107,
+    1.1687709317649142,
+    0.045673084665271736,
+    -337.5318278487773,
+    -42.14994495833518
+   ],
+   [
+    -40.01407738793351,
+    -0.16573652029992775,
+    0.7634172932735651,
+    -0.16602995230641604,
+    -349.86135510242434,
+    -84.62455259467252
+   ]
+  ],
+  [
+   "hard level@1090",
+   [
+    -29.23307774816956,
+    -10.174206147108597,
+    -11.937344799736533,
+    163.1625849849381,
+    -917.8247966445978,
+    826.4810047792455
+   ],
+   [
+    -16.631238055353915,
+    -6.159161328836791,
+    -7.338045311993295,
+    120.20165477001757,
+    -902.1731080444141,
+    930.8112215350433
+   ],
+   [
+    -12.601839692815645,
+    -4.015044818271806,
+    -4.599299487743237,
+    42.96093021492052,
+    -15.651688600183691,
+    -104.3302167557978
+   ]
+  ]
+ ],
+ "landing": {
+  "A_all_through_arms RB": {
+   "whole hub": {
+    "p99_MPa": 9.598489853480839,
+    "p99_case": "hard 10 wide + drift .5 y@342",
+    "max_MPa": 169.45013851179195,
+    "max_case": "hard 10 wide + drift .5 y@342",
+    "RF_p99": 0.9663355861627464,
+    "RF_max_singular": 0.05473800375911237,
+    "allow_MPa": 9.27536231884058
+   },
+   "aft of block face (D-209 \"bridge boss\" definition)": {
+    "p99_MPa": 8.545813969650343,
+    "p99_case": "hard 10 wide + drift .5 y@342",
+    "max_MPa": 169.45013851179195,
+    "max_case": "hard 10 wide + drift .5 y@342",
+    "RF_p99": 1.0853690885129443,
+    "RF_max_singular": 0.05473800375911237,
+    "allow_MPa": 9.27536231884058
+   },
+   "last 12 mm before the bore mouth (collar in C6; block in base)": {
+    "p99_MPa": 4.201546229657356,
+    "p99_case": "hard 7/7 combo@345",
+    "max_MPa": 18.04379999607667,
+    "max_case": "hard 7/7 combo@345",
+    "RF_p99": 2.207606869435066,
+    "RF_max_singular": 0.5140470588710446,
+    "allow_MPa": 9.27536231884058
+   },
+   "collar extension only (x > 24)": {
+    "p99_MPa": 4.196121878552073,
+    "p99_case": "hard 7/7 combo@345",
+    "max_MPa": 18.04379999607667,
+    "max_case": "hard 7/7 combo@345",
+    "RF_p99": 2.210460655647392,
+    "RF_max_singular": 0.5140470588710446,
+    "allow_MPa": 9.27536231884058
+   }
+  },
+  "B_partition RB": {
+   "whole hub": {
+    "p99_MPa": 9.898236952458896,
+    "p99_case": "hard 10 wide + drift .5 y@342",
+    "max_MPa": 167.2322161583463,
+    "max_case": "hard 10 wide + drift .5 y@342",
+    "RF_p99": 0.9370721637994751,
+    "RF_max_singular": 0.055463968198914894,
+    "allow_MPa": 9.27536231884058
+   },
+   "aft of block face (D-209 \"bridge boss\" definition)": {
+    "p99_MPa": 9.023096280175325,
+    "p99_case": "hard 10 wide + drift .5 y@342",
+    "max_MPa": 167.2322161583463,
+    "max_case": "hard 10 wide + drift .5 y@342",
+    "RF_p99": 1.0279578130202942,
+    "RF_max_singular": 0.055463968198914894,
+    "allow_MPa": 9.27536231884058
+   },
+   "last 12 mm before the bore mouth (collar in C6; block in base)": {
+    "p99_MPa": 4.23861243138828,
+    "p99_case": "hard 7/7 combo@345",
+    "max_MPa": 17.468205616503525,
+    "max_case": "hard 7/7 combo@345",
+    "RF_p99": 2.1883015890185096,
+    "RF_max_singular": 0.5309854098624446,
+    "allow_MPa": 9.27536231884058
+   },
+   "collar extension only (x > 24)": {
+    "p99_MPa": 4.233599846241999,
+    "p99_case": "hard 7/7 combo@345",
+    "max_MPa": 17.468205616503525,
+    "max_case": "hard 7/7 combo@345",
+    "RF_p99": 2.1908925396135293,
+    "RF_max_singular": 0.5309854098624446,
+    "allow_MPa": 9.27536231884058
+   }
+  },
+  "A_all_through_arms RBx1.5": {
+   "whole hub": {
+    "p99_MPa": 14.397734780221256,
+    "p99_case": "hard 10 wide + drift .5 y@342",
+    "max_MPa": 254.17520776768794,
+    "max_case": "hard 10 wide + drift .5 y@342",
+    "RF_p99": 0.6442237241084977,
+    "RF_max_singular": 0.036492002506074914,
+    "allow_MPa": 9.27536231884058
+   },
+   "aft of block face (D-209 \"bridge boss\" definition)": {
+    "p99_MPa": 12.818720954475515,
+    "p99_case": "hard 10 wide + drift .5 y@342",
+    "max_MPa": 254.17520776768794,
+    "max_case": "hard 10 wide + drift .5 y@342",
+    "RF_p99": 0.7235793923419629,
+    "RF_max_singular": 0.036492002506074914,
+    "allow_MPa": 9.27536231884058
+   },
+   "last 12 mm before the bore mouth (collar in C6; block in base)": {
+    "p99_MPa": 6.302319344486034,
+    "p99_case": "hard 7/7 combo@345",
+    "max_MPa": 27.065699994115,
+    "max_case": "hard 7/7 combo@345",
+    "RF_p99": 1.4717379129567105,
+    "RF_max_singular": 0.3426980392473632,
+    "allow_MPa": 9.27536231884058
+   },
+   "collar extension only (x > 24)": {
+    "p99_MPa": 6.29418281782811,
+    "p99_case": "hard 7/7 combo@345",
+    "max_MPa": 27.065699994115,
+    "max_case": "hard 7/7 combo@345",
+    "RF_p99": 1.473640437098261,
+    "RF_max_singular": 0.3426980392473632,
+    "allow_MPa": 9.27536231884058
+   }
+  },
+  "B_partition RBx1.5": {
+   "whole hub": {
+    "p99_MPa": 14.847355428688346,
+    "p99_case": "hard 10 wide + drift .5 y@342",
+    "max_MPa": 250.84832423751942,
+    "max_case": "hard 10 wide + drift .5 y@342",
+    "RF_p99": 0.6247147758663166,
+    "RF_max_singular": 0.036975978799276596,
+    "allow_MPa": 9.27536231884058
+   },
+   "aft of block face (D-209 \"bridge boss\" definition)": {
+    "p99_MPa": 13.534644420262984,
+    "p99_case": "hard 10 wide + drift .5 y@342",
+    "max_MPa": 250.84832423751942,
+    "max_case": "hard 10 wide + drift .5 y@342",
+    "RF_p99": 0.6853052086801964,
+    "RF_max_singular": 0.036975978799276596,
+    "allow_MPa": 9.27536231884058
+   },
+   "last 12 mm before the bore mouth (collar in C6; block in base)": {
+    "p99_MPa": 6.35791864708242,
+    "p99_case": "hard 7/7 combo@345",
+    "max_MPa": 26.202308424755287,
+    "max_case": "hard 7/7 combo@345",
+    "RF_p99": 1.4588677260123395,
+    "RF_max_singular": 0.3539902732416297,
+    "allow_MPa": 9.27536231884058
+   },
+   "collar extension only (x > 24)": {
+    "p99_MPa": 6.350399769363,
+    "p99_case": "hard 7/7 combo@345",
+    "max_MPa": 26.202308424755287,
+    "max_case": "hard 7/7 combo@345",
+    "RF_p99": 1.460595026409019,
+    "RF_max_singular": 0.3539902732416297,
+    "allow_MPa": 9.27536231884058
+   }
+  }
+ },
+ "landing_B_peak_pack_hub_wrench": [
+  40.01407738793351,
+  15.208518657274492,
+  11.211412738843139,
+  126.41850817461678,
+  376.78008480966145,
+  335.77428361708826
+ ],
+ "landing_B_peak_arm_group_wrench": [
+  52.808452005898076,
+  28.456070365633718,
+  21.49682260789401,
+  6281.274062066828,
+  6926.209150780722,
+  17622.41748460395
+ ],
+ "total_wall_s": 3329.5204405784607
+}

@@ -1,0 +1,6 @@
+nominal                                       |y|<0.052 (1 ply)                                    EI_in   5650.7  EI_flap  56.94  GJ   56.01  EA   3.06 MN  (spar alone EI 36.9, GJ 3.16); xn 77.4 mm
+nominal                                       0.052-0.40 (3 plies)                                 EI_in   6799.9  EI_flap  89.60  GJ  155.73  EA   3.41 MN  (spar alone EI 36.9, GJ 3.16); xn 79.0 mm
+nominal                                       0.40-0.45 (no skin, foam + spar, strip ends at 0.40) EI_in    331.9  EI_flap  40.56  GJ    6.15  EA   2.52 MN  (spar alone EI 36.9, GJ 3.16); xn 61.1 mm
+lower (foam E,G x0.5, skin x0.7, no strip)    |y|<0.052 (1 ply)                                    EI_in    683.7  EI_flap  50.20  GJ   39.56  EA   2.59 MN  (spar alone EI 36.9, GJ 3.16); xn 62.1 mm
+lower (foam E,G x0.5, skin x0.7, no strip)    0.052-0.40 (3 plies)                                 EI_in   1648.5  EI_flap  73.09  GJ  109.36  EA   2.84 MN  (spar alone EI 36.9, GJ 3.16); xn 64.8 mm
+lower (foam E,G x0.5, skin x0.7, no strip)    0.40-0.45 (no skin, foam + spar, strip ends at 0.40) EI_in    185.1  EI_flap  38.73  GJ    4.65  EA   2.47 MN  (spar alone EI 36.9, GJ 3.16); xn 60.6 mm

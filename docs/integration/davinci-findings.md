@@ -1,0 +1,210 @@
+# DaVinci API: findings (T-037, R-INT-04, spec 8.3)
+
+**Status (2026-11-23, updated after AM-045):** the product and its API documentation are identified. The task is still BLOCKED, because there is no account and no token yet, and AM-003 keeps spend at $0. Superseded (2026-11-24): a token now exists and probes, an import and a STEP test have run (s7, s8 and davinci-import-2026-11-23.md); DaVinci usage readings stayed equal, which is consistent with no charge but not proof (usage asOf 2026-11-09); org storage 836 MB in API Test (AM-050).
+
+## 1. What the team repos say
+
+Source: `davinciucberkeley-collab/dbf-hangar` @ `cf4e7164` (Tristan Hottier, 2026-11-23), read-only clone.
+
+| Item | Where | What it says |
+|---|---|---|
+| Adapter | `core/hangar/adapters/davinci.py` (24 lines) | Stub only. `available()` returns False; `push`, `pull` and `run` return SKIP "DaVinci API access not configured (D3 decided: skip until real calls after Dec 1)". It has no network code and no tokens. |
+| Decision D3 | `ledger/items.yaml` | Asks "DaVinci API: who has access, which account, is a Claude connector set up?" The owner is blank. The default was taken: ship the adapter as SKIP and move the full DaVinci build to after Dec 1. |
+| Ruling R29 | `ledger/items.yaml` | "Connect DaVinci API to Claude; do a full build in DaVinci". Superseded by D3: "full DaVinci build after the Dec 2 deadline". |
+| CLI | D45, T107 | `plane davinci push` and `plane davinci pull` are planned for hangar v1.1. |
+
+The team weekly-update page (week of 2 Dec) repeats the ask: "Connect the DaVinci API to Claude and do a full build through it; message Douglas if setup stalls."
+
+## 2. The DaVinci Programmatic API (read 2026-11-23)
+
+Sources, all opened in the browser on 2026-11-23:
+- https://docs.davinci-app.com/pages/api/introduction
+- https://docs.davinci-app.com/pages/api/personal-access-tokens
+- https://docs.davinci-app.com/pages/api/simulation-results
+
+**Base and auth.**
+- Base URL: `https://davinci-app.com/api/v2/`.
+- Auth is a user-owned personal access token sent as `Authorization: Bearer dav_ak_live_…`. The token is 110 characters, carries scopes, expires after at most 90 days, and is rate-limited to 1–10,000 requests per minute (default 60).
+- It is created in the web app under Settings → Connections → Personal Access Tokens. It is shown only once.
+- There are official SDKs for TypeScript (`@celedon/davinci-sdk`) and Python. Raw HTTP works without either.
+
+**Sections.**
+
+| Section | What it covers |
+|---|---|
+| Projects | Create, open, close and delete projects; branches, packages, personas; files. |
+| Content | The object tree; add and delete objects; export an object to a file (PDF, docx and so on). |
+| Branches | Branch, commit, uncommitted changes, object history. |
+| Sessions / Agent / Chats | Open a project session and prompt its agent. Chats also appear in the web app, where a person can watch or take over. |
+| Tools | Run one of the agent's tools directly with `invokeTool`: deterministic, and "incurs no LLM charges". |
+| Usage | What model usage cost, by account, project, session or day. Spend only, not balance or limits. |
+| Tests | Start an authored Test and read its status and evidence. |
+| Organizations / Teams / Cards | Team boards, sprints and project Task Cards. |
+
+**Scopes.** These fit our case:
+- `projects:read` / `write` / `manage` (a ladder: each includes the one before);
+- `sessions:manage`;
+- `agent:message`;
+- `usage:read`, needed to see spend;
+- `cards:*` and `teams:*`.
+
+**Simulation results.** A LIVE simulation can be read with no agent and no model charge:
+- `QueryOptics` returns optics data.
+- `ExportSimulationPlot` returns any result display (QoIs, dynamics curves such as frf, srs and psd, thermal histories) as JSON/CSV/PNG.
+
+The documented displays lean toward optics and structural dynamics. Whether DaVinci models aircraft (aero, flight dynamics, landing) is **—**: the docs read so far do not say.
+
+**Cost model.**
+- Prompts to the project agent use LLM models, and the Usage endpoints report what that cost.
+- Direct tool calls (`invokeTool`) are documented as free of LLM charges.
+- Any subscription or seat price: **—** (not on these pages).
+- Spec 8.3 asks us to measure the cost, not assume it. The plan does that with the Usage endpoint before and after each step.
+
+## 3. What spec 8.3 asks, and status
+
+| Spec 8.3 step | Status |
+|---|---|
+| Investigate the API capabilities available to the team | Done from the docs (s2). Capabilities as the team's account sees them still need a token. |
+| Attempt the agreed design-build workflow through Claude Code with authorized access | Blocked: no token, and spend stays at $0 (AM-003). |
+| Verify real functionality and cost | Blocked; the method is in s4. |
+| Document failures and external dependencies | This file. Dependencies: a DaVinci account, a token, a project, and spend approval. |
+
+## 4. Proposed workflow once a token exists (read-only and $0 first)
+
+1. **Token, created by Dillon or the account holder.**
+   - Claude cannot create accounts or tokens.
+   - Scopes: `projects:read`, `usage:read`. Expiry: 30 days. Rate limit: 60 per minute.
+   - Store it in an environment variable `DAVINCI_API_KEY` or in a git-ignored `.env`, never in the repo (CLAUDE.md rule).
+2. **Read-only probe**, raw HTTP with curl, no SDK install:
+   - list projects;
+   - read one project's object tree;
+   - read Usage before and after (it should show $0).
+3. **Map concept A** to DaVinci objects (mass items, parts, requirements). This needs `projects:write` on a scratch branch, never `main`. Create the objects with the documented validation, then commit to the branch.
+4. **Run one check with `invokeTool`** (no LLM charge) and compare it with our own value, for example mass roll-up or CG.
+5. **Only with an approved cap:** one agent prompt (`agent:message`), with Usage read before and after, to measure the real cost per prompt.
+6. **Record results:** failures, rate-limit hits, cost per call, and what data leaves the team (privacy). Record them here and on the ledger. Then wire the hangar adapter (`push` / `pull`) only after AM-038 is lifted.
+
+## 5. What the team still has to provide
+
+1. A DaVinci account for the team, and who holds it. Is it Douglas (the weekly page names him for setup)?
+2. A token with the scopes above, set as `DAVINCI_API_KEY` on the machine that runs Claude.
+3. A spend cap for agent prompts (AM-003 is $0), and whether DaVinci spend counts inside the $2,000 budget.
+4. The "agreed complete design-build workflow": which DaVinci project, and what "a full build in DaVinci" must produce.
+
+## 6. Can Claude Code usage replace the DaVinci AI budget? (question from Douglas via Dillon, 2026-11-23)
+
+Probably yes for most work. It has to be measured before it counts (spec 8.3).
+
+**The pattern.** Claude Code does all the reasoning and DaVinci's agent is never prompted. Claude calls only the API's non-agent operations:
+- objects, branches and commits;
+- exports;
+- `invokeTool`.
+
+**Evidence that this costs nothing:**
+- `invokeTool` "incurs no LLM charges" (API introduction).
+- The billing docs (docs.davinci-app.com/pages/browser/usage-plans-billing/overview.md, read 2026-11-23) describe AI usage (included usage first, then on-demand, invoiced at $100) and storage. Object reads and writes are not described as billed.
+
+**Unknowns (—):**
+- session and compute cost;
+- simulation compile cost;
+- seat or subscription price (celedon.solutions/pricing, not checked);
+- whether the team's deployment and terms allow this.
+
+**Not the same thing.** Organization API keys (bring your own AI provider key, on some deployments) would use a separate Anthropic API key with its own billing, not this Claude account.
+
+**Test: the $0 proof.** Read Usage, open a session, do reads, one `invokeTool` call and a scratch-branch write, close the session, read Usage again. Record the before and after values, the session duration and the storage change.
+
+## 7. Probe 1: read-only, run 2026-11-23 (`python -I tools/davinci_probe.py`)
+
+Token: created by Dillon with scopes projects:read and usage:read, kept in the git-ignored `.env`. The token was never printed or logged.
+
+| Step | Result |
+|---|---|
+| GET /usage (before) | HTTP 200 in 0.63 s. Account lifetime AI spend $49.06; 1,093 usage events; asOf 2026-11-09 |
+| GET /projects | HTTP 200 in 0.14 s. One owned project ("Test", private, charge method "user") |
+| GET /projects/{id}/tree | HTTP 200 in 0.62 s. 10 objects (Library and Model packages, an "I-Beam 1m" geometry, …) |
+| GET /usage (after) | HTTP 200 in 0.21 s. Unchanged: $49.06, 1,093 events, same asOf |
+
+**Result.**
+- Token auth, project listing and reading the object tree all work.
+- Reads add no usage events and no spend.
+- Usage is recorded on an interval. To rule out a late charge, read Usage again after a day.
+
+**Not yet tested.** Douglas's pattern: open a session, run `invokeTool`, write to a scratch branch, close. That needs a token with `projects:write` and `sessions:manage` (probe 2).
+
+The raw JSON is kept locally only (git-ignored: account spend and ids).
+
+## 8. Probe 2: Claude drives and DaVinci only runs tools, 2026-11-23 23:33 (`python -I tools/davinci_probe2.py`)
+
+Token scopes: projects:read, projects:write, sessions:manage, usage:read. **No `agent:message` scope**, so DaVinci's agent could not run. Project "Test", on the new scratch branch `claude-probe-20261123-233319` (`main` untouched, no commit made).
+
+| Step | Result |
+|---|---|
+| Usage before | $49.060351, 1,093 events |
+| Create scratch branch from main | 201 (0.93 s) |
+| Open session on the branch | 201 (0.39 s) |
+| invokeTool Core/ReadObject on the Model package | 422 TOOL_ERROR: the package id is not a UUID. The tool's own validation rejected it; nothing ran |
+| Add one object (type requirement) on the branch | 201 (1.21 s) |
+| invokeTool Core/ReadObject on that object | 200 (0.17 s). Deterministic read, no model involved |
+| Delete the probe object | 200 |
+| Close session | 200 |
+| Usage after | $49.060351, 1,093 events: **unchanged** |
+
+**Result.** Douglas's pattern works:
+- Claude Code makes the decisions.
+- DaVinci does the work: sessions, writes and direct tool calls.
+- DaVinci recorded no AI usage events and no spend.
+
+**Caveats.**
+- Usage is recorded on an interval, so read it again after a day to rule out a late charge.
+- The scratch branch is still there, because deleting a branch needs projects:manage. Remove it in the UI.
+- Any subscription or seat price is not covered by this test (see s6).
+- Raw JSON is kept locally only (git-ignored).
+
+**User check (2026-11-23, after the 367-object import, AM-047):** Dillon saw the imported snapshot in the DaVinci web app and confirmed that the DaVinci budget shown there had not changed. That matches the API Usage reading ($49.060351 / 1,093 events). A next-day re-read is still due.
+
+## Spend evidence: what it does and does not show (fix pass C, review round 13 R13-3, 2026-11-24)
+
+- The Usage `asOf` stayed **2026-11-09** through every probe (probes 1 and 2, the imports). Equal before and after values ($49.060351, 1,093 events) are therefore consistent with no charge but are **not proof** of $0, because the usage snapshot predates all probes.
+- Dillon's UI check (2026-11-23, above) showed the DaVinci budget unchanged. That is the only other evidence.
+- Proof needs a later Usage read after `asOf` moves past the probe times, or the DaVinci invoice / wallet. Until then the claim is "no change observed, usage snapshot stale".
+
+**Storage facts (read 2026-11-24):**
+- API Test: storageUsedBytes 836.1 MB.
+- Held by the 205 STEP geometry objects (129 + 76 assembly copies) on branch `concept-a-snapshot-73656c93`. The attached files are only the 2.5 MB GLB.
+- The organization is at about 1.0 of 1.0 GB, with Model Benchmarks at 226 MB.
+- Deleting the branch is pending with Dillon (AM-050; deletion needs his approval, R-GEN-02).
+
+## Status read 2026-11-24 (AM-054, `python -I tools/davinci_status.py`, read-only)
+
+- Branches in API Test: `concept-a-snapshot-73656c93` and `main`. The snapshot branch is still there: the UI delete on 2026-11-24 returned an error (AM-050).
+- API Test storageUsedBytes 836,126,423 (unchanged). Other projects visible: Test 11.3 MB (Dillon's own), Support Arm Astra 151.7 MB, Argon 23.6 MB, Sol 23.4 MB, Haiku 18.6 MB, Opus 11.7 MB (team projects; not touched).
+- Usage: $49.060351, 1,093 events, asOf still 2026-11-09T07:22:13Z, so the $0 claim is still "no change observed, usage snapshot stale". The plans page says credits cover "uploading files", so the uploads may be charged once the usage feed updates (—).
+- Storage ratio measured from the import: about 38.6 MB of STEP gave 836 MB stored (about 22x). A lighter re-import must budget for that: one decimated STEP per subsystem (10 geometries, target about 3 MB of STEP, about 70 MB stored EST at 22x), no assembly duplicates, the first upload measured before the rest.
+
+## Branch delete via the API, 2026-11-24 (AM-055)
+
+With a projects:manage token (Dillon, 1-day expiry, git-ignored `.env`, never printed), deleting `concept-a-snapshot-73656c93` in API Test:
+- `DELETE /projects/{id}/branches/concept-a-snapshot-73656c93`: HTTP 400 `BRANCH_NOT_FOUND`, although `GET /projects/{id}/branches` lists the branch (the list gives names only, no ids).
+- `DELETE /projects/{id}/branches` with the name as query (`branch=` or `name=`) or JSON body: HTTP 403 `CREDENTIAL_NOT_PERMITTED`, "This endpoint cannot be called with this credential type", allowed `jwt` only.
+- **Result:** branch deletion is not available to personal access tokens; it needs a signed-in web session (JWT), and the web-app delete fails for Dillon. Storage unchanged at 836,126,423 bytes. Nothing was deleted.
+- The manage token value was removed from `.env` after the attempt; Dillon should revoke it in Settings → Connections.
+- Next: an organization admin (Douglas) or DaVinci support deletes the branch or purges its storage, or raises the 1 GB limit. Until then no uploads (AM-050).
+
+## New project "Concept A", 2026-11-24 (AM-056)
+
+- Dillon deleted API Test and created **Concept A** (id bbb1b6e0-63d1-4a95-8e6d-0e300beed2c9, design-build-fly org). The token's project list now shows Test (11.3 MB) and Concept A only; the Support Arm projects listed earlier no longer appear to this token (reason —).
+- **Data import:** `python -I tools/davinci_import_a.py --project bbb1b6e0-... --sha 2aba012d` (script now takes project and commit as arguments) onto branch `concept-a-snapshot-2aba012d`: every POST 201, commit 201, five ReadObject checks 200. Concept A storageUsedBytes stays 0 (data objects take no counted storage). Usage unchanged ($49.060351, 1,093 events, asOf still 2026-11-09).
+- **Storage not freed by the project delete.** A measuring upload of two small STEP parts (AVN-002 70 KB, AVN-003 390 KB) returned 413 `STORAGE_LIMIT_EXCEEDED`: "Uploading this file would exceed the storage limit for this account (1.0 GB used of 1.0 GB)", storageUsedBytes 1,073,801,516 then 1,074,121,747 (the figure rose by 320,231 bytes between the two refused uploads; cause —). Nothing was stored in Concept A (0 geometries, 0 bytes). Uploads stopped.
+- Reading: the limit is per **account** and the deleted project's 836 MB is still counted (a soft delete / trash, or a delayed recount; —). Next: Dillon checks the web app for a trash or recently-deleted list and empties it; otherwise DaVinci support or Douglas (purge or a larger limit). No further uploads until the used figure drops.
+- **Storage freed (check 2026-11-24, after Douglas's clean-up):** a single 70,004-byte STEP (AVN-002) uploaded to Concept A (HTTP 200, 1 geometry). Concept A storageUsedBytes 1,132,846, so about 16x the STEP size for this part (the import's average was about 22x). Account total and limit are not exposed on success (only in a 413), so the free space is "—". Usage unchanged ($49.060351, asOf 2026-11-09).
+- **Full-detail 3-D import done (2026-11-24, AM-058):** all 129 part STEPs (geometry from the GLB at 73656c93; no CAD geometry change since, only reports) uploaded to Concept A, branch `concept-a-snapshot-2aba012d`, package "CAD geometry" with one sub-package per subsystem: 129 geometries, 0 missing, 0 duplicates. The first pass stopped at 23 parts on two HTTP 500 replies (body unreadable; the same parts loaded on 2026-11-23), the idempotent rerun uploaded the other 106 with no failure. Concept A storageUsedBytes 396,073,794 (396 MB for 23.6 MB of STEP, about 17x). Usage unchanged ($49.060351, 1,093 events, asOf 2026-11-09). Committed on the DaVinci branch as bf0a3803 (140 additions: 129 geometries + packages); no assembly copies made (the assembly step doubles storage; optional now with 50 GB).
+- **Assembly (2026-11-24):** `tools/davinci_step_assemble.py` (via a wrapper setting project Concept A / branch `concept-a-snapshot-2aba012d`) built "Concept A assembly (snapshot 73656c93)" under CAD geometry with 10 sub-assemblies: 129 geometries in the assembly, 0 missing, 0 duplicates; branch commit HTTP 201. Concept A storageUsedBytes 789,715,772 (790 MB with both the package set and the assembly). Whether the top-level assembly's Geometric view shows all 10 sub-assemblies together is for Dillon to check in the web app (—).
+- **Assembly view and the whole-aircraft STEP (2026-11-24):** Dillon opened the assembly: nothing renders, and Compile answers "source is required". The DaVinci docs (assembly.md, geometry.md, add-objects.md, read 2026-11-24) do not say how an assembly's source is written; the only documented code is CadQuery on Geometry objects (Kind code / step / onshape), and there is no documented object-update endpoint. Workaround: all 129 part meshes merged into one faceted STEP (`tools/mesh_to_step.py`, 88,413 vertices, 177,522 triangles, 54,338 faces, 245 bodies, 25.4 MB) and uploaded as one geometry "Concept A whole aircraft" in package CAD geometry / "Whole aircraft (one STEP, 129 parts)"; HTTP 200, branch commit 201. Storage rose 790 -> 817 MB (+27 MB for a 25.4 MB file, about 1.1x), so the earlier 16-22x was per-object overhead, not file size. Usage unchanged.
+
+## Spend correction (2026-11-24, Dillon's billing check)
+
+Dillon's DaVinci transaction list shows the Concept A work **does cost something**: many rows "Embedding call · Deduction · Prepaid Balance · text-embedding-3-small · Concept A · <$0.01" (e.g. 24 Nov 2026 01:20-01:21 PM), and the displayed balance is unchanged (rounding). So creating objects triggers DaVinci's own embedding (search indexing) calls, charged per call to the prepaid balance; `invokeTool` and the agent were not involved. The API Usage endpoint (asOf 2026-11-09) did not show these. **Corrected claim:** the "Claude drives, DaVinci runs tools" pattern has no LLM chat spend but a small per-object indexing charge; it is near-zero, not $0. Total for the imports: — (each row < $0.01; sum not read; the billing page total is the source). Earlier lines in this file and on the weekly card that say "no AI spend seen" are superseded by this section.
+- **Bound on the indexing cost (Dillon, 2026-11-24):** the prepaid balance shown did not change after all the Concept A imports (data, 129 parts, assembly, whole-aircraft STEPs), so the total of those embedding charges is below the balance display's resolution (one cent, if shown to the cent): near-zero for this whole import.
+- **Whole-aircraft lite and extra-lite STEPs (2026-11-24):** the full 25.4 MB whole-aircraft geometry failed on Compile in the web app with `CAD_OCCT_ERROR: socket hang up` after several minutes (Dillon's screenshot, 2026-11-24). Lighter versions: `tools/blender_decimate_whole.py` (Blender 4.5.14 background; merge the 129 part meshes, weld 1e-4, decimate parts above the poly floor) then `tools/mesh_to_step.py`. **Lite:** ratio 0.25, parts > 400 polys: 26,467 vertices, 53,652 triangles, 31,512 faces, 245 bodies, 12,700,885 bytes. **Extra-lite:** ratio 0.06, parts > 150 polys: 7,864 vertices, 16,456 triangles, 12,892 faces, 4,831,642 bytes. Both uploaded to CAD geometry / "Whole aircraft (one STEP, 129 parts)" (HTTP 200, branch commits 201). Dillon reported "The lite upload worked" (it renders), with triangle edges visible. Concept A storageUsedBytes read 2026-11-24 after these uploads and the compile attempts: 1,056,091,993 (1.06 GB of 50 GB).
+- **Manage token revoked (2026-11-24):** Dillon revoked the one-day projects:manage token in DaVinci (Settings, Connections). Its `.env` line was already empty; only the regular `DAVINCI_API_KEY` token remains in use.

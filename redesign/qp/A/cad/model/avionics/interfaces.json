@@ -3,31 +3,31 @@
  "subsystem": "avionics",
  "parts": [
   {
-   "id": "AVN-001",
-   "name": "Avionics plate",
+   "id": "AVN-010",
+   "name": "R2 mounting bosses (T-073 R2, T-077 p5): 4 FC bosses 6 x 6 mm on the 25 x 25 pattern with M2 hex-nut pockets, 4 ESC bosses 6 x 6 on the 20 x 20 pattern, 4 GPS corner pads 6 x 6 and 2 RX strip pads 5 x 11 mm (T-073 s.R2 Phase 2: GPS / RX pads), each up to the pad plane ZP (heights from the skin), bonded to the skin, printed PETG 6 x 6 x h (T-070); mass = drawn volume x T-067 basis",
    "subsystem": "avionics",
    "status": "MODELLED",
-   "mass_g": 8.0,
+   "mass_g": 1.63,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0923,
-    0.0,
-    0.0123
+    0.0629,
+    -0.0187,
+    0.0125
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "AVN-002",
-   "name": "Flight controller Kakute F405 Wing Mini",
+   "name": "Flight controller Holybro Kakute H743-Wing, 45 x 30 x 13.5 mm (V docs.holybro.com kakute-h743-wing, read 2026-11-20), M2 25 x 25 mm, 28 g with USB extender; drawn: PCB 45 x 30 x 1.6 mm (PCB thickness EST, vendor -), corner radius -, hole diameter - (2.2 mm drawn), connector and header outlines and heights - (not drawn; the 13.5 mm overall height is a wiring keep-out), orientation 45 mm along y is my choice; position (T-092, D-239): board centre x 47 mm, y -75 mm (75 mm off the wing centre, left side, hard-mounted); IMU chip position on the board \"-\" (not published)",
    "subsystem": "avionics",
    "status": "MODELLED",
-   "mass_g": 17.0,
+   "mass_g": 28.0,
    "material": "PCB",
    "cg_xyz_m": [
-    0.0599,
-    0.0,
-    0.0269
+    0.0472,
+    -0.075,
+    0.0178
    ],
    "make_or_buy": "buy",
    "electrical": "bus",
@@ -41,8 +41,8 @@
    "mass_g": 1.0,
    "material": "VHB-class foam tape",
    "cg_xyz_m": [
-    0.06,
-    0.0,
+    0.047,
+    -0.075,
     0.0154
    ],
    "make_or_buy": "buy",
@@ -56,9 +56,9 @@
    "mass_g": 4.6,
    "material": "PCB",
    "cg_xyz_m": [
-    0.1178,
+    0.1035,
     -0.046,
-    0.0152
+    0.0142
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -72,7 +72,7 @@
    "mass_g": 13.5,
    "material": "PCB",
    "cg_xyz_m": [
-    0.0575,
+    0.0425,
     0.0395,
     0.0172
    ],
@@ -143,45 +143,45 @@
   },
   {
    "id": "AVN-008",
-   "name": "Bay cover (D-198): 0.6 mm printed PETG hood over the FC stack, ESC and the phase-lead runs from the foam ditch to the ESC pads; notches for the sensor leads and the battery tail",
+   "name": "Bay cover (D-198, T-022 Q4): 0.6 mm printed PETG hood over the FC (T-092: now at y -75 under the FC annex, x 22.5-72.2, y -99 to -26.5), ESC and the phase-lead runs from the foam ditch to the ESC pads, with a low annex (RX hood) over the receiver enclosing the RX UART lead; bottom-open slots for the GPS lead, the battery tail and the two antennas",
    "subsystem": "avionics",
    "status": "MODELLED",
-   "mass_g": 9.6,
+   "mass_g": 14.61,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0732,
-    0.0,
-    0.0298
+    0.0594,
+    -0.0312,
+    0.0295
    ],
    "make_or_buy": "make",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "HWC-001",
-   "name": "FC mounting screws: 4 x M2 x 25 pan screw (stock)",
+   "name": "FC mounting screws: 4 x M2 pan screw (stock, length per hole 8-10 mm, T-077 p5)",
    "subsystem": "avionics",
    "status": "MODELLED",
-   "mass_g": 2.97,
+   "mass_g": 1.18,
    "material": "A2 stainless",
    "cg_xyz_m": [
-    0.06,
-    0.0,
-    0.0265
+    0.0459,
+    -0.075,
+    0.0167
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
   },
   {
    "id": "HWC-003",
-   "name": "FC mounting nuts: 4 x M2 thin nut (DIN 439 1.2 mm) in the plate hex pockets",
+   "name": "FC mounting nuts: 4 x M2 thin nut (DIN 439 1.2 mm) in the boss hex pockets",
    "subsystem": "avionics",
    "status": "MODELLED",
    "mass_g": 0.41,
    "material": "A2 stainless",
    "cg_xyz_m": [
-    0.06,
-    -0.0,
-    0.0129
+    0.047,
+    -0.075,
+    0.0121
    ],
    "make_or_buy": "buy",
    "notes": "concept A CAD (qp/A/cad/a_model.py); mass per MASS-GATE / STRUCTURES iteration 2 or vendor page (EST where marked in a_model.py)"
@@ -190,19 +190,19 @@
  "edges": [
   {
    "id": "E-AVN-01",
-   "part_a": "AVN-001",
+   "part_a": "AVN-010",
    "part_b": "WNG-001",
    "via": "CT-CA",
    "owner": "avionics",
-   "notes": "plate base follows the upper skin (same vertices as the core)"
+   "notes": "R2 bosses and pads: bases follow the upper skin (same vertices as the core), bonded with CA / epoxy; no plate (T-073 R2)"
   },
   {
    "id": "E-AVN-02",
    "part_a": "AVN-007",
-   "part_b": "AVN-001",
+   "part_b": "AVN-010",
    "via": "CT-GEL-PAD",
    "owner": "avionics",
-   "notes": "four thin foam-tape pads on the plate (FC on the wing centre, not on the cage hub: SITL-FLIGHT follow-up 2; hard mount, BOARD D-186)"
+   "notes": "four thin foam-tape pads on the FC bosses (FC on the wing, 75 mm left of centre (D-239 / D-240), not on the cage hub: SITL-FLIGHT follow-up 2; hard mount, BOARD D-186)"
   },
   {
    "id": "E-AVN-03",
@@ -227,10 +227,10 @@
   {
    "id": "E-AVN-05",
    "part_a": "AVN-003",
-   "part_b": "AVN-001",
+   "part_b": "AVN-010",
    "via": "CT-TAPE-FOAM",
    "owner": "avionics",
-   "notes": "foam tape + tie",
+   "notes": "foam tape + tie on the R2 pads",
    "retention": {
     "item": "VHB-class tape",
     "count": 1
@@ -239,10 +239,10 @@
   {
    "id": "E-AVN-06",
    "part_a": "AVN-004",
-   "part_b": "AVN-001",
+   "part_b": "AVN-010",
    "via": "CT-TAPE-FOAM",
    "owner": "avionics",
-   "notes": "foam tape + tie",
+   "notes": "foam tape + tie on the R2 pads",
    "retention": {
     "item": "VHB-class tape",
     "count": 1
@@ -331,10 +331,10 @@
   {
    "id": "E-AVN-14",
    "part_a": "AVN-008",
-   "part_b": "AVN-001",
+   "part_b": "WNG-001",
    "via": "CT-TAPE-FOAM",
    "owner": "avionics",
-   "notes": "cover stands on the plate (and its front ramp on the skin ahead of the plate), foam tape + two ties; removable for FC access (D-198)",
+   "notes": "cover walls stand on the skin (T-077 p5: no plate), foam tape + two ties; removable for FC access (D-198)",
    "retention": {
     "item": "VHB-class tape + ties",
     "count": 1
@@ -347,12 +347,12 @@
    "via": "CT-HW-SEATED",
    "owner": "avionics",
    "hardware": true,
-   "notes": "four M2 screws through the stack standoffs (hardware of E-AVN-03)",
+   "notes": "four M2 screws through the board, the tape pads and the bosses (hardware of E-AVN-03)",
    "joint_stack": {
-    "fastener": "M2 x 25 pan screw (stock)",
+    "fastener": "M2 pan screw (stock 6..25 mm, per hole)",
     "count": 4,
     "grade": "A2-70",
-    "hole": "boards 2.2 mm clearance (EST), standoffs ID 2.2",
+    "hole": "board hole 2.2 mm clearance (EST)",
     "insert": "none",
     "engagement_mm": 1.2,
     "min_engagement_mm": 1.0,
@@ -371,7 +371,7 @@
    "via": "CT-HW-SEATED",
    "owner": "avionics",
    "hardware": true,
-   "notes": "screw threads into the nut (stock M2 x 25: tip 0.1 mm short of to 0.6 mm past the nut bottom)",
+   "notes": "screw threads into the nut (shortest stock length that reaches the nut bottom)",
    "joint_stack": {
     "fastener": "M2 x 25 pan screw into M2 thin nut",
     "count": 4,
@@ -391,16 +391,16 @@
   {
    "id": "E-AVN-17",
    "part_a": "HWC-003",
-   "part_b": "AVN-001",
+   "part_b": "AVN-010",
    "via": "CT-HW-SEATED",
    "owner": "avionics",
    "hardware": true,
-   "notes": "four M2 thin nuts trapped in hex pockets on the plate underside (seated before the plate goes on the skin)",
+   "notes": "four M2 thin nuts trapped in hex pockets in the FC bosses (seated before the bosses go on the skin)",
    "joint_stack": {
     "fastener": "M2 pan screw + M2 thin nut (DIN 439, 1.2 mm)",
     "count": 4,
     "grade": "A2-70",
-    "hole": "2.2 mm hole + hex pocket in the plate (plate 1.5-2.1 mm)",
+    "hole": "2.2 mm hole + hex pocket in the boss (boss 1.6-3.0 mm over the skin)",
     "insert": "none",
     "engagement_mm": 1.2,
     "min_engagement_mm": 1.0,
@@ -420,6 +420,6 @@
   "E-HRN-09",
   "E-HRN-10",
   "E-HRN-11",
-  "E-PRP-09"
+  "E-PRP-13"
  ]
 }

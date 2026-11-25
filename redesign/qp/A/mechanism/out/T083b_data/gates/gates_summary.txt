@@ -1,0 +1,24 @@
+build_a exit 1 18 s
+wire_inventory exit 0 11 s
+cad_mass exit 0 8 s
+mission_gate exit 0 1 s
+prop_sched exit 0 8 s
+proofs exit 1 1 s
+bbox exit 0 8 s
+collide_pose21 exit 0 1040 s
+assembly exit 0 2198 s
+collide_linkage exit 0 1213 s
+drawings exit 0 245 s
+build_guide exit 0 5 s
+parts_links exit 0 4 s
+GATES_DONE
+proofs_rerun exit 1
+assembly exit 0 2245 s
+drawings exit 0 225 s
+build_guide exit 0 5 s
+parts_links exit 0 4 s
+GATES_DONE
+proofs exit 1 2 s (run 3)
+collide_pose21 exit 0 991 s (run 3)
+collide_linkage exit 0 1135 s (run 3)
+GATES_R3_DONE

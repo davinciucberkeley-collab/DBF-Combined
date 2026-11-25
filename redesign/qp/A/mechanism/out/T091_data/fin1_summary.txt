@@ -1,0 +1,18 @@
+B0 as drawn
+  GM min over 72: pit0.8=1.61 pit1.0=1.13 pit1.2=1.05 rll0.8=2.44 rll1.0=2.68 rll1.2=3.38 yaw0.8=2.13 yaw1.0=2.44 yaw1.2=2.48
+  forced window {'0.01': 32.4, '0.005': 32.9} sweep {'0.01': 97.9, '0.005': 187.2} D185 FAIL 65/72 dm_FE 0.0 g
+S1 sleeve CF 14x12 on the spar |y|<=0.075
+  GM min over 72: pit0.8=2.13 pit1.0=1.69 pit1.2=1.69 rll0.8=2.52 rll1.0=2.64 rll1.2=3.32 yaw0.8=2.13 yaw1.0=2.41 yaw1.2=2.48
+  forced window {'0.01': 35.1, '0.005': 35.8} sweep {'0.01': 96.1, '0.005': 181.3} D185 FAIL 69/72 dm_FE 9.8 g
+S1 sleeve CF 14x12 on the spar |y|<=0.100
+  GM min over 72: pit0.8=2.33 pit1.0=1.88 pit1.2=1.91 rll0.8=2.52 rll1.0=2.68 rll1.2=3.32 yaw0.8=2.13 yaw1.0=2.37 yaw1.2=2.48
+  forced window {'0.01': 34.6, '0.005': 35.4} sweep {'0.01': 95.2, '0.005': 178.6} D185 FAIL 69/72 dm_FE 13.1 g
+K3 struts 12x10 (R08 offcut)
+  GM min over 72: pit0.8=1.74 pit1.0=1.45 pit1.2=1.40 rll0.8=3.08 rll1.0=3.13 rll1.2=3.76 yaw0.8=2.19 yaw1.0=2.44 yaw1.2=2.52
+  forced window {'0.01': 89.2, '0.005': 121.5} sweep {'0.01': 106.2, '0.005': 203.9} D185 FAIL 66/72 dm_FE 12.7 g
+A1 arms 10x8 (T-085 C5)
+  GM min over 72: pit0.8=2.48 pit1.0=1.66 pit1.2=1.49 rll0.8=3.94 rll1.0=3.03 rll1.2=3.32 yaw0.8=2.13 yaw1.0=2.41 yaw1.2=2.48
+  forced window {'0.01': 19.7, '0.005': 23.1} sweep {'0.01': 86.6, '0.005': 163.1} D185 FAIL 57/72 dm_FE -11.1 g
+F1 sleeve 14x12, spar |y|<=0.075 + struts 12x10
+  GM min over 72: pit0.8=3.22 pit1.0=2.85 pit1.2=2.98 rll0.8=3.13 rll1.0=3.17 rll1.2=3.82 yaw0.8=2.19 yaw1.0=2.44 yaw1.2=2.52
+  forced window {'0.01': 105.7, '0.005': 203.3} sweep {'0.01': 105.7, '0.005': 203.3} D185 FAIL 66/72 dm_FE 22.5 g

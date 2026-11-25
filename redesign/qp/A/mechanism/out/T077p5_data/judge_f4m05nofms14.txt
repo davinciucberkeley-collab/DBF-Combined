@@ -1,0 +1,22 @@
+D-223 rows (RB / 1.97 and D-1 x 0.84), minimum over pad zeta; baseline G1 (T076d) -> pocketed f4m05nofms14
+row              set   baseline  pocketed   ratio
+bond T076c def   RB       0.615     0.513   0.834
+bond T076c def   D1       0.852     0.754   0.885
+bond full        RB       0.449     0.433   0.964
+bond full        D1       0.650     0.616   0.948
+hub von Mises    RB       1.095     1.429   1.305
+hub von Mises    D1       1.403     1.976   1.408
+tube A axial     RB       1.212     1.241   1.024
+tube A axial     D1       1.274     1.295   1.017
+tube A hoop      RB       1.974     1.959   0.992
+tube A hoop      D1       2.073     2.060   0.994
+tube A tau_st    RB       4.344     4.221   0.972
+tube A tau_st    D1       4.321     3.885   0.899
+tube B axial     RB       0.938     0.966   1.030
+tube B axial     D1       1.294     1.312   1.014
+tube B hoop      RB       1.490     1.528   1.026
+tube B hoop      D1       2.052     2.216   1.080
+tube B tau_st    RB       3.096     2.522   0.815
+tube B tau_st    D1       3.865     3.482   0.901
+rows that PASSED (>= 1.0) at baseline and FAIL now: none
+hub von Mises minimum RF 1.429 (baseline 1.095); hub mass 41.41 g Al (baseline 61.22 g)

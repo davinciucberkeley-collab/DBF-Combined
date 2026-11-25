@@ -1,0 +1,12 @@
+e182.dat           n 61 cl0 0.009 cm_c/4 +0.0119
+e184.dat           n 61 cl0 -0.080 cm_c/4 +0.0319
+e186.dat           n 61 cl0 -0.081 cm_c/4 +0.0573
+e230.dat           n 61 cl0 -0.061 cm_c/4 +0.0356
+mh45.dat           n 67 cl0 0.019 cm_c/4 +0.0150
+mh60.dat           n 68 cl0 0.023 cm_c/4 +0.0147
+mh61.dat           n 68 cl0 -0.038 cm_c/4 +0.0257
+mh62.dat           n 68 cl0 0.036 cm_c/4 +0.0086
+mh64.dat           n 68 cl0 0.045 cm_c/4 +0.0037
+mh81.dat           n 67 cl0 0.143 cm_c/4 +0.0085
+s5010.dat          n 61 cl0 0.044 cm_c/4 +0.0131
+s5020.dat          n 61 cl0 0.053 cm_c/4 +0.0150
